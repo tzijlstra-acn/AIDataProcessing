@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ICS Dashboard · NFR Platform</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css"/>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+:root{
+  --canvas:#F2F3F5;
+  --surface:#FFFFFF;
+  --s1:#F8F8F7;
+  --s2:#EEECEA;
+  --border:rgba(0,0,0,.08);
+  --borderS:rgba(0,0,0,.13);
+  --brand:#1E3A6E;
+  --brandMid:#2A5298;
+  --brandLight:#EEF3FB;
+  --tp:#14202E;
+  --ts:#3A4657;
+  --tm:#6B7686;
+  --g:#1A7A52; --gb:#E4F2EB; --gd:#A8D5BC;
+  --a:#9A6500; --ab:#FEF3DC; --ad:#F0C96A;
+  --r:#B4322A; --rb:#FCEAE9; --rd:#F0A09A;
+  --gr:#6B7686; --grb:#F0F1F3;
+  --font:'Inter',system-ui,sans-serif;
+  --mono:'IBM Plex Mono',monospace;
+  --radius:8px; --radiusL:12px; --radiusXL:16px;
+}
+
+*{box-sizing:border-box;margin:0;padding:0;}
+html,body{height:100%;}
+body{font-family:var(--font);background:var(--canvas);color:var(--tp);font-size:13px;line-height:1.55;-webkit-font-smoothing:antialiased;}
+
+/* ── TOPBAR ── */
+.topbar{background:var(--brand);color:#fff;height:54px;display:flex;align-items:center;justify-content:space-between;padding:0 24px;position:sticky;top:0;z-index:200;gap:16px;}
+.topbar-brand{display:flex;align-items:center;gap:10px;}
+.topbar-logo-icon{width:32px;height:32px;background:rgba(255,255,255,.15);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+.topbar-logo-icon i{font-size:18px;color:#fff;}
+.topbar-title{font-size:15px;font-weight:600;color:#fff;letter-spacing:-.01em;}
+.topbar-sub{font-size:11px;color:rgba(255,255,255,.55);font-family:var(--mono);}
+.topbar-right{display:flex;align-items:center;gap:10px;}
+.topbar-meta{display:flex;gap:20px;}
+.topbar-meta-item{display:flex;flex-direction:column;}
+.topbar-meta-label{font-size:9px;letter-spacing:.06em;text-transform:uppercase;color:rgba(255,255,255,.5);}
+.topbar-meta-val{font-size:12px;font-weight:500;color:#fff;font-family:var(--mono);}
+.avatar{width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.2);font-size:11px;font-weight:600;display:flex;align-items:center;justify-content:center;color:#fff;flex-shrink:0;}
+.user-block{display:flex;flex-direction:column;line-height:1.3;}
+.user-name{font-size:12px;font-weight:500;color:#fff;}
+.user-role{font-size:11px;color:rgba(255,255,255,.55);}
+
+/* ── NAV TABS ── */
+.nav-bar{background:var(--surface);border-bottom:0.5px solid var(--border);padding:0 24px;display:flex;align-items:center;justify-content:space-between;height:44px;position:sticky;top:54px;z-index:190;}
+.nav-tabs{display:flex;gap:0;height:44px;}
+.nav-tab{display:flex;align-items:center;gap:6px;padding:0 14px;font-size:13px;color:var(--tm);border-bottom:2px solid transparent;cursor:pointer;text-decoration:none;white-space:nowrap;transition:color .12s;}
+.nav-tab:hover{color:var(--tp);}
+.nav-tab.active{color:var(--brandMid);border-bottom-color:var(--brandMid);font-weight:500;}
+.nav-tab i{font-size:15px;}
+.nav-right{display:flex;align-items:center;gap:8px;}
+.breadcrumb{font-size:12px;color:var(--tm);display:flex;align-items:center;gap:5px;}
+.breadcrumb a{color:var(--brandMid);text-decoration:none;cursor:pointer;}
+.breadcrumb a:hover{text-decoration:underline;}
+
+/* ── LAYOUT ── */
+.app-body{display:flex;height:calc(100vh - 98px);overflow:hidden;}
+.main-area{flex:1;overflow-y:auto;padding:20px 24px 40px;}
+.agent-pane{width:300px;flex-shrink:0;border-left:0.5px solid var(--border);background:var(--surface);display:flex;flex-direction:column;overflow:hidden;}
+
+/* ── CARDS ── */
+.card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radiusL);padding:16px;}
+.card-hdr{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+.card-title{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--tm);display:flex;align-items:center;gap:7px;}
+.card-title i{font-size:15px;color:var(--brandMid);}
+.card-action{font-size:12px;color:var(--brandMid);cursor:pointer;display:flex;align-items:center;gap:4px;text-decoration:none;}
+.card-action:hover{text-decoration:underline;}
+
+/* ── METRIC CARDS ── */
+.metrics-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-bottom:16px;}
+.metric{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radiusL);padding:14px 16px;}
+.metric-label{font-size:11px;color:var(--tm);margin-bottom:5px;}
+.metric-value{font-size:26px;font-weight:600;color:var(--tp);line-height:1;letter-spacing:-.02em;font-family:var(--mono);}
+.metric-value small{font-size:14px;color:var(--tm);font-weight:400;}
+.metric-sub{font-size:11px;color:var(--tm);margin-top:4px;display:flex;align-items:center;gap:4px;}
+.metric-sub i{font-size:12px;}
+
+/* ── CHIPS ── */
+.chip{display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:2px 8px;border-radius:4px;border:0.5px solid;white-space:nowrap;font-family:var(--mono);}
+.chip i{font-size:11px;}
+.chip-green{background:var(--gb);color:var(--g);border-color:var(--gd);}
+.chip-amber{background:var(--ab);color:var(--a);border-color:var(--ad);}
+.chip-red{background:var(--rb);color:var(--r);border-color:var(--rd);}
+.chip-blue{background:var(--brandLight);color:var(--brandMid);border-color:#B6CEEE;}
+.chip-gray{background:var(--grb);color:var(--gr);border-color:#D4D8DE;}
+.chip-purple{background:#F3EEF9;color:#6D28D9;border-color:#C4B5FD;}
+
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:var(--radius);font-size:12px;font-weight:500;cursor:pointer;border:0.5px solid var(--borderS);background:var(--surface);color:var(--tp);font-family:var(--font);transition:background .1s;}
+.btn:hover{background:var(--s1);}
+.btn-primary{background:var(--brand);color:#fff;border-color:var(--brand);}
+.btn-primary:hover{background:var(--brandMid);}
+.btn-sm{padding:4px 10px;font-size:11px;}
+.btn i{font-size:14px;}
+
+/* ── ALERT BAR ── */
+.alert-bar{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:var(--radiusL);background:var(--ab);border:0.5px solid var(--ad);border-left:3px solid var(--a);margin-bottom:16px;}
+.alert-bar i.icon{font-size:18px;color:var(--a);flex-shrink:0;margin-top:1px;}
+.alert-bar-body{flex:1;}
+.alert-bar-title{font-size:12px;font-weight:600;color:var(--a);margin-bottom:2px;}
+.alert-bar-text{font-size:12px;color:var(--a);line-height:1.5;}
+.alert-bar-text strong{font-weight:600;}
+
+/* ── AREA WIDGETS (landing page) ── */
+.areas-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:16px;}
+.area-card{background:var(--surface);border:0.5px solid var(--border);border-radius:var(--radiusXL);padding:16px;cursor:pointer;transition:border-color .12s,box-shadow .12s;position:relative;overflow:hidden;}
+.area-card:hover{border-color:var(--borderS);box-shadow:0 2px 12px rgba(0,0,0,.07);}
+.area-card-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
+.area-card-icon{width:34px;height:34px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.area-card-icon i{font-size:18px;}
+.area-card-name{font-size:13px;font-weight:600;margin-bottom:2px;}
+.area-card-owner{font-size:11px;color:var(--tm);}
+.area-mini-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:6px;margin:10px 0 8px;}
+.area-mini-stat{text-align:center;}
+.area-mini-stat-val{font-size:15px;font-weight:600;font-family:var(--mono);}
+.area-mini-stat-lbl{font-size:9px;color:var(--tm);text-transform:uppercase;letter-spacing:.04em;}
+.area-mini-bar{height:4px;border-radius:2px;overflow:hidden;background:var(--s2);margin-top:8px;}
+.area-mini-bar-fill{height:100%;border-radius:2px;}
+.area-status-badge{position:absolute;top:12px;right:12px;}
+
+/* ── RISK HEATMAP ── */
+.heatmap-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;}
+.heat-cell{min-height:48px;border-radius:6px;padding:4px;display:flex;flex-wrap:wrap;gap:3px;align-content:flex-start;border:0.5px solid;}
+.heat-chip{font-family:var(--mono);font-size:10px;font-weight:600;color:#fff;border-radius:4px;padding:2px 6px;cursor:pointer;border:none;white-space:nowrap;}
+.heat-chip:hover{opacity:.8;}
+.heat-chip.new-risk{outline:2px solid var(--tp);outline-offset:1px;}
+.heat-axis-x{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-top:5px;}
+.heat-axis-label{font-size:9px;text-align:center;color:var(--tm);}
+.heat-mode-toggle{display:flex;gap:3px;background:var(--s1);padding:3px;border-radius:6px;border:0.5px solid var(--border);}
+.heat-mode-btn{border:none;cursor:pointer;font-size:11px;font-weight:600;padding:4px 10px;border-radius:4px;font-family:var(--font);transition:background .12s;}
+
+/* ── RCSA TIMELINE ── */
+.timeline-row{display:grid;grid-template-columns:130px 1fr 70px;align-items:center;gap:10px;padding:6px 0;border-bottom:0.5px solid var(--border);cursor:pointer;}
+.timeline-row:last-child{border-bottom:none;}
+.timeline-row:hover .timeline-name{color:var(--brandMid);}
+.timeline-name{font-size:12px;color:var(--ts);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.timeline-bar-track{height:7px;background:var(--s2);border-radius:4px;overflow:hidden;border:0.5px solid var(--border);}
+.timeline-bar-fill{height:100%;border-radius:4px;}
+.timeline-days{font-family:var(--mono);font-size:11px;font-weight:600;text-align:right;}
+
+/* ── RISK TABLE ── */
+.risk-table{width:100%;border-collapse:collapse;font-size:12px;}
+.risk-table th{text-align:left;padding:6px 10px;font-size:10px;font-weight:600;color:var(--tm);text-transform:uppercase;letter-spacing:.04em;border-bottom:0.5px solid var(--border);white-space:nowrap;}
+.risk-table td{padding:9px 10px;border-bottom:0.5px solid var(--border);vertical-align:middle;}
+.risk-table tr:last-child td{border-bottom:none;}
+.risk-table tbody tr{cursor:pointer;}
+.risk-table tbody tr:hover td{background:var(--s1);}
+.risk-name{font-weight:500;color:var(--tp);}
+.risk-sub{font-size:10px;color:var(--tm);margin-top:1px;}
+
+/* ── CONTROL ITEMS ── */
+.ctrl-item{display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:0.5px solid var(--border);}
+.ctrl-item:last-child{border-bottom:none;}
+.ctrl-icon{width:30px;height:30px;border-radius:7px;border:0.5px solid var(--border);background:var(--s1);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.ctrl-icon i{font-size:16px;}
+.ctrl-body{flex:1;min-width:0;}
+.ctrl-name{font-size:12px;font-weight:500;margin-bottom:2px;}
+.ctrl-meta{font-size:11px;color:var(--tm);}
+
+/* ── PENDING ITEMS ── */
+.pending-item{display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:0.5px solid var(--border);}
+.pending-item:last-child{border-bottom:none;}
+.p-avatar{width:28px;height:28px;border-radius:50%;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.p-body{flex:1;min-width:0;}
+.p-name{font-size:12px;font-weight:500;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.p-meta{font-size:11px;color:var(--tm);}
+.icon-btn{background:none;border:none;cursor:pointer;color:var(--brandMid);display:flex;align-items:center;padding:2px;}
+.icon-btn i{font-size:16px;}
+.icon-btn:hover{opacity:.7;}
+
+/* ── AGENT PANE ── */
+.agent-header{padding:12px 14px;border-bottom:0.5px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.agent-title{font-size:13px;font-weight:600;display:flex;align-items:center;gap:8px;}
+.agent-icon{width:28px;height:28px;border-radius:50%;background:var(--brandLight);color:var(--brandMid);display:flex;align-items:center;justify-content:center;}
+.agent-icon i{font-size:14px;}
+.agent-status{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--tm);}
+.status-dot{width:7px;height:7px;border-radius:50%;background:#22c55e;flex-shrink:0;}
+.chat-msgs{flex:1;overflow-y:auto;padding:12px;display:flex;flex-direction:column;gap:10px;}
+.msg{font-size:12px;line-height:1.55;padding:9px 11px;border-radius:10px;max-width:94%;}
+.msg-agent{background:var(--s1);border:0.5px solid var(--border);color:var(--tp);align-self:flex-start;border-radius:3px 10px 10px 10px;}
+.msg-user{background:var(--brand);color:#fff;align-self:flex-end;border-radius:10px 3px 10px 10px;}
+.msg-sys{background:var(--ab);border:0.5px solid var(--ad);color:var(--a);align-self:center;font-size:11px;border-radius:6px;padding:5px 10px;text-align:center;max-width:96%;}
+.msg-lbl{font-size:10px;color:var(--tm);margin-bottom:3px;font-weight:500;}
+.chat-footer{padding:10px 12px;border-top:0.5px solid var(--border);flex-shrink:0;}
+.suggestions{display:flex;flex-direction:column;gap:4px;margin-bottom:8px;}
+.suggest-btn{text-align:left;padding:6px 9px;background:var(--s1);border:0.5px solid var(--border);border-radius:var(--radius);font-size:11px;color:var(--ts);cursor:pointer;display:flex;align-items:center;gap:6px;font-family:var(--font);transition:background .1s;}
+.suggest-btn:hover{background:var(--s2);color:var(--tp);}
+.suggest-btn i{font-size:13px;color:var(--brandMid);flex-shrink:0;}
+.chat-compose{display:flex;gap:6px;align-items:flex-end;}
+.chat-compose textarea{flex:1;resize:none;height:36px;font-size:12px;padding:8px 10px;border:0.5px solid var(--border);border-radius:var(--radius);background:var(--s1);color:var(--tp);font-family:var(--font);line-height:1.4;outline:none;transition:border-color .12s;}
+.chat-compose textarea:focus{border-color:var(--brandMid);}
+.send-btn{width:36px;height:36px;border-radius:var(--radius);background:var(--brand);border:none;color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.send-btn i{font-size:16px;}
+.send-btn:hover{background:var(--brandMid);}
+
+/* ── TYPING ── */
+.typing{display:flex;gap:3px;align-items:center;padding:10px 12px;align-self:flex-start;}
+.typing span{width:6px;height:6px;border-radius:50%;background:var(--tm);animation:bounce 1.2s infinite;}
+.typing span:nth-child(2){animation-delay:.2s;}
+.typing span:nth-child(3){animation-delay:.4s;}
+@keyframes bounce{0%,60%,100%{transform:translateY(0)}30%{transform:translateY(-4px)}}
+
+/* ── PROCESS TABLE ── */
+.proc-table{width:100%;border-collapse:collapse;font-size:12px;}
+.proc-table th{text-align:left;padding:7px 10px;font-size:10px;font-weight:600;color:var(--tm);text-transform:uppercase;letter-spacing:.04em;border-bottom:0.5px solid var(--border);white-space:nowrap;background:var(--s1);}
+.proc-table td{padding:9px 10px;border-bottom:0.5px solid var(--border);vertical-align:middle;}
+.proc-table tr:last-child td{border-bottom:none;}
+.proc-table tbody tr{cursor:pointer;}
+.proc-table tbody tr:hover td{background:var(--s1);}
+
+/* ── DONUT ── */
+.donut-wrap{display:flex;gap:14px;align-items:center;}
+.donut-legend{flex:1;display:flex;flex-direction:column;gap:7px;}
+.donut-leg-row{display:flex;align-items:center;justify-content:space-between;font-size:12px;}
+.donut-leg-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0;}
+
+/* ── TREND SVG ── */
+.trend-card svg{width:100%;height:auto;}
+
+/* ── 2-col grids ── */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:14px;}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;}
+.grid-wide{display:grid;grid-template-columns:1.3fr 1fr;gap:14px;margin-bottom:14px;}
+
+/* ── SECTION DIVIDER ── */
+.sec-divider{display:flex;align-items:center;gap:10px;margin:20px 0 12px;}
+.sec-divider-line{flex:1;height:0.5px;background:var(--border);}
+.sec-divider-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.06em;color:var(--tm);}
+
+/* ── VIEWS ── */
+.view{display:none;}
+.view.active{display:block;}
+
+::-webkit-scrollbar{width:4px;height:4px;}
+::-webkit-scrollbar-track{background:transparent;}
+::-webkit-scrollbar-thumb{background:var(--s2);border-radius:2px;}
+
+@media(max-width:960px){
+  .agent-pane{display:none;}
+  .metrics-grid{grid-template-columns:repeat(3,1fr);}
+  .areas-grid{grid-template-columns:1fr 1fr;}
+  .grid-2,.grid-3,.grid-wide{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<!-- TOPBAR -->
+<header class="topbar">
+  <div class="topbar-brand">
+    <div class="topbar-logo-icon"><i class="ti ti-shield-check" aria-hidden="true"></i></div>
+    <div>
+      <div class="topbar-title">ICS Cockpit</div>
+      <div class="topbar-sub">Internal Control System · NFR Platform</div>
+    </div>
+  </div>
+  <div class="topbar-meta" id="topbar-meta">
+    <div class="topbar-meta-item">
+      <span class="topbar-meta-label">Org. unit</span>
+      <span class="topbar-meta-val">All areas</span>
+    </div>
+    <div class="topbar-meta-item">
+      <span class="topbar-meta-label">Reporting date</span>
+      <span class="topbar-meta-val">10 Jul 2026</span>
+    </div>
+    <div class="topbar-meta-item">
+      <span class="topbar-meta-label">Assessment cycle</span>
+      <span class="topbar-meta-val">Q3 2026</span>
+    </div>
+  </div>
+  <div class="topbar-right">
+    <span class="chip chip-blue" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.25);"><i class="ti ti-sparkles"></i>Agent active</span>
+    <button class="btn btn-sm" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.25);" onclick="agentAction('Start a new ICS assessment for the current cycle')"><i class="ti ti-plus"></i>New ICS Assessment</button>
+    <div class="avatar">MK</div>
+    <div class="user-block">
+      <span class="user-name">Marek K.</span>
+      <span class="user-role" style="color:rgba(255,255,255,.55);">2LoD · Risk Manager</span>
+    </div>
+  </div>
+</header>
+
+<!-- NAV TABS -->
+<nav class="nav-bar">
+  <div class="nav-tabs" id="main-nav">
+    <a class="nav-tab active" onclick="showView('landing')" href="#"><i class="ti ti-layout-dashboard"></i>Overview</a>
+    <a class="nav-tab" onclick="showView('area','Operations & Sourcing','P-01')" href="#"><i class="ti ti-building-factory-2"></i>Operations &amp; Sourcing</a>
+    <a class="nav-tab" onclick="showView('area','Payments','P-02')" href="#"><i class="ti ti-credit-card"></i>Payments</a>
+    <a class="nav-tab" onclick="showView('area','IT &amp; Security','P-05')" href="#"><i class="ti ti-lock"></i>IT &amp; Security</a>
+    <a class="nav-tab" onclick="showView('area','Finance','P-04')" href="#"><i class="ti ti-chart-line"></i>Finance</a>
+    <a class="nav-tab" onclick="showView('area','Data &amp; Privacy','P-03')" href="#"><i class="ti ti-database"></i>Data &amp; Privacy</a>
+    <a class="nav-tab" onclick="showView('area','Treasury','P-06')" href="#"><i class="ti ti-building-bank"></i>Treasury</a>
+  </div>
+  <div class="nav-right">
+    <div class="breadcrumb" id="breadcrumb"><span style="color:var(--tm);">Dashboard</span></div>
+  </div>
+</nav>
+
+<div class="app-body">
+  <main class="main-area" id="main-area">
+    <!-- injected by JS -->
+  </main>
+
+  <!-- AGENT PANE -->
+  <aside class="agent-pane">
+    <div class="agent-header">
+      <div class="agent-title">
+        <div class="agent-icon"><i class="ti ti-sparkles" aria-hidden="true"></i></div>
+        ICS Agent
+      </div>
+      <div class="agent-status"><span class="status-dot"></span>Ready</div>
+    </div>
+    <div class="chat-msgs" id="chatMsgs">
+      <div class="msg msg-agent">
+        <div class="msg-lbl">ICS Agent</div>
+        Welcome back, Marek. Q3 2026 ICS assessment is in progress across 12 processes.<br><br>
+        A new critical third-party service (DataServ GmbH) was detected via TPRM — I've flagged a suggested new risk for <em>Third-Party Service Onboarding</em>. Click "Review risk" to assess it.
+      </div>
+      <div class="msg msg-sys"><i class="ti ti-alert-triangle" style="font-size:11px;vertical-align:-1px"></i> TPRM signal: DataServ GmbH classified critical · 09 Jul</div>
+    </div>
+    <div class="chat-footer">
+      <div class="suggestions">
+        <button class="suggest-btn" onclick="agentAction('Show me all overdue or high-risk processes across all areas')"><i class="ti ti-alert-triangle"></i>Show all high-risk processes</button>
+        <button class="suggest-btn" onclick="agentAction('Which areas have RCSA assessments due within the next 30 days?')"><i class="ti ti-calendar"></i>Upcoming RCSA due dates</button>
+        <button class="suggest-btn" onclick="agentAction('Draft a summary of open control gaps for the Q3 report')"><i class="ti ti-file-pencil"></i>Draft Q3 gap summary</button>
+      </div>
+      <div class="chat-compose">
+        <textarea id="chatInput" placeholder="Ask the ICS agent…" onkeydown="handleKey(event)" rows="1"></textarea>
+        <button class="send-btn" onclick="sendMsg()" aria-label="Send"><i class="ti ti-send" aria-hidden="true"></i></button>
+      </div>
+    </div>
+  </aside>
+</div>
+
+<script>
+/* ─────────────────────────────────────────────────────
+   DATA
+───────────────────────────────────────────────────── */
+const TODAY = new Date("2026-07-10");
+const C = {g:"#1A7A52",gb:"#E4F2EB",gd:"#A8D5BC",a:"#9A6500",ab:"#FEF3DC",ad:"#F0C96A",r:"#B4322A",rb:"#FCEAE9",rd:"#F0A09A",gr:"#6B7686",grb:"#F0F1F3",brand:"#1E3A6E",brandMid:"#2A5298",ink:"#14202E",ink2:"#3A4657",muted:"#6B7686",line:"#E2E5EA",soft:"#F0F1F3"};
+
+const PROCESSES = [
+  {id:"P-01",name:"Third-Party Service Onboarding",area:"Operations & Sourcing",orgUnit:"Operations & Sourcing",owner:"L. Meyer",nextRcsa:"15 Sep 2026",lastRcsa:"15 Sep 2025",rcsaStatus:"Update required",residualRisk:"Medium",highestInherent:"High",ineffCtrl:1,
+   riskBreakdown:{low:0,medium:2,high:1,critical:0},controlBreakdown:{effective:4,partial:1,ineffective:1,notAssessed:0},
+   risks:[
+     {id:"R-101",title:"Incomplete Vendor Due Diligence",cat:"Third-Party Risk",inherent:"High",iL:4,iI:4,residual:"Medium",rL:2,rI:3,trend:"stable",owner:"L. Meyer"},
+     {id:"R-102",title:"Contractual Gaps in Service Agreements",cat:"Legal & Compliance",inherent:"Medium",iL:3,iI:3,residual:"Low",rL:2,rI:2,trend:"stable",owner:"A. Ferreira"},
+     {id:"R-103",title:"Data Protection Non-Compliance",cat:"Compliance & Privacy",inherent:"High",iL:3,iI:4,residual:"Medium",rL:2,rI:3,trend:"stable",owner:"S. Kowalski"},
+     {id:"R-104",title:"Inadequate Vendor Monitoring",cat:"Third-Party Risk",inherent:"High",iL:4,iI:4,residual:"Medium",rL:3,rI:3,trend:"increasing",owner:"L. Meyer",isNew:true}
+   ],
+   controls:[
+     {id:"C-201",name:"Vendor due-diligence questionnaire",type:"Preventive",exec:"Manual",freq:"Per onboarding",eff:"Effective",owner:"L. Meyer",lastTest:"12 May 2026"},
+     {id:"C-202",name:"Contract legal review & standard clauses",type:"Preventive",exec:"System-supported",freq:"Per onboarding",eff:"Effective",owner:"A. Ferreira",lastTest:"12 May 2026"},
+     {id:"C-203",name:"Data-protection assessment & DPA sign-off",type:"Preventive",exec:"Manual",freq:"Per onboarding",eff:"Partially effective",owner:"S. Kowalski",lastTest:"12 May 2026"},
+     {id:"C-204",name:"Vendor risk classification",type:"Detective",exec:"System-supported",freq:"Per onboarding",eff:"Effective",owner:"IT Risk",lastTest:"20 Apr 2026"},
+     {id:"C-205",name:"Management approval workflow",type:"Preventive",exec:"Automated",freq:"Per request",eff:"Effective",owner:"Head of XYZ",lastTest:"20 Apr 2026"},
+     {id:"C-206",name:"Periodic vendor performance review",type:"Detective",exec:"Manual",freq:"Annual",eff:"Ineffective",owner:"L. Meyer",lastTest:"Overdue"}
+   ],
+   trend:[{p:"Q3 24",i:3,r:3},{p:"Q4 24",i:3,r:2.5},{p:"Q1 25",i:3,r:2},{p:"Q2 25",i:3,r:2},{p:"Q3 25",i:3,r:2},{p:"Q1 26",i:3,r:2}],
+   alert:{type:"tprm",msg:"TPRM trigger: DataServ GmbH classified critical — new risk suggested"},
+   processes:["Third-Party Service Onboarding","Vendor Offboarding","Sub-processor Management"]
+  },
+  {id:"P-02",name:"Payment Processing",area:"Payments",orgUnit:"Payments",owner:"M. Brandt",nextRcsa:"20 Mar 2027",lastRcsa:"20 Mar 2026",rcsaStatus:"Up to date",residualRisk:"High",highestInherent:"Critical",ineffCtrl:1,
+   riskBreakdown:{low:1,medium:2,high:2,critical:0},controlBreakdown:{effective:7,partial:2,ineffective:1,notAssessed:0},
+   risks:[
+     {id:"R-201",title:"Fraudulent Payment Instructions",cat:"Fraud",inherent:"Critical",iL:4,iI:5,residual:"High",rL:3,rI:4,trend:"increasing",owner:"M. Brandt"},
+     {id:"R-202",title:"Settlement Failure",cat:"Operational",inherent:"High",iL:3,iI:4,residual:"Medium",rL:2,rI:3,trend:"stable",owner:"M. Brandt"},
+     {id:"R-203",title:"SEPA Scheme Non-Compliance",cat:"Regulatory",inherent:"High",iL:2,iI:5,residual:"Medium",rL:2,rI:3,trend:"stable",owner:"Compliance"}
+   ],
+   controls:[
+     {id:"C-301",name:"Four-eyes payment release",type:"Preventive",exec:"System-supported",freq:"Per payment",eff:"Effective",owner:"M. Brandt",lastTest:"10 Jun 2026"},
+     {id:"C-302",name:"Sanctions & fraud screening",type:"Detective",exec:"Automated",freq:"Continuous",eff:"Partially effective",owner:"Compliance",lastTest:"01 May 2026"},
+     {id:"C-303",name:"Daily reconciliation",type:"Detective",exec:"System-supported",freq:"Daily",eff:"Effective",owner:"Finance",lastTest:"30 Jun 2026"}
+   ],
+   trend:[{p:"Q3 25",i:4,r:3},{p:"Q4 25",i:4,r:3},{p:"Q1 26",i:4,r:3},{p:"Q2 26",i:4,r:3}],
+   alert:null,
+   processes:["SEPA Credit Transfer","Instant Payments","Cross-border Payments","FX Settlement"]
+  },
+  {id:"P-03",name:"Customer Data Management",area:"Data & Privacy",orgUnit:"Data & Privacy",owner:"S. Kowalski",nextRcsa:"05 Jun 2027",lastRcsa:"05 Jun 2026",rcsaStatus:"Up to date",residualRisk:"Medium",highestInherent:"High",ineffCtrl:0,
+   riskBreakdown:{low:2,medium:2,high:1,critical:0},controlBreakdown:{effective:6,partial:1,ineffective:0,notAssessed:1},
+   risks:[
+     {id:"R-301",title:"Unauthorised Data Access",cat:"Information Security",inherent:"High",iL:3,iI:4,residual:"Medium",rL:2,rI:3,trend:"decreasing",owner:"S. Kowalski"},
+     {id:"R-302",title:"GDPR Data Subject Rights Breach",cat:"Compliance & Privacy",inherent:"High",iL:2,iI:4,residual:"Low",rL:1,rI:3,trend:"stable",owner:"DPO"}
+   ],
+   controls:[
+     {id:"C-401",name:"Role-based access reviews",type:"Detective",exec:"System-supported",freq:"Quarterly",eff:"Effective",owner:"S. Kowalski",lastTest:"30 Jun 2026"},
+     {id:"C-402",name:"Data retention & deletion controls",type:"Preventive",exec:"Automated",freq:"Continuous",eff:"Effective",owner:"IT Risk",lastTest:"15 Jun 2026"}
+   ],
+   trend:[{p:"Q3 25",i:3,r:3},{p:"Q4 25",i:3,r:2.5},{p:"Q1 26",i:3,r:2},{p:"Q2 26",i:3,r:2}],
+   alert:null,
+   processes:["Customer Data Intake","KYC & Identity Verification","Data Subject Requests","Data Retention Management"]
+  },
+  {id:"P-04",name:"Financial Reporting",area:"Finance",orgUnit:"Finance",owner:"R. Nowak",nextRcsa:"31 Jul 2026",lastRcsa:"12 Jun 2026",rcsaStatus:"Due within 30 days",residualRisk:"Medium",highestInherent:"High",ineffCtrl:0,
+   riskBreakdown:{low:1,medium:3,high:1,critical:0},controlBreakdown:{effective:8,partial:1,ineffective:0,notAssessed:0},
+   risks:[
+     {id:"R-401",title:"Material Misstatement",cat:"Financial",inherent:"High",iL:2,iI:5,residual:"Medium",rL:2,rI:3,trend:"stable",owner:"R. Nowak"},
+     {id:"R-402",title:"Regulatory Reporting Error",cat:"Regulatory",inherent:"High",iL:2,iI:4,residual:"Medium",rL:2,rI:3,trend:"stable",owner:"Compliance"}
+   ],
+   controls:[
+     {id:"C-501",name:"Reconciliation & sign-off",type:"Detective",exec:"System-supported",freq:"Monthly",eff:"Effective",owner:"R. Nowak",lastTest:"31 May 2026"},
+     {id:"C-502",name:"Management review of financial statements",type:"Detective",exec:"Manual",freq:"Monthly",eff:"Partially effective",owner:"CFO",lastTest:"30 Jun 2026"}
+   ],
+   trend:[{p:"Q3 25",i:3,r:2},{p:"Q4 25",i:3,r:2},{p:"Q1 26",i:3,r:2},{p:"Q2 26",i:3,r:2}],
+   alert:{type:"due",msg:"RCSA due in 21 days — last assessment was 12 Jun 2026"},
+   processes:["Monthly Financial Close","Regulatory Reporting (COREP/FINREP)","IFRS 9 Provisioning","Management Reporting"]
+  },
+  {id:"P-05",name:"User Access Management",area:"IT & Security",orgUnit:"IT & Security",owner:"T. Vogel",nextRcsa:"30 Jun 2026",lastRcsa:"10 Jan 2026",rcsaStatus:"Overdue",residualRisk:"High",highestInherent:"High",ineffCtrl:1,
+   riskBreakdown:{low:1,medium:1,high:2,critical:0},controlBreakdown:{effective:4,partial:1,ineffective:1,notAssessed:0},
+   risks:[
+     {id:"R-501",title:"Excessive Privileged Access",cat:"Information Security",inherent:"High",iL:4,iI:4,residual:"High",rL:3,rI:4,trend:"increasing",owner:"T. Vogel"},
+     {id:"R-502",title:"Joiner-Mover-Leaver Process Gap",cat:"Information Security",inherent:"High",iL:3,iI:4,residual:"High",rL:3,rI:3,trend:"stable",owner:"HR"}
+   ],
+   controls:[
+     {id:"C-601",name:"Privileged access recertification",type:"Detective",exec:"Manual",freq:"Semi-annual",eff:"Ineffective",owner:"T. Vogel",lastTest:"Overdue"},
+     {id:"C-602",name:"Automated JML provisioning",type:"Preventive",exec:"Automated",freq:"Continuous",eff:"Partially effective",owner:"IT Risk",lastTest:"30 Jun 2026"}
+   ],
+   trend:[{p:"Q3 25",i:3,r:2.5},{p:"Q4 25",i:3,r:3},{p:"Q1 26",i:3,r:3},{p:"Q2 26",i:3,r:3}],
+   alert:{type:"overdue",msg:"RCSA overdue since 30 Jun 2026 — privileged access risk increasing"},
+   processes:["IAM Provisioning","Privileged Access Management","Joiner-Mover-Leaver","Annual Access Recertification"]
+  },
+  {id:"P-06",name:"Cash & Liquidity Management",area:"Treasury",orgUnit:"Treasury",owner:"H. Roth",nextRcsa:"18 Apr 2027",lastRcsa:"18 Apr 2026",rcsaStatus:"Up to date",residualRisk:"Medium",highestInherent:"High",ineffCtrl:0,
+   riskBreakdown:{low:1,medium:2,high:1,critical:0},controlBreakdown:{effective:5,partial:0,ineffective:0,notAssessed:0},
+   risks:[
+     {id:"R-601",title:"Intraday Liquidity Shortfall",cat:"Liquidity",inherent:"High",iL:2,iI:5,residual:"Medium",rL:2,rI:3,trend:"stable",owner:"H. Roth"},
+     {id:"R-602",title:"FX Exposure Limit Breach",cat:"Market Risk",inherent:"Medium",iL:2,iI:4,residual:"Low",rL:1,rI:2,trend:"stable",owner:"Treasurer"}
+   ],
+   controls:[
+     {id:"C-701",name:"Daily LCR monitoring",type:"Detective",exec:"System-supported",freq:"Daily",eff:"Effective",owner:"H. Roth",lastTest:"30 Jun 2026"},
+     {id:"C-702",name:"FX position limit controls",type:"Preventive",exec:"Automated",freq:"Continuous",eff:"Effective",owner:"IT Risk",lastTest:"30 Jun 2026"}
+   ],
+   trend:[{p:"Q3 25",i:3,r:2.5},{p:"Q4 25",i:3,r:2.5},{p:"Q1 26",i:3,r:2},{p:"Q2 26",i:3,r:2}],
+   alert:null,
+   processes:["Daily Cash Position Management","LCR/NSFR Calculation","Collateral Management","Stress Testing"]
+  }
+];
+
+function daysUntil(s){if(!s||s==="—")return null;const mo={Jan:0,Feb:1,Mar:2,Apr:3,May:4,Jun:5,Jul:6,Aug:7,Sep:8,Oct:9,Nov:10,Dec:11};const m=s.match(/(\d+) (\w+) (\d+)/);if(!m)return null;const d=new Date(+m[3],mo[m[2]],+m[1]);return Math.round((d-TODAY)/86400e3);}
+function ratingColor(r){return r==="Critical"?"#7C1F18":r==="High"?C.r:r==="Medium"?C.a:C.g;}
+function ratingBg(r){return r==="Critical"?"#F5DADA":r==="High"?C.rb:r==="Medium"?C.ab:C.gb;}
+function effColor(e){return e==="Effective"?C.g:e==="Partially effective"?C.a:e==="Ineffective"?C.r:C.gr;}
+function statusColor(s){return s==="Overdue"?C.r:s==="Due within 30 days"?C.a:s==="Up to date"?C.g:s==="Update required"?C.a:C.gr;}
+function statusBg(s){return s==="Overdue"?C.rb:s==="Due within 30 days"?C.ab:s==="Up to date"?C.gb:s==="Update required"?C.ab:C.grb;}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");}
+
+/* ─────────────────────────────────────────────────────
+   STATE
+───────────────────────────────────────────────────── */
+let VIEW = 'landing';
+let CURRENT_AREA = null;
+let CURRENT_PROCESS = null;
+let HEATMODE = 'residual';
+
+/* ─────────────────────────────────────────────────────
+   NAVIGATION
+───────────────────────────────────────────────────── */
+function showView(type, area, pid) {
+  VIEW = type;
+  CURRENT_AREA = area || null;
+  CURRENT_PROCESS = pid || null;
+  document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+  if (type === 'landing') {
+    document.querySelectorAll('.nav-tab')[0].classList.add('active');
+    document.getElementById('breadcrumb').innerHTML = '<span style="color:var(--tm);">Dashboard</span>';
+    document.querySelector('.topbar-meta-val').textContent = 'All areas';
+  } else {
+    const tabs = document.querySelectorAll('.nav-tab');
+    tabs.forEach(t => { if (t.textContent.includes(area)) t.classList.add('active'); });
+    document.getElementById('breadcrumb').innerHTML = `<a onclick="showView('landing');return false;">Dashboard</a> <i class="ti ti-chevron-right" style="font-size:11px;color:var(--tm)"></i> <span>${esc(area)}</span>`;
+    document.querySelector('.topbar-meta-val').textContent = area;
+  }
+  renderMain();
+  document.querySelector('.main-area').scrollTop = 0;
+}
+
+function openProcess(pid) {
+  const p = PROCESSES.find(x => x.id === pid);
+  if (!p) return;
+  CURRENT_PROCESS = pid;
+  VIEW = 'process';
+  document.getElementById('breadcrumb').innerHTML = `<a onclick="showView('landing');return false;">Dashboard</a> <i class="ti ti-chevron-right" style="font-size:11px;color:var(--tm)"></i> <a onclick="showView('area','${esc(p.area)}','${p.id}');return false;">${esc(p.area)}</a> <i class="ti ti-chevron-right" style="font-size:11px;color:var(--tm)"></i> <span>${esc(p.name)}</span>`;
+  renderMain();
+  document.querySelector('.main-area').scrollTop = 0;
+}
+
+/* ─────────────────────────────────────────────────────
+   COMPONENTS
+───────────────────────────────────────────────────── */
+function ratingBadge(r){
+  return `<span style="display:inline-flex;align-items:center;gap:5px;font-family:var(--mono);font-size:11px;font-weight:600;padding:2px 8px;border-radius:4px;color:${ratingColor(r)};background:${ratingBg(r)};border:0.5px solid ${ratingColor(r)}44;"><span style="width:6px;height:6px;border-radius:2px;background:${ratingColor(r)};"></span>${r}</span>`;
+}
+function statusBadge(s){
+  const c=statusColor(s),bg=statusBg(s);
+  return `<span style="display:inline-flex;align-items:center;gap:4px;font-size:11px;font-weight:500;padding:2px 8px;border-radius:4px;color:${c};background:${bg};border:0.5px solid ${c}44;font-family:var(--mono);">${s}</span>`;
+}
+function effBadge(e){
+  const c=effColor(e);
+  return `<span style="display:inline-flex;align-items:center;gap:5px;font-size:11px;color:${c};font-weight:500;"><span style="width:8px;height:8px;border-radius:2px;background:${c};"></span>${e}</span>`;
+}
+function trendIcon(t){
+  if(t==="increasing")return `<span style="color:${C.r};font-size:11px;display:inline-flex;align-items:center;gap:3px;"><i class="ti ti-trending-up" style="font-size:12px;"></i>Increasing</span>`;
+  if(t==="decreasing")return `<span style="color:${C.g};font-size:11px;display:inline-flex;align-items:center;gap:3px;"><i class="ti ti-trending-down" style="font-size:12px;"></i>Decreasing</span>`;
+  return `<span style="color:${C.muted};font-size:11px;display:inline-flex;align-items:center;gap:3px;"><i class="ti ti-minus" style="font-size:12px;"></i>Stable</span>`;
+}
+
+function heatmapCard(risks){
+  const LIK=["Rare","Unlikely","Possible","Likely","Almost\ncertain"];
+  const IMP=["Negligible","Minor","Moderate","Major","Severe"];
+  function zoneStyle(l,i){const s=l*i;if(s>=15)return{bg:"#FCEAE9",border:"#F0A09A"};if(s>=9)return{bg:"#FEF3DC",border:"#F0C96A"};if(s>=4)return{bg:"#FFFDE8",border:"#E9D890"};return{bg:"#E4F2EB",border:"#A8D5BC"};}
+  let cells="";
+  [5,4,3,2,1].forEach(i=>[1,2,3,4,5].forEach(l=>{
+    const z=zoneStyle(l,i);
+    const cr=risks.filter(r=>HEATMODE==="inherent"?(r.iL===l&&r.iI===i):(r.rL===l&&r.rI===i));
+    const chips=cr.map(r=>`<button class="heat-chip${r.isNew?" new-risk":""}" onclick="openProcess('${r.pid||CURRENT_PROCESS||'P-01'}')" title="${esc(r.title)}" style="background:${ratingColor(HEATMODE==="inherent"?r.inherent:r.residual)};">${r.id.replace("R-","")}</button>`).join("");
+    cells+=`<div class="heat-cell" style="background:${z.bg};border-color:${z.border};">${chips}</div>`;
+  }));
+  const likLabels=LIK.map(x=>`<div class="heat-axis-label">${x}</div>`).join("");
+  const toggle=["inherent","residual"].map(m=>`<button class="heat-mode-btn" onclick="HEATMODE='${m}';renderMain();" style="background:${HEATMODE===m?"var(--brand)":"transparent"};color:${HEATMODE===m?"#fff":"var(--tm)"};">${m.charAt(0).toUpperCase()+m.slice(1)}</button>`).join("");
+  const impLabels=[5,4,3,2,1].map(i=>`<div style="height:52px;display:flex;align-items:center;font-size:9px;color:var(--tm);text-align:right;padding-right:4px;justify-content:flex-end;">${IMP[i-1]}</div>`).join("");
+  return `<div class="card"><div class="card-hdr"><div class="card-title"><i class="ti ti-layout-grid"></i>Risk heatmap</div><div class="heat-mode-toggle">${toggle}</div></div>
+  <div style="display:flex;gap:6px;">
+    <div style="display:flex;flex-direction:column;justify-content:space-between;padding-top:0;">${impLabels}</div>
+    <div style="flex:1;">
+      <div class="heatmap-grid">${cells}</div>
+      <div class="heat-axis-x">${likLabels}</div>
+      <div style="text-align:center;font-size:9px;color:var(--tm);margin-top:3px;text-transform:uppercase;letter-spacing:.04em;font-weight:600;">Likelihood →</div>
+    </div>
+  </div>
+  <div style="font-size:11px;color:var(--tm);margin-top:8px;">Chips = risk ID. Outlined chips are new this cycle. Click to open process.</div>
+  </div>`;
+}
+
+function timelineCard(processes){
+  const rows=processes.map(p=>({...p,d:daysUntil(p.nextRcsa)})).filter(p=>p.d!==null).sort((a,b)=>a.d-b.d).slice(0,8);
+  const max=Math.max(365,...rows.map(r=>Math.abs(r.d)));
+  const body=rows.map(p=>{
+    const over=p.d<0;const pct=Math.min(100,(Math.abs(p.d)/max)*100);const c=statusColor(p.rcsaStatus);
+    return `<div class="timeline-row" onclick="openProcess('${p.id}')">
+      <span class="timeline-name">${esc(p.name)}</span>
+      <div class="timeline-bar-track"><div class="timeline-bar-fill" style="width:${pct}%;background:${c};opacity:.8;${over?"margin-left:auto;":""}"></div></div>
+      <span class="timeline-days" style="color:${c};">${over?Math.abs(p.d)+"d over":p.d+"d"}</span>
+    </div>`;
+  }).join("");
+  return `<div class="card"><div class="card-hdr"><div class="card-title"><i class="ti ti-calendar"></i>Upcoming RCSA due dates</div></div><div style="display:flex;flex-direction:column;">${body}</div></div>`;
+}
+
+function donutCard(breakdown){
+  const items=[["Effective",breakdown.effective,C.g],["Partially effective",breakdown.partial,C.a],["Ineffective",breakdown.ineffective,C.r],["Not assessed",breakdown.notAssessed,C.gr]];
+  const total=items.reduce((a,b)=>a+b[1],0)||1;
+  const eff=Math.round((breakdown.effective/total)*100);
+  const r=50,cx=68,cy=68,circ=2*Math.PI*r;let acc=0;
+  const rings=items.map(it=>{const len=(it[1]/total)*circ;const seg=`<circle cx="${cx}" cy="${cy}" r="${r}" fill="none" stroke="${it[2]}" stroke-width="22" stroke-dasharray="${Math.max(len-2,0)} ${circ}" stroke-dashoffset="${-acc}" style="cursor:pointer;"/>`;acc+=len;return seg;}).join("");
+  const legend=items.map(it=>`<div class="donut-leg-row"><span style="display:flex;align-items:center;gap:7px;color:var(--ts);"><span class="donut-leg-dot" style="background:${it[2]};"></span>${it[0]}</span><span style="font-family:var(--mono);font-size:13px;font-weight:600;color:var(--tp);">${it[1]}</span></div>`).join("");
+  return `<div class="card"><div class="card-hdr"><div class="card-title"><i class="ti ti-shield-check"></i>Control effectiveness</div></div>
+  <div class="donut-wrap">
+    <div style="position:relative;width:136px;height:136px;flex-shrink:0;">
+      <svg width="136" height="136" viewBox="0 0 136 136"><g transform="rotate(-90 68 68)">${rings}</g></svg>
+      <div style="position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;pointer-events:none;">
+        <span style="font-family:var(--mono);font-size:24px;font-weight:600;color:var(--tp);">${eff}%</span>
+        <span style="font-size:9px;letter-spacing:.05em;text-transform:uppercase;color:var(--tm);">Effective</span>
+      </div>
+    </div>
+    <div class="donut-legend">${legend}</div>
+  </div></div>`;
+}
+
+function trendCard(series,title){
+  const W=360,H=160,pad={l:34,r:12,t:10,b:24};
+  const iw=W-pad.l-pad.r,ih=H-pad.t-pad.b;const n=series.length;
+  const xp=i=>pad.l+(n<=1?iw/2:(i/(n-1))*iw);
+  const yp=v=>pad.t+ih-((v-0.5)/3.5)*ih;
+  const grid=[1,2,3].map(v=>`<line x1="${pad.l}" y1="${yp(v)}" x2="${W-pad.r}" y2="${yp(v)}" stroke="${C.line}" stroke-width="0.5"/><text x="${pad.l-5}" y="${yp(v)+3}" text-anchor="end" font-family="IBM Plex Mono,monospace" font-size="9" fill="${C.muted}">${v===1?"Low":v===2?"Med":"High"}</text>`).join("");
+  const xlab=series.map((s,i)=>`<text x="${xp(i)}" y="${H-6}" text-anchor="middle" font-family="IBM Plex Mono,monospace" font-size="9" fill="${C.muted}">${s.p}</text>`).join("");
+  const makeLine=(key,color,dash)=>{const pts=series.map((s,i)=>`${xp(i)},${yp(s[key])}`).join(" ");const dots=series.map((s,i)=>`<circle cx="${xp(i)}" cy="${yp(s[key])}" r="${key==="r"?4:3}" fill="${color}"/>`).join("");return `<polyline points="${pts}" fill="none" stroke="${color}" stroke-width="${key==="r"?2.5:1.5}" ${dash?'stroke-dasharray="4 3"':""} stroke-linejoin="round"/>${dots}`;};
+  return `<div class="card"><div class="card-hdr"><div class="card-title"><i class="ti ti-trending-up"></i>${esc(title)}</div></div>
+  <svg viewBox="0 0 ${W} ${H}" style="width:100%;height:auto;">${grid}${makeLine("i",C.r,true)}${makeLine("r",C.brand,false)}${xlab}</svg>
+  <div style="display:flex;gap:14px;justify-content:center;margin-top:6px;font-size:11px;color:var(--tm);">
+    <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:14px;height:1.5px;background:${C.r};display:inline-block;border-top:1.5px dashed ${C.r};"></span>Inherent</span>
+    <span style="display:inline-flex;align-items:center;gap:5px;"><span style="width:14px;height:2.5px;background:${C.brand};display:inline-block;"></span>Residual</span>
+  </div></div>`;
+}
+
+function risksByProcessCard(processes){
+  const max=Math.max(...processes.map(p=>p.riskBreakdown.low+p.riskBreakdown.medium+p.riskBreakdown.high+p.riskBreakdown.critical),1);
+  const seg=(v,color)=>v>0?`<div style="width:${(v/max)*100}%;background:${color};height:14px;"></div>`:"";
+  const rows=processes.map(p=>{const b=p.riskBreakdown;const tot=b.low+b.medium+b.high+b.critical;
+    return `<div onclick="openProcess('${p.id}')" style="display:grid;grid-template-columns:120px 1fr 22px;align-items:center;gap:10px;padding:5px 0;border-bottom:0.5px solid var(--border);cursor:pointer;" onmouseover="this.style.background='var(--s1)'" onmouseout="this.style.background=''">
+      <span style="font-size:11.5px;color:var(--ts);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(p.name)}</span>
+      <div style="display:flex;border-radius:3px;overflow:hidden;background:var(--s2);">${seg(b.low,C.g)}${seg(b.medium,"#D69A2E")}${seg(b.high,C.r)}${seg(b.critical,"#7C1F18")}</div>
+      <span style="font-family:var(--mono);font-size:12px;color:var(--tm);text-align:right;">${tot}</span>
+    </div>`;
+  }).join("");
+  const leg=[["Low",C.g],["Medium","#D69A2E"],["High",C.r],["Critical","#7C1F18"]].map(l=>`<span style="display:inline-flex;align-items:center;gap:4px;font-size:10px;color:var(--tm);"><span style="width:8px;height:8px;background:${l[1]};border-radius:2px;"></span>${l[0]}</span>`).join("");
+  return `<div class="card"><div class="card-hdr"><div class="card-title"><i class="ti ti-chart-bar"></i>Risks by process</div></div>
+  <div>${rows}</div>
+  <div style="display:flex;gap:12px;margin-top:10px;padding-top:8px;border-top:0.5px solid var(--border);">${leg}</div></div>`;
+}
+
+/* ─────────────────────────────────────────────────────
+   LANDING VIEW
+───────────────────────────────────────────────────── */
+function renderLanding(){
+  const allRisks=PROCESSES.flatMap(p=>p.risks.map(r=>({...r,pid:p.id})));
+  const allCtrl=PROCESSES.flatMap(p=>p.controls);
+  const aggCtrl={effective:allCtrl.filter(c=>c.eff==="Effective").length,partial:allCtrl.filter(c=>c.eff==="Partially effective").length,ineffective:allCtrl.filter(c=>c.eff==="Ineffective").length,notAssessed:allCtrl.filter(c=>c.eff==="Not assessed").length};
+  const openRisks=allRisks.length;
+  const highRisks=allRisks.filter(r=>r.residual==="High"||r.residual==="Critical").length;
+  const ctrlGaps=allCtrl.filter(c=>c.eff==="Ineffective"||c.eff==="Partially effective").length;
+  const overdueRcsa=PROCESSES.filter(p=>p.rcsaStatus==="Overdue").length;
+  const pending1lod=5;
+  const areaColors={"Operations & Sourcing":{bg:"#EEF3FB",icon:"ti-building-factory-2",iconColor:"#2A5298"},"Payments":{bg:"#FEF3DC",icon:"ti-credit-card",iconColor:"#9A6500"},"IT & Security":{bg:"#FCEAE9",icon:"ti-lock",iconColor:"#B4322A"},"Finance":{bg:"#E4F2EB",icon:"ti-chart-line",iconColor:"#1A7A52"},"Data & Privacy":{bg:"#F3EEF9",icon:"ti-database",iconColor:"#6D28D9"},"Treasury":{bg:"#F0F1F3",icon:"ti-building-bank",iconColor:"#3A4657"}};
+  const areaCards=PROCESSES.map(p=>{
+    const ac=areaColors[p.area]||{bg:"#F0F1F3",icon:"ti-folder",iconColor:"#6B7686"};
+    const b=p.riskBreakdown;const ctot=p.controlBreakdown.effective+p.controlBreakdown.partial+p.controlBreakdown.ineffective+p.controlBreakdown.notAssessed;
+    const effPct=ctot>0?Math.round((p.controlBreakdown.effective/ctot)*100):0;
+    const riskTotal=b.low+b.medium+b.high+b.critical;
+    const day=daysUntil(p.nextRcsa);
+    return `<div class="area-card" onclick="showView('area','${esc(p.area)}','${p.id}')">
+      <div class="area-status-badge">${statusBadge(p.rcsaStatus)}</div>
+      <div class="area-card-header">
+        <div style="display:flex;align-items:center;gap:10px;">
+          <div class="area-card-icon" style="background:${ac.bg};"><i class="ti ${ac.icon}" style="color:${ac.iconColor};"></i></div>
+          <div><div class="area-card-name">${esc(p.area)}</div><div class="area-card-owner">${esc(p.owner)} · ${p.processes.length} processes</div></div>
+        </div>
+      </div>
+      <div class="area-mini-stats">
+        <div class="area-mini-stat"><div class="area-mini-stat-val" style="color:${ratingColor(p.residualRisk)};">${riskTotal}</div><div class="area-mini-stat-lbl">Risks</div></div>
+        <div class="area-mini-stat"><div class="area-mini-stat-val" style="color:${effPct>=80?C.g:effPct>=60?C.a:C.r};">${effPct}%</div><div class="area-mini-stat-lbl">Ctrl. eff.</div></div>
+        <div class="area-mini-stat"><div class="area-mini-stat-val" style="color:${day!==null&&day<0?C.r:day!==null&&day<30?C.a:C.g};">${day!==null?(day<0?Math.abs(day)+"d":day+"d"):"—"}</div><div class="area-mini-stat-lbl">${day!==null&&day<0?"Overdue":"Next RCSA"}</div></div>
+      </div>
+      <div style="display:flex;gap:4px;align-items:center;">
+        ${b.critical>0?`<div style="flex:${b.critical};height:5px;background:#7C1F18;border-radius:2px 0 0 2px;"></div>`:""}
+        ${b.high>0?`<div style="flex:${b.high};height:5px;background:${C.r};${b.critical===0?"border-radius:2px 0 0 2px;":""}"></div>`:""}
+        ${b.medium>0?`<div style="flex:${b.medium};height:5px;background:#D69A2E;"></div>`:""}
+        ${b.low>0?`<div style="flex:${b.low};height:5px;background:${C.g};border-radius:0 2px 2px 0;"></div>`:""}
+      </div>
+      <div style="display:flex;gap:4px;margin-top:6px;flex-wrap:wrap;">
+        ${ratingBadge(p.residualRisk)}
+        ${p.ineffCtrl>0?`<span style="font-size:11px;color:${C.r};font-family:var(--mono);background:${C.rb};border:0.5px solid ${C.rd};padding:2px 6px;border-radius:4px;">${p.ineffCtrl} ctrl gap${p.ineffCtrl>1?"s":""}</span>`:""}
+      </div>
+    </div>`;
+  }).join("");
+  const tprmAlert=`<div class="alert-bar">
+    <i class="ti ti-alert-triangle icon" aria-hidden="true"></i>
+    <div class="alert-bar-body">
+      <div class="alert-bar-title">New critical third-party service detected via TPRM</div>
+      <div class="alert-bar-text">Vendor <strong>DataServ GmbH</strong> (cloud data processing) classified as <strong>critical</strong> on 09 Jul 2026. ICS agent suggests new risk: <em>"Inadequate Vendor Monitoring"</em> for Third-Party Service Onboarding.</div>
+    </div>
+    <button class="btn btn-sm" style="background:var(--a);color:#fff;border-color:var(--a);white-space:nowrap;" onclick="openProcess('P-01')">Review risk →</button>
+  </div>`;
+  return `
+  ${tprmAlert}
+  <div class="metrics-grid">
+    <div class="metric"><div class="metric-label">Open risks</div><div class="metric-value">${openRisks}</div><div class="metric-sub" style="color:${C.r};"><i class="ti ti-arrow-up"></i>2 since last cycle</div></div>
+    <div class="metric"><div class="metric-label">High / critical risks</div><div class="metric-value" style="color:${C.r};">${highRisks}</div><div class="metric-sub" style="color:${C.r};">Require escalation</div></div>
+    <div class="metric"><div class="metric-label">Control gaps</div><div class="metric-value" style="color:${C.a};">${ctrlGaps}</div><div class="metric-sub">Ineffective + partial</div></div>
+    <div class="metric"><div class="metric-label">Overdue RCSAs</div><div class="metric-value" style="color:${C.r};">${overdueRcsa}</div><div class="metric-sub" style="color:${C.a};"><i class="ti ti-clock"></i>3 due within 30d</div></div>
+    <div class="metric"><div class="metric-label">1LoD input pending</div><div class="metric-value">${pending1lod}</div><div class="metric-sub" style="color:${C.r};"><i class="ti ti-clock"></i>2 overdue</div></div>
+  </div>
+  <div class="sec-divider"><div class="sec-divider-line"></div><div class="sec-divider-label">Areas overview</div><div class="sec-divider-line"></div></div>
+  <div class="areas-grid">${areaCards}</div>
+  <div class="sec-divider"><div class="sec-divider-line"></div><div class="sec-divider-label">Cross-area analytics</div><div class="sec-divider-line"></div></div>
+  <div class="grid-wide">${risksByProcessCard(PROCESSES)}${heatmapCard(allRisks)}</div>
+  <div class="grid-2">${donutCard(aggCtrl)}${timelineCard(PROCESSES)}</div>`;
+}
+
+/* ─────────────────────────────────────────────────────
+   AREA VIEW
+───────────────────────────────────────────────────── */
+function renderArea(areaName){
+  const areaProcesses=PROCESSES.filter(p=>p.area===areaName);
+  const p=areaProcesses[0];if(!p)return`<p>Area not found.</p>`;
+  const areaRisks=areaProcesses.flatMap(pr=>pr.risks.map(r=>({...r,pid:pr.id})));
+  const areaCtrl=areaProcesses.flatMap(pr=>pr.controls);
+  const aggCtrl={effective:areaCtrl.filter(c=>c.eff==="Effective").length,partial:areaCtrl.filter(c=>c.eff==="Partially effective").length,ineffective:areaCtrl.filter(c=>c.eff==="Ineffective").length,notAssessed:areaCtrl.filter(c=>c.eff==="Not assessed").length};
+  let alertHtml="";
+  if(p.alert){const isRed=p.alert.type==="overdue"||p.alert.type==="tprm";const bg=isRed?C.rb:C.ab;const border=isRed?C.rd:C.ad;const c=isRed?C.r:C.a;const bdrColor=isRed?C.r:C.a;alertHtml=`<div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:var(--radiusL);background:${bg};border:0.5px solid ${border};border-left:3px solid ${bdrColor};margin-bottom:16px;"><i class="ti ti-alert-triangle" style="font-size:18px;color:${c};flex-shrink:0;margin-top:1px;"></i><div style="font-size:12px;color:${c};"><strong style="font-weight:600;">${p.alert.type==="tprm"?"TPRM signal:":p.alert.type==="overdue"?"RCSA overdue:":"Due date:"}</strong> ${esc(p.alert.msg)}</div></div>`;}
+  const procCards=areaProcesses.map(pr=>{const tot=pr.riskBreakdown.low+pr.riskBreakdown.medium+pr.riskBreakdown.high+pr.riskBreakdown.critical;const day=daysUntil(pr.nextRcsa);
+    return `<div onclick="openProcess('${pr.id}')" style="padding:12px 14px;border-bottom:0.5px solid var(--border);cursor:pointer;display:grid;grid-template-columns:1fr auto;align-items:center;gap:10px;" onmouseover="this.style.background='var(--s1)'" onmouseout="this.style.background=''">
+      <div><div style="font-size:13px;font-weight:500;margin-bottom:3px;">${esc(pr.name)}</div><div style="display:flex;gap:6px;align-items:center;flex-wrap:wrap;">${ratingBadge(pr.residualRisk)}${statusBadge(pr.rcsaStatus)}<span style="font-size:11px;color:var(--tm);">${tot} risks · ${pr.controls.length} controls</span></div></div>
+      <div style="text-align:right;"><div style="font-family:var(--mono);font-size:11px;color:${day!==null&&day<0?C.r:day!==null&&day<30?C.a:C.g};font-weight:600;">${day!==null?(day<0?"Overdue "+Math.abs(day)+"d":day+"d"):""}</div><div style="font-size:10px;color:var(--tm);">Next RCSA</div></div>
+    </div>`;
+  }).join("");
+  const riskRows=areaRisks.map(r=>`<tr onclick="openProcess('${r.pid}')"><td><div class="risk-name">${esc(r.title)}${r.isNew?` <span style="font-family:var(--mono);font-size:9px;font-weight:600;color:#fff;background:var(--brand);padding:1px 5px;border-radius:3px;vertical-align:middle;">NEW</span>`:""}</div><div class="risk-sub">${esc(r.cat)}</div></td><td>${ratingBadge(r.inherent)}</td><td>${ratingBadge(r.residual)}</td><td>${trendIcon(r.trend)}</td><td style="font-size:11px;color:var(--tm);">${esc(r.owner)}</td><td><i class="ti ti-chevron-right" style="color:var(--tm);font-size:14px;"></i></td></tr>`).join("");
+  const pending1lod=`<div class="pending-item"><div class="p-avatar" style="background:#E4F2EB;color:#1A7A52;">TL</div><div class="p-body"><div class="p-name">Process documentation — ${esc(p.processes[0]||p.name)}</div><div class="p-meta">Thomas L. · Head of Credit Operations</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span class="chip chip-red" style="font-size:10px;">Overdue 3d</span><button class="icon-btn" onclick="agentAction('Send escalation reminder to Thomas Lehr')" aria-label="Send reminder"><i class="ti ti-send" style="font-size:15px;"></i></button></div></div>
+  <div class="pending-item"><div class="p-avatar" style="background:var(--brandLight);color:var(--brandMid);">AM</div><div class="p-body"><div class="p-name">Risk owner confirmation — ${esc(p.name)}</div><div class="p-meta">Anna M. · CISO</div></div><div style="display:flex;flex-direction:column;align-items:flex-end;gap:3px;"><span class="chip chip-amber" style="font-size:10px;">Due today</span><button class="icon-btn" onclick="agentAction('Send reminder to Anna M. for risk owner confirmation')" aria-label="Send reminder"><i class="ti ti-send" style="font-size:15px;"></i></button></div></div>`;
+  return `
+  ${alertHtml}
+  <div class="metrics-grid">
+    <div class="metric"><div class="metric-label">Processes in scope</div><div class="metric-value">${areaProcesses.length}</div><div class="metric-sub">This area</div></div>
+    <div class="metric"><div class="metric-label">Open risks</div><div class="metric-value">${areaRisks.length}</div><div class="metric-sub" style="color:${C.r};">${areaRisks.filter(r=>r.residual==="High"||r.residual==="Critical").length} high/critical</div></div>
+    <div class="metric"><div class="metric-label">Controls</div><div class="metric-value">${areaCtrl.length}</div><div class="metric-sub">${aggCtrl.effective} effective</div></div>
+    <div class="metric"><div class="metric-label">Control gaps</div><div class="metric-value" style="color:${aggCtrl.ineffective>0?C.r:C.a};">${aggCtrl.ineffective+aggCtrl.partial}</div><div class="metric-sub">${aggCtrl.ineffective} ineffective</div></div>
+    <div class="metric"><div class="metric-label">RCSA status</div><div class="metric-value" style="font-size:16px;">${statusBadge(p.rcsaStatus)}</div><div class="metric-sub">Next: ${esc(p.nextRcsa)}</div></div>
+  </div>
+  <div class="grid-wide">
+    <div>
+      <div class="sec-divider" style="margin-top:0;"><div class="sec-divider-line"></div><div class="sec-divider-label">Processes</div><div class="sec-divider-line"></div></div>
+      <div class="card" style="padding:0;overflow:hidden;margin-bottom:14px;">${procCards}<div style="padding:10px 14px;border-top:0.5px solid var(--border);font-size:11px;color:var(--brandMid);cursor:pointer;display:flex;align-items:center;gap:5px;"><i class="ti ti-plus" style="font-size:13px;"></i>Example processes: ${esc(p.processes.join(" · "))}</div></div>
+      <div class="sec-divider"><div class="sec-divider-line"></div><div class="sec-divider-label">All risks</div><div class="sec-divider-line"></div></div>
+      <div class="card" style="padding:0;overflow:hidden;"><table class="risk-table"><thead><tr><th>Risk</th><th>Inherent</th><th>Residual</th><th>Trend</th><th>Owner</th><th></th></tr></thead><tbody>${riskRows}</tbody></table></div>
+    </div>
+    <div>
+      ${heatmapCard(areaRisks)}
+      <div style="margin-top:14px;"></div>
+      ${donutCard(aggCtrl)}
+      <div style="margin-top:14px;"></div>
+      <div class="card"><div class="card-hdr"><div class="card-title"><i class="ti ti-users"></i>1LoD input pending</div><a class="card-action" onclick="agentAction('Send reminders to all pending 1LoD respondents for ${esc(areaName)}')">Send all reminders <i class="ti ti-send" style="font-size:13px;"></i></a></div>${pending1lod}</div>
+    </div>
+  </div>
+  ${trendCard(p.trend,"Residual risk trend — "+esc(p.name))}`;
+}
+
+/* ─────────────────────────────────────────────────────
+   PROCESS DETAIL VIEW
+───────────────────────────────────────────────────── */
+function renderProcess(pid){
+  const p=PROCESSES.find(x=>x.id===pid);if(!p)return`<p>Process not found.</p>`;
+  const ctrlRows=p.controls.map(c=>`<tr><td><div class="risk-name">${esc(c.id)} — ${esc(c.name)}</div><div class="risk-sub">${c.type} · ${c.exec} · ${c.freq}</div></td><td>${effBadge(c.eff)}</td><td style="font-size:11px;color:var(--tm);">${esc(c.owner)}</td><td style="font-family:var(--mono);font-size:11px;color:var(--tm);">${esc(c.lastTest)}</td><td><i class="ti ti-chevron-right" style="color:var(--tm);font-size:14px;"></i></td></tr>`).join("");
+  const riskRows=p.risks.map(r=>`<tr><td><div class="risk-name">${esc(r.id)} — ${esc(r.title)}${r.isNew?` <span style="font-family:var(--mono);font-size:9px;font-weight:600;color:#fff;background:var(--brand);padding:1px 5px;border-radius:3px;vertical-align:middle;">NEW</span>`:""}</div><div class="risk-sub">${esc(r.cat)}</div></td><td>${ratingBadge(r.inherent)}</td><td>${ratingBadge(r.residual)}</td><td>${trendIcon(r.trend)}</td><td style="font-size:11px;color:var(--tm);">${esc(r.owner)}</td></tr>`).join("");
+  const ctrlBd=p.controlBreakdown;const ctrlTot=ctrlBd.effective+ctrlBd.partial+ctrlBd.ineffective+ctrlBd.notAssessed||1;const effPct=Math.round((ctrlBd.effective/ctrlTot)*100);
+  return `
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;">
+    <div>
+      <button class="btn btn-sm btn-primary" style="margin-right:8px;" onclick="agentAction('Start ICS assessment for process: ${esc(p.name)}')"><i class="ti ti-player-play"></i>Start ICS Assessment</button>
+      <button class="btn btn-sm" onclick="agentAction('Show me the full risk and control details for process ${esc(p.name)}')"><i class="ti ti-eye"></i>View full detail</button>
+    </div>
+    <div style="font-size:12px;color:var(--tm);">Owner: <strong>${esc(p.owner)}</strong> · Last RCSA: <strong>${esc(p.lastRcsa)}</strong></div>
+  </div>
+  <div class="metrics-grid">
+    <div class="metric"><div class="metric-label">Residual risk</div><div class="metric-value" style="font-size:18px;">${ratingBadge(p.residualRisk)}</div></div>
+    <div class="metric"><div class="metric-label">Risks</div><div class="metric-value">${p.risks.length}</div><div class="metric-sub">${p.risks.filter(r=>r.residual==="High"||r.residual==="Critical").length} high/critical</div></div>
+    <div class="metric"><div class="metric-label">Controls</div><div class="metric-value">${p.controls.length}</div><div class="metric-sub">${effPct}% effective</div></div>
+    <div class="metric"><div class="metric-label">RCSA status</div><div class="metric-value" style="font-size:15px;">${statusBadge(p.rcsaStatus)}</div></div>
+    <div class="metric"><div class="metric-label">Next RCSA due</div><div class="metric-value" style="font-family:var(--mono);font-size:16px;">${esc(p.nextRcsa)}</div></div>
+  </div>
+  <div class="grid-wide">
+    <div>
+      <div class="sec-divider" style="margin-top:0;"><div class="sec-divider-line"></div><div class="sec-divider-label">Risks</div><div class="sec-divider-line"></div></div>
+      <div class="card" style="padding:0;overflow:hidden;margin-bottom:14px;"><table class="risk-table"><thead><tr><th>Risk</th><th>Inherent</th><th>Residual</th><th>Trend</th><th>Owner</th></tr></thead><tbody>${riskRows}</tbody></table></div>
+      <div class="sec-divider"><div class="sec-divider-line"></div><div class="sec-divider-label">Controls</div><div class="sec-divider-line"></div></div>
+      <div class="card" style="padding:0;overflow:hidden;"><table class="risk-table"><thead><tr><th>Control</th><th>Effectiveness</th><th>Owner</th><th>Last test</th><th></th></tr></thead><tbody>${ctrlRows}</tbody></table></div>
+    </div>
+    <div>
+      ${heatmapCard(p.risks.map(r=>({...r,pid:p.id})))}
+      <div style="margin-top:14px;"></div>
+      ${donutCard(ctrlBd)}
+      <div style="margin-top:14px;"></div>
+      ${trendCard(p.trend,"Risk trend")}
+    </div>
+  </div>`;
+}
+
+/* ─────────────────────────────────────────────────────
+   MAIN RENDER
+───────────────────────────────────────────────────── */
+function renderMain(){
+  const el=document.getElementById("main-area");
+  if(VIEW==="landing")el.innerHTML=renderLanding();
+  else if(VIEW==="area")el.innerHTML=renderArea(CURRENT_AREA);
+  else if(VIEW==="process")el.innerHTML=renderProcess(CURRENT_PROCESS);
+}
+
+/* ─────────────────────────────────────────────────────
+   AGENT CHAT
+───────────────────────────────────────────────────── */
+const REPLIES={default:["Checking the GRC system and current assessment data…","Analysing risk register and control mappings for that request.","On it — cross-referencing the controls library and gap findings."]};
+function getReply(t){
+  const l=t.toLowerCase();
+  if(l.includes("high-risk")||l.includes("high risk"))return"High-risk processes: <strong>User Access Management</strong> (IAM) — RCSA overdue, 2 high-severity risks increasing. <strong>Payment Processing</strong> — fraud risk High and trending up. <strong>Third-Party Service Onboarding</strong> — new TPRM-triggered risk pending review.";
+  if(l.includes("due date")||l.includes("upcoming rcsa"))return"RCSA due dates: <strong>User Access Management</strong> — overdue since 30 Jun 2026. <strong>Financial Reporting</strong> — due 31 Jul (21 days). <strong>Regulatory Reporting</strong> — due 29 Jul (19 days). <strong>Model Risk</strong> — due 31 Aug (52 days).";
+  if(l.includes("gap")||l.includes("summary"))return"Control gaps Q3: Total 7 gaps across 3 areas.<br>• <strong>C-206</strong> Vendor performance review (Ops) — Ineffective, overdue<br>• <strong>C-302</strong> Fraud screening (Payments) — Partial, tuning backlog<br>• <strong>C-601</strong> Privileged access recertification (IT) — Ineffective, JML gaps<br>Want me to draft the formal gap report?";
+  if(l.includes("start")||l.includes("new ics")||l.includes("assessment"))return"Ready to start ICS assessment. Confirm: scope — all 14 business units or subset? Cycle — Q3 2026? Start date — today (10 Jul)? Reply to confirm and I'll initialise the run.";
+  if(l.includes("reminder")||l.includes("escalation"))return"Reminder sent. A follow-up escalation queued to line manager if no response by EOD. I'll notify you of any response.";
+  if(l.includes("vendor")||l.includes("dataserv")||l.includes("tprm"))return"DataServ GmbH reclassified as Critical on 09 Jul (expanded data processing scope + sub-processor concerns). New risk R-104 <em>Inadequate Vendor Monitoring</em> added to register. Suggested controls: monthly KPI review + quarterly SLA breach review. Assign owner?";
+  return REPLIES.default[Math.floor(Math.random()*REPLIES.default.length)];
+}
+function appendMsg(html,type){const msgs=document.getElementById("chatMsgs");const div=document.createElement("div");div.className="msg msg-"+type;if(type==="agent"){const l=document.createElement("div");l.className="msg-lbl";l.textContent="ICS Agent";div.appendChild(l);}const sp=document.createElement("span");sp.innerHTML=html;div.appendChild(sp);msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;}
+function showTyping(){const msgs=document.getElementById("chatMsgs");const d=document.createElement("div");d.className="typing";d.id="typ";d.innerHTML="<span></span><span></span><span></span>";msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
+function hideTyping(){const t=document.getElementById("typ");if(t)t.remove();}
+function agentAction(text){appendMsg(text,"user");showTyping();setTimeout(()=>{hideTyping();appendMsg(getReply(text),"agent");},800+Math.random()*600);}
+function sendMsg(){const i=document.getElementById("chatInput");const v=i.value.trim();if(!v)return;i.value="";i.style.height="36px";agentAction(v);}
+function handleKey(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMsg();}const ta=document.getElementById("chatInput");ta.style.height="auto";ta.style.height=Math.min(ta.scrollHeight,80)+"px";}
+
+/* INIT */
+renderMain();
+</script>
+</body>
+</html>
