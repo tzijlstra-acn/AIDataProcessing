@@ -317,7 +317,18 @@ body{font-family:var(--font);background:var(--canvas);color:var(--tp);font-size:
         <div class="agent-icon"><i class="ti ti-sparkles" aria-hidden="true"></i></div>
         ICS Agent
       </div>
-      <div class="agent-status"><span class="status-dot"></span>Ready</div>
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="agent-status"><span class="status-dot" id="agentDot"></span><span id="agentStatusText">Ready</span></div>
+        <button class="icon-btn" onclick="toggleKeyPanel()" title="Configure API key" style="width:22px;height:22px;border-radius:5px;border:0.5px solid var(--border);background:var(--s1);padding:0;justify-content:center;flex-shrink:0;"><i class="ti ti-key" style="font-size:12px;color:var(--tm);"></i></button>
+      </div>
+    </div>
+    <div id="keyPanel" style="display:none;padding:8px 12px;border-bottom:0.5px solid var(--border);background:var(--s1);">
+      <div style="font-size:10px;color:var(--tm);margin-bottom:5px;text-transform:uppercase;letter-spacing:.04em;font-weight:600;">Anthropic API key</div>
+      <div style="display:flex;gap:5px;">
+        <input id="keyInput" type="password" placeholder="sk-ant-..." style="flex:1;font-size:11px;padding:4px 7px;border:0.5px solid var(--border);border-radius:5px;background:var(--surface);color:var(--tp);font-family:var(--mono);outline:none;min-width:0;" onkeydown="if(event.key==='Enter')saveKey()"/>
+        <button class="btn btn-sm btn-primary" onclick="saveKey()">Save</button>
+      </div>
+      <div style="font-size:10px;color:var(--tm);margin-top:4px;">Stored in localStorage · direct browser API call</div>
     </div>
     <div class="chat-msgs" id="chatMsgs">
       <div class="msg msg-agent">
@@ -770,28 +781,206 @@ function renderMain(){
 }
 
 /* ─────────────────────────────────────────────────────
-   AGENT CHAT
+   AGENT CHAT — powered by Claude (claude-fable-5)
 ───────────────────────────────────────────────────── */
-const REPLIES={default:["Checking the GRC system and current assessment data…","Analysing risk register and control mappings for that request.","On it — cross-referencing the controls library and gap findings."]};
-function getReply(t){
-  const l=t.toLowerCase();
-  if(l.includes("high-risk")||l.includes("high risk"))return"High-risk processes: <strong>User Access Management</strong> (IAM) — RCSA overdue, 2 high-severity risks increasing. <strong>Payment Processing</strong> — fraud risk High and trending up. <strong>Third-Party Service Onboarding</strong> — new TPRM-triggered risk pending review.";
-  if(l.includes("due date")||l.includes("upcoming rcsa"))return"RCSA due dates: <strong>User Access Management</strong> — overdue since 30 Jun 2026. <strong>Financial Reporting</strong> — due 31 Jul (21 days). <strong>Regulatory Reporting</strong> — due 29 Jul (19 days). <strong>Model Risk</strong> — due 31 Aug (52 days).";
-  if(l.includes("gap")||l.includes("summary"))return"Control gaps Q3: Total 7 gaps across 3 areas.<br>• <strong>C-206</strong> Vendor performance review (Ops) — Ineffective, overdue<br>• <strong>C-302</strong> Fraud screening (Payments) — Partial, tuning backlog<br>• <strong>C-601</strong> Privileged access recertification (IT) — Ineffective, JML gaps<br>Want me to draft the formal gap report?";
-  if(l.includes("start")||l.includes("new ics")||l.includes("assessment"))return"Ready to start ICS assessment. Confirm: scope — all 14 business units or subset? Cycle — Q3 2026? Start date — today (10 Jul)? Reply to confirm and I'll initialise the run.";
-  if(l.includes("reminder")||l.includes("escalation"))return"Reminder sent. A follow-up escalation queued to line manager if no response by EOD. I'll notify you of any response.";
-  if(l.includes("vendor")||l.includes("dataserv")||l.includes("tprm"))return"DataServ GmbH reclassified as Critical on 09 Jul (expanded data processing scope + sub-processor concerns). New risk R-104 <em>Inadequate Vendor Monitoring</em> added to register. Suggested controls: monthly KPI review + quarterly SLA breach review. Assign owner?";
-  return REPLIES.default[Math.floor(Math.random()*REPLIES.default.length)];
+const CHAT_HISTORY = [];
+const CLAUDE_MODEL = 'claude-fable-5';
+
+function buildSystemPrompt() {
+  const data = PROCESSES.map(p => ({
+    id: p.id, name: p.name, area: p.area, owner: p.owner,
+    rcsaStatus: p.rcsaStatus, nextRcsa: p.nextRcsa, lastRcsa: p.lastRcsa,
+    residualRisk: p.residualRisk,
+    risks: p.risks.map(r => ({ id: r.id, title: r.title, category: r.cat, inherent: r.inherent, residual: r.residual, trend: r.trend, owner: r.owner, isNew: !!r.isNew })),
+    controls: p.controls.map(c => ({ id: c.id, name: c.name, type: c.type, exec: c.exec, freq: c.freq, effectiveness: c.eff, owner: c.owner, lastTest: c.lastTest })),
+    subProcesses: p.processes
+  }));
+  return `You are the ICS Agent embedded in an Internal Control System (ICS) Cockpit for a financial services firm. The current user is Marek K., Risk Manager (2nd Line of Defence), running the Q3 2026 ICS assessment cycle across 12 processes.
+
+Your role: answer questions about the live risk register, control effectiveness, and RCSA progress; draft gap summaries and escalation messages; flag trends; suggest improvements.
+
+Format: respond using HTML inline elements (<strong>, <em>, <br>, • bullets). Keep responses under 150 words unless drafting a formal document. Be professional, precise, and direct. Never fabricate data not present in the dataset below.
+
+Active TPRM signal: DataServ GmbH reclassified as Critical on 09 Jul 2026. Draft risk R-104 "Inadequate Vendor Monitoring" pending owner assignment (Operations & Sourcing).
+
+Live ICS data — 10 Jul 2026:
+${JSON.stringify(data, null, 2)}`;
 }
-function appendMsg(html,type){const msgs=document.getElementById("chatMsgs");const div=document.createElement("div");div.className="msg msg-"+type;if(type==="agent"){const l=document.createElement("div");l.className="msg-lbl";l.textContent="ICS Agent";div.appendChild(l);}const sp=document.createElement("span");sp.innerHTML=html;div.appendChild(sp);msgs.appendChild(div);msgs.scrollTop=msgs.scrollHeight;}
-function showTyping(){const msgs=document.getElementById("chatMsgs");const d=document.createElement("div");d.className="typing";d.id="typ";d.innerHTML="<span></span><span></span><span></span>";msgs.appendChild(d);msgs.scrollTop=msgs.scrollHeight;}
-function hideTyping(){const t=document.getElementById("typ");if(t)t.remove();}
-function agentAction(text){appendMsg(text,"user");showTyping();setTimeout(()=>{hideTyping();appendMsg(getReply(text),"agent");},800+Math.random()*600);}
-function sendMsg(){const i=document.getElementById("chatInput");const v=i.value.trim();if(!v)return;i.value="";i.style.height="36px";agentAction(v);}
-function handleKey(e){if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();sendMsg();}const ta=document.getElementById("chatInput");ta.style.height="auto";ta.style.height=Math.min(ta.scrollHeight,80)+"px";}
+
+function getApiKey() { return localStorage.getItem('ics_api_key') || ''; }
+
+function saveKey() {
+  const v = document.getElementById('keyInput').value.trim();
+  if (!v) return;
+  if (!v.startsWith('sk-')) { alert('Key should start with sk-'); return; }
+  localStorage.setItem('ics_api_key', v);
+  document.getElementById('keyPanel').style.display = 'none';
+  updateAgentStatus();
+}
+
+function toggleKeyPanel() {
+  const p = document.getElementById('keyPanel');
+  const open = p.style.display !== 'none';
+  p.style.display = open ? 'none' : 'block';
+  if (!open) {
+    const k = getApiKey();
+    document.getElementById('keyInput').value = k ? k.slice(0, 12) + '…' : '';
+    setTimeout(() => document.getElementById('keyInput').select(), 40);
+  }
+}
+
+function updateAgentStatus() {
+  const dot = document.getElementById('agentDot');
+  const txt = document.getElementById('agentStatusText');
+  if (!dot) return;
+  const hasKey = !!getApiKey();
+  dot.style.background = hasKey ? '#22c55e' : '#F0C96A';
+  txt.textContent = hasKey ? CLAUDE_MODEL : 'No key — demo mode';
+}
+
+function appendMsg(html, type) {
+  const msgs = document.getElementById('chatMsgs');
+  const div = document.createElement('div');
+  div.className = 'msg msg-' + type;
+  if (type === 'agent') { const l = document.createElement('div'); l.className = 'msg-lbl'; l.textContent = 'ICS Agent'; div.appendChild(l); }
+  const sp = document.createElement('span');
+  sp.innerHTML = html;
+  div.appendChild(sp);
+  msgs.appendChild(div);
+  msgs.scrollTop = msgs.scrollHeight;
+  return sp;
+}
+
+function showTyping() {
+  const msgs = document.getElementById('chatMsgs');
+  const d = document.createElement('div');
+  d.className = 'typing'; d.id = 'typ';
+  d.innerHTML = '<span></span><span></span><span></span>';
+  msgs.appendChild(d);
+  msgs.scrollTop = msgs.scrollHeight;
+}
+
+function hideTyping() { const t = document.getElementById('typ'); if (t) t.remove(); }
+
+/* Fallback canned replies when no API key is configured */
+const REPLIES = { default: ["Checking the GRC system and current assessment data…", "Analysing risk register and control mappings for that request.", "On it — cross-referencing the controls library and gap findings."] };
+function getReply(t) {
+  const l = t.toLowerCase();
+  if (l.includes("high-risk") || l.includes("high risk")) return "High-risk processes: <strong>User Access Management</strong> (IAM) — RCSA overdue, 2 high-severity risks increasing. <strong>Payment Processing</strong> — fraud risk High and trending up. <strong>Third-Party Service Onboarding</strong> — new TPRM-triggered risk pending review.";
+  if (l.includes("due date") || l.includes("upcoming rcsa")) return "RCSA due dates: <strong>User Access Management</strong> — overdue since 30 Jun 2026. <strong>Financial Reporting</strong> — due 31 Jul (21 days). <strong>Regulatory Reporting</strong> — due 29 Jul (19 days). <strong>Model Risk</strong> — due 31 Aug (52 days).";
+  if (l.includes("gap") || l.includes("summary")) return "Control gaps Q3: Total 7 gaps across 3 areas.<br>• <strong>C-206</strong> Vendor performance review (Ops) — Ineffective, overdue<br>• <strong>C-302</strong> Fraud screening (Payments) — Partial, tuning backlog<br>• <strong>C-601</strong> Privileged access recertification (IT) — Ineffective, JML gaps<br>Want me to draft the formal gap report?";
+  if (l.includes("start") || l.includes("new ics") || l.includes("assessment")) return "Ready to start ICS assessment. Confirm: scope — all 14 business units or subset? Cycle — Q3 2026? Start date — today (10 Jul)? Reply to confirm and I'll initialise the run.";
+  if (l.includes("reminder") || l.includes("escalation")) return "Reminder sent. A follow-up escalation queued to line manager if no response by EOD. I'll notify you of any response.";
+  if (l.includes("vendor") || l.includes("dataserv") || l.includes("tprm")) return "DataServ GmbH reclassified as Critical on 09 Jul (expanded data processing scope + sub-processor concerns). New risk R-104 <em>Inadequate Vendor Monitoring</em> added to register. Suggested controls: monthly KPI review + quarterly SLA breach review. Assign owner?";
+  return REPLIES.default[Math.floor(Math.random() * REPLIES.default.length)];
+}
+
+async function agentAction(text) {
+  appendMsg(text, 'user');
+  CHAT_HISTORY.push({ role: 'user', content: text });
+  const key = getApiKey();
+
+  if (!key) {
+    showTyping();
+    setTimeout(() => {
+      hideTyping();
+      const r = getReply(text);
+      appendMsg(r, 'agent');
+      CHAT_HISTORY.push({ role: 'assistant', content: r });
+    }, 700 + Math.random() * 500);
+    return;
+  }
+
+  const dot = document.getElementById('agentDot');
+  dot.style.background = '#3B82F6';
+  showTyping();
+
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+        'x-api-key': key,
+        'anthropic-version': '2023-06-01',
+        'anthropic-dangerous-direct-browser-access': 'true'
+      },
+      body: JSON.stringify({
+        model: CLAUDE_MODEL,
+        max_tokens: 512,
+        system: buildSystemPrompt(),
+        messages: CHAT_HISTORY.slice(-12),
+        stream: true
+      })
+    });
+
+    hideTyping();
+
+    if (!res.ok) {
+      const err = await res.json().catch(() => ({}));
+      appendMsg(`<span style="color:var(--r);">Error ${res.status}: ${err.error?.message || res.statusText}</span>`, 'agent');
+      updateAgentStatus();
+      return;
+    }
+
+    const msgs = document.getElementById('chatMsgs');
+    const div = document.createElement('div');
+    div.className = 'msg msg-agent';
+    const lbl = document.createElement('div'); lbl.className = 'msg-lbl'; lbl.textContent = 'ICS Agent';
+    div.appendChild(lbl);
+    const sp = document.createElement('span');
+    div.appendChild(sp);
+    msgs.appendChild(div);
+
+    const reader = res.body.getReader();
+    const decoder = new TextDecoder();
+    let fullText = '', buf = '';
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      buf += decoder.decode(value, { stream: true });
+      const lines = buf.split('\n');
+      buf = lines.pop();
+      for (const line of lines) {
+        if (!line.startsWith('data: ')) continue;
+        const raw = line.slice(6);
+        if (raw === '[DONE]') continue;
+        try {
+          const ev = JSON.parse(raw);
+          if (ev.type === 'content_block_delta' && ev.delta?.type === 'text_delta') {
+            fullText += ev.delta.text;
+            sp.innerHTML = fullText;
+            msgs.scrollTop = msgs.scrollHeight;
+          }
+        } catch (_) {}
+      }
+    }
+    CHAT_HISTORY.push({ role: 'assistant', content: fullText });
+  } catch (e) {
+    hideTyping();
+    appendMsg(`<span style="color:var(--r);">Network error: ${e.message}</span>`, 'agent');
+  }
+  updateAgentStatus();
+}
+
+function sendMsg() {
+  const i = document.getElementById('chatInput');
+  const v = i.value.trim();
+  if (!v) return;
+  i.value = ''; i.style.height = '36px';
+  agentAction(v);
+}
+
+function handleKey(e) {
+  if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMsg(); }
+  const ta = document.getElementById('chatInput');
+  ta.style.height = 'auto';
+  ta.style.height = Math.min(ta.scrollHeight, 80) + 'px';
+}
 
 /* INIT */
 renderMain();
+updateAgentStatus();
 </script>
 </body>
 </html>
