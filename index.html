@@ -240,6 +240,12 @@ section { padding-top: 16px; margin-bottom: 40px; }
   <a href="#data" class="nav-item" data-section="data"><i class="ti ti-database"></i>Data Requirements</a>
   <a href="#infrastructure" class="nav-item" data-section="infrastructure"><i class="ti ti-cpu"></i>AI Infrastructure</a>
   <a href="#features" class="nav-item" data-section="features"><i class="ti ti-pointer"></i>Feature Specification</a>
+  <a href="#build-buy" class="nav-item" data-section="build-buy"><i class="ti ti-shopping-cart"></i>Build vs. Buy</a>
+  <a href="#data-flow" class="nav-item" data-section="data-flow"><i class="ti ti-arrows-split"></i>Data Flow</a>
+  <a href="#models" class="nav-item" data-section="models"><i class="ti ti-brain"></i>Model Placement</a>
+  <a href="#token-economics" class="nav-item" data-section="token-economics"><i class="ti ti-coin"></i>Token Economics</a>
+  <a href="#cost-model" class="nav-item" data-section="cost-model"><i class="ti ti-calculator"></i>Cost Model</a>
+  <a href="#walkthroughs" class="nav-item" data-section="walkthroughs"><i class="ti ti-route"></i>Activity Walkthroughs</a>
 </nav>
 
 <!-- MAIN CONTENT -->
@@ -1575,6 +1581,709 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view} | 
     <div class="card" style="background:var(--s1);">
       <h4>SSE Reconnection &amp; Fallback</h4>
       <p style="font-size:13px;color:var(--ts);">EventSource auto-reconnects on disconnect with exponential backoff (1s, 2s, 4s, 8s, max 30s). If SSE connection cannot be established after 3 retries, fall back to polling GET /api/overview every 60 seconds. A "Live" / "Polling" indicator in the topbar shows the current connection mode to the user.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 7: BUILD VS. BUY ===== -->
+<section id="build-buy">
+  <div class="section-header">
+    <div class="section-tag">Section 7</div>
+    <h2>Build vs. Buy</h2>
+    <p>Every external service licensed or procured, and every custom component built by Accenture — with phase, technology, and effort estimates.</p>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-shopping-cart"></i>7.1 What Is Acquired (Licensed / SaaS)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Vendor</th><th>Tier / SKU</th><th>Purpose</th><th>Acquired in Phase</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Azure OpenAI Service</strong></td><td>Microsoft</td><td>Standard (GPT-4o + text-embedding-3-large)</td><td>LLM inference and document embeddings</td><td>Phase 3</td></tr>
+          <tr><td><strong>Azure PostgreSQL Flexible Server</strong></td><td>Microsoft</td><td>v16, General Purpose 8 vCores 32GB</td><td>Operational data store (risks, controls, RCSA, users)</td><td>Phase 0</td></tr>
+          <tr><td><strong>Azure AI Search</strong></td><td>Microsoft</td><td>Standard S1</td><td>Hybrid BM25 + vector search over document corpus</td><td>Phase 1</td></tr>
+          <tr><td><strong>Azure Data Factory</strong></td><td>Microsoft</td><td>v2 (pay-per-use)</td><td>Orchestrates GRC ingestion pipelines</td><td>Phase 1</td></tr>
+          <tr><td><strong>Azure Container Apps</strong></td><td>Microsoft</td><td>Consumption plan</td><td>Hosts FastAPI; auto-scales to zero</td><td>Phase 2</td></tr>
+          <tr><td><strong>Azure API Management</strong></td><td>Microsoft</td><td>Standard tier</td><td>Rate limiting, auth, versioning, caching headers</td><td>Phase 2</td></tr>
+          <tr><td><strong>Azure Cache for Redis</strong></td><td>Microsoft</td><td>C2 Standard (6GB)</td><td>API response caching; agent session history</td><td>Phase 2</td></tr>
+          <tr><td><strong>Azure Durable Functions</strong></td><td>Microsoft</td><td>Consumption plan</td><td>RCSA lifecycle orchestration; reminder scheduling</td><td>Phase 4</td></tr>
+          <tr><td><strong>Azure Service Bus</strong></td><td>Microsoft</td><td>Standard tier</td><td>TPRM vendor change event queue</td><td>Phase 3</td></tr>
+          <tr><td><strong>Azure Communication Services</strong></td><td>Microsoft</td><td>Pay-per-email</td><td>Reminder and escalation emails to 1LoD</td><td>Phase 4</td></tr>
+          <tr><td><strong>Azure Blob Storage</strong></td><td>Microsoft</td><td>LRS (hot)</td><td>GRC export files, PDF document corpus</td><td>Phase 1</td></tr>
+          <tr><td><strong>Azure Static Web Apps</strong></td><td>Microsoft</td><td>Standard</td><td>Hosts React frontend; global CDN</td><td>Phase 2</td></tr>
+          <tr><td><strong>Azure Key Vault</strong></td><td>Microsoft</td><td>Standard</td><td>Stores all secrets, API keys, DB passwords</td><td>Phase 0</td></tr>
+          <tr><td><strong>Azure Monitor + App Insights</strong></td><td>Microsoft</td><td>Pay-per-GB</td><td>Observability, alerting, cost tracking</td><td>Phase 0</td></tr>
+          <tr><td><strong>Azure Active Directory</strong></td><td>Microsoft (client tenant)</td><td>Existing</td><td>SSO, RBAC, user identity</td><td>Phase 0</td></tr>
+          <tr><td><strong>LangChain</strong></td><td>Open source (pip)</td><td>0.2+</td><td>RAG pipeline, agent orchestration, tool routing</td><td>Phase 3</td></tr>
+          <tr><td><strong>dbt Core</strong></td><td>Open source (pip)</td><td>1.7+</td><td>Data transformation (staging → core PostgreSQL layers)</td><td>Phase 1</td></tr>
+          <tr><td><strong>GRC Platform (ServiceNow / Archer)</strong></td><td>Client-existing</td><td>—</td><td>Source of truth for risks, controls, RCSA</td><td>Pre-existing</td></tr>
+          <tr><td><strong>TPRM Tool</strong></td><td>Client-existing</td><td>—</td><td>Vendor registry, change events</td><td>Pre-existing</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-code"></i>7.2 What Is Built (Custom Code — Accenture Deliverables)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Technology</th><th>Who Builds</th><th>Phase</th><th>LOC (est.)</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>GRC platform connectors</strong></td><td>Python (ABC base class)</td><td>Data Eng 1</td><td>Ph1</td><td>~1,500</td><td>ServiceNow/Archer/MetricStream adapters with watermark-based incremental ingestion; CSV fallback</td></tr>
+          <tr><td><strong>ADF pipeline definitions</strong></td><td>Azure Data Factory JSON</td><td>Data Eng 1</td><td>Ph1</td><td>~800</td><td>Pipeline JSONs for each entity type; trigger schedules; error-handling datasets</td></tr>
+          <tr><td><strong>PostgreSQL schema (DDL)</strong></td><td>SQL</td><td>Data Eng 2</td><td>Ph1</td><td>~600</td><td>Full schema: areas, processes, risks, controls, rcsa_assessments, risk_rating_history, workflow_tasks, tprm_signals, users, agent_audit_log</td></tr>
+          <tr><td><strong>dbt transformation models</strong></td><td>dbt SQL</td><td>Data Eng 1+2</td><td>Ph1</td><td>~400</td><td>Staging → core layers; data quality tests; incremental models</td></tr>
+          <tr><td><strong>Document ingestion pipeline</strong></td><td>Python + Azure Functions</td><td>Data Eng 2 + AI</td><td>Ph1</td><td>~600</td><td>Blob trigger → PyMuPDF parse → LangChain text splitter → embed → AI Search index upsert</td></tr>
+          <tr><td><strong>FastAPI application</strong></td><td>Python 3.11</td><td>BE Dev 1</td><td>Ph2</td><td>~3,000</td><td>All API endpoints; auth middleware; RBAC; SQLAlchemy async; Redis caching layer</td></tr>
+          <tr><td><strong>RCSA workflow engine</strong></td><td>Azure Durable Functions</td><td>BE Dev 2</td><td>Ph4</td><td>~800</td><td>Orchestrator + activity functions for RCSA lifecycle; reminder scheduling; escalation</td></tr>
+          <tr><td><strong>Notification service</strong></td><td>Python + Azure Functions</td><td>BE Dev 2</td><td>Ph4</td><td>~400</td><td>Email template rendering; Teams webhook; delivery tracking</td></tr>
+          <tr><td><strong>LangChain agent</strong></td><td>Python + LangChain</td><td>AI/ML Eng</td><td>Ph3</td><td>~1,200</td><td>System prompt engineering; 4 tools (SQL, RAG, analysis, workflow); SSE streaming; audit logging</td></tr>
+          <tr><td><strong>TPRM Signal Engine</strong></td><td>Python + Azure Functions</td><td>AI/ML Eng</td><td>Ph3</td><td>~600</td><td>Service Bus subscriber; rule pre-filter; dedup; GPT-4o-mini classification; risk JSON drafting</td></tr>
+          <tr><td><strong>Trend detection function</strong></td><td>Python + Azure Functions</td><td>AI/ML Eng</td><td>Ph3</td><td>~300</td><td>Weekly scipy linregress on residual score history; alert on Increasing trend</td></tr>
+          <tr><td><strong>RCSA due-date monitor</strong></td><td>Python + Azure Functions</td><td>AI/ML Eng</td><td>Ph3</td><td>~200</td><td>Daily function; flag overdue; trigger Durable Function reminder</td></tr>
+          <tr><td><strong>NL Query Interface</strong></td><td>Python</td><td>AI/ML Eng</td><td>Ph3</td><td>~500</td><td>Intent classification; SQL safety validation; hybrid search branch</td></tr>
+          <tr><td><strong>React SPA</strong></td><td>TypeScript, React 18, Vite</td><td>FE Dev 1+2</td><td>Ph2–4</td><td>~8,000</td><td>All UI components; React Query; Zustand; SSE client; WCAG 2.1 AA</td></tr>
+          <tr><td><strong>Terraform IaC</strong></td><td>HCL</td><td>Solution Architect</td><td>Ph0</td><td>~2,000</td><td>All Azure resources; RBAC assignments; Private Endpoints; NSGs; Key Vault secrets</td></tr>
+          <tr><td><strong>CI/CD pipelines</strong></td><td>GitHub Actions / Azure DevOps</td><td>SA + BE Dev</td><td>Ph0</td><td>~400</td><td>Build, test, plan, apply, deploy workflows</td></tr>
+          <tr><td><strong>Agent audit logging</strong></td><td>Python</td><td>BE Dev 1</td><td>Ph3</td><td>~200</td><td>Every agent interaction: user, timestamp, prompt hash, response, tool calls, tokens used</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card" style="background:var(--brandLight);border-color:var(--brandMid);">
+      <h4 style="color:var(--brand);">Total estimated custom code</h4>
+      <p style="font-size:13.5px;color:var(--ts);">~<strong>21,300 lines</strong> across 17 custom components. React SPA (~8,000 LOC) and FastAPI (~3,000 LOC) are the largest single components. Infrastructure-as-code (Terraform, ~2,000 LOC) is significant but generated/maintained by Solution Architect rather than dev team.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 8: DATA FLOW ===== -->
+<section id="data-flow">
+  <div class="section-header">
+    <div class="section-tag">Section 8</div>
+    <h2>Data Flow</h2>
+    <p>End-to-end data movement: from GRC source systems through ingestion, transformation, caching, and API to the browser — with caching strategy and freshness guarantees.</p>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-arrows-split"></i>8.1 System Architecture Overview</div>
+    <div class="arch-block">  GRC PLATFORM              TPRM TOOL              AZURE AD / HR
+  (ServiceNow/Archer)       (Vendor registry)      (User directory)
+        │                        │                        │
+        │  REST API / CSV        │  REST API              │  Graph API
+        ▼                        ▼                        ▼
+  ┌─────────────────────────────────────────────────────────┐
+  │              INGESTION LAYER (ADF + Python)              │
+  │  GRC Connector  ──watermark──►  ADF Pipeline  ──►  Blob  │
+  │  Doc Fn  ──────blob trigger──►  Parse → Chunk → Embed    │
+  │  TPRM Fn ──────Service Bus──►   TPRMSignalEngine         │
+  └───────────────────────┬─────────────────────────────────┘
+                          │ dbt transform
+                          ▼
+  ┌─────────────────────────────────────────────────────────┐
+  │              DATA PLATFORM (PostgreSQL + AI Search)      │
+  │  risks │ controls │ rcsa_assessments │ tprm_signals      │
+  │  risk_rating_history │ workflow_tasks │ users             │
+  │  ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─ ─            │
+  │  Azure AI Search index: chunks, embeddings, metadata     │
+  └───────────────────────┬─────────────────────────────────┘
+                          │
+                ┌─────────┴──────────┐
+                │ Redis Cache         │
+                │ (hot query results) │
+                └─────────┬──────────┘
+                          │ FastAPI (Container Apps)
+                          │ + APIM (auth, rate limit)
+                          ▼
+                     React SPA
+             (Azure Static Web Apps)</div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-grid-dots"></i>8.2 End-to-End Flow: Risk Heatmap</div>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:14px;">Step-by-step trace when a user opens the Overview tab and the heatmap loads:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Actor</th><th>Action</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Browser</td><td><code>GET /api/heatmap?mode=residual&amp;scope=all</code></td><td>Authenticated with Bearer token (Azure AD)</td></tr>
+          <tr><td>2</td><td>APIM</td><td>Validate JWT; check rate limit; forward to Container Apps</td><td>Strips Authorization header; injects X-User-Claims</td></tr>
+          <tr><td>3</td><td>FastAPI auth middleware</td><td>Decode JWT; extract user_id, lod_role, area_ids</td><td>Role=2LoD: no row-level filtering applied</td></tr>
+          <tr><td>4</td><td>Redis</td><td>Check cache key: <code>heatmap:residual:all:2lod</code></td><td>Cache HIT → return in &lt;5ms, skip steps 5–7</td></tr>
+          <tr><td>5</td><td>FastAPI</td><td>Execute SQL: GROUP BY residual_likelihood, residual_impact</td><td><code>SELECT residual_likelihood, residual_impact, COUNT(*) as risk_count FROM risks WHERE status='Open' GROUP BY 1,2</code></td></tr>
+          <tr><td>6</td><td>PostgreSQL</td><td>Return 25-cell matrix (some cells empty)</td><td>&lt;50ms on indexed columns</td></tr>
+          <tr><td>7</td><td>FastAPI</td><td>Shape into 5×5 matrix JSON; store in Redis TTL=5min</td><td>Cache key includes role to prevent cross-role leakage</td></tr>
+          <tr><td>8</td><td>Browser</td><td>Render heatmap cells; colour by count and max severity</td><td>Inherent/residual toggle is client-side state only — no re-fetch</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-message-chatbot"></i>8.3 End-to-End Flow: Agent Chat Query</div>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:14px;">Step-by-step trace for the query: <em>"Show me all high-risk processes in IT &amp; Security"</em></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Actor</th><th>Action</th><th>Tokens</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Browser</td><td>POST /api/agent/chat with message + context + session_id</td><td>—</td></tr>
+          <tr><td>2</td><td>FastAPI</td><td>Validate request; load session history from Redis (last 10 turns)</td><td>—</td></tr>
+          <tr><td>3</td><td>LangChain agent</td><td>Build full prompt: system prompt + context injection + history + user message</td><td>~3,800 input tokens</td></tr>
+          <tr><td>4</td><td>LangChain intent</td><td>Classify: SQL query needed (risk/process data question)</td><td>—</td></tr>
+          <tr><td>5</td><td>SQLQueryTool</td><td>Generate SQL: SELECT processes with High/Critical risks in P-05</td><td>~150 tokens</td></tr>
+          <tr><td>6</td><td>PostgreSQL</td><td>Execute via read-only connection (ics_agent_readonly)</td><td>&lt;30ms</td></tr>
+          <tr><td>7</td><td>LangChain</td><td>Feed SQL result back to LLM as tool observation</td><td>+~200 tokens</td></tr>
+          <tr><td>8</td><td>GPT-4o</td><td>Generate natural-language answer with risk IDs cited</td><td>~600 output tokens</td></tr>
+          <tr><td>9</td><td>FastAPI</td><td>Stream SSE tokens to browser; log interaction to agent_audit_log</td><td>—</td></tr>
+          <tr><td>10</td><td>FastAPI</td><td>Append turn to Redis session; update session TTL</td><td>—</td></tr>
+          <tr><td style="font-weight:700;">Total</td><td>—</td><td>—</td><td style="font-weight:700;">~4,150 in + ~600 out</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-building-store"></i>8.4 End-to-End Flow: TPRM Vendor Reclassification</div>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:14px;">Step-by-step trace when a vendor is reclassified from Standard → Critical in the TPRM tool:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Actor</th><th>Action</th><th>Detail</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>TPRM Tool</td><td>Fires webhook on vendor classification change</td><td>HTTP POST to Azure Function endpoint</td></tr>
+          <tr><td>2</td><td>Azure Function (HTTP trigger)</td><td>Validate HMAC signature; publish to Service Bus topic <code>tprm-events</code></td><td></td></tr>
+          <tr><td>3</td><td>TPRMSignalEngine (Service Bus trigger)</td><td>Pull message; parse VendorChangeEvent JSON</td><td></td></tr>
+          <tr><td>4</td><td>TPRMSignalEngine</td><td>Rule pre-filter: <code>changed_field == 'vendor_classification' AND new_value == 'Critical'</code> → proceed</td><td></td></tr>
+          <tr><td>5</td><td>TPRMSignalEngine</td><td>Fetch vendor context from PostgreSQL: affected processes, SLA breach count, existing risks</td><td></td></tr>
+          <tr><td>6</td><td>TPRMSignalEngine</td><td>Deduplication: check tprm_signals for (vendor_id, changed_field) in last 30 days → none found</td><td></td></tr>
+          <tr><td>7</td><td>GPT-4o-mini</td><td>Classification + risk drafting prompt → structured JSON output</td><td>~800 input + ~400 output tokens</td></tr>
+          <tr><td>8</td><td>TPRMSignalEngine</td><td>Parse JSON; validate via Pydantic; persist to tprm_signals (status=Pending)</td><td></td></tr>
+          <tr><td>9</td><td>FastAPI SSE</td><td>Push <code>tprm_signal_new</code> event to all connected 2LoD browser sessions</td><td></td></tr>
+          <tr><td>10</td><td>React frontend</td><td>Show TPRM banner; increment pending count; toast notification</td><td></td></tr>
+          <tr><td>11</td><td>2LoD user</td><td>Reviews signal in panel; clicks "Accept" → PUT /api/tprm/signals/{id}/accept</td><td></td></tr>
+          <tr><td>12</td><td>FastAPI</td><td>Create draft risk in risks table (status=Open, source='TPRM-Signal'); invalidate relevant caches</td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-database-cog"></i>8.5 Caching Strategy</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Resource</th><th>Cache</th><th>TTL</th><th>Key Pattern</th><th>Reason</th></tr></thead>
+        <tbody>
+          <tr><td>Heatmap matrix</td><td>Redis</td><td>5 min</td><td><code>heatmap:{mode}:{scope}:{role}</code></td><td>Expensive GROUP BY; role-scoped to prevent leakage</td></tr>
+          <tr><td>Overview KPIs</td><td>Redis</td><td>5 min</td><td><code>overview:{user_id}</code></td><td>Queried on every Overview tab load</td></tr>
+          <tr><td>Area summary</td><td>Redis</td><td>5 min</td><td><code>area:{area_id}:{role}</code></td><td>Tab navigation triggers this on every click</td></tr>
+          <tr><td>Process detail</td><td>Redis</td><td>2 min</td><td><code>process:{process_id}:{user_id}</code></td><td>More volatile — risk updates invalidate it</td></tr>
+          <tr><td>RCSA timeline</td><td>Redis</td><td>10 min</td><td><code>rcsa:timeline:{area_id}:{status}</code></td><td>Forward schedule changes infrequently</td></tr>
+          <tr><td>TPRM signals</td><td>Redis</td><td>1 min</td><td><code>tprm:signals:pending</code></td><td>Near-real-time — accept/reject invalidates immediately</td></tr>
+          <tr><td>Agent session</td><td>Redis</td><td>2 hours</td><td><code>agent:session:{session_id}</code></td><td>10-turn conversation history; extended on activity</td></tr>
+          <tr><td>Document chunks</td><td>Azure AI Search</td><td>Permanent</td><td>Index entry with version hash</td><td>Only re-indexed when source document changes</td></tr>
+          <tr><td>Embeddings</td><td>Azure AI Search</td><td>Permanent</td><td>Content hash-keyed index entries</td><td>Computed once at ingestion; never recomputed unless content changes</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-clock"></i>8.6 Data Freshness Guarantees</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Data</th><th>Source Refresh</th><th>DB Refresh</th><th>Dashboard Reflects</th><th>Acceptable?</th></tr></thead>
+        <tbody>
+          <tr><td>Risk status changes</td><td>GRC API: real-time (webhook) or batch (daily 02:00)</td><td>Immediately (webhook) or within 24h (batch)</td><td>Within Redis TTL (0–5 min)</td><td><span class="chip chip-low">Yes</span></td></tr>
+          <tr><td>Control test results</td><td>GRC API: batch (daily 02:00)</td><td>Daily at 02:00 ADF run</td><td>Within 5 min of ADF completion</td><td><span class="chip chip-low">Yes</span></td></tr>
+          <tr><td>RCSA assessment status</td><td>GRC API: batch (hourly during RCSA peak)</td><td>Hourly during peak</td><td>Within 5 min</td><td><span class="chip chip-low">Yes</span></td></tr>
+          <tr><td>TPRM vendor classification</td><td>TPRM webhook: real-time</td><td>Immediately via Service Bus</td><td>Within 1 min (SSE push)</td><td><span class="chip chip-low">Yes</span></td></tr>
+          <tr><td>User directory</td><td>Azure AD Graph API: nightly sync</td><td>Nightly at 00:30</td><td>Within 5 min of sync</td><td><span class="chip chip-low">Yes</span></td></tr>
+          <tr><td>Document corpus (PDFs)</td><td>Manual upload to Blob</td><td>Within 15 min of upload (Function trigger)</td><td>Immediately after re-index</td><td><span class="chip chip-low">Yes</span></td></tr>
+          <tr><td>Risk rating history</td><td>ADF: weekly snapshot (Sunday 01:00)</td><td>Weekly</td><td>Weekly</td><td><span class="chip chip-low">Yes</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 9: MODEL PLACEMENT ===== -->
+<section id="models">
+  <div class="section-header">
+    <div class="section-tag">Section 9</div>
+    <h2>Model Placement</h2>
+    <p>Which AI model is used for each task, why, and what the fallback is — with context window budgets and vendor rationale.</p>
+  </div>
+
+  <div class="card" style="border-left:3px solid var(--brandMid);margin-bottom:24px;">
+    <h4 style="color:var(--brandMid);">Design Principle</h4>
+    <p>Use the most capable model only where reasoning quality directly impacts output quality. Downgrade to faster/cheaper models for classification, extraction, and structured tasks. Never use an LLM where a deterministic function suffices.</p>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-brain"></i>9.1 Model Selection Decision Matrix</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Task</th><th>Model</th><th>Why This Model</th><th>Latency</th><th>Cost/Call</th><th>Fallback</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Agent chat — complex reasoning</strong></td><td><span class="chip chip-critical">GPT-4o (2024-11-20)</span></td><td>Multi-step reasoning across SQL results + document chunks + regulatory context requires full GPT-4o capability</td><td>3–12s (streaming masks it)</td><td>~€0.033–0.056</td><td>GPT-4o-mini (reduced quality)</td></tr>
+          <tr><td><strong>TPRM signal classification</strong></td><td><span class="chip chip-medium">GPT-4o-mini</span></td><td>Binary: "is this event risk-relevant?" + structured JSON extraction. No deep reasoning needed. 5× cheaper.</td><td>0.8–2s</td><td>~€0.0003</td><td>Rule-based fallback (flag all Critical reclassifications)</td></tr>
+          <tr><td><strong>Risk draft generation (TPRM)</strong></td><td><span class="chip chip-medium">GPT-4o-mini</span></td><td>Generate risk_title, risk_description, suggested_controls JSON. Structured output, short.</td><td>1–3s</td><td>~€0.001</td><td>Template fill-in with vendor name and classification</td></tr>
+          <tr><td><strong>Document embedding (ingestion)</strong></td><td><span class="chip chip-low">text-embedding-3-large</span></td><td>Best MTEB benchmark for domain-specific legal/risk text. Consistent with query-time embeddings.</td><td>0.5s per batch</td><td>~€0.000012/chunk</td><td>text-embedding-3-small (lower recall)</td></tr>
+          <tr><td><strong>Query embedding (RAG search)</strong></td><td><span class="chip chip-low">text-embedding-3-large</span></td><td>Must match ingestion model exactly for cosine similarity to be valid</td><td>0.3s</td><td>~€0.0000012/query</td><td>Must match — no fallback</td></tr>
+          <tr><td><strong>Intent classification (agent)</strong></td><td><span class="chip chip-critical">GPT-4o (inline)</span></td><td>Prompt routing is a function call within the main agent — same LLM call, no extra round-trip</td><td>0s extra</td><td>€0 extra</td><td>Keyword heuristics</td></tr>
+          <tr><td><strong>Text-to-SQL generation</strong></td><td><span class="chip chip-critical">GPT-4o (inline)</span></td><td>SQL generation for compliance/risk queries requires understanding complex relationships. Errors = wrong data shown to risk managers.</td><td>0s extra</td><td>€0 extra</td><td>Refuse query + prompt user to rephrase</td></tr>
+          <tr><td><strong>Trend detection</strong></td><td><span class="chip chip-low" style="background:#E4F2EB;color:#1A7A52;">scipy (no LLM)</span></td><td>Linear regression on 4–8 data points. Statistical, not semantic. LLM would add cost with no benefit.</td><td>&lt;1ms</td><td>€0</td><td>—</td></tr>
+          <tr><td><strong>RCSA due-date monitoring</strong></td><td><span class="chip chip-low" style="background:#E4F2EB;color:#1A7A52;">Rule-based Python</span></td><td>Date arithmetic. <code>due_date &lt; TODAY() + INTERVAL '14 days'</code></td><td>&lt;1ms</td><td>€0</td><td>—</td></tr>
+          <tr><td><strong>Notification content</strong></td><td><span class="chip chip-low" style="background:#E4F2EB;color:#1A7A52;">Jinja2 templates</span></td><td>Fixed-format reminder emails. Personalisation via template variables.</td><td>&lt;1ms</td><td>€0</td><td>—</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-shield-lock"></i>9.2 Why Azure OpenAI (not Anthropic API direct)</div>
+    <div class="card" style="background:var(--s1);">
+      <p style="font-size:13.5px;color:var(--ts);margin-bottom:12px;">Azure OpenAI is used — not the Anthropic API, OpenAI API, or any other public endpoint — for the following reasons:</p>
+      <ol style="padding-left:20px;font-size:13.5px;color:var(--ts);line-height:1.9;">
+        <li><strong>Data sovereignty:</strong> All processing stays within the client's Azure tenant. Anthropic's API is a public endpoint — transmitting client GRC data to it fails DPIA requirements for most EU financial institutions.</li>
+        <li><strong>Private Endpoints:</strong> Azure OpenAI can be locked behind a Private Endpoint with no public internet exposure. Not possible with the Anthropic API.</li>
+        <li><strong>Compliance:</strong> EU data residency guaranteed (Sweden/Netherlands Azure regions). Azure OpenAI has EU-specific data processing addenda.</li>
+        <li><strong>Existing commercial relationship:</strong> Most financial institutions already have Azure EA contracts covering Azure OpenAI consumption — no new vendor procurement required.</li>
+      </ol>
+      <p style="font-size:13px;color:var(--tm);margin-top:12px;border-top:1px solid var(--border);padding-top:10px;"><strong>Note:</strong> The LangChain architecture is model-agnostic. If the client later obtains Azure access to Claude models (available via Azure Marketplace), swapping in <code>AzureChatClaude</code> requires changing one configuration variable.</p>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-table"></i>9.3 Model Context Windows</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Model</th><th>Context Window</th><th>Max Output</th><th>Usage in This System</th></tr></thead>
+        <tbody>
+          <tr><td><strong>GPT-4o (2024-11-20)</strong></td><td>128,000 tokens</td><td>16,384 tokens</td><td>Agent chat (system + context + history + response)</td></tr>
+          <tr><td><strong>GPT-4o-mini</strong></td><td>128,000 tokens</td><td>16,384 tokens</td><td>TPRM signal classification + risk draft</td></tr>
+          <tr><td><strong>text-embedding-3-large</strong></td><td>8,191 tokens</td><td>3,072 dimensions</td><td>Document chunks (avg 400 tokens) + queries</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-chart-bar"></i>9.4 Context Budget — Typical Agent Turn</div>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:14px;">How the 128k context window is actually used in a typical agent interaction (standard query, no RAG):</p>
+    <div style="border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);margin-bottom:16px;">
+      <div style="display:flex;height:32px;">
+        <div style="width:12%;background:var(--brand);display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;" title="System prompt: 480 tokens">12%</div>
+        <div style="width:53%;background:#6D28D9;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;" title="Context injection: 2,100 tokens">53%</div>
+        <div style="width:33%;background:#9A6500;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;color:#fff;" title="Conversation history: 1,300 tokens">33%</div>
+        <div style="width:2%;background:var(--g);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:#fff;" title="User message: 80 tokens">2%</div>
+      </div>
+    </div>
+    <div style="display:flex;flex-wrap:wrap;gap:12px;margin-bottom:20px;font-size:12.5px;">
+      <div style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:var(--brand);border-radius:2px;display:inline-block;"></span><span><strong>System prompt</strong> — 480 tokens (12%)</span></div>
+      <div style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:#6D28D9;border-radius:2px;display:inline-block;"></span><span><strong>Context injection</strong> — 2,100 tokens (53%)</span></div>
+      <div style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:#9A6500;border-radius:2px;display:inline-block;"></span><span><strong>Conversation history</strong> — 1,300 tokens (33%)</span></div>
+      <div style="display:flex;align-items:center;gap:6px;"><span style="width:12px;height:12px;background:var(--g);border-radius:2px;display:inline-block;"></span><span><strong>User message</strong> — 80 tokens (2%)</span></div>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Budget Component</th><th>Tokens</th><th>% of Input</th><th>Contents</th></tr></thead>
+        <tbody>
+          <tr><td>System prompt</td><td>480</td><td>12%</td><td>Role definition, tool descriptions, rules, today's date, current_view</td></tr>
+          <tr><td>Context injection — top risks (area/process)</td><td>1,840</td><td>46%</td><td>8 risks × ~230 tokens each (ID, title, owner, ratings, next review)</td></tr>
+          <tr><td>Context injection — RCSA schedule</td><td>160</td><td>4%</td><td>Next 3 RCSA due dates for current area</td></tr>
+          <tr><td>Context injection — active TPRM signals</td><td>100</td><td>3%</td><td>2 pending signals summary</td></tr>
+          <tr><td>Conversation history (last 10 turns)</td><td>1,300</td><td>33%</td><td>Average 130 tokens per turn</td></tr>
+          <tr><td>User message (current turn)</td><td>80</td><td>2%</td><td>The actual question</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);"><td><strong>Total input</strong></td><td><strong>~3,960</strong></td><td><strong>100%</strong></td><td>Well within 128k limit; leaves room for tool observations</td></tr>
+          <tr><td>Response (output)</td><td>~540</td><td>—</td><td>Typically 400–700 tokens for a structured answer</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 10: TOKEN ECONOMICS ===== -->
+<section id="token-economics">
+  <div class="section-header">
+    <div class="section-tag">Section 10</div>
+    <h2>Token Economics</h2>
+    <p>Detailed token consumption per interaction type, monthly budget projections for a 50-user organisation, and optimisation strategies.</p>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-coin"></i>10.1 Azure OpenAI Pricing Reference (July 2026)</div>
+    <div class="card" style="border-left:3px solid var(--a);background:var(--ab);">
+      <p style="font-size:12.5px;color:var(--ts);margin-bottom:10px;"><strong>Prices in USD as published by Microsoft Azure for EU regions (Netherlands / Sweden). Converted to EUR at ≈0.93 rate for cost model in Section 11.</strong></p>
+      <div class="table-wrap" style="margin-bottom:0;">
+        <table>
+          <thead><tr><th>Model</th><th>Input (per 1M tokens)</th><th>Output (per 1M tokens)</th><th>Notes</th></tr></thead>
+          <tbody>
+            <tr><td><strong>GPT-4o (2024-11-20)</strong></td><td>$2.50</td><td>$10.00</td><td>Standard deployment; no PTU</td></tr>
+            <tr><td><strong>GPT-4o-mini</strong></td><td>$0.15</td><td>$0.60</td><td>TPRM classification + risk drafting</td></tr>
+            <tr><td><strong>text-embedding-3-large</strong></td><td>$0.13</td><td>—</td><td>Ingestion + query-time embeddings</td></tr>
+            <tr><td><strong>text-embedding-3-small</strong></td><td>$0.02</td><td>—</td><td>Fallback only</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-calculator"></i>10.2 Token Consumption Per Interaction Type</div>
+
+    <p style="font-size:13.5px;font-weight:700;color:var(--tp);margin-bottom:8px;margin-top:16px;">Agent Chat — Standard Query</p>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:10px;">Sample: <em>"What are the top 3 open risks in Payments with residual rating High or Critical?"</em></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Tokens</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>System prompt</td><td>480</td><td>Role, rules, current_view, today's date</td></tr>
+          <tr><td>Context injection — top risks (P-02)</td><td>1,840</td><td>8 risks × ~230 tokens each (ID, title, owner, ratings, next review)</td></tr>
+          <tr><td>Context injection — RCSA schedule</td><td>320</td><td>Next 3 RCSA due dates for P-02</td></tr>
+          <tr><td>Context injection — active TPRM signals</td><td>140</td><td>2 pending signals summary</td></tr>
+          <tr><td>Conversation history (10 prior turns)</td><td>1,240</td><td>Avg 124 tokens/turn</td></tr>
+          <tr><td>User message</td><td>28</td><td>"What are the top 3 open risks in Payments…"</td></tr>
+          <tr style="font-weight:600;"><td>Total input (pre-tool)</td><td>4,048</td><td></td></tr>
+          <tr><td>SQLQueryTool observation fed back</td><td>+220</td><td>SQL result JSON: 3 risk rows</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);"><td><strong>Total input after tool call</strong></td><td><strong>4,268</strong></td><td></td></tr>
+          <tr><td>Response (output)</td><td>520</td><td>3 risk summaries with IDs, ratings, recommended actions</td></tr>
+          <tr><td>Cost: input</td><td colspan="2"><strong>$0.0107</strong> — 4,268 × $2.50/1M</td></tr>
+          <tr><td>Cost: output</td><td colspan="2"><strong>$0.0052</strong> — 520 × $10/1M</td></tr>
+          <tr style="background:var(--brandLight);font-weight:700;"><td><strong>Cost per query</strong></td><td colspan="2"><strong>~$0.016</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:13.5px;font-weight:700;color:var(--tp);margin-bottom:8px;margin-top:20px;">Agent Chat — Document RAG Query</p>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:10px;">Sample: <em>"What does our policy say about escalating a Critical risk?"</em></p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Tokens</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>Standard prompt + context + history</td><td>3,780</td><td>As above minus risk context, plus generic KPIs</td></tr>
+          <tr><td>DocumentRAGTool: query embedding</td><td>12</td><td>"escalating a Critical risk"</td></tr>
+          <tr><td>DocumentRAGTool: top-5 chunks (reranked)</td><td>2,100</td><td>~420 tokens per chunk from Policy + RCSA Procedure</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);"><td><strong>Total input after tool call</strong></td><td><strong>5,892</strong></td><td></td></tr>
+          <tr><td>Response (output)</td><td>680</td><td>Policy citation with article reference</td></tr>
+          <tr style="background:var(--brandLight);font-weight:700;"><td><strong>Cost per query</strong></td><td colspan="2"><strong>~$0.021</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:13.5px;font-weight:700;color:var(--tp);margin-bottom:8px;margin-top:20px;">TPRM Signal Processing</p>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:10px;">Sample: Vendor "Acme Cloud Services" reclassified Standard → Critical</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Component</th><th>Tokens</th><th>Notes</th></tr></thead>
+        <tbody>
+          <tr><td>System prompt (classification)</td><td>220</td><td>Is this risk-relevant? Y/N</td></tr>
+          <tr><td>Vendor context: name, classification, services, processes, breach history</td><td>340</td><td>GPT-4o-mini input</td></tr>
+          <tr style="font-weight:600;"><td>Total input (classification)</td><td>560</td><td>GPT-4o-mini</td></tr>
+          <tr><td>Response (classification)</td><td>8</td><td><code>{"relevant": true, "confidence": 0.95}</code></td></tr>
+          <tr style="background:var(--s2);"><td colspan="3"></td></tr>
+          <tr><td>System prompt (risk drafting)</td><td>380</td><td>Role, output schema</td></tr>
+          <tr><td>Vendor context + affected processes</td><td>580</td><td>3 processes, breach history</td></tr>
+          <tr style="font-weight:600;"><td>Total input (risk draft)</td><td>960</td><td>GPT-4o-mini</td></tr>
+          <tr><td>Response (risk draft JSON)</td><td>420</td><td>title, description, likelihood, impact, controls, regulations</td></tr>
+          <tr><td>Cost (classification)</td><td colspan="2"><strong>$0.00008</strong> — 560 × $0.15/1M</td></tr>
+          <tr><td>Cost (risk draft)</td><td colspan="2"><strong>$0.00026</strong> — 960 × $0.15/1M + 420 × $0.60/1M</td></tr>
+          <tr style="background:var(--brandLight);font-weight:700;"><td><strong>Cost per TPRM signal</strong></td><td colspan="2"><strong>~$0.0003</strong> — 99% cheaper than using GPT-4o for this</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <p style="font-size:13.5px;font-weight:700;color:var(--tp);margin-bottom:8px;margin-top:20px;">Document Ingestion (One-Time)</p>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:10px;">Assumptions: 85 documents, average 42 pages, 400 tokens/page after extraction = 1,428,000 tokens total</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Tokens</th><th>Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Text extraction + chunking (no LLM)</td><td>—</td><td>$0</td></tr>
+          <tr><td>Embedding: text-embedding-3-large</td><td>1,428,000</td><td>$0.19</td></tr>
+          <tr><td>Azure AI Search indexing</td><td>—</td><td>Included in AI Search tier</td></tr>
+          <tr style="background:var(--brandLight);font-weight:700;"><td><strong>Total one-time ingestion cost</strong></td><td></td><td><strong>~$0.19</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12.5px;color:var(--ts);margin-top:8px;margin-bottom:20px;">Re-ingestion cost when a document is updated: proportional to changed document size. A 50-page policy update ≈ 21,000 tokens ≈ $0.003.</p>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-users"></i>10.3 Monthly Token Budget (Medium Organisation — 50 Users)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Interaction Type</th><th>Volume/Month</th><th>Tokens/Call</th><th>Monthly Tokens</th><th>Monthly Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Agent chat queries (standard)</td><td>4,000</td><td>4,800 in / 580 out</td><td>19.2M in / 2.3M out</td><td>$50.90</td></tr>
+          <tr><td>Document RAG queries (30% of chat)</td><td>1,200</td><td>6,200 in / 700 out</td><td>7.4M in / 0.8M out</td><td>$26.60</td></tr>
+          <tr><td>TPRM signal processing</td><td>80</td><td>1,520 in / 428 out</td><td>0.12M in / 0.03M out</td><td>$0.04</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--brandLight);"><td><strong>Total GPT-4o</strong></td><td></td><td></td><td>26.7M in / 3.1M out</td><td>$77.50</td></tr>
+          <tr style="font-weight:700;background:var(--s1);"><td><strong>Total GPT-4o-mini</strong></td><td></td><td></td><td>0.12M in / 0.03M out</td><td>$0.04</td></tr>
+          <tr><td>Query-time embeddings (agent RAG)</td><td>1,200</td><td>12 tokens</td><td>14,400</td><td>$0.002</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:#E4F2EB;"><td><strong>Total AI cost/month (medium org)</strong></td><td></td><td></td><td></td><td><strong>~$78</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card" style="background:var(--gb);border-left:3px solid var(--g);">
+      <h4 style="color:var(--g);">Cost Perspective</h4>
+      <p style="font-size:13.5px;color:var(--ts);">For comparison: a single Bloomberg Terminal subscription costs $27,000/year (~$2,250/month). This AI layer costs <strong>~$78/month</strong> for 50 users = <strong>$18.72/user/year</strong>. The ROI case is driven not by cost savings on the AI layer, but by time savings on manual GRC work — see Section 11 (Cost Model).</p>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-bulb"></i>10.4 Token Optimisation Strategies</div>
+    <div style="display:flex;flex-direction:column;gap:12px;">
+      <div class="card" style="border-left:3px solid var(--brandMid);">
+        <h4><span style="background:var(--brandLight);color:var(--brandMid);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-right:8px;">1</span>Context pruning</h4>
+        <p>Only inject the top 8 risks relevant to the current view (area or process). Don't inject all 300+ risks. Saves ~4,000 tokens per query — a 50% input token reduction for data-heavy queries.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--brandMid);">
+        <h4><span style="background:var(--brandLight);color:var(--brandMid);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-right:8px;">2</span>Conversation summarisation</h4>
+        <p>After 10 turns, summarise the conversation history with GPT-4o-mini (cheap), then continue with the summary instead of raw turns. Prevents unbounded context growth in long working sessions.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--brandMid);">
+        <h4><span style="background:var(--brandLight);color:var(--brandMid);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-right:8px;">3</span>Model downgrade for classification</h4>
+        <p>Use GPT-4o-mini for all intent classification and TPRM pre-filtering. 5× cheaper input, 16× cheaper output for tasks that don't require deep reasoning. Already implemented in the TPRM Signal Engine.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--brandMid);">
+        <h4><span style="background:var(--brandLight);color:var(--brandMid);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-right:8px;">4</span>Redis cache for repeated queries</h4>
+        <p>Agent queries are often repeated (e.g. "how many overdue RCSAs?" is asked by multiple 2LoD users on the same day). Cache final LLM responses by (query_hash + user_role + date) with TTL=1 hour. Potential 30–40% token reduction.</p>
+      </div>
+      <div class="card" style="border-left:3px solid var(--brandMid);">
+        <h4><span style="background:var(--brandLight);color:var(--brandMid);border-radius:50%;width:22px;height:22px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-right:8px;">5</span>Streaming vs. batch</h4>
+        <p>Use streaming (SSE) for interactive chat — better UX, same cost. Use batch completions for TPRM signals and scheduled analysis — allows grouping multiple events in one request for higher throughput.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 11: COST MODEL ===== -->
+<section id="cost-model">
+  <div class="section-header">
+    <div class="section-tag">Section 11</div>
+    <h2>Cost Model</h2>
+    <p>One-time engagement costs, monthly infrastructure costs, scale scenarios, and break-even analysis — all in Euros.</p>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-receipt"></i>11.1 One-Time Setup Costs (Accenture Engagement)</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Cost Category</th><th>Detail</th><th>Estimated Cost</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Accenture engagement fees</strong></td><td>~200 FTE-weeks × avg €1,800/day blended rate × 5 days/week</td><td>€1,800,000</td></tr>
+          <tr><td><strong>Travel &amp; expenses</strong></td><td>Estimated 10% of engagement fees (T&amp;M)</td><td>€180,000</td></tr>
+          <tr><td><strong>External pen test (Phase 5)</strong></td><td>One full application + API penetration test by accredited firm</td><td>€25,000–€40,000</td></tr>
+          <tr><td><strong>GRC platform API licence extension</strong></td><td>If client's GRC platform requires additional API tier for programmatic read access</td><td>€0–€30,000</td></tr>
+          <tr><td><strong>Training material production</strong></td><td>Video recording, e-learning module production (external studio)</td><td>€10,000–€20,000</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--brandLight);"><td><strong>Total one-time</strong></td><td></td><td><strong>€2,015,000–€2,070,000</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12.5px;color:var(--ts);margin-top:8px;padding:10px 14px;background:var(--s1);border-radius:var(--radius);border-left:3px solid var(--tm);">Note: The Accenture engagement fees assume a fully-dedicated team. A phased/part-time model with client co-delivery can reduce to approximately €1.2–1.5M.</p>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-server"></i>11.2 Monthly Infrastructure Cost (Steady-State, Post Go-Live)</div>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:14px;">Assumptions: EU West region (Netherlands), medium-scale deployment (~50–200 users, ~8 business processes per area, ~600 active risks).</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Azure Service</th><th>SKU / Config</th><th style="text-align:right;">Est. Monthly Cost</th></tr></thead>
+        <tbody>
+          <tr><td>Azure PostgreSQL Flexible Server</td><td>General Purpose, 8 vCores, 32GB RAM, 512GB storage</td><td style="text-align:right;">€420</td></tr>
+          <tr><td>Azure Container Apps (FastAPI)</td><td>~40M requests/month, 0.5 vCPU avg, 1GB RAM</td><td style="text-align:right;">€85</td></tr>
+          <tr><td>Azure API Management</td><td>Standard tier (1 unit)</td><td style="text-align:right;">€290</td></tr>
+          <tr><td>Azure AI Search</td><td>Standard S1 (1 replica, 1 partition)</td><td style="text-align:right;">€230</td></tr>
+          <tr><td>Azure Cache for Redis</td><td>C2 Standard (6GB)</td><td style="text-align:right;">€95</td></tr>
+          <tr><td>Azure Service Bus</td><td>Standard tier, ~100K messages/month</td><td style="text-align:right;">€10</td></tr>
+          <tr><td>Azure Data Factory</td><td>~3,000 activity runs/month</td><td style="text-align:right;">€45</td></tr>
+          <tr><td>Azure Functions</td><td>Consumption plan, ~500K executions/month</td><td style="text-align:right;">€8</td></tr>
+          <tr><td>Azure Durable Functions</td><td>Consumption plan, ~2K orchestrations/month</td><td style="text-align:right;">€5</td></tr>
+          <tr><td>Azure Blob Storage</td><td>~500GB hot tier + transactions</td><td style="text-align:right;">€30</td></tr>
+          <tr><td>Azure Static Web Apps</td><td>Standard</td><td style="text-align:right;">€9</td></tr>
+          <tr><td>Azure Communication Services</td><td>~5,000 emails/month</td><td style="text-align:right;">€5</td></tr>
+          <tr><td>Azure OpenAI — GPT-4o + GPT-4o-mini</td><td>~$78/month AI costs (see Section 10)</td><td style="text-align:right;">€72</td></tr>
+          <tr><td>Azure OpenAI — Embeddings</td><td>&lt;$1/month (incremental re-indexing only)</td><td style="text-align:right;">€1</td></tr>
+          <tr><td>Azure Key Vault</td><td>Standard, ~50K operations/month</td><td style="text-align:right;">€5</td></tr>
+          <tr><td>Azure Monitor + App Insights</td><td>~10GB ingestion/month</td><td style="text-align:right;">€30</td></tr>
+          <tr><td>Azure Active Directory</td><td>Existing client tenant — no additional cost</td><td style="text-align:right;">€0</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--brandLight);"><td><strong>Total Monthly Infrastructure</strong></td><td></td><td style="text-align:right;"><strong>~€1,340/month</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card" style="background:var(--gb);border-left:3px solid var(--g);">
+      <h4 style="color:var(--g);">Annual infrastructure cost: ~€16,080/year</h4>
+      <p style="font-size:13.5px;color:var(--ts);">For comparison: traditional GRC platform licensing (ServiceNow GRC, Archer, MetricStream) typically costs <strong>€150,000–€500,000/year</strong> for an equivalent user count. This AI layer adds <strong>€16,080/year</strong> on top of existing GRC spend — roughly 3–10% of the cost of replacing the underlying GRC platform.</p>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-chart-line"></i>11.3 Cost by Scale Scenario</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Scenario</th><th>Users</th><th>Active Risks</th><th>Agent Queries/Month</th><th>Monthly AI Cost</th><th>Monthly Infra</th><th style="text-align:right;">Monthly Total</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Small (pilot: 1–2 areas)</strong></td><td>15</td><td>~150</td><td>800</td><td>€15</td><td>€900</td><td style="text-align:right;font-weight:700;">€915</td></tr>
+          <tr><td><strong>Medium (full rollout)</strong></td><td>50</td><td>~600</td><td>4,000</td><td>€78</td><td>€1,340</td><td style="text-align:right;font-weight:700;">€1,418</td></tr>
+          <tr><td><strong>Large (group/holding)</strong></td><td>200</td><td>~2,500</td><td>18,000</td><td>€310</td><td>€2,100</td><td style="text-align:right;font-weight:700;">€2,410</td></tr>
+          <tr><td><strong>Enterprise (multi-entity)</strong></td><td>500</td><td>~8,000</td><td>50,000</td><td>€820</td><td>€4,200</td><td style="text-align:right;font-weight:700;">€5,020</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:12.5px;color:var(--ts);">Infrastructure scales roughly log-linearly (bigger PostgreSQL, more Container Apps replicas, AI Search S2 tier). AI costs scale linearly with query volume.</p>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-adjustments"></i>11.4 Cost Optimisation Options</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Optimisation</th><th>Implementation</th><th>Potential Saving</th><th>Trade-off</th></tr></thead>
+        <tbody>
+          <tr><td><strong>PTU (Provisioned Throughput Units) for GPT-4o</strong></td><td>Commit to 1 PTU ($290/month) — break-even at ~9M tokens input/month</td><td>30–50% at high volume</td><td>Upfront commitment; underutilised at low volume</td></tr>
+          <tr><td><strong>Redis caching of LLM responses</strong></td><td>Cache agent responses by (query_hash + role + date) TTL=1h</td><td>30–40% token reduction</td><td>Cache misses on novel queries; stale answers if data changes</td></tr>
+          <tr><td><strong>Downsize PostgreSQL during off-hours</strong></td><td>Scale to 4 vCores 10pm–6am via automation</td><td>€80/month</td><td>Adds operational complexity</td></tr>
+          <tr><td><strong>AI Search S1→Basic tier (small deployments)</strong></td><td>Reduces index capacity but sufficient for &lt;50K documents</td><td>€160/month</td><td>Limited replica/shard options; no semantic ranking</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-trending-up"></i>11.5 Break-Even Analysis</div>
+    <div class="card" style="margin-bottom:16px;">
+      <h4>Productivity savings assumptions</h4>
+      <p style="font-size:13.5px;color:var(--ts);margin-bottom:12px;">A 2LoD risk manager currently spends an estimated <strong>12–15 hours per week</strong> on manual GRC report compilation, RCSA follow-ups, and cross-area risk reviews. At an average fully-loaded cost of <strong>€90/hour</strong>, that is <strong>€56,160/year per 2LoD manager</strong>.</p>
+      <p style="font-size:13.5px;color:var(--ts);">If the ICS Cockpit reduces manual GRC work by <strong>40%</strong> (conservative estimate from comparable deployments), the annual saving per 2LoD manager is <strong>€22,464</strong>.</p>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Item</th><th style="text-align:right;">Value</th></tr></thead>
+        <tbody>
+          <tr><td>Annual saving: 4 × 2LoD risk managers × €22,464</td><td style="text-align:right;font-weight:600;">€89,856</td></tr>
+          <tr><td>Annual infrastructure cost</td><td style="text-align:right;">−€16,080</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--gb);"><td><strong>Net annual saving (Year 1+)</strong></td><td style="text-align:right;color:var(--g);"><strong>€73,776</strong></td></tr>
+          <tr><td>Engagement cost (one-time)</td><td style="text-align:right;">€2,050,000</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--brandLight);"><td><strong>Payback period</strong></td><td style="text-align:right;color:var(--brandMid);"><strong>~2.3 years</strong></td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="card" style="background:var(--s1);">
+      <h4>Additional value drivers (not quantified above)</h4>
+      <p style="font-size:13px;color:var(--ts);">Reduction in regulatory findings and associated remediation costs; faster RCSA cycle times (target: 20% reduction from automated reminders and workflow); improved audit trail completeness reducing external audit duration; 1LoD self-service reducing 2LoD query volume by an estimated 15–25%.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 12: ACTIVITY WALKTHROUGHS ===== -->
+<section id="walkthroughs">
+  <div class="section-header">
+    <div class="section-tag">Section 12</div>
+    <h2>Activity Walkthroughs</h2>
+    <p>Step-by-step swimlane walkthroughs of four key end-to-end activities — showing exactly what the system does and what each human actor does at each step.</p>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-route"></i>12.1 Walkthrough: RCSA Assessment Lifecycle (End-to-End)</div>
+    <p style="font-size:13px;color:var(--ts);margin-bottom:14px;">From automated due-date detection through 1LoD completion to 2LoD approval and audit trail creation:</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>System Action</th><th>Component</th><th>Human Actor</th><th>Role</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>RCSA due date approaches (D-14)</td><td>RCSA Due-Date Monitor (Azure Function, daily 07:00)</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>Function detects assessment due in 14 days; status = Not Started</td></tr>
+          <tr><td>2</td><td>Workflow task created</td><td>1LoD Workflow Engine (Durable Function)</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>Creates workflow_tasks record; starts orchestration timer</td></tr>
+          <tr><td>3</td><td>Reminder email sent</td><td>Notification service (Azure Communication Services)</td><td>1LoD Process Owner</td><td><span class="chip chip-low">Client</span></td><td>Receives email: "Your RCSA for [Process] is due in 14 days. Click here to start."</td></tr>
+          <tr><td>4</td><td>—</td><td>—</td><td>1LoD Process Owner</td><td><span class="chip chip-low">Client</span></td><td>Clicks link; logs in via SSO; navigates to process detail</td></tr>
+          <tr><td>5</td><td>POST /api/assessments/start</td><td>FastAPI + Durable Function</td><td>1LoD Process Owner</td><td><span class="chip chip-low">Client</span></td><td>Clicks "Start ICS Assessment" button; status changes to In Progress</td></tr>
+          <tr><td>6</td><td>Assessment form rendered</td><td>React frontend</td><td>1LoD Process Owner</td><td><span class="chip chip-low">Client</span></td><td>Reviews pre-populated risk list; updates status per control; adds comments</td></tr>
+          <tr><td>7</td><td>D-3 check</td><td>Durable Function timer</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>If still Not Started at D-3: escalation email to 1LoD + their manager</td></tr>
+          <tr><td>8</td><td>1LoD submits assessment</td><td>POST /api/assessments/submit</td><td>1LoD Process Owner</td><td><span class="chip chip-low">Client</span></td><td>Clicks "Submit to 2LoD"; status = 1LoD Complete; 2LoD notified via email + SSE</td></tr>
+          <tr><td>9</td><td>Completion notification</td><td>Notification service</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Receives email: "[Process] RCSA submitted by [owner]. Review due by [date]."</td></tr>
+          <tr><td>10</td><td>2LoD reviews</td><td>GET /api/processes/{process_id}</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Opens dashboard; reviews risk ratings, control effectiveness, 1LoD comments</td></tr>
+          <tr><td>11</td><td>AI assist</td><td>POST /api/agent/chat</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Asks agent: "Summarise key gaps in this RCSA vs. prior quarter." Agent compares current ratings to risk_rating_history.</td></tr>
+          <tr><td>12</td><td>2LoD approves</td><td>PUT /api/assessments/{id}/complete</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Clicks "Approve RCSA"; status = Completed; cycle closed</td></tr>
+          <tr><td>13</td><td>Audit trail</td><td>agent_audit_log + assessment record</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>Full audit: who started, who submitted, who approved, timestamps, all agent queries</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-building-store"></i>12.2 Walkthrough: TPRM Vendor Signal → New Risk</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>System Action</th><th>Component</th><th>Human Actor</th><th>Role</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Vendor reclassified</td><td>TPRM Tool (client system)</td><td>TPRM Analyst</td><td><span class="chip chip-low">Client</span></td><td>Changes vendor_classification from Standard → Critical in TPRM tool</td></tr>
+          <tr><td>2</td><td>Webhook fired</td><td>TPRM Tool webhook</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>HTTP POST to Azure Function endpoint</td></tr>
+          <tr><td>3</td><td>Event validated + queued</td><td>Azure Function + Service Bus</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>HMAC signature validated; message published to tprm-events topic</td></tr>
+          <tr><td>4</td><td>Signal engine triggered</td><td>TPRMSignalEngine</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>Service Bus message consumed; pre-filter passes; vendor context fetched</td></tr>
+          <tr><td>5</td><td>Risk draft generated</td><td>GPT-4o-mini</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>LLM drafts risk_title, risk_description, inherent ratings, suggested controls JSON (~$0.0003)</td></tr>
+          <tr><td>6</td><td>Signal persisted</td><td>PostgreSQL (tprm_signals table)</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>Signal created: status=Pending, linked to vendor</td></tr>
+          <tr><td>7</td><td>Real-time push</td><td>SSE stream</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Banner appears: "1 new TPRM signal: Acme Cloud Services reclassified as Critical"</td></tr>
+          <tr><td>8</td><td>Signal review</td><td>React: TPRM signal panel</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Opens panel; reads AI-drafted risk; reviews vendor context, affected processes</td></tr>
+          <tr><td>9</td><td>AI consultation (optional)</td><td>POST /api/agent/chat</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Asks: "What DORA obligations arise from a Critical ICT third-party?" Agent queries DocumentRAGTool</td></tr>
+          <tr><td>10a</td><td>Accept signal</td><td>PUT /api/tprm/signals/{id}/accept</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Clicks Accept (with or without edits); draft risk created in risks table</td></tr>
+          <tr><td>10b</td><td>Reject signal</td><td>PUT /api/tprm/signals/{id}/reject</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Provides reason; signal closed; no risk created</td></tr>
+          <tr><td>11</td><td>Risk owner notified</td><td>Notification service</td><td>GRC Domain Expert (Accenture, hypercare) / 2LoD (post-hypercare)</td><td><span class="chip chip-high">Both</span></td><td>Email: "New risk created from TPRM signal. Assign risk owner."</td></tr>
+          <tr><td>12</td><td>Risk assigned</td><td>PUT /api/risks/{id}</td><td>2LoD Risk Manager</td><td><span class="chip chip-low">Client</span></td><td>Updates risk_owner_id; schedules next_review_date</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-message-chatbot"></i>12.3 Walkthrough: Agent Chat — Gap Summary for Board Report</div>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>System Action</th><th>Component</th><th>Human Actor</th><th>Role</th><th>Action</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>—</td><td>—</td><td>Head of Risk (2LoD)</td><td><span class="chip chip-low">Client</span></td><td>Opens Overview tab; clicks Quick Prompt G-03 "Draft Q3 gap summary"</td></tr>
+          <tr><td>2</td><td>POST /api/agent/chat</td><td>FastAPI</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>Request received; JWT validated; role confirmed as 2LoD (all areas)</td></tr>
+          <tr><td>3</td><td>Session loaded</td><td>Redis</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>New session (first query); empty history</td></tr>
+          <tr><td>4</td><td>Prompt assembled</td><td>LangChain agent</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>System prompt (480t) + full KPI context (2,100t) + user message (74t) = 2,654 input tokens</td></tr>
+          <tr><td>5</td><td>Intent classified</td><td>LangChain tool router</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>"Structured analysis" query → SQLQueryTool called for 4 sub-questions in parallel</td></tr>
+          <tr><td>6</td><td>SQL queries executed</td><td>PostgreSQL (read-only)</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>4 queries: open risks by area/rating, ineffective controls, overdue RCSAs, appetite breaches</td></tr>
+          <tr><td>7</td><td>Results fed back</td><td>LangChain → GPT-4o</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>SQL results (~800 tokens) added as tool observations; total input ~3,454 tokens</td></tr>
+          <tr><td>8</td><td>GPT-4o generates summary</td><td>Azure OpenAI</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>Executive gap summary: ~900 tokens. Streams via SSE. Cost: ~$0.018</td></tr>
+          <tr><td>9</td><td>Summary rendered</td><td>React (SSE client)</td><td>Head of Risk</td><td><span class="chip chip-low">Client</span></td><td>Reads streaming response; sees structured summary with area breakdowns</td></tr>
+          <tr><td>10</td><td>Human refinement</td><td>—</td><td>Head of Risk</td><td><span class="chip chip-low">Client</span></td><td>Copies summary to Word; adds management commentary; presents to CRO</td></tr>
+          <tr><td>11</td><td>Session turn saved</td><td>Redis</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>Turn appended to session; TTL extended 2 hours</td></tr>
+          <tr><td>12</td><td>Agent audit logged</td><td>PostgreSQL (agent_audit_log)</td><td>—</td><td><span class="chip chip-medium">Automated</span></td><td>Logs: user_id, session_id, message_hash, tool_calls, tokens_used, response_hash, timestamp</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div class="subsec">
+    <div class="subsec-title"><i class="ti ti-database"></i>12.4 Walkthrough: Risk Data — From GRC Platform to Heatmap</div>
+    <p style="font-size:13.5px;font-weight:700;color:var(--tp);margin-bottom:8px;">Initial Setup (Phase 1, one-time):</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Step</th><th>Who</th><th>Action</th><th>Timeline</th></tr></thead>
+        <tbody>
+          <tr><td>1</td><td>Data Eng 1 (Accenture)</td><td>Obtain GRC platform API docs + sandbox credentials from GRC System Admin (client)</td><td>Week 5</td></tr>
+          <tr><td>2</td><td>GRC System Admin (client)</td><td>Provide API endpoint, auth credentials, entity schemas, sample 100-record extracts</td><td>Week 5</td></tr>
+          <tr><td>3</td><td>Data Eng 1 (Accenture)</td><td>Build GRCConnector abstract class; implement concrete ServiceNowAdapter</td><td>Weeks 5–6</td></tr>
+          <tr><td>4</td><td>GRC Domain Expert (Accenture)</td><td>Validate field mapping: client's GRC "risk score" → our inherent_likelihood × inherent_impact logic</td><td>Week 6</td></tr>
+          <tr><td>5</td><td>Risk Management SME (client)</td><td>Confirm heatmap thresholds: Critical=score≥15, High=score≥9, Medium=score≥4, Low=score&lt;4</td><td>Week 6</td></tr>
+          <tr><td>6</td><td>Data Eng 1 (Accenture)</td><td>Define ADF pipeline: source (GRC API) → staging table → dbt → core risks table. Include watermark column (updated_at)</td><td>Week 7</td></tr>
+          <tr><td>7</td><td>Data Eng 2 (Accenture)</td><td>Deploy PostgreSQL schema; run initial full load; validate record counts vs. GRC platform</td><td>Weeks 7–8</td></tr>
+          <tr><td>8</td><td>GRC Domain Expert (Accenture)</td><td>Run data quality report: check for nulls in mandatory fields, validate area_id mapping to P-01–P-06</td><td>Weeks 8–9</td></tr>
+          <tr><td>9</td><td>Risk Management SME (client)</td><td>Review data quality report; identify exceptions; coordinate fixes in source GRC system</td><td>Weeks 9–10</td></tr>
+          <tr><td>10</td><td>Data Eng 1 (Accenture)</td><td>Switch ADF pipeline to incremental mode (watermark); schedule daily run at 02:00</td><td>Week 10</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p style="font-size:13.5px;font-weight:700;color:var(--tp);margin-bottom:8px;margin-top:20px;">Ongoing Operation (fully automated — no manual steps required):</p>
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Schedule</th><th>System Action</th><th>Component</th><th>Output</th></tr></thead>
+        <tbody>
+          <tr><td>Daily 02:00</td><td>GRC Connector polls API: <code>GET /risks?updated_after={last_watermark}</code></td><td>ADF + Python connector</td><td>Changed risks written to staging table</td></tr>
+          <tr><td>Daily 02:05</td><td>dbt runs staging → core transformation; applies validation tests</td><td>dbt Core</td><td>risks table updated; invalid rows flagged to App Insights alert</td></tr>
+          <tr><td>Daily 02:15</td><td>ADF pipeline completes; App Insights metric logged</td><td>Azure Monitor</td><td>Dashboard pipeline health metric = Green</td></tr>
+          <tr><td>On demand</td><td>User loads Overview tab; React Query checks if heatmap cache is stale</td><td>Redis</td><td>Cache HIT: &lt;5ms response. Cache MISS: PostgreSQL query + reshape + Redis write ~120ms</td></tr>
+        </tbody>
+      </table>
     </div>
   </div>
 </section>
