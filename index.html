@@ -258,6 +258,11 @@ section { padding-top: 16px; margin-bottom: 40px; }
 .roi-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 20px; }
 .roi-val { font-size: 24px; font-weight: 800; }
 .roi-lbl { font-size: 12px; opacity: .7; margin-top: 3px; }
+.roi-headline { font-size: 15px; font-weight: 700; margin-bottom: 16px; opacity: .9; }
+.roi-metric { display: flex; flex-direction: column; }
+.roi-value { font-size: 26px; font-weight: 800; }
+.roi-label { font-size: 12px; opacity: .7; margin-top: 3px; }
+.roi-note { font-size: 12px; opacity: .75; margin-top: 16px; line-height: 1.6; border-top: 1px solid rgba(255,255,255,.25); padding-top: 12px; }
 
 /* JOURNEY PLAYER */
 .journey-player { background: var(--surface); border-radius: var(--radiusL); border: 1px solid var(--border); overflow: hidden; margin-bottom: 28px; }
@@ -624,7 +629,7 @@ details.collapsible > div.details-body { padding: 16px; }
         <tbody>
           <tr><td>Client Data Requirements</td><td>All GRC system entities, TPRM data, organisational data, and document corpus required before any feature can be built. Includes a 30-item Data Readiness Checklist.</td><td><a href="#data" style="color:var(--brandMid);">Data Requirements</a></td></tr>
           <tr><td>AI Infrastructure Architecture</td><td>Full Azure architecture: PostgreSQL, Azure AI Search, Container Apps, Azure OpenAI, Durable Functions, APIM, Redis, Service Bus, Key Vault — with security, RBAC, and network design.</td><td><a href="#architecture" style="color:var(--brandMid);">Architecture</a></td></tr>
-          <tr><td>Implementation Roadmap</td><td>Six-phase, 28-week delivery plan with phase cards, Gantt timeline, staffing profile, risk register, and governance cadence.</td><td><a href="#roadmap" style="color:var(--brandMid);">Roadmap &amp; Gantt</a></td></tr>
+          <tr><td>Implementation Roadmap</td><td><span id="roadmap-desc-pill">Six-phase, 28-week</span> delivery plan with phase cards, Gantt timeline, staffing profile, risk register, and governance cadence. Scope adapts to selected maturity level.</td><td><a href="#roadmap" style="color:var(--brandMid);">Roadmap &amp; Gantt</a></td></tr>
         </tbody>
       </table>
     </div>
@@ -745,7 +750,7 @@ details.collapsible > div.details-body { padding: 16px; }
 
     <!-- Accenture panel -->
     <div>
-      <div class="team-panel-head accenture-head"><i class="ti ti-building"></i>Accenture Delivery Team (10 Roles)</div>
+      <div class="team-panel-head accenture-head"><i class="ti ti-building"></i>Accenture Delivery Team (<span id="team-role-count">10</span> Roles)</div>
       <div class="role-grid" style="grid-template-columns:1fr;">
 
         <!-- Consulting Practice Group -->
@@ -895,7 +900,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="client-needs"><div class="client-needs-label">Needs from Accenture</div><div style="font-size:12px;color:var(--ts);">Terraform plan (Ph0 W3), network architecture diagram (Ph0 W3), access matrix (Ph0 W2)</div></div>
         </div>
 
-        <div class="role-card client-card">
+        <div class="role-card client-card" data-min-level="2">
           <div class="role-card-header">
             <div><div class="role-name">Data Protection Officer</div><div class="role-seniority">DPO / Privacy Officer</div><div class="role-practice">Legal &amp; Compliance</div></div>
             <span class="fte-badge">1 day/wk Ph0–1</span>
@@ -905,7 +910,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="client-needs"><div class="client-needs-label">Needs from Accenture</div><div style="font-size:12px;color:var(--ts);">DPIA template (Ph0 W3), data flow diagram (Ph0 W4), LLM data handling spec (Ph3 W14)</div></div>
         </div>
 
-        <div class="role-card client-card">
+        <div class="role-card client-card" data-min-level="3">
           <div class="role-card-header">
             <div><div class="role-name">1LoD Champion</div><div class="role-seniority">Business manager (1 of 6 areas)</div><div class="role-practice">Business Operations</div></div>
             <span class="fte-badge">2–3 days Ph4–5</span>
@@ -998,7 +1003,7 @@ details.collapsible > div.details-body { padding: 16px; }
   <div class="section-header">
     <div class="section-tag">Section 3</div>
     <h2>Roadmap &amp; Gantt</h2>
-    <p>Six-phase, 28-week delivery plan with phase gates, Gantt timeline, risk register, and governance cadence.</p>
+    <p id="roadmap-section-desc">Six-phase, 28-week delivery plan with phase gates, Gantt timeline, risk register, and governance cadence. Scope adjusts with selected maturity level.</p>
   </div>
 
   <div class="subsec">
@@ -1142,7 +1147,7 @@ details.collapsible > div.details-body { padding: 16px; }
   </div>
 
   <div class="subsec">
-    <div class="subsec-title"><i class="ti ti-timeline"></i>Visual Gantt — W01 to W28</div>
+    <div class="subsec-title"><i class="ti ti-timeline"></i>Visual Gantt — <span id="gantt-title-weeks">W01 to W28</span></div>
     <div class="level-ctx-banner lcb-ok" id="gantt-scope-banner" style="margin-bottom:10px;">
       <span class="lcb-icon">✓</span>
       <span id="gantt-scope-text">L3 (Base Case) — Full scope: W1–W28 · All 6 phases active (Ph0–Ph5). Phases not applicable at the selected level are grayed out.</span>
@@ -1157,14 +1162,14 @@ details.collapsible > div.details-body { padding: 16px; }
         <div class="gl ms-lbl" style="grid-column:1;grid-row:2;">◆ Milestones</div>
         <div class="gms" style="grid-column:5;grid-row:2;" title="W4: Project Charter + ADR signed"><div class="gms-d" style="background:#2A5298;"></div></div>
         <div class="gms" style="grid-column:9;grid-row:2;" title="W8: Data quality report accepted"><div class="gms-d" style="background:#1A7A52;"></div></div>
-        <div class="gms" style="grid-column:11;grid-row:2;" title="W10: All GRC pipelines stable (5 days)"><div class="gms-d" style="background:#1A7A52;"></div></div>
+        <div class="gms" data-gantt-min-level="2" style="grid-column:11;grid-row:2;" title="W10: All GRC pipelines stable — L2+"><div class="gms-d" style="background:#1A7A52;"></div></div>
         <div class="gms" style="grid-column:13;grid-row:2;" title="W12: Static dashboard design sign-off"><div class="gms-d" style="background:#1A7A52;"></div></div>
-        <div class="gms" style="grid-column:17;grid-row:2;" title="W16: Dashboard v1.0 live — real data"><div class="gms-d" style="background:#6D28D9;"></div></div>
-        <div class="gms" style="grid-column:19;grid-row:2;" title="W18: DPIA signed by DPO"><div class="gms-d" style="background:#9A6500;"></div></div>
-        <div class="gms" style="grid-column:21;grid-row:2;" title="W20: AI agent: 80% test set pass"><div class="gms-d" style="background:#9A6500;"></div></div>
-        <div class="gms" style="grid-column:25;grid-row:2;" title="W24: Full workflow + RBAC validated"><div class="gms-d" style="background:#B4322A;"></div></div>
-        <div class="gms" style="grid-column:27;grid-row:2;" title="W26: UAT sign-off obtained"><div class="gms-d" style="background:#3A4657;"></div></div>
-        <div class="gms" style="grid-column:29;grid-row:2;" title="W28: GO-LIVE"><span style="font-size:16px;color:#B8860B;font-weight:800;line-height:1;">★</span></div>
+        <div class="gms" data-gantt-min-level="2" style="grid-column:17;grid-row:2;" title="W16: Dashboard v1.0 live — real data (L2+)"><div class="gms-d" style="background:#6D28D9;"></div></div>
+        <div class="gms" data-gantt-min-level="3" style="grid-column:19;grid-row:2;" title="W18: DPIA signed by DPO (L3+)"><div class="gms-d" style="background:#9A6500;"></div></div>
+        <div class="gms" data-gantt-min-level="3" style="grid-column:21;grid-row:2;" title="W20: AI agent: 80% test set pass (L3+)"><div class="gms-d" style="background:#9A6500;"></div></div>
+        <div class="gms" data-gantt-min-level="4" style="grid-column:25;grid-row:2;" title="W24: Full workflow + RBAC validated (L4+)"><div class="gms-d" style="background:#B4322A;"></div></div>
+        <div class="gms" data-gantt-min-level="3" style="grid-column:27;grid-row:2;" title="W26: UAT sign-off obtained (L3+)"><div class="gms-d" style="background:#3A4657;"></div></div>
+        <div class="gms" data-gantt-min-level="3" style="grid-column:29;grid-row:2;" title="W28: GO-LIVE (L3+)"><span style="font-size:16px;color:#B8860B;font-weight:800;line-height:1;">★</span></div>
 
         <!-- PHASE 0 (row 3) W1-W4 → grid-column 2/6 -->
         <div class="gl ph" style="grid-column:1;grid-row:3;">Ph0 — Discovery</div>
@@ -1186,9 +1191,9 @@ details.collapsible > div.details-body { padding: 16px; }
         <div class="gl sub" style="grid-column:1;grid-row:8;" data-gantt-min-level="3">→ Document Ingestion</div>
         <div class="gc" style="grid-column:10/14;grid-row:8;" data-gantt-min-level="3"><div class="gbar sub" style="background:#6ab890;"></div></div>
 
-        <!-- PHASE 2 (row 9) W9-W16 → 10/18 -->
-        <div class="gl ph" style="grid-column:1;grid-row:9;">Ph2 — Core Dashboard</div>
-        <div class="gc" style="grid-column:10/18;grid-row:9;"><div class="gbar ph" style="background:#6D28D9;"></div></div>
+        <!-- PHASE 2 (row 9) W9-W16 → 10/18 — L2+ for connected dashboard -->
+        <div class="gl ph" style="grid-column:1;grid-row:9;" data-gantt-min-level="2">Ph2 — Core Dashboard</div>
+        <div class="gc" style="grid-column:10/18;grid-row:9;" data-gantt-min-level="2"><div class="gbar ph" style="background:#6D28D9;"></div></div>
         <!-- API skeleton (row 10) W9-W11 → 10/13 — L2+ FastAPI -->
         <div class="gl sub" style="grid-column:1;grid-row:10;" data-gantt-min-level="2">→ API skeleton + Auth</div>
         <div class="gc" style="grid-column:10/13;grid-row:10;" data-gantt-min-level="2"><div class="gbar sub" style="background:#a97ee8;"></div></div>
@@ -2738,18 +2743,18 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
         <table>
           <thead><tr><th>Task</th><th>Model</th><th>Why</th><th>Latency</th><th>Cost/Call</th><th>Fallback</th></tr></thead>
           <tbody>
-            <tr><td><strong>Agent chat — complex reasoning</strong></td><td><span class="chip chip-critical">GPT-4o</span></td><td>Multi-step reasoning across SQL + document chunks + regulatory context</td><td>3–12s (SSE masks)</td><td>~€0.033–0.056</td><td>GPT-4o-mini (reduced quality)</td></tr>
-            <tr><td><strong>TPRM signal classification</strong></td><td><span class="chip chip-medium">GPT-4o-mini</span></td><td>Binary: "is this risk-relevant?" + structured JSON. No deep reasoning needed. 5× cheaper.</td><td>0.8–2s</td><td>~€0.0003</td><td>Rule-based (flag all Critical reclassifications)</td></tr>
-            <tr><td><strong>Risk draft generation (TPRM)</strong></td><td><span class="chip chip-medium">GPT-4o-mini</span></td><td>Structured output, short form. No multi-hop reasoning required.</td><td>1–3s</td><td>~€0.001</td><td>Template fill-in with vendor name</td></tr>
-            <tr><td><strong>Document embedding (ingestion)</strong></td><td><span class="chip chip-low">text-embedding-3-large</span></td><td>Best MTEB benchmark for legal/risk text. Must match query-time embeddings.</td><td>0.5s/batch</td><td>~€0.000012/chunk</td><td>text-embedding-3-small (lower recall)</td></tr>
-            <tr><td><strong>Trend detection</strong></td><td><span class="chip chip-low" style="background:#E4F2EB;color:#1A7A52;">scipy (no LLM)</span></td><td>Linear regression on 4–8 data points. Statistical, not semantic.</td><td>&lt;1ms</td><td>€0</td><td>—</td></tr>
-            <tr><td><strong>RCSA due-date monitoring</strong></td><td><span class="chip chip-low" style="background:#E4F2EB;color:#1A7A52;">Rule-based Python</span></td><td>Date arithmetic: <code>due_date &lt; TODAY() + INTERVAL '14 days'</code></td><td>&lt;1ms</td><td>€0</td><td>—</td></tr>
-            <tr><td><strong>Notification content</strong></td><td><span class="chip chip-low" style="background:#E4F2EB;color:#1A7A52;">Jinja2 templates</span></td><td>Fixed-format reminder emails. Personalisation via template variables.</td><td>&lt;1ms</td><td>€0</td><td>—</td></tr>
+            <tr data-min-level="3"><td><strong>Agent chat — complex reasoning</strong></td><td><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i><span class="chip chip-critical">GPT-4o</span></td><td>Multi-step reasoning across SQL + document chunks + regulatory context</td><td>3–12s (SSE masks)</td><td>~€0.033–0.056</td><td>GPT-4o-mini (reduced quality)</td></tr>
+            <tr data-min-level="3"><td><strong>TPRM signal classification</strong></td><td><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i><span class="chip chip-medium">GPT-4o-mini</span></td><td>Binary: "is this risk-relevant?" + structured JSON. No deep reasoning needed. 5× cheaper.</td><td>0.8–2s</td><td>~€0.0003</td><td>Rule-based (flag all Critical reclassifications)</td></tr>
+            <tr data-min-level="3"><td><strong>Risk draft generation (TPRM)</strong></td><td><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i><span class="chip chip-medium">GPT-4o-mini</span></td><td>Structured output, short form. No multi-hop reasoning required.</td><td>1–3s</td><td>~€0.001</td><td>Template fill-in with vendor name</td></tr>
+            <tr data-min-level="3"><td><strong>Document embedding (ingestion)</strong></td><td><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i><span class="chip chip-low">text-embedding-3-large</span></td><td>Best MTEB benchmark for legal/risk text. Must match query-time embeddings.</td><td>0.5s/batch</td><td>~€0.000012/chunk</td><td>text-embedding-3-small (lower recall)</td></tr>
+            <tr data-min-level="2"><td><strong>Trend detection</strong></td><td><i class="ti ti-brand-python brand-icon" style="color:#3776AB;"></i><span class="chip chip-low" style="background:#E4F2EB;color:#1A7A52;">scipy (no LLM)</span></td><td>Linear regression on 4–8 data points. Statistical, not semantic.</td><td>&lt;1ms</td><td>€0</td><td>—</td></tr>
+            <tr data-min-level="2"><td><strong>RCSA due-date monitoring</strong></td><td><i class="ti ti-brand-python brand-icon" style="color:#3776AB;"></i><span class="chip chip-low" style="background:#E4F2EB;color:#1A7A52;">Rule-based Python</span></td><td>Date arithmetic: <code>due_date &lt; TODAY() + INTERVAL '14 days'</code></td><td>&lt;1ms</td><td>€0</td><td>—</td></tr>
+            <tr data-min-level="2"><td><strong>Notification content</strong></td><td><i class="ti ti-brand-python brand-icon" style="color:#3776AB;"></i><span class="chip chip-low" style="background:#E4F2EB;color:#1A7A52;">Jinja2 templates</span></td><td>Fixed-format reminder emails. Personalisation via template variables.</td><td>&lt;1ms</td><td>€0</td><td>—</td></tr>
           </tbody>
         </table>
       </div>
       <div class="card" style="background:var(--s1);margin-top:4px;">
-        <h4>Why Azure OpenAI (not Anthropic API direct)</h4>
+        <h4><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;font-size:15px;"></i> <i class="ti ti-brand-openai brand-icon" style="color:#10a37f;font-size:15px;"></i> Why Azure OpenAI (not Anthropic API direct)</h4>
         <ol style="padding-left:20px;font-size:13.5px;color:var(--ts);line-height:1.9;">
           <li><strong>Data sovereignty:</strong> All processing stays within the client's Azure tenant. Anthropic's API is a public endpoint — transmitting client GRC data to it fails DPIA requirements for most EU financial institutions.</li>
           <li><strong>Private Endpoints:</strong> Azure OpenAI can be locked behind a Private Endpoint with no public internet exposure.</li>
@@ -3110,6 +3115,10 @@ useEffect(() =&gt; {
     <h2>Cost &amp; ROI</h2>
     <p>Project investment, infrastructure costs, and business case for the ICS Cockpit implementation.</p>
   </div>
+  <div class="level-ctx-banner lcb-warn" style="margin-bottom:18px;">
+    <span class="lcb-icon">⚠</span>
+    <span>Cost &amp; ROI figures shown are <strong>L3 (Base Case) specific</strong> — <span id="cost-level-note">€2.4M implementation, 28 weeks, 10 roles. Select a different level above to see the headline investment in the Overview section.</span></span>
+  </div>
 
   <!-- ROI Card -->
   <div class="roi-card">
@@ -3128,8 +3137,8 @@ useEffect(() =&gt; {
         <div class="roi-label">Annual Infra Cost</div>
       </div>
       <div class="roi-metric">
-        <div class="roi-value">40%</div>
-        <div class="roi-label">RCSA Cycle Time Reduction</div>
+        <div class="roi-value">35%</div>
+        <div class="roi-label">2LoD Analyst Time Saving</div>
       </div>
     </div>
     <div class="roi-note">Quantified savings based on 4 2LoD risk analysts + 8 process owners at market-loaded rates. Payback ~7 years on quantified savings alone — primary investment driver is DORA Article 30 compliance and material-finding avoidance, where one regulatory action can represent 8–10× the implementation cost. At larger institutions (10+ analysts) payback compresses to ~4 years.</div>
@@ -3180,7 +3189,7 @@ useEffect(() =&gt; {
           <tr><td>Phase 3 — AI Layer</td><td>W13–20</td><td>PM, AI/ML Eng, BE1, SA (part), GRC (part)</td><td>~220</td><td>€2,100</td><td>€462,000</td></tr>
           <tr><td>Phase 4 — Workflow &amp; Actions</td><td>W17–24</td><td>PM, BE2, FE1, FE2, CM Lead</td><td>~200</td><td>€2,000</td><td>€400,000</td></tr>
           <tr><td>Phase 5 — Hardening &amp; Rollout</td><td>W21–28</td><td>PM, Security, CM Lead (full), SA, BE (part)</td><td>~160</td><td>€2,200</td><td>€352,000</td></tr>
-          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--s1);"><td><strong>Accenture fees</strong></td><td><strong>28 weeks</strong></td><td>9 roles</td><td><strong>~1,000</strong></td><td><strong>€2,150 avg</strong></td><td><strong>€2,146,000</strong></td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--s1);"><td><strong>Accenture fees</strong></td><td><strong>28 weeks</strong></td><td>10 roles</td><td><strong>~1,000</strong></td><td><strong>€2,150 avg</strong></td><td><strong>€2,146,000</strong></td></tr>
           <tr><td>Travel &amp; Expenses (T&amp;E)</td><td colspan="4">~10% of fees (on-site client visits, workshops, UAT sessions)</td><td>€215,000</td></tr>
           <tr><td>External penetration test</td><td colspan="4">Accredited security firm — full web app + API scope</td><td>€30,000</td></tr>
           <tr style="font-weight:700;background:var(--brandLight);"><td><strong>Total Implementation Investment</strong></td><td colspan="4">—</td><td><strong>~€2,391,000</strong></td></tr>
@@ -3937,7 +3946,7 @@ const LEVEL_DATA = {
     label: 'L1 — Static',
     weeks: '12', fteWeeks: '~42', roles: '4', phases: '3', cost: '~€440K',
     ganttMinWeek: 1, ganttMaxWeek: 12,
-    ganttScope: 'W1–W12 · Ph0 Foundation → Ph2 Data Pipeline only',
+    ganttScope: 'W1–W12 · Ph0 Discovery + Ph1 Data Foundation + static dashboard only (no live API)',
     overviewCtx: 'L1 (Static) — Minimal engagement: 4 roles, 12-week delivery, ~€440K. Covers foundation, data ingestion, and a basic static dashboard. No AI or automation. Suitable for a PoC or readiness assessment.',
     overviewOk: false
   },
@@ -3967,9 +3976,9 @@ const LEVEL_DATA = {
   },
   5: {
     label: 'L5 — Autonomous',
-    weeks: '36', fteWeeks: '~290', roles: '10', phases: '7', cost: '~€3.3M',
+    weeks: '36', fteWeeks: '~290', roles: '10', phases: '6', cost: '~€3.3M',
     ganttMinWeek: 1, ganttMaxWeek: 36,
-    ganttScope: 'W1–W36 · Ph0–Ph5 + write-back & autonomous agent phase',
+    ganttScope: 'W1–W36 · Ph0–Ph5 + autonomous write-back extension (W29–W36)',
     overviewCtx: 'L5 (Autonomous) — 10 roles, 36-week delivery, ~€3.3M. Full autonomous operation: AI agents write back to GRC systems, self-heal data quality issues, and auto-generate regulatory submissions. Requires strong AI governance framework.',
     overviewOk: true
   }
@@ -4055,6 +4064,18 @@ function setMaturityLevel(level) {
   if (sr) sr.textContent = ld.roles;
   if (sp) sp.textContent = ld.phases;
   if (sc) sc.textContent = ld.cost;
+
+  // ── Dynamic text labels that reference phase/week counts ──────────────
+  var trc = document.getElementById('team-role-count');
+  if (trc) trc.textContent = ld.roles;
+  var rdp = document.getElementById('roadmap-desc-pill');
+  if (rdp) rdp.textContent = ld.phases + '-phase, ' + ld.weeks + '-week';
+  var rsd = document.getElementById('roadmap-section-desc');
+  if (rsd) rsd.textContent = ld.phases + '-phase, ' + ld.weeks + '-week delivery plan with phase gates, Gantt timeline, risk register, and governance cadence. Scope adjusts with selected maturity level.';
+  var gtw = document.getElementById('gantt-title-weeks');
+  if (gtw) gtw.textContent = 'W01 to W' + (ld.ganttMaxWeek <= 28 ? String(ld.ganttMaxWeek).padStart(2, '0') : '28+');
+  var cln = document.getElementById('cost-level-note');
+  if (cln) cln.textContent = ld.cost + ' implementation, ' + ld.weeks + ' weeks, ' + ld.roles + ' roles. Full breakdown below reflects L3 (Base Case) — adjust budget linearly for other levels.';
 
   // ── Overview context banner ──────────────────────────────────────────
   var ovBanner = document.getElementById('level-ctx-overview');
