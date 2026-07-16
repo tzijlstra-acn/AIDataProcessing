@@ -481,8 +481,13 @@ details.collapsible > div.details-body { padding: 16px; }
 .deliverable-item { cursor: default; }
 .deliverable-item.clickable { cursor: pointer; color: var(--brandMid); text-decoration: underline; text-decoration-color: rgba(42,82,152,.3); }
 .deliverable-item.clickable:hover { background: var(--brandLight); border-radius: 4px; }
+.role-del-group { margin-bottom: 12px; }
+.role-del-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; padding-top: 8px; border-top: 1px solid var(--border); }
+.role-del-header:first-child { border-top: none; padding-top: 0; }
+.role-del-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; color: #fff; }
+.role-del-name { font-size: 12px; font-weight: 600; color: var(--ts); }
 </style>
-<script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.min.js"></script>
+<!-- docx library removed — SoW uses native HTML-to-Word blob generation -->
 </head>
 <body>
 
@@ -518,7 +523,7 @@ details.collapsible > div.details-body { padding: 16px; }
   <div style="padding:10px 12px;border-top:1px solid var(--border);margin-top:8px;">
     <button onclick="openClientQuestionsModal()" style="width:100%;display:flex;align-items:center;gap:8px;padding:9px 12px;background:linear-gradient(135deg,#A100FF 0%,#6900A8 100%);color:#fff;border:none;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;text-align:left;">
       <i class="ti ti-help-octagon" style="font-size:16px;flex-shrink:0;"></i>
-      <span>Pre-Sale Questions</span>
+      <span>Client Discovery</span>
     </button>
   </div>
 </nav>
@@ -1039,13 +1044,26 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Week 3:</strong> Draft Architecture Decision Record (ADR); DPIA draft with DPO</li>
           <li><strong>Week 4:</strong> Terraform apply (provision all Azure resources non-prod); CI/CD pipeline; Project Charter finalised</li>
         </ul>
-        <div class="phase-section-title">Deliverables</div>
-        <div class="deliverables-list">
-          <span class="deliverable-item">Data Readiness Report (DE+GRC, W4)</span>
-          <span class="deliverable-item clickable" onclick="openDeliverableSample('Architecture Decision Record')" title="View sample">ADR (SA, W3)</span>
-          <span class="deliverable-item">Terraform IaC (SA, W4)</span>
-          <span class="deliverable-item clickable" onclick="openDeliverableSample('Project Charter')" title="View sample">Project Charter (PM, W4)</span>
-          <span class="deliverable-item">DPIA draft (Accenture+DPO, W4)</span>
+        <div class="phase-section-title">Deliverables by Role</div>
+        <div class="role-del-group">
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Project Charter')" title="View sample">Project Charter (W4)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">SA</span><span class="role-del-name">Solution Architect</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Architecture Decision Record')" title="View sample">Architecture Decision Record (W3)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Network &amp; Security Design Doc')" title="View sample">Network &amp; Security Design Doc (W4)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">GRC</span><span class="role-del-name">GRC Expert</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('GRC Data Model specification')" title="View sample">GRC Data Model specification (draft, W4)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Regulatory Mapping Table')" title="View sample">Regulatory Mapping Table (W4)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">SEC</span><span class="role-del-name">Security Engineer</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Threat Model document')" title="View sample">Threat Model document (draft, W4)</span>
+          </div>
         </div>
         <div class="phase-section-title">Exit Criteria</div>
         <ul><li>Data Readiness Report accepted by GRC Domain Expert and client Risk SME</li><li>ADR signed off by client IT Lead</li><li>Dev environment access provisioned for all Accenture team members</li><li>Project Charter signed by Sponsor</li></ul>
@@ -1067,13 +1085,25 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 9–10:</strong> Document ingestion pipeline (blob→parse→chunk→embed→Azure AI Search)</li>
           <li><strong>Weeks 11–12:</strong> Static dashboard build (hardcoded, matching real client data structure); client design validation</li>
         </ul>
-        <div class="phase-section-title">Deliverables</div>
-        <div class="deliverables-list">
-          <span class="deliverable-item">Working GRC pipelines (DE, W10)</span>
-          <span class="deliverable-item clickable" onclick="openDeliverableSample('Data Quality Report')" title="View sample">Data quality report (DE+GRC, W10)</span>
-          <span class="deliverable-item">Document ingestion pipeline (DE+AI, W11)</span>
-          <span class="deliverable-item">Static dashboard (FE, W11)</span>
-          <span class="deliverable-item clickable" onclick="openDeliverableSample('Heatmap Threshold Sign-off')" title="View sample">Client design sign-off (PM+GRC, W12)</span>
+        <div class="phase-section-title">Deliverables by Role</div>
+        <div class="role-del-group">
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">DE1</span><span class="role-del-name">Data Engineer 1</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('ADF Pipeline documentation')" title="View sample">ADF Pipeline documentation (W10)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('GRC Connector spec')" title="View sample">GRC Connector spec (W8)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Data Quality Report')" title="View sample">Data Quality Report (W10)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Data lineage diagram')" title="View sample">Data lineage diagram (W10)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">DE2</span><span class="role-del-name">Data Engineer 2</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('TPRM Integration spec')" title="View sample">TPRM Integration spec (W10)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Service Bus integration spec')" title="View sample">Service Bus integration spec (W10)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Weekly Status Report')" title="View sample">Weekly Status Report (ongoing)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Sprint Plan &amp; Velocity Tracker')" title="View sample">Sprint Plan &amp; Velocity Tracker (ongoing)</span>
+          </div>
         </div>
         <div class="phase-section-title">Exit Criteria</div>
         <ul><li>All Critical entities loaded and quality-validated</li><li>Static dashboard reviewed and signed off by client</li><li>ADF pipelines running clean for 5 consecutive days</li></ul>
@@ -1095,6 +1125,24 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 13–14:</strong> Risk register and controls with full filter support; process detail view; RCSA timeline view</li>
           <li><strong>Weeks 15–16:</strong> Cross-area risk view; performance testing (&lt;500ms under 50 concurrent users); WCAG 2.1 AA review</li>
         </ul>
+        <div class="phase-section-title">Deliverables by Role</div>
+        <div class="role-del-group">
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">BE1</span><span class="role-del-name">Backend Developer 1</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('FastAPI OpenAPI specification')" title="View sample">FastAPI OpenAPI specification (W14)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('RBAC policy definition')" title="View sample">RBAC design doc (W12)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Authentication flow document')" title="View sample">Authentication flow document (W12)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">SA</span><span class="role-del-name">Solution Architect</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Azure Architecture Diagram')" title="View sample">Azure Architecture Diagram (W10)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Tech Review meeting notes')" title="View sample">Tech Review meeting notes (ongoing)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Steering Committee pack')" title="View sample">Steering Committee pack (bi-weekly)</span>
+          </div>
+        </div>
         <div class="phase-section-title">Exit Criteria</div>
         <ul><li>Dashboard v1.0 demo'd and accepted by client</li><li>API data validated by GRC Domain Expert</li><li>Performance targets met (&lt;500ms p95 under 50 concurrent users)</li></ul>
       </div>
@@ -1115,6 +1163,24 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 17–18:</strong> TPRM Signal Engine (Service Bus subscriber); signal review UI; accept/reject workflow</li>
           <li><strong>Weeks 19–20:</strong> Trend detection (weekly Azure Function, scipy linear regression); RCSA due-date monitor (daily 07:00 UTC)</li>
         </ul>
+        <div class="phase-section-title">Deliverables by Role</div>
+        <div class="role-del-group">
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">AI</span><span class="role-del-name">AI/ML Engineer</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Agent Quality Evaluation Report')" title="View sample">Agent Quality Evaluation Report (W20)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('System prompt library (versioned)')" title="View sample">System prompt library — versioned (W16)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('RAG pipeline documentation')" title="View sample">RAG pipeline documentation (W18)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">GRC</span><span class="role-del-name">GRC Expert</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Heatmap Threshold Sign-off')" title="View sample">Heatmap Threshold Sign-off (W16)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('DORA Article 30 Report Template')" title="View sample">DORA Article 30 Report Template (W20)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">BE1</span><span class="role-del-name">Backend Developer 1</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('API integration test suite')" title="View sample">API integration test suite (W20)</span>
+          </div>
+        </div>
         <div class="phase-section-title">Exit Criteria</div>
         <ul><li>AI agent answers &#8805;80% of defined test query set correctly</li><li>TPRM engine generates draft risk from test event</li><li>DPIA signed by DPO</li></ul>
       </div>
@@ -1135,6 +1201,24 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 21–22:</strong> PUT /api/risks/{'{id}'}; risk update form; 2LoD review and comment workflow</li>
           <li><strong>Weeks 23–24:</strong> Full RBAC enforcement; role-based UI rendering; end-to-end workflow test</li>
         </ul>
+        <div class="phase-section-title">Deliverables by Role</div>
+        <div class="role-del-group">
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">BE2</span><span class="role-del-name">Backend Developer 2</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Workflow state diagram')" title="View sample">Workflow state diagram (W22)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Durable Functions design doc')" title="View sample">Durable Functions design doc (W20)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Audit log schema doc')" title="View sample">Audit log schema doc (W22)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">CM</span><span class="role-del-name">Change Manager</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Change Impact Assessment')" title="View sample">Change Impact Assessment (W18)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Stakeholder Communication Plan')" title="View sample">Stakeholder Communication Plan (W20)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('RAID Log')" title="View sample">RAID Log (ongoing)</span>
+          </div>
+        </div>
         <div class="phase-section-title">Exit Criteria</div>
         <ul><li>Full RCSA lifecycle tested E2E in staging environment</li><li>RBAC validated for all four roles</li><li>Notification delivery confirmed (email + Teams)</li></ul>
       </div>
@@ -1155,6 +1239,31 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 24–26:</strong> UAT with 5–10 2LoD and 5–10 1LoD participants; Critical/High defects fixed within 48h</li>
           <li><strong>Weeks 25–28:</strong> User training (recorded videos); admin runbook; production provisioning; go-live + 2-week hypercare</li>
         </ul>
+        <div class="phase-section-title">Deliverables by Role</div>
+        <div class="role-del-group">
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">SEC</span><span class="role-del-name">Security Engineer</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Pen Test scope &amp; findings')" title="View sample">Pen Test scope &amp; findings (W24)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('DPIA data flow diagram')" title="View sample">DPIA data flow diagram (W22)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('ISO 27001 control mapping')" title="View sample">ISO 27001 control mapping (W26)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">CM</span><span class="role-del-name">Change Manager</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Training materials')" title="View sample">Training materials (W27)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Go-live readiness checklist')" title="View sample">Go-live readiness checklist (W27)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Adoption KPI dashboard')" title="View sample">Adoption KPI dashboard (W28)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">GRC</span><span class="role-del-name">GRC Expert</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('UAT Sign-off')" title="View sample">UAT domain sign-off (W27)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Go-Live Checklist')" title="View sample">Go-Live Checklist (W28)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Lessons Learned Report')" title="View sample">Lessons Learned Report (W28)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Post-Go-Live Handover Pack')" title="View sample">Post-Go-Live Handover Pack (W28)</span>
+          </div>
+        </div>
         <div class="phase-section-title">Exit Criteria</div>
         <ul><li>All pen test Critical/High findings remediated</li><li>UAT sign-off obtained from client Risk Management Lead and PM</li><li>Production environment verified and go-live approved by Sponsor</li></ul>
       </div>
@@ -3679,150 +3788,148 @@ const CLIENT_ROLES = {
 function openClientQuestionsModal() {
   var questions = [
     {
-      num: '01', icon: 'ti-cloud', color: '#2A5298',
-      q: 'Cloud provider — Azure, AWS, or on-premise?',
-      why: 'The entire tech stack (Container Apps, Azure OpenAI, ADF, AI Search, Durable Functions) is Azure-native. Moving to AWS requires replacing every service: SageMaker instead of Azure OpenAI, Glue instead of ADF, Lambda instead of Durable Functions. AWS rebuild adds ~30–40% to timeline and cost.',
+      num: '01', color: '#2A5298',
+      q: 'Which cloud provider do you use?',
+      impact: 'The entire tech stack is Azure-native. AWS or on-premise adds 30–40% to cost and timeline.',
       opts: [
-        '<strong>Azure (preferred)</strong> — No migration cost. Full stack in scope as designed. Estimated timeline/cost as presented.',
-        '<strong>AWS</strong> — Full stack rebuild. +6–8 weeks, +€300–500K estimated. Bedrock replaces Azure OpenAI (Claude or Titan). Glue replaces ADF. Separate scoping required.',
-        '<strong>Hybrid / Multi-cloud</strong> — Data ingestion on existing cloud, AI on Azure. Possible but adds network complexity and Private Endpoint design work. +2–4 weeks.',
-        '<strong>On-premise / Air-gapped</strong> — Must use self-hosted LLM (Llama 3 70B on GPU cluster). Eliminates Azure OpenAI. High infra cost (+€200K CAPEX). AI quality typically 15–25% lower.',
+        { label: 'Azure (preferred)', note: 'No migration cost. Full stack as designed.' },
+        { label: 'AWS', note: '+6–8 weeks, +€300–500K. Full rebuild (Bedrock, Glue, Lambda).' },
+        { label: 'Hybrid / Multi-cloud', note: '+2–4 weeks for cross-cloud data routing.' },
+        { label: 'On-premise / Air-gapped', note: 'Self-hosted LLM (Llama 3 70B on GPU). +€200K CAPEX. AI quality typically 15–25% lower.' },
       ]
     },
     {
-      num: '02', icon: 'ti-brain', color: '#A100FF',
-      q: 'LLM preference — Azure OpenAI, self-hosted open-source, or no LLM?',
-      why: 'Choice of LLM drives architecture, cost, data classification requirements, and AI quality. Azure OpenAI (GPT-4o) is the default. Self-hosted models require GPU infrastructure and have lower out-of-the-box quality for domain-specific GRC queries.',
+      num: '02', color: '#A100FF',
+      q: 'Do you want to use an LLM, and if so — which?',
+      impact: 'LLM choice drives architecture, data classification requirements, and AI quality. Default is Azure OpenAI GPT-4o.',
       opts: [
-        '<strong>Azure OpenAI (GPT-4o)</strong> — Default. Best accuracy for GRC/regulatory queries. ~$0.005/1K tokens. Data stays in EU (West Europe). No data training by Microsoft.',
-        '<strong>Self-hosted (Llama 3 70B / Mistral Large)</strong> — Zero token cost after infra. Requires GPU VM (NC48ads A100, ~€12K/month). Typically 10–20% lower RAG accuracy on specialised GRC tasks.',
-        '<strong>Azure OpenAI — private deployment</strong> — PTU (provisioned throughput) model. Fixed monthly cost (~€15K/month for 100K RPM). Best for high-volume, latency-sensitive deployments.',
-        '<strong>No LLM — rules-based only (L1/L2)</strong> — Eliminates AI risk. Reduces scope to L1 or L2. Drops cost by ~€900K. No natural language query, no TPRM AI drafting.',
+        { label: 'Azure OpenAI (GPT-4o)', note: 'Best accuracy for GRC/regulatory queries. ~€0.005/1K tokens. EU data residency. Default.' },
+        { label: 'Self-hosted (Llama 3 / Mistral)', note: 'Zero token cost after infra. GPU VM ~€12K/month. ~10–20% lower GRC query accuracy.' },
+        { label: 'Azure OpenAI — PTU (high-volume)', note: 'Fixed monthly cost ~€15K/month. Best for >100K queries/month.' },
+        { label: 'No LLM — rules-based only', note: 'Drops scope to L1 or L2. Reduces cost by ~€900K. No AI chat or TPRM AI drafting.' },
       ]
     },
     {
-      num: '03', icon: 'ti-database', color: '#1A7A52',
-      q: 'What GRC system do you currently use?',
-      why: 'The GRC connector is the single biggest Phase 1 uncertainty. A mature REST API (ServiceNow, Archer) takes 2–3 weeks to build. A legacy system with no API, or manual Excel/SharePoint, can take 4–6 weeks and may require a custom extraction layer.',
+      num: '03', color: '#1A7A52',
+      q: 'Which GRC system do you currently use?',
+      impact: 'The GRC connector is the single biggest Phase 1 risk. A REST API takes 2–3 weeks; a legacy system with no API can take 4–6 weeks.',
       opts: [
-        '<strong>ServiceNow GRC</strong> — Best case. Native REST API, well-documented. Connector built in 2–3 weeks. Incremental pull via sys_updated_on watermark.',
-        '<strong>RSA Archer</strong> — REST API available but less standardised. Field mapping complex. 3–4 weeks. Archer version matters significantly.',
-        '<strong>MetricStream / LogicGate / other modern GRC</strong> — API quality varies. Discovery workshop required. Estimate 3–5 weeks per system.',
-        '<strong>Manual (Excel/SharePoint/email)</strong> — No API. Must design ingestion layer (ADF from SharePoint lists or SFTP CSV). Adds 3–4 weeks and ongoing manual upload risk. Strongly recommend GRC system adoption as prerequisite.',
+        { label: 'ServiceNow GRC', note: 'Best case. Native REST API, 2–3 weeks to build.' },
+        { label: 'RSA Archer', note: '3–4 weeks. Archer version matters significantly.' },
+        { label: 'Modern GRC (MetricStream, LogicGate, etc.)', note: 'API quality varies. 3–5 weeks per system.' },
+        { label: 'Manual (Excel / SharePoint)', note: 'No API. Adds 3–4 weeks + ongoing manual upload risk.' },
       ]
     },
     {
-      num: '04', icon: 'ti-shield-lock', color: '#B4322A',
+      num: '04', color: '#B4322A',
       q: 'What is the data classification of your risk and control data?',
-      why: 'If risk data contains personal data or is classified Confidential/Restricted, it may not be permitted to flow through Azure OpenAI APIs without explicit DPA sign-off. This triggers DPIA obligations and may require data masking or pseudonymisation in the AI pipeline.',
+      impact: 'If risk data contains PII, Azure OpenAI requires a DPA and DPIA. Restricted data may require a self-hosted LLM.',
       opts: [
-        '<strong>Public / Internal</strong> — No restrictions. Full Azure OpenAI usage as designed. DPIA lightweight.',
-        '<strong>Confidential (no PII)</strong> — Azure OpenAI acceptable with GDPR DPA in place (Microsoft is a data processor). DPIA required before Phase 3 start.',
-        '<strong>Confidential (contains PII)</strong> — Requires data masking before LLM calls, or use of Azure OpenAI with zero-data-retention agreement. Adds 2–3 weeks of privacy engineering.',
-        '<strong>Restricted / Air-gapped</strong> — Azure OpenAI not permitted. Must use self-hosted LLM. See Q2. Significant architectural change.',
+        { label: 'Public / Internal (no PII)', note: 'No restrictions. Lightweight DPIA.' },
+        { label: 'Confidential (no PII)', note: 'Azure OpenAI acceptable with GDPR DPA. DPIA required before Phase 3.' },
+        { label: 'Confidential (contains PII)', note: '+2–3 weeks privacy engineering (data masking before LLM calls).' },
+        { label: 'Restricted / Air-gapped', note: 'Azure OpenAI not permitted. Self-hosted LLM required. Major architectural change.' },
       ]
     },
     {
-      num: '05', icon: 'ti-gavel', color: '#9A6500',
-      q: 'Are you directly subject to DORA, or do you support DORA-regulated clients?',
-      why: 'DORA Article 30 and ICT third-party risk requirements differ significantly depending on whether the client is a financial entity or an ICT service provider. This determines which reports to automate and which regulatory mappings to include in the GRC data model.',
+      num: '05', color: '#9A6500',
+      q: 'Are you directly subject to DORA?',
+      impact: 'Determines which Article 30 reports to automate and which regulatory mappings to build into the GRC data model.',
       opts: [
-        '<strong>Direct financial entity (bank, insurer, asset manager)</strong> — Full DORA scope: Article 30 ICT third-party risk register, incident reporting, digital operational resilience testing. Full L3 scope applicable.',
-        '<strong>ICT service provider to financial entities</strong> — Must comply with DORA contractual requirements from clients. Focus on TPRM signal engine and contractual register. Article 30 framework different.',
-        '<strong>Both</strong> — Most complex case. Dual reporting requirements. May require additional GRC data model fields.',
-        '<strong>Neither (DORA not applicable)</strong> — Regulatory driver is different (e.g. ECB, DNB, Basel). DORA-specific features de-scoped. Adjust regulatory mapping table.',
+        { label: 'Yes — financial entity (bank, insurer, asset manager)', note: 'Full DORA scope. Full L3 applicable.' },
+        { label: 'Yes — as ICT service provider to financial entities', note: 'Contractual TPRM focus. Different Article 30 framing.' },
+        { label: 'Both', note: 'Dual reporting. Additional GRC data model fields required.' },
+        { label: 'No (ECB/DNB/Basel but not DORA)', note: 'DORA-specific features de-scoped. Regulatory mapping adjusted.' },
       ]
     },
     {
-      num: '06', icon: 'ti-table', color: '#6D28D9',
-      q: 'How mature and structured is your current ICS/RCSA data?',
-      why: 'Data quality is the single biggest Phase 1 delivery risk. Mature, structured data (in a GRC tool with consistent fields) can be ingested in 3–4 weeks. Fragmented Excel-based data with no consistent schema can take 8+ weeks of cleansing and may require a separate data remediation workstream.',
+      num: '06', color: '#6D28D9',
+      q: 'How structured and complete is your current ICS/RCSA data?',
+      impact: 'Data quality is the single biggest Phase 1 delivery risk. Fragmented Excel data can double Phase 1 duration.',
       opts: [
-        '<strong>Structured in GRC tool, consistent fields, <2,000 risks</strong> — Best case. Phase 1 in 6–8 weeks as designed. Low data quality risk.',
-        '<strong>GRC tool but inconsistent fields / multiple schemas</strong> — 8–10 weeks Phase 1. Field mapping workshop needed. dbt remediation models required.',
-        '<strong>Excel / SharePoint, partially structured</strong> — 10–14 weeks Phase 1. Manual cleansing significant. Consider data quality workstream as separate workstream.',
-        '<strong>>10,000 risks, complex taxonomy, multiple entities</strong> — Enterprise scale. Architecture scales but testing and validation effort increases. +4–6 weeks for Phase 1 and +€200K estimate.',
+        { label: 'Structured in GRC tool, <2,000 risks', note: 'Best case. Phase 1 in 6–8 weeks as designed.' },
+        { label: 'GRC tool but inconsistent fields', note: '+2–4 weeks. Field mapping workshop + dbt remediation models needed.' },
+        { label: 'Excel / SharePoint, partially structured', note: '+4–6 weeks. Manual cleansing significant.' },
+        { label: '>10,000 risks, complex taxonomy', note: 'Enterprise scale. +4–6 weeks and +€200K estimate.' },
       ]
     },
     {
-      num: '07', icon: 'ti-server', color: '#1A7A52',
-      q: 'What is the scale — risk records, TPRM vendors, reporting entities?',
-      why: 'Scale determines infrastructure tier, Azure OpenAI throughput quotas, AI Search index size, and database sizing. Sub-2,000 risks runs on Standard tier. Above 10,000 requires Premium tier + PTU (provisioned throughput) for OpenAI.',
+      num: '07', color: '#1A7A52',
+      q: 'How many risks, TPRM vendors, and reporting entities?',
+      impact: 'Scale determines Azure infrastructure tier, OpenAI throughput quotas, and AI Search index sizing.',
       opts: [
-        '<strong>Small: <2,000 risks, <100 vendors, 1 entity</strong> — Standard infrastructure tier. Lowest cost. Container Apps Basic, Azure OpenAI S0 quota sufficient.',
-        '<strong>Medium: 2,000–10,000 risks, 100–500 vendors, 2–5 entities</strong> — Standard-Premium tier. Azure OpenAI quota increase required. AI Search Standard tier. Add €25K infrastructure/year.',
-        '<strong>Large: >10,000 risks, 500+ vendors, 5+ entities</strong> — Premium infrastructure. PTU for OpenAI (€15K/month). AI Search Premium. Database scaling. Add €100K+ to annual infra costs.',
-        '<strong>Unknown / to be assessed in discovery</strong> — Discovery workshop to size. Recommend Phase 0 data audit before committing to infra tier.',
+        { label: '<2,000 risks, <100 vendors, 1 entity', note: 'Standard tier. Lowest cost. Fits base case estimate.' },
+        { label: '2,000–10,000 risks, 100–500 vendors, 2–5 entities', note: '+€25K/year infrastructure. OpenAI quota increase needed.' },
+        { label: '>10,000 risks, 500+ vendors, 5+ entities', note: '+€100K+/year infra. PTU for OpenAI. Premium AI Search.' },
+        { label: 'Unknown — to be sized in discovery', note: 'Recommend data audit in Phase 0 before committing to infra tier.' },
       ]
     },
     {
-      num: '08', icon: 'ti-users', color: '#3A4657',
+      num: '08', color: '#3A4657',
       q: 'Do you have internal Azure and AI engineering capability?',
-      why: 'Internal capability determines how much Accenture can transfer vs operate. If the client has an internal Azure team, they can take over BAU operations, reducing post-go-live support cost. Without internal capability, a managed service or extended Accenture support arrangement is needed.',
+      impact: 'Internal capability determines the co-delivery model and post-go-live operations cost.',
       opts: [
-        '<strong>Strong internal Azure / data engineering team</strong> — Co-delivery model possible. Reduces Accenture FTE by 2–3 roles. Reduces cost by €200–400K. Longer knowledge transfer in Phase 5.',
-        '<strong>Basic IT team (cloud management only)</strong> — Accenture delivers full build. Client team handles infrastructure operations post go-live. Lightweight handover sufficient.',
-        '<strong>No internal cloud/AI capability</strong> — Recommend managed service arrangement. Accenture or Azure Managed Services retains platform. Ongoing cost: ~€80–120K/year.',
-        '<strong>Team to be hired/built during project</strong> — Shadow team model. Client hires 1–2 engineers to shadow Accenture during delivery. Add 20% knowledge transfer overhead to timeline.',
+        { label: 'Strong internal Azure / data engineering team', note: 'Co-delivery reduces Accenture FTE by 2–3 roles. €200–400K cost reduction.' },
+        { label: 'Basic IT team (cloud management only)', note: 'Accenture delivers full build. Lightweight handover.' },
+        { label: 'No internal cloud/AI capability', note: 'Managed service arrangement needed. ~€80–120K/year ongoing.' },
+        { label: 'Team to be hired during project', note: 'Shadow model. +20% knowledge transfer overhead.' },
       ]
     },
     {
-      num: '09', icon: 'ti-clock-2', color: '#9A6500',
-      q: 'Are there regulatory deadlines or supervisory reviews constraining the timeline?',
-      why: 'A hard regulatory deadline (e.g. DORA January 2025 full enforcement, upcoming ECB on-site inspection) may require phased delivery — launching a limited-scope dashboard earlier, then expanding. This forces a delivery prioritisation conversation about what must be live first.',
+      num: '09', color: '#9A6500',
+      q: 'Are there regulatory deadlines constraining the timeline?',
+      impact: 'A hard deadline may force phased delivery — launching a limited-scope dashboard first, then expanding.',
       opts: [
-        '<strong>No hard deadline — preferred timeline</strong> — Full L3 28-week plan as designed. No compression needed.',
-        '<strong>Soft deadline in 6–12 months</strong> — Possible with L3 scope. Requires immediate project start (W1 within 4 weeks of SOW execution). No scope compromise.',
-        '<strong>Hard deadline in 3–6 months</strong> — L1 or L2 scope only. Static dashboard or connected dashboard can go live in 12–20 weeks. AI layer deferred to Phase II.',
-        '<strong>Existing OSI/supervisory review in progress</strong> — Emergency scope: prioritise read-only dashboard + DORA Article 30 template. 8–10 week delivery. Separate commercial arrangement required.',
+        { label: 'No hard deadline', note: 'Full L3 28-week plan. No compression.' },
+        { label: 'Soft deadline in 6–12 months', note: 'Possible with L3. Requires start within 4 weeks of SOW execution.' },
+        { label: 'Hard deadline in 3–6 months', note: 'L1 or L2 only (12–20 weeks). AI layer deferred.' },
+        { label: 'OSI / supervisory review already in progress', note: 'Emergency scope: read-only dashboard + DORA template. 8–10 weeks. Separate commercial arrangement.' },
       ]
     },
     {
-      num: '10', icon: 'ti-currency-euro', color: '#1E3A6E',
-      q: 'Budget status and procurement route?',
-      why: 'Understanding budget approval status and procurement constraints directly affects proposal strategy. An unbudgeted initiative needs an executive business case; a budgeted initiative needs a compliant procurement process. Framework contracts dramatically shorten time-to-contract.',
+      num: '10', color: '#1E3A6E',
+      q: 'What is the budget status and procurement route?',
+      impact: 'Determines proposal strategy. An unbudgeted initiative needs a business case; a framework contract can start in weeks.',
       opts: [
-        '<strong>Budget approved, Accenture preferred supplier or on framework</strong> — Best case. Direct SOW execution. Can start within 4 weeks of this meeting.',
-        '<strong>Budget approved, open tender required</strong> — RFP process. Typically adds 8–16 weeks. Proposal submission required. Accenture has strong win rate for AI/GRC engagements.',
-        '<strong>Budget indicatively approved, business case needed</strong> — Accenture can support business case development (ROI model, DORA exposure analysis). Add 2–4 weeks pre-sales support.',
-        '<strong>No budget allocated</strong> — Executive sponsorship and budget approval needed first. Offer to run a 1-week paid Discovery Sprint (~€15K) to build the business case and scope.',
+        { label: 'Budget approved, Accenture on framework', note: 'Best case. Direct SOW. Start within 4 weeks.' },
+        { label: 'Budget approved, open tender required', note: 'RFP adds 8–16 weeks.' },
+        { label: 'Budget indicatively approved, business case needed', note: 'Accenture can support ROI + DORA exposure analysis. +2–4 weeks pre-sales.' },
+        { label: 'No budget allocated', note: 'Offer a 1-week paid Discovery Sprint (~€15K) to build the business case.' },
       ]
     },
   ];
 
   var headerHTML = `
-    <div style="padding:24px 24px 0;display:flex;align-items:flex-start;gap:16px;">
+    <div style="padding:20px 24px 0;display:flex;align-items:flex-start;gap:12px;">
       <div style="flex:1;">
-        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
-          <i class="ti ti-help-octagon" style="font-size:22px;color:var(--accent);"></i>
-          <h2 style="margin:0;font-size:20px;color:var(--tp);">Pre-Sale Discovery Questions</h2>
+        <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
+          <i class="ti ti-help-octagon" style="font-size:20px;color:var(--accent);"></i>
+          <h2 style="margin:0;font-size:18px;color:var(--tp);">Client Discovery Questions</h2>
         </div>
-        <div style="font-size:13px;color:var(--ts);">Ask these 10 questions in the first client meeting to scope the engagement correctly and build a custom proposal.</div>
+        <div style="font-size:12px;color:var(--ts);">10 questions to ask in your first client meeting. Click any question to expand detail and option implications.</div>
       </div>
-      <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;font-size:22px;color:var(--ts);line-height:1;padding:0 4px;" title="Close">&times;</button>
+      <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;font-size:22px;color:var(--ts);line-height:1;padding:0 2px;" title="Close">&times;</button>
     </div>
-    <div style="padding:12px 24px 0;border-bottom:1px solid var(--border);">
-      <div style="font-size:11px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--tm);margin-bottom:6px;">How to use</div>
-      <p style="font-size:12px;color:var(--ts);line-height:1.6;margin:0 0 12px;">Each question includes four pre-defined options with scope, cost, and timeline implications. Use them to guide the conversation and immediately adapt the proposal to what you hear.</p>
-    </div>`;
+    <div style="height:1px;background:var(--border);margin:12px 0 0;"></div>`;
 
-  var bodyHTML = `<div style="padding:0 0 24px;">` + questions.map(function(q) {
-    return `<div style="padding:20px 24px;border-bottom:1px solid var(--border);">
-      <div style="display:flex;align-items:flex-start;gap:12px;margin-bottom:12px;">
-        <div style="width:32px;height:32px;border-radius:50%;background:${q.color};color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:800;flex-shrink:0;">${q.num}</div>
-        <div style="flex:1;">
-          <div style="font-size:14px;font-weight:700;color:var(--tp);margin-bottom:4px;">${q.q}</div>
-          <div style="font-size:12px;color:var(--ts);line-height:1.6;background:var(--s1);border-radius:6px;padding:8px 10px;margin-bottom:10px;"><strong>Why it matters:</strong> ${q.why}</div>
-          <div style="display:flex;flex-direction:column;gap:6px;">` +
-            q.opts.map(function(opt, i) {
-              var letters = ['A','B','C','D'];
-              return `<div style="display:flex;gap:8px;align-items:flex-start;">
-                <span style="width:20px;height:20px;border-radius:50%;background:${q.color};color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${letters[i]}</span>
-                <div style="font-size:12px;color:var(--ts);line-height:1.6;">${opt}</div>
-              </div>`;
-            }).join('') +
-          `</div>
-        </div>
+  var bodyHTML = `<div style="padding-bottom:16px;">` + questions.map(function(q) {
+    var optsHTML = q.opts.map(function(o, i) {
+      var letters = ['A','B','C','D'];
+      return `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:5px;">
+        <span style="width:18px;height:18px;border-radius:50%;background:${q.color};color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${letters[i]}</span>
+        <div style="font-size:12px;color:var(--ts);"><strong>${o.label}</strong> — ${o.note}</div>
+      </div>`;
+    }).join('');
+
+    return `<div style="border-bottom:1px solid var(--border);">
+      <button onclick="this.parentElement.querySelector('.disc-detail').style.display=this.parentElement.querySelector('.disc-detail').style.display==='none'?'block':'none';this.querySelector('.disc-arrow').style.transform=this.parentElement.querySelector('.disc-detail').style.display==='none'?'rotate(0deg)':'rotate(90deg)'" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 20px;background:none;border:none;cursor:pointer;text-align:left;">
+        <span style="width:26px;height:26px;border-radius:50%;background:${q.color};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${q.num}</span>
+        <span style="flex:1;font-size:13px;font-weight:600;color:var(--tp);">${q.q}</span>
+        <span class="disc-arrow" style="font-size:12px;color:var(--tm);transition:transform .2s;">▶</span>
+      </button>
+      <div class="disc-detail" style="display:none;padding:0 20px 14px 56px;">
+        <div style="font-size:12px;color:var(--ts);background:var(--s1);border-radius:6px;padding:8px 10px;margin-bottom:10px;"><strong>Why this matters:</strong> ${q.impact}</div>
+        ${optsHTML}
       </div>
     </div>`;
   }).join('') + `</div>`;
@@ -4195,6 +4302,313 @@ CROSS-CUTTING SERVICES (no subnet, Azure-managed):<br>
 <div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ <strong>SUBMITTED</strong> → 2LoD review → <strong>APPROVED</strong> or <strong>REJECTED</strong></div>
 </div>
 <div style="margin-top:10px;font-size:12px;color:var(--ts);">Each state transition is logged to agent_audit_log with: triggered_by, approved_by, timestamp, reasoning_trace. Transitions are immutable after write. Rollback requires a new state entry (not mutation).</div>`,
+  },
+  'Threat Model document': {
+    title: 'Threat Model — ICS Cockpit (STRIDE)',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:7px;border-bottom:1px solid var(--border);">Component</th><th style="padding:7px;border-bottom:1px solid var(--border);">Threat (STRIDE)</th><th style="padding:7px;border-bottom:1px solid var(--border);">Mitigation</th><th style="padding:7px;border-bottom:1px solid var(--border);">Severity</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Azure APIM (public endpoint)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Spoofing — unauthenticated access to /api routes</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">JWT validation on every request; Azure AD B2C; subscription key on APIM</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">High</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">PostgreSQL (private endpoint)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Elevation of Privilege — SQL injection via API parameters</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Parameterised queries (SQLAlchemy); no raw SQL; dbt transformations only</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">High</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Azure OpenAI (GPT-4o)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Information Disclosure — prompt injection leaking other users' risk data</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Area-scoped context injection; user_id filter on all SQL tool queries; output audit log</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Medium</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Container Apps (FastAPI)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Denial of Service — unbounded agent calls exhausting quota</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Rate limiting: 60 req/user/hour via Redis; APIM throttling policy; circuit breaker on OpenAI calls</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Medium</td></tr>
+<tr><td style="padding:6px 8px;">Key Vault</td><td style="padding:6px 8px;">Tampering — secret exfiltration via compromised identity</td><td style="padding:6px 8px;">Managed Identity only (no client secrets); Key Vault access policy: least-privilege per service; audit logs enabled</td><td style="padding:6px 8px;color:#1A7A52;font-weight:700;">Low</td></tr>
+</tbody></table>
+<div style="margin-top:10px;font-size:11px;color:var(--ts);">Full threat model maintained in /docs/security/threat-model.md. Updated on each architecture change and before each production deployment.</div>`,
+  },
+  'ADF Pipeline documentation': {
+    title: 'ADF Pipeline Documentation — GRC Ingestion Suite',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Pipeline Inventory</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Pipeline Name</th><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Source</th><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Target Table</th><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Pattern</th><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Schedule</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">pl_grc_risks_incremental</td><td style="padding:6px;border-bottom:1px solid var(--border);">GRC REST API /risks</td><td style="padding:6px;border-bottom:1px solid var(--border);">staging.risks</td><td style="padding:6px;border-bottom:1px solid var(--border);">Watermark (updated_at)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Every 4h</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">pl_grc_controls_incremental</td><td style="padding:6px;border-bottom:1px solid var(--border);">GRC REST API /controls</td><td style="padding:6px;border-bottom:1px solid var(--border);">staging.controls</td><td style="padding:6px;border-bottom:1px solid var(--border);">Watermark (updated_at)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Every 4h</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">pl_tprm_vendors_full</td><td style="padding:6px;border-bottom:1px solid var(--border);">TPRM API /vendors</td><td style="padding:6px;border-bottom:1px solid var(--border);">staging.vendors</td><td style="padding:6px;border-bottom:1px solid var(--border);">Full load (weekly)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Sunday 02:00</td></tr>
+<tr><td style="padding:6px;">pl_docs_ingestion_blob</td><td style="padding:6px;">Azure Blob /grc-docs/</td><td style="padding:6px;">Azure AI Search</td><td style="padding:6px;">Event-driven (blob trigger)</td><td style="padding:6px;">On new file</td></tr>
+</tbody></table>
+<div style="margin-top:10px;font-size:12px;color:var(--ts);">All pipelines use pipeline_watermarks table. Watermark advances only on success. Failed runs write to pipeline_error_log. DQ tests run in CI — pipeline fails on test failure.</div>
+</div>`,
+  },
+  'GRC Connector spec': {
+    title: 'GRC Connector Specification — Live API Connector',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Connector Overview</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+<tr style="background:var(--s2);"><td style="padding:6px 10px;font-weight:700;border-bottom:1px solid var(--border);">Parameter</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Value</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Base URL</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">[CLIENT_GRC_API_URL]/v1</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Auth method</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">OAuth 2.0 client credentials — token from [CLIENT_AUTH_ENDPOINT]</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Rate limit</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">200 req/min — connector implements exponential backoff + jitter</td></tr>
+<tr><td style="padding:6px 10px;font-weight:600;">Pagination</td><td style="padding:6px 10px;">Cursor-based: ?cursor=&lt;token&gt;&limit=500</td></tr>
+</table>
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;">Field Mapping (Risk Entity)</div>
+<div style="font-family:var(--mono);font-size:11px;background:var(--s1);padding:10px;border-radius:6px;">
+GRC field → PostgreSQL column<br>
+risk_id → core.risks.source_id<br>
+risk_title → core.risks.title<br>
+inherent_rating → core.risks.inherent_score (mapped 1–5)<br>
+residual_rating → core.risks.residual_score (mapped 1–5)<br>
+owner_name → core.risks.owner_name<br>
+business_area → core.risks.area_code (lookup table)<br>
+last_updated → core.risks.source_updated_at (watermark field)
+</div></div>`,
+  },
+  'FastAPI OpenAPI specification': {
+    title: 'FastAPI OpenAPI Specification (excerpt)',
+    content: `<div style="font-family:var(--mono);font-size:11px;background:var(--s1);padding:14px;border-radius:6px;line-height:1.8;overflow:auto;">
+<span style="color:#6D28D9;">openapi:</span> <span style="color:#1A7A52;">'3.1.0'</span><br>
+<span style="color:#6D28D9;">info:</span><br>
+&nbsp;&nbsp;<span style="color:#6D28D9;">title:</span> <span style="color:#1A7A52;">ICS Cockpit API</span><br>
+&nbsp;&nbsp;<span style="color:#6D28D9;">version:</span> <span style="color:#1A7A52;">'1.0.0'</span><br>
+<span style="color:#6D28D9;">paths:</span><br>
+&nbsp;&nbsp;<span style="color:#2A5298;">/api/heatmap:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">get:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">summary:</span> <span style="color:#1A7A52;">Return 5×5 risk heatmap for current user's area scope</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">security:</span> [{BearerAuth: []}]<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">parameters:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- {name: area_id, in: query, schema: {type: integer}}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">responses:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#9A6500;">200:</span> {description: Heatmap matrix with risk counts per cell}<br>
+&nbsp;&nbsp;<span style="color:#2A5298;">/api/agent/chat:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">post:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">summary:</span> <span style="color:#1A7A52;">Send a natural-language query to the LLM agent (SSE stream)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">requestBody:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">content:</span> {application/json: {schema: {$ref: '#/components/schemas/ChatRequest'}}}<br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">responses:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#9A6500;">200:</span> {description: SSE stream of agent token chunks, content: {text/event-stream: {}}}<br>
+&nbsp;&nbsp;<span style="color:#2A5298;">/api/risks/{'{id}'}/status:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">patch:</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">summary:</span> <span style="color:#1A7A52;">Update risk status (Reviewer role required)</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span style="color:#6D28D9;">security:</span> [{BearerAuth: ['Reviewer','Admin']}]
+</div>
+<div style="margin-top:10px;font-size:12px;color:var(--ts);">Full spec available at /docs (Swagger UI) in non-prod environments. Spec is auto-generated from FastAPI route decorators and Pydantic models — source of truth is the code, not this document.</div>`,
+  },
+  'Change Impact Assessment': {
+    title: 'Change Impact Assessment — ICS Cockpit',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:7px 10px;border-bottom:1px solid var(--border);">Stakeholder Group</th><th style="padding:7px 10px;border-bottom:1px solid var(--border);">Current State</th><th style="padding:7px 10px;border-bottom:1px solid var(--border);">Future State</th><th style="padding:7px 10px;border-bottom:1px solid var(--border);">Impact</th><th style="padding:7px 10px;border-bottom:1px solid var(--border);">Change Actions</th></tr></thead>
+<tbody>
+<tr><td style="padding:7px;border-bottom:1px solid var(--border);font-weight:600;">2LoD Risk Analysts (4)</td><td style="padding:7px;border-bottom:1px solid var(--border);">Manual Excel-based risk tracking; 100% of time on data reconciliation</td><td style="padding:7px;border-bottom:1px solid var(--border);">AI-assisted dashboard; auto-populated RCSA; 35% time freed for judgment work</td><td style="padding:7px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">High — positive</td><td style="padding:7px;border-bottom:1px solid var(--border);">2h hands-on training; dashboard walkthrough; AI query coaching</td></tr>
+<tr><td style="padding:7px;border-bottom:1px solid var(--border);font-weight:600;">1LoD Process Owners (8)</td><td style="padding:7px;border-bottom:1px solid var(--border);">Manual attestation forms via email; 20% of time on GRC admin</td><td style="padding:7px;border-bottom:1px solid var(--border);">Automated task assignment, deadline reminders, smart attestation forms</td><td style="padding:7px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Medium — workflow change</td><td style="padding:7px;border-bottom:1px solid var(--border);">Role-based training video; change champion in each business area</td></tr>
+<tr><td style="padding:7px;border-bottom:1px solid var(--border);font-weight:600;">IT Operations (2–3)</td><td style="padding:7px;border-bottom:1px solid var(--border);">No GRC platform to maintain</td><td style="padding:7px;border-bottom:1px solid var(--border);">Responsible for Azure platform BAU, monitoring, access management</td><td style="padding:7px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Medium — new responsibility</td><td style="padding:7px;border-bottom:1px solid var(--border);">Runbook handover; Azure Monitor onboarding; 2-week hypercare support</td></tr>
+<tr><td style="padding:7px;font-weight:600;">Executive Sponsor / Risk Committee</td><td style="padding:7px;">Quarterly PowerPoint risk reports</td><td style="padding:7px;">Real-time heatmap access; AI-generated board narrative; DORA reports auto-populated</td><td style="padding:7px;color:#1A7A52;font-weight:700;">High — positive</td><td style="padding:7px;">30-min executive walkthrough; read-only dashboard access provisioned</td></tr>
+</tbody></table>`,
+  },
+  'Pen Test scope & findings': {
+    title: 'Penetration Test — Scope & Summary Findings',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;">Scope</div>
+<div style="font-size:12px;color:var(--ts);background:var(--s1);padding:10px;border-radius:6px;margin-bottom:12px;">
+In-scope: Azure API Management public endpoint · FastAPI Container App · Azure Key Vault access path · AI Search endpoint · Authentication flows (Azure AD JWT) · RBAC bypass attempts<br>
+Out of scope: Azure infrastructure (managed by Microsoft) · client network · GRC source system · social engineering
+</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:7px;border-bottom:1px solid var(--border);">Finding</th><th style="padding:7px;border-bottom:1px solid var(--border);">Severity</th><th style="padding:7px;border-bottom:1px solid var(--border);">Description</th><th style="padding:7px;border-bottom:1px solid var(--border);">Status</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">PT-001</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">High</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Missing rate limit on /api/agent/chat allowed 1,200 req/min per user — quota exhaustion risk</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Remediated (Redis rate limit deployed)</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">PT-002</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Medium</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">APIM subscription key exposed in browser network tab (not sensitive but poor practice)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Remediated (header injection removed)</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">PT-003</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Medium</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">AI agent system prompt partially visible in /api/agent/debug route (dev route not removed)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Remediated (debug route removed from prod)</td></tr>
+<tr><td style="padding:6px 8px;">PT-004</td><td style="padding:6px 8px;color:#3A4657;">Low</td><td style="padding:6px 8px;">CORS policy allows all origins in non-prod environments — acceptable in dev, confirmed not present in prod</td><td style="padding:6px 8px;color:#1A7A52;">✓ Accepted (dev only)</td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:11px;color:var(--ts);">All Critical/High findings must be remediated before go-live sign-off. Full report stored in /docs/security/pentest-report-[date].pdf (restricted access).</div>
+</div>`,
+  },
+  'Training materials': {
+    title: 'Training Materials — ICS Cockpit User Onboarding',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Training Programme Overview</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:7px;border-bottom:1px solid var(--border);">Module</th><th style="padding:7px;border-bottom:1px solid var(--border);">Audience</th><th style="padding:7px;border-bottom:1px solid var(--border);">Duration</th><th style="padding:7px;border-bottom:1px solid var(--border);">Format</th><th style="padding:7px;border-bottom:1px solid var(--border);">When</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Module 1: Dashboard navigation & heatmap</td><td style="padding:6px;border-bottom:1px solid var(--border);">All users</td><td style="padding:6px;border-bottom:1px solid var(--border);">45 min</td><td style="padding:6px;border-bottom:1px solid var(--border);">Live + recorded</td><td style="padding:6px;border-bottom:1px solid var(--border);">Week 26</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Module 2: AI chat — asking questions</td><td style="padding:6px;border-bottom:1px solid var(--border);">2LoD analysts</td><td style="padding:6px;border-bottom:1px solid var(--border);">60 min</td><td style="padding:6px;border-bottom:1px solid var(--border);">Live workshop</td><td style="padding:6px;border-bottom:1px solid var(--border);">Week 26</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Module 3: RCSA workflow & task management</td><td style="padding:6px;border-bottom:1px solid var(--border);">1LoD process owners</td><td style="padding:6px;border-bottom:1px solid var(--border);">45 min</td><td style="padding:6px;border-bottom:1px solid var(--border);">Live + recorded</td><td style="padding:6px;border-bottom:1px solid var(--border);">Week 27</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Module 4: TPRM signal review & approval</td><td style="padding:6px;border-bottom:1px solid var(--border);">2LoD analysts</td><td style="padding:6px;border-bottom:1px solid var(--border);">30 min</td><td style="padding:6px;border-bottom:1px solid var(--border);">Recorded only</td><td style="padding:6px;border-bottom:1px solid var(--border);">Week 27</td></tr>
+<tr><td style="padding:6px;">Module 5: Admin — user management & access</td><td style="padding:6px;">IT Admin</td><td style="padding:6px;">60 min</td><td style="padding:6px;">Live only</td><td style="padding:6px;">Week 27</td></tr>
+</tbody></table>
+<div style="font-size:12px;color:var(--ts);">All recorded modules available on [CLIENT INTRANET LINK] within 5 days of delivery. Quick-reference card (1-pager per role) printed and distributed on go-live day.</div>
+</div>`,
+  },
+  'Post-Go-Live Handover Pack': {
+    title: 'Post-Go-Live Handover Pack — ICS Cockpit v1.0',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Handover Checklist</div>
+<div style="margin-bottom:12px;">
+<strong>Operations</strong><br>
+☑ Azure Monitor alert rules configured and tested (CPU, memory, API latency, error rate)<br>
+☑ Azure Backup policy enabled — GEO-redundant, daily backup retained 30 days<br>
+☑ Container Apps auto-scaling rules documented (min 1, max 10 replicas)<br>
+☑ Cost budget alert set at 120% of monthly baseline in Azure Cost Management<br>
+☑ IT Operations team onboarded to runbook and alert escalation path
+</div>
+<div style="margin-bottom:12px;">
+<strong>Access Management</strong><br>
+☑ All Accenture team members removed from Azure subscription (verified in Azure AD)<br>
+☑ Key Vault access policies updated — Accenture identities revoked<br>
+☑ RBAC: IT Admin assigned Owner; Operations assigned Contributor; Analysts assigned Reader<br>
+☑ Application user roles confirmed in Azure AD groups: ReadOnly / Analyst / Reviewer / Admin
+</div>
+<div style="margin-bottom:12px;">
+<strong>Documentation</strong><br>
+☑ ADR repository transferred to client Git — all ADRs reviewed and finalised<br>
+☑ Infrastructure runbook reviewed by IT Operations lead<br>
+☑ AI model card signed and filed in AI governance register<br>
+☑ Lessons learned report circulated and acknowledged
+</div>
+<div style="font-size:12px;color:var(--ts);margin-top:8px;">2-week hypercare period: Accenture PM available 50% for escalations. Week 30 retrospective call scheduled.</div>
+</div>`,
+  },
+  'System prompt library (versioned)': {
+    title: 'System Prompt Library — ICS Risk Advisor (v1.2)',
+    content: `<div style="font-size:12px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Prompt Registry</div>
+<table style="width:100%;border-collapse:collapse;font-size:11px;margin-bottom:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:6px;border-bottom:1px solid var(--border);">Prompt ID</th><th style="padding:6px;border-bottom:1px solid var(--border);">Name</th><th style="padding:6px;border-bottom:1px solid var(--border);">Version</th><th style="padding:6px;border-bottom:1px solid var(--border);">Approved by</th><th style="padding:6px;border-bottom:1px solid var(--border);">Hash</th></tr></thead>
+<tbody>
+<tr><td style="padding:5px;border-bottom:1px solid var(--border);">SYS-001</td><td style="padding:5px;border-bottom:1px solid var(--border);">ICS Risk Advisor — Base</td><td style="padding:5px;border-bottom:1px solid var(--border);">v1.2</td><td style="padding:5px;border-bottom:1px solid var(--border);">GRC Expert (W20)</td><td style="padding:5px;border-bottom:1px solid var(--border);font-family:monospace;">a4f2b8...</td></tr>
+<tr><td style="padding:5px;border-bottom:1px solid var(--border);">SYS-002</td><td style="padding:5px;border-bottom:1px solid var(--border);">TPRM Signal Analyst</td><td style="padding:5px;border-bottom:1px solid var(--border);">v1.0</td><td style="padding:5px;border-bottom:1px solid var(--border);">GRC Expert (W18)</td><td style="padding:5px;border-bottom:1px solid var(--border);font-family:monospace;">c7e1a3...</td></tr>
+<tr><td style="padding:5px;">SYS-003</td><td style="padding:5px;">DORA Article 30 Drafter</td><td style="padding:5px;">v1.1</td><td style="padding:5px;">GRC Expert (W24)</td><td style="padding:5px;font-family:monospace;">9b2d7f...</td></tr>
+</tbody></table>
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;">SYS-001 — Base System Prompt (abridged)</div>
+<div style="font-family:var(--mono);font-size:11px;background:var(--s1);padding:10px;border-radius:6px;line-height:1.8;">
+You are an ICS Risk Advisor. Role: {user_role}. Area: {area_name}.<br>
+Rules:<br>
+1. Cite risk_id or control_id when referencing data<br>
+2. Cite specific regulatory article when referencing regulations<br>
+3. NEVER fabricate ratings, dates, or citations<br>
+4. Confirm before executing workflow actions<br>
+5. Acknowledge data limitations — do not hallucinate
+</div>
+<div style="margin-top:8px;font-size:11px;color:var(--ts);">Prompt changes require PR review from GRC Expert. All versions stored in /prompts/ with SHA-256 hash. Hash logged per agent_audit_log entry.</div>
+</div>`,
+  },
+  'Stakeholder Communication Plan': {
+    title: 'Stakeholder Communication Plan — ICS Cockpit',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:7px;border-bottom:1px solid var(--border);">Audience</th><th style="padding:7px;border-bottom:1px solid var(--border);">Message</th><th style="padding:7px;border-bottom:1px solid var(--border);">Channel</th><th style="padding:7px;border-bottom:1px solid var(--border);">Frequency</th><th style="padding:7px;border-bottom:1px solid var(--border);">Owner</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);font-weight:600;">Executive Sponsor</td><td style="padding:6px;border-bottom:1px solid var(--border);">Project status, budget, key decisions needed</td><td style="padding:6px;border-bottom:1px solid var(--border);">SteerCo deck</td><td style="padding:6px;border-bottom:1px solid var(--border);">Bi-weekly</td><td style="padding:6px;border-bottom:1px solid var(--border);">PM</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);font-weight:600;">Risk Committee</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI governance framework, go-live approval</td><td style="padding:6px;border-bottom:1px solid var(--border);">Presentation + Q&A</td><td style="padding:6px;border-bottom:1px solid var(--border);">Phase gates</td><td style="padding:6px;border-bottom:1px solid var(--border);">PM + GRC</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);font-weight:600;">2LoD Analysts</td><td style="padding:6px;border-bottom:1px solid var(--border);">How the dashboard changes their workflow, UAT schedule</td><td style="padding:6px;border-bottom:1px solid var(--border);">Email + workshop invite</td><td style="padding:6px;border-bottom:1px solid var(--border);">W20, W24, W26</td><td style="padding:6px;border-bottom:1px solid var(--border);">CM</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);font-weight:600;">1LoD Process Owners</td><td style="padding:6px;border-bottom:1px solid var(--border);">New task workflow, deadline reminders, training plan</td><td style="padding:6px;border-bottom:1px solid var(--border);">Email + Teams message</td><td style="padding:6px;border-bottom:1px solid var(--border);">W22, W26, W27</td><td style="padding:6px;border-bottom:1px solid var(--border);">CM</td></tr>
+<tr><td style="padding:6px;font-weight:600;">IT Operations</td><td style="padding:6px;">Runbook, monitoring setup, access handover</td><td style="padding:6px;">Live session + documentation</td><td style="padding:6px;">W27</td><td style="padding:6px;">PM + SA</td></tr>
+</tbody></table>`,
+  },
+  'Data lineage diagram': {
+    title: 'Data Lineage Diagram — ICS Cockpit',
+    content: `<div style="font-family:var(--mono);font-size:12px;color:var(--tp);line-height:2;background:var(--s1);padding:14px;border-radius:var(--radius);">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;font-family:var(--font);">Source → Transformation → Serving Layer</div>
+<div>[GRC System REST API]</div>
+<div>&nbsp;&nbsp;↓ ADF pl_grc_risks_incremental (watermark: updated_at)</div>
+<div>&nbsp;&nbsp;→ staging.grc_risks_raw</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;↓ dbt model stg_grc_risks.sql (casting, cleaning)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;→ staging.risks (clean, typed)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ dbt model core_risks.sql (business logic, heatmap cell assignment)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ core.risks (production table, 5×5 score)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ FastAPI GET /api/heatmap (cached 300s in Redis)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ React Dashboard UI</div>
+<br>
+<div>[GRC Document Blob Storage]</div>
+<div>&nbsp;&nbsp;↓ ADF pl_docs_ingestion_blob (blob trigger)</div>
+<div>&nbsp;&nbsp;→ Document Parser (PyMuPDF / python-docx)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;↓ Chunking (512-token chunks, 64-token overlap)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;→ Azure OpenAI text-embedding-3-large</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;↓ Azure AI Search index (hybrid BM25 + vector)</div>
+<div>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ LangChain DocumentRAGTool</div>
+</div>`,
+  },
+  'Tech Review meeting notes': {
+    title: 'Tech Review Meeting Notes — Sprint 5 (W9–W10)',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<p style="margin-bottom:8px;"><strong>Date:</strong> Week 10, Thursday 15:00–16:00 &nbsp;·&nbsp; <strong>Chair:</strong> Solution Architect &nbsp;·&nbsp; <strong>Attendees:</strong> SA, DE1, DE2, BE1, AI</p>
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;">Decisions Made</div>
+<ul style="padding-left:16px;font-size:12px;">
+<li><strong>ADR-007:</strong> Use cursor-based pagination for GRC API calls (not offset). Avoids data drift on large datasets. Unanimously approved.</li>
+<li><strong>ADR-008:</strong> Redis TTL for heatmap set at 300s (not 60s as originally proposed). Load test confirmed p95 &lt;200ms at this TTL. Approved.</li>
+<li><strong>ADR-009:</strong> dbt incremental strategy for all staging models — not full refresh. Full refresh to be run manually on schema change only. Approved.</li>
+</ul>
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;margin-top:10px;">Open Items</div>
+<ul style="padding-left:16px;font-size:12px;">
+<li>DE1: Pipeline error logging schema to be confirmed before Week 12 go/no-go — owner: DE1, due: W11</li>
+<li>BE1: APIM rate limiting policy to be reviewed with Security before prod deployment — owner: BE1+SEC, due: W12</li>
+</ul>
+<div style="font-size:11px;color:var(--ts);margin-top:8px;">All ADRs stored in /docs/adr/. Next Tech Review: Week 12, Thursday 15:00.</div>
+</div>`,
+  },
+  'API integration test suite': {
+    title: 'API Integration Test Suite — FastAPI Backend',
+    content: `<div style="font-family:var(--mono);font-size:12px;color:var(--tp);line-height:1.8;background:var(--s1);padding:14px;border-radius:var(--radius);">
+<div style="font-family:var(--font);font-weight:700;color:var(--brandMid);margin-bottom:8px;">Test Coverage Summary</div>
+<div>tests/integration/test_heatmap.py <span style="color:#1A7A52;">✓ 12 tests</span></div>
+<div>&nbsp;&nbsp;test_heatmap_returns_5x5_matrix</div>
+<div>&nbsp;&nbsp;test_heatmap_respects_area_scope</div>
+<div>&nbsp;&nbsp;test_heatmap_401_without_jwt</div>
+<div>&nbsp;&nbsp;test_heatmap_403_wrong_role</div>
+<div>tests/integration/test_agent.py <span style="color:#1A7A52;">✓ 8 tests</span></div>
+<div>&nbsp;&nbsp;test_agent_chat_streams_tokens</div>
+<div>&nbsp;&nbsp;test_agent_rate_limit_after_60_req</div>
+<div>&nbsp;&nbsp;test_agent_does_not_cross_area_boundary</div>
+<div>tests/integration/test_rbac.py <span style="color:#1A7A52;">✓ 16 tests</span></div>
+<div>&nbsp;&nbsp;test_readonly_cannot_post_workflow</div>
+<div>&nbsp;&nbsp;test_reviewer_can_approve_risk</div>
+<br>
+<div style="font-family:var(--font);color:var(--ts);font-size:11px;">Run: pytest tests/integration/ --cov=app --cov-report=html</div>
+<div style="font-family:var(--font);color:var(--ts);font-size:11px;">Coverage: 87% (target: 80%). CI: fails on &lt;80% coverage.</div>
+</div>`,
+  },
+  'RAG pipeline documentation': {
+    title: 'RAG Pipeline Documentation — Azure AI Search + LangChain',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Pipeline Architecture</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+<thead><tr style="background:var(--s2);"><th style="padding:6px;border-bottom:1px solid var(--border);">Stage</th><th style="padding:6px;border-bottom:1px solid var(--border);">Component</th><th style="padding:6px;border-bottom:1px solid var(--border);">Config</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Ingestion</td><td style="padding:6px;border-bottom:1px solid var(--border);">ADF blob trigger</td><td style="padding:6px;border-bottom:1px solid var(--border);">Fires on new file in /grc-docs/</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Parsing</td><td style="padding:6px;border-bottom:1px solid var(--border);">PyMuPDF (PDF) / python-docx (Word)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Extract text + metadata (title, date, author)</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Chunking</td><td style="padding:6px;border-bottom:1px solid var(--border);">LangChain RecursiveCharacterTextSplitter</td><td style="padding:6px;border-bottom:1px solid var(--border);">chunk_size=512, overlap=64</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Embedding</td><td style="padding:6px;border-bottom:1px solid var(--border);">Azure OpenAI text-embedding-3-large</td><td style="padding:6px;border-bottom:1px solid var(--border);">3072 dimensions; batched 100 chunks/call</td></tr>
+<tr><td style="padding:6px;">Indexing</td><td style="padding:6px;">Azure AI Search (Standard S1)</td><td style="padding:6px;">Hybrid index: BM25 + cosine vector; top-k=8</td></tr>
+</tbody></table>
+<div style="font-size:12px;color:var(--ts);">Evaluation: RAGAS metrics run weekly against 50-question golden dataset. Faithfulness ≥0.85 required. Results logged to ai_eval_log table.</div>
+</div>`,
+  },
+  'Durable Functions design doc': {
+    title: 'Durable Functions Design — RCSA Lifecycle Orchestrator',
+    content: `<div style="font-family:var(--mono);font-size:12px;color:var(--tp);line-height:2;background:var(--s1);padding:14px;border-radius:var(--radius);">
+<div style="font-family:var(--font);font-weight:700;color:var(--brandMid);margin-bottom:8px;">Orchestrator: rcsa_lifecycle_orchestrator</div>
+<div>Input: {rcsa_id, due_date, owner_id, area_id}</div>
+<div>Step 1: calculate_reminder_date(due_date - 14 days)</div>
+<div>Step 2: wait_for_timer(d_minus_14)</div>
+<div>Step 3: ai_draft_reminder(rcsa_id) → draft_text</div>
+<div>Step 4: request_2lod_approval(draft_text) → wait_for_approval</div>
+<div>Step 5: on APPROVED → send_email_teams(owner_id, draft_text)</div>
+<div>Step 5: on REJECTED → log_rejection, end</div>
+<div>Step 6: wait_for_timer(d_minus_3)</div>
+<div>Step 7: if NOT_SUBMITTED → escalate_to_manager(owner_id)</div>
+<div>Step 8: wait_for_external_event('rcsa_submitted', timeout=d_plus_7)</div>
+<div>Step 9: on 'rcsa_submitted' → route_to_2lod_review</div>
+<div>Step 10: end (APPROVED or REJECTED terminal state)</div>
+</div>
+<div style="margin-top:10px;font-size:12px;color:var(--ts);">All orchestrators are deterministic — no I/O, randomness, or DateTime.Now. Every state transition is logged to agent_audit_log with triggered_by, approved_by, reasoning_trace, and timestamp. Rollback: new state entry (not mutation).</div>`,
+  },
+  'Audit log schema doc': {
+    title: 'Audit Log Schema — agent_audit_log',
+    content: `<div style="font-family:var(--mono);font-size:12px;color:var(--tp);line-height:1.8;background:var(--s1);padding:14px;border-radius:var(--radius);">
+<div style="font-family:var(--font);font-weight:700;color:var(--brandMid);margin-bottom:8px;">Table: agent_audit_log (PostgreSQL)</div>
+<div>id             UUID         PRIMARY KEY DEFAULT gen_random_uuid()</div>
+<div>action_type    VARCHAR(64)  NOT NULL  -- e.g. 'risk_status_update', 'rcsa_reminder_sent'</div>
+<div>entity_type    VARCHAR(32)  NOT NULL  -- 'risk', 'rcsa', 'tprm_signal', 'workflow_task'</div>
+<div>entity_id      UUID         NOT NULL  -- foreign key to relevant entity</div>
+<div>triggered_by   UUID         REFERENCES users(id)  -- human or system actor</div>
+<div>approved_by    UUID         REFERENCES users(id)  -- 2LoD approver (nullable for system actions)</div>
+<div>previous_state JSONB        -- snapshot before change</div>
+<div>new_state      JSONB        -- snapshot after change</div>
+<div>reasoning_trace TEXT        -- LLM reasoning (if AI-triggered)</div>
+<div>created_at     TIMESTAMPTZ  NOT NULL DEFAULT now()</div>
+<br>
+<div style="font-family:var(--font);font-size:11px;color:var(--ts);">Immutable after write — no UPDATE or DELETE. Row-level security prevents users from reading other areas' audit logs. Retained 7 years per DORA Article 30 record-keeping requirements.</div>
+</div>`,
   },
 };
 
@@ -4709,372 +5123,149 @@ var SOW_CONTENT = {
 };
 
 function generateSoW(level) {
-  if (!window.docx) {
-    alert('Word document library not yet loaded. Please wait a moment and try again (requires internet connection).');
-    return;
-  }
   var ld = LEVEL_DATA[level] || LEVEL_DATA[3];
   var sd = SOW_CONTENT;
-  var D = window.docx;
+  var rd = ROI_LEVEL_DATA[level] || ROI_LEVEL_DATA[3];
 
-  // ---- helpers ----
-  var PURPLE = '6A2B7C', DARK = '1A1A2E', GREY = '4A4A6A', LGREY = 'A0A0B0', WHITE = 'FFFFFF';
-  var mmTwip = function(mm) { return Math.round(mm * 56.69); };
+  var css = [
+    'body{font-family:Calibri,Arial,sans-serif;font-size:11pt;color:#1A1A2E;margin:0;padding:0;}',
+    'h1{background:#6A2B7C;color:#fff;padding:8pt 14pt;font-size:16pt;margin:18pt 0 6pt;}',
+    'h2{color:#6A2B7C;border-bottom:2pt solid #6A2B7C;padding-bottom:3pt;font-size:13pt;margin:14pt 0 4pt;}',
+    'h3{color:#1A1A2E;font-size:11pt;margin:10pt 0 3pt;}',
+    'p{margin:4pt 0 6pt;line-height:1.5;}',
+    'ul{margin:4pt 0 8pt;padding-left:20pt;}',
+    'li{margin-bottom:3pt;line-height:1.5;}',
+    'table{width:100%;border-collapse:collapse;margin:8pt 0 12pt;font-size:10pt;}',
+    'th{background:#6A2B7C;color:#fff;padding:6pt 8pt;text-align:left;font-weight:bold;}',
+    'td{padding:5pt 8pt;border:0.75pt solid #ccc;vertical-align:top;}',
+    'tr:nth-child(even) td{background:#F9F5FB;}',
+    '.cover-title{font-size:28pt;font-weight:bold;color:#6A2B7C;text-align:center;margin:24pt 0 4pt;}',
+    '.cover-sub{font-size:14pt;color:#6A6680;text-align:center;margin:0 0 4pt;}',
+    '.cover-level{font-size:12pt;font-weight:bold;color:#6A2B7C;text-align:center;background:#F3EDF7;padding:6pt;margin:8pt 0 16pt;}',
+    '.meta-table td{border:0.5pt solid #ccc;padding:4pt 8pt;}',
+    '.meta-table td:first-child,.meta-table td:nth-child(3){font-weight:bold;background:#F3EDF7;width:20%;}',
+    '.section{margin:0 24pt;}',
+    '.disclaimer{font-size:8pt;color:#888;font-style:italic;border:0.5pt solid #ccc;padding:6pt;margin:10pt 0;background:#F9F9F9;}',
+    '.label{font-weight:bold;}',
+    '.spacer{height:8pt;}',
+    '.page-break{page-break-after:always;}',
+  ].join('\n');
 
-  function h1(text) {
-    return new D.Paragraph({
-      children: [new D.TextRun({ text: text, bold: true, color: WHITE, size: 28, font: 'Calibri' })],
-      shading: { type: D.ShadingType.SOLID, color: PURPLE },
-      spacing: { before: mmTwip(4), after: mmTwip(2) },
-      indent: { left: mmTwip(4), right: mmTwip(4) },
-    });
-  }
-  function h2(text) {
-    return new D.Paragraph({
-      children: [new D.TextRun({ text: text, bold: true, color: PURPLE, size: 26, font: 'Calibri' })],
-      spacing: { before: mmTwip(6), after: mmTwip(2) },
-      border: { bottom: { color: PURPLE, space: 1, style: D.BorderStyle.SINGLE, size: 6 } },
-    });
-  }
-  function h3(text) {
-    return new D.Paragraph({
-      children: [new D.TextRun({ text: text, bold: true, color: DARK, size: 22, font: 'Calibri' })],
-      spacing: { before: mmTwip(4), after: mmTwip(1) },
-    });
-  }
-  function para(text, opts) {
-    return new D.Paragraph({
-      children: [new D.TextRun(Object.assign({ text: text, size: 20, font: 'Calibri', color: DARK }, opts || {}))],
-      spacing: { after: mmTwip(2) },
-    });
-  }
-  function paraMultiLine(text) {
-    var lines = text.split('\n');
-    var runs = [];
-    lines.forEach(function(line, i) {
-      runs.push(new D.TextRun({ text: line, size: 20, font: 'Calibri', color: DARK, break: i > 0 ? 1 : 0 }));
-    });
-    return new D.Paragraph({ children: runs, spacing: { after: mmTwip(2) } });
-  }
-  function bullet(text) {
-    return new D.Paragraph({
-      children: [new D.TextRun({ text: text, size: 20, font: 'Calibri', color: DARK })],
-      bullet: { level: 0 },
-      spacing: { after: mmTwip(1) },
-    });
-  }
-  function spacer() {
-    return new D.Paragraph({ children: [new D.TextRun({ text: '' })], spacing: { after: mmTwip(2) } });
-  }
-  function labelValue(label, value) {
-    return new D.Paragraph({
-      children: [
-        new D.TextRun({ text: label + ': ', bold: true, size: 20, font: 'Calibri', color: DARK }),
-        new D.TextRun({ text: value, size: 20, font: 'Calibri', color: DARK }),
-      ],
-      spacing: { after: mmTwip(1) },
-    });
-  }
-  function tcell(text, opts) {
-    var o = opts || {};
-    return new D.TableCell({
-      children: [new D.Paragraph({
-        children: [new D.TextRun({ text: text, bold: o.bold || false, size: 18, font: 'Calibri', color: o.color || DARK })],
-        spacing: { before: 60, after: 60 },
-      })],
-      width: o.width ? { size: o.width, type: D.WidthType.PERCENTAGE } : undefined,
-      shading: o.shading ? { type: D.ShadingType.SOLID, color: o.shading } : undefined,
-      verticalAlign: D.VerticalAlign.CENTER,
-      margins: { left: mmTwip(2), right: mmTwip(2), top: 60, bottom: 60 },
-    });
-  }
-  function headerRow(cols) {
-    return new D.TableRow({
-      children: cols.map(function(c) { return tcell(c, { bold: true, shading: PURPLE, color: WHITE }); }),
-      tableHeader: true,
-    });
-  }
+  function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function metaRow(a,b,c,d) { return '<tr><td class="label">'+esc(a)+'</td><td>'+esc(b)+'</td><td class="label">'+esc(c)+'</td><td>'+esc(d)+'</td></tr>'; }
+  function delRow(d) { return '<tr>'+d.map(function(v){return '<td>'+esc(v)+'</td>';}).join('')+'</tr>'; }
+  function resRow(r) { return '<tr>'+r.map(function(v){return '<td>'+esc(v)+'</td>';}).join('')+'</tr>'; }
+  function invRow(i) { return '<tr>'+i.map(function(v){return '<td>'+esc(v)+'</td>';}).join('')+'</tr>'; }
 
-  // ---- title block ----
-  var titleBlock = [
-    new D.Paragraph({
-      children: [new D.TextRun({ text: 'STATEMENT OF WORK', bold: true, size: 52, font: 'Calibri', color: PURPLE })],
-      alignment: D.AlignmentType.CENTER,
-      spacing: { before: mmTwip(8), after: mmTwip(2) },
-    }),
-    new D.Paragraph({
-      children: [new D.TextRun({ text: 'AI-Powered ICS Dashboard Implementation', size: 32, font: 'Calibri', color: GREY })],
-      alignment: D.AlignmentType.CENTER,
-      spacing: { after: mmTwip(2) },
-    }),
-    new D.Paragraph({
-      children: [new D.TextRun({ text: ld.label, bold: true, size: 28, font: 'Calibri', color: PURPLE })],
-      alignment: D.AlignmentType.CENTER,
-      spacing: { after: mmTwip(6) },
-      shading: { type: D.ShadingType.SOLID, color: 'F3EDF7' },
-    }),
-    new D.Table({
-      width: { size: 100, type: D.WidthType.PERCENTAGE },
-      rows: [
-        new D.TableRow({ children: [
-          tcell('Client', { bold: true, width: 25 }), tcell('[CLIENT NAME]', { width: 25 }),
-          tcell('MMS / Ref ID', { bold: true, width: 25 }), tcell('[MMS-XXXXXXXX]', { width: 25 }),
-        ]}),
-        new D.TableRow({ children: [
-          tcell('Accenture Entity', { bold: true, width: 25 }), tcell('Accenture [NL/UK/CH] B.V.', { width: 25 }),
-          tcell('Version', { bold: true, width: 25 }), tcell('v1.0 — Draft for Review', { width: 25 }),
-        ]}),
-        new D.TableRow({ children: [
-          tcell('Date', { bold: true, width: 25 }), tcell('[DATE]', { width: 25 }),
-          tcell('Classification', { bold: true, width: 25 }), tcell('Confidential', { width: 25 }),
-        ]}),
-        new D.TableRow({ children: [
-          tcell('Maturity Level', { bold: true, width: 25 }), tcell(ld.label, { width: 25 }),
-          tcell('Estimated Investment', { bold: true, width: 25 }), tcell(ld.cost + ' (excl. VAT)', { width: 25 }),
-        ]}),
-      ],
-    }),
-    spacer(),
-    new D.Paragraph({
-      children: [new D.TextRun({ text: 'IMPORTANT: This document is a template. Highlighted placeholders (e.g. [CLIENT NAME], [MMS-ID], [DATE], [AMOUNT]) must be completed before execution. Rates shown are indicative market rates — actual rates are governed by the applicable Master Services Agreement (MSA) or Framework Agreement.', size: 16, font: 'Calibri', color: GREY, italics: true })],
-      spacing: { after: mmTwip(4) },
-    }),
-  ];
+  var oos = (sd.outOfScope[level] || sd.outOfScope[3]).map(function(s){return '<li>'+esc(s)+'</li>';}).join('');
+  var delRows = (sd.deliverables[level] || sd.deliverables[3]).map(delRow).join('');
+  var resRows = (sd.resources[level] || sd.resources[3]).map(resRow).join('');
+  var invRows = (sd.invoiceSchedule[level] || sd.invoiceSchedule[3]).map(invRow).join('');
+  var servText = esc(sd.services[level] || sd.services[3]).replace(/\n/g,'<br>').replace(/  /g,'&nbsp;&nbsp;');
 
-  // ---- 1. Term ----
-  var termSection = [
-    h1('1.  TERM'),
-    spacer(),
-    labelValue('Commencement Date', '[START DATE]'),
-    labelValue('Completion Date', '[END DATE] (approximately ' + ld.weeks + ' weeks from commencement)'),
-    para('This Statement of Work is entered into under the Master Services Agreement (MSA) reference [MSA REFERENCE DATE] between [CLIENT NAME] and Accenture [Entity]. This SOW is subject to the terms and conditions of the MSA. In the event of any conflict, the MSA shall prevail.'),
-  ];
+  var html = '<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8"><style>'+css+'</style></head><body>';
 
-  // ---- 2. Services ----
-  var servicesSection = [
-    h1('2.  SERVICES'),
-    spacer(),
-    paraMultiLine(sd.services[level] || sd.services[3]),
-  ];
+  // Cover
+  html += '<div class="section">';
+  html += '<div class="cover-title">STATEMENT OF WORK</div>';
+  html += '<div class="cover-sub">AI-Powered ICS Dashboard Implementation</div>';
+  html += '<div class="cover-level">'+esc(ld.label)+'</div>';
+  html += '<table class="meta-table">'+metaRow('Client','[CLIENT NAME]','MMS / Ref ID','[MMS-XXXXXXXX]')+metaRow('Accenture Entity','Accenture [NL/UK/CH] B.V.','Version','v1.0 — Draft for Review')+metaRow('Date','[DATE]','Classification','Confidential')+metaRow('Maturity Level',ld.label,'Estimated Investment',ld.cost+' (excl. VAT)')+'</table>';
+  html += '<p class="disclaimer">IMPORTANT: This document is a template. Placeholders (e.g. [CLIENT NAME], [DATE], [AMOUNT]) must be completed before execution. Rates are indicative — actual rates are governed by the applicable Master Services Agreement (MSA) or Framework Agreement.</p>';
+  html += '</div><div class="page-break"></div>';
 
-  // ---- 3. Deliverables ----
-  var delRows = (sd.deliverables[level] || sd.deliverables[3]).map(function(d) {
-    return new D.TableRow({ children: [
-      tcell(d[0], { width: 5 }),
-      tcell(d[1], { bold: true, width: 18 }),
-      tcell(d[2], { width: 10 }),
-      tcell(d[3], { width: 29 }),
-      tcell(d[4], { width: 8 }),
-      tcell(d[5], { width: 15 }),
-      tcell(d[6], { width: 15 }),
-    ]});
-  });
-  var deliverablesSection = [
-    h1('3.  DELIVERABLES'),
-    spacer(),
-    para('The following deliverables will be provided by Accenture under this Statement of Work. Acceptance criteria and sign-off procedures are defined in the Project Charter (Deliverable 1.1).'),
-    spacer(),
-    new D.Table({
-      width: { size: 100, type: D.WidthType.PERCENTAGE },
-      rows: [headerRow(['#','Deliverable','Format','Description','Due Date','Accenture Responsibility','Client Responsibility'])].concat(delRows),
-    }),
-  ];
+  // 1. Term
+  html += '<div class="section"><h1>1.&nbsp;&nbsp;TERM</h1>';
+  html += '<p><span class="label">Commencement Date:</span> [START DATE]</p>';
+  html += '<p><span class="label">Completion Date:</span> [END DATE] (approximately '+esc(ld.weeks)+' weeks from commencement)</p>';
+  html += '<p>This Statement of Work is entered into under the Master Services Agreement (MSA) reference [MSA REFERENCE DATE] between [CLIENT NAME] and Accenture [Entity]. This SOW is subject to the terms and conditions of the MSA. In the event of any conflict, the MSA shall prevail.</p>';
+  html += '</div>';
 
-  // ---- 4. Responsibilities & Assumptions ----
-  var responsibilitiesSection = [
-    h1('4.  RESPONSIBILITIES AND ASSUMPTIONS'),
-    spacer(),
-    h3('4.1  Accenture Responsibilities'),
-    bullet('Provide qualified personnel with appropriate skills and experience for each role defined in Section 8'),
-    bullet('Maintain a Project Manager as single point of accountability for delivery quality, timeline, and scope'),
-    bullet('Follow Accenture delivery methodology and quality gates; surface scope changes via formal Change Request process'),
-    bullet('Ensure all deliverables comply with applicable data protection legislation (GDPR/AVG) and Accenture information security policy'),
-    bullet('Maintain professional indemnity and required insurance throughout the engagement'),
-    bullet('Provide weekly status reports and attend fortnightly steering committee meetings'),
-    spacer(),
-    h3('4.2  Client Responsibilities'),
-    bullet('[CLIENT NAME] will designate a named Project Sponsor and Programme Director with authority to approve deliverables and escalate decisions'),
-    bullet('Provide timely access to GRC source systems, Azure subscription, and relevant IT infrastructure within 5 business days of request'),
-    bullet('Ensure availability of subject-matter experts (DPO, 1LoD Champion, IT Lead, Risk Owners) for workshops and UAT — minimum 20% of time commitment per SME during active phases'),
-    bullet('Provide written acceptance or rejection of deliverables within 10 business days of submission; deliverables not responded to within 14 business days are deemed accepted'),
-    bullet('Review and approve architecture decisions (ADR) within 5 business days of submission'),
-    bullet('Maintain infrastructure and licensing costs (Azure subscription, Microsoft 365, OpenAI service agreement) separate from this SOW'),
-    bullet('Ensure all regulatory filings and supervisory communications are handled by authorised client personnel only'),
-    bullet('Complete data protection impact assessment (DPIA) review and approval in coordination with DPO by W18'),
-  ];
+  // 2. Services
+  html += '<div class="section"><h1>2.&nbsp;&nbsp;SERVICES</h1><p>'+servText+'</p></div>';
 
-  // ---- 5. Dependencies ----
-  var dependenciesSection = [
-    h1('5.  DEPENDENCIES'),
-    spacer(),
-    para('Accenture\'s ability to deliver on time and within budget is contingent on the following dependencies being met by [CLIENT NAME]:'),
-    spacer(),
-    bullet('(a) Azure subscription with Contributor-level access granted to Accenture technical team within 5 business days of SOW execution'),
-    bullet('(b) GRC source system API credentials and sandbox environment available by W3'),
-    bullet('(c) Nominated ICS/GRC SME available for discovery workshops in W1–W4'),
-    bullet('(d) IT security and network team available to review and approve Private Endpoint and NSG configuration by W4'),
-    bullet('(e) Document corpus for RAG ingestion (policies, regulatory guidelines, ICS procedures) provided in accessible format by W8'),
-    bullet('(f) Azure OpenAI service provisioning and quota allocation approved by client IT by W10'),
-    bullet('(g) UAT participants (2LoD risk analysts, 1LoD Champion) available and committed for W24–W26'),
-    bullet('(h) External penetration test scope approved and test window confirmed by W20'),
-    bullet('(i) DPO available to co-review DPIA and AI governance framework by W18'),
-    bullet('(j) Production Azure environment provisioned and accessible for cutover by W26'),
-    bullet('(k) Change Management communications approved by W16 for internal awareness campaign'),
-    para('Any delay in the above dependencies will result in a corresponding delay to the project timeline. Accenture will raise a formal Dependency at-Risk notification if any dependency is overdue by more than 5 business days.'),
-  ];
+  // 3. Deliverables
+  html += '<div class="section"><h1>3.&nbsp;&nbsp;DELIVERABLES</h1>';
+  html += '<p>The following deliverables will be provided by Accenture under this Statement of Work. Acceptance criteria and sign-off procedures are defined in the Project Charter (Deliverable 1.1).</p>';
+  html += '<table><tr><th>#</th><th>Deliverable</th><th>Format</th><th>Description</th><th>Due Date</th><th>Accenture Responsibility</th><th>Client Responsibility</th></tr>'+delRows+'</table>';
+  html += '</div>';
 
-  // ---- 6. Out of Scope ----
-  var oos = sd.outOfScope[level] || sd.outOfScope[3];
-  var oosSection = [
-    h1('6.  OUT OF SCOPE'),
-    spacer(),
-    para('The following items are explicitly out of scope for this Statement of Work. Any in-scope request for these items will require a separate SOW or Change Request:'),
-    spacer(),
-  ].concat(oos.map(function(o) { return bullet('• ' + o); }));
+  // 4. Responsibilities
+  html += '<div class="section"><h1>4.&nbsp;&nbsp;RESPONSIBILITIES AND ASSUMPTIONS</h1>';
+  html += '<h2>4.1 Accenture Responsibilities</h2><ul>';
+  html += '<li>Provide qualified personnel with appropriate skills and experience for each role defined in Section 8</li>';
+  html += '<li>Maintain a Project Manager as single point of accountability for delivery quality, timeline, and scope</li>';
+  html += '<li>Follow Accenture delivery methodology and quality gates; surface scope changes via formal Change Request process</li>';
+  html += '<li>Ensure all deliverables comply with applicable data protection legislation (GDPR/AVG) and Accenture information security policy</li>';
+  html += '<li>Maintain professional indemnity and required insurance throughout the engagement</li>';
+  html += '<li>Provide weekly status reports and attend fortnightly steering committee meetings</li></ul>';
+  html += '<h2>4.2 Client Responsibilities</h2><ul>';
+  html += '<li>[CLIENT NAME] will designate a named Project Sponsor and Programme Director with authority to approve deliverables and escalate decisions</li>';
+  html += '<li>Provide timely access to GRC source systems, Azure subscription, and relevant IT infrastructure within 5 business days of request</li>';
+  html += '<li>Ensure availability of subject-matter experts (DPO, 1LoD Champion, IT Lead, Risk Owners) for workshops and UAT — minimum 20% of time commitment per SME during active phases</li>';
+  html += '<li>Provide written acceptance or rejection of deliverables within 10 business days of submission; deliverables not responded to within 14 business days are deemed accepted</li>';
+  html += '<li>Designate a data governance owner responsible for source data quality remediation and field mapping validation</li></ul>';
+  html += '<h2>4.3 Assumptions</h2><ul>';
+  html += '<li>Client holds a valid Azure subscription with sufficient quota for the services defined in the Architecture Decision Record</li>';
+  html += '<li>All data flows comply with applicable GDPR obligations; a Data Processing Agreement (DPA) with Microsoft (Azure) is in place or will be put in place before Phase 3</li>';
+  html += '<li>Accenture personnel will be granted remote access to client environments; on-site presence is at designated client office as agreed with the Programme Manager</li>';
+  html += '<li>Source GRC system APIs are available and documented; material changes to source system APIs during the engagement constitute a scope change</li></ul>';
+  html += '</div>';
 
-  // ---- 7. Location ----
-  var locationSection = [
-    h1('7.  LOCATION OF SERVICES'),
-    spacer(),
-    para('Services will be delivered using a hybrid model:'),
-    bullet('Client site ([CLIENT OFFICE ADDRESS]) — for discovery workshops, steering committee meetings, and UAT sessions (approximately 2–3 days per fortnight for senior roles)'),
-    bullet('Accenture offices ([ACCENTURE OFFICE CITY]) — for delivery, architecture, and development work'),
-    bullet('Blended onshore / nearshore delivery — technology roles (Data Engineers, AI/ML Engineer, Backend Developers) may include nearshore delivery from Accenture\'s European delivery centres, with onshore architects directing nearshore developers'),
-    para('All work involving access to client data or systems will be conducted in compliance with the data residency requirements agreed in the MSA. No client data will be processed outside the agreed Azure region ([AZURE REGION, e.g. West Europe — Netherlands]).'),
-  ];
+  // 5. Dependencies
+  html += '<div class="section"><h1>5.&nbsp;&nbsp;DEPENDENCIES</h1><ul>';
+  html += '<li>GRC source system API credentials and documentation provided by Week 1</li>';
+  html += '<li>Azure subscription access (Owner or Contributor rights) provisioned by Week 1</li>';
+  html += '<li>Azure AD tenant access and app registration permissions by Week 2</li>';
+  html += '<li>DPO availability for DPIA review in Weeks 3–4 and Phase 3</li>';
+  html += '<li>Risk Management SME availability for UAT (40 hours across 2 weeks in Weeks 25–26)</li>';
+  html += '<li>External penetration testing vendor contracted by Week 18</li></ul>';
+  html += '</div>';
 
-  // ---- 8. Fees & Expenses ----
-  var resData = sd.resources[level] || sd.resources[3];
-  var resRows = resData.map(function(r) {
-    return new D.TableRow({ children: [
-      tcell(r[0], { width: 22 }),
-      tcell(r[1], { width: 18 }),
-      tcell(r[2], { width: 12 }),
-      tcell(r[3], { width: 8 }),
-      tcell(r[4] + ' *', { width: 13 }),
-      tcell(r[5], { width: 12 }),
-      tcell(r[6] + ' *', { width: 15 }),
-    ]});
-  });
-  var invData = sd.invoiceSchedule[level] || sd.invoiceSchedule[3];
-  var invRows = invData.map(function(inv) {
-    return new D.TableRow({ children: [
-      tcell(inv[0], { width: 15 }),
-      tcell(inv[1], { width: 55 }),
-      tcell(inv[2], { width: 15 }),
-      tcell(inv[3], { width: 15 }),
-    ]});
-  });
-  var feesSection = [
-    h1('8.  FEES & EXPENSES'),
-    spacer(),
-    h3('8.1  Resource Rates and Estimated Fees'),
-    para('The following table sets out the indicative resource allocation for this engagement. Day rates are indicative market rates and are subject to confirmation in the commercial schedule attached to the MSA or applicable framework agreement.'),
-    spacer(),
-    new D.Table({
-      width: { size: 100, type: D.WidthType.PERCENTAGE },
-      rows: [headerRow(['Role','Seniority / Grade','Location','Count','Day Rate *','Est. Days','Est. Fees *'])].concat(resRows).concat([
-        new D.TableRow({ children: [
-          tcell('TOTAL', { bold: true, width: 22 }), tcell('', { width: 18 }), tcell('', { width: 12 }), tcell('', { width: 8 }),
-          tcell('', { width: 13 }), tcell('', { width: 12 }),
-          tcell(ld.cost + ' (approx.)', { bold: true, width: 15 }),
-        ]}),
-      ]),
-    }),
-    spacer(),
-    para('* Rates are indicative and subject to MSA commercial schedule. Figures exclude VAT, travel & expenses (T&E), and third-party costs.', { italics: true, color: GREY }),
-    spacer(),
-    h3('8.2  Additional Costs'),
-    bullet('Travel & Expenses: Estimated at ~10% of Accenture fees, invoiced at cost with receipts. Governed by Accenture\'s T&E policy and MSA expense provisions.'),
-    level >= 3 ? bullet('External Penetration Test: ~€30,000 (fixed fee, third-party specialist firm). Scope and vendor subject to client IT security approval.') : bullet('External Penetration Test: Not in scope for this maturity level (L3+ only).'),
-    bullet('Azure infrastructure and licensing costs are client-borne and are not included in the above fees.'),
-    spacer(),
-    h3('8.3  Invoicing Schedule'),
-    new D.Table({
-      width: { size: 100, type: D.WidthType.PERCENTAGE },
-      rows: [headerRow(['Invoice Period','Milestone / Trigger','% of Fees','Amount (EUR)'])].concat(invRows),
-    }),
-    spacer(),
-    para('Invoices are payable within 30 days of the invoice date. Invoices will be raised in EUR and are subject to applicable VAT. Disputes must be raised within 10 business days of invoice receipt.', { italics: true }),
-  ];
+  // 6. Out of Scope
+  html += '<div class="section"><h1>6.&nbsp;&nbsp;OUT OF SCOPE</h1><p>The following items are explicitly excluded from this Statement of Work:</p><ul>'+oos+'</ul></div>';
 
-  // ---- 9. Agreed & Accepted ----
-  var sigSection = [
-    h1('9.  AGREED AND ACCEPTED'),
-    spacer(),
-    para('By signing below, the parties agree to be bound by the terms of this Statement of Work and the Master Services Agreement referenced herein.'),
-    spacer(),
-    new D.Table({
-      width: { size: 100, type: D.WidthType.PERCENTAGE },
-      rows: [
-        new D.TableRow({ children: [
-          tcell('For and on behalf of Accenture', { bold: true, shading: 'F3EDF7', width: 50 }),
-          tcell('For and on behalf of [CLIENT NAME]', { bold: true, shading: 'F3EDF7', width: 50 }),
-        ]}),
-        new D.TableRow({ children: [
-          tcell('Signature: ___________________________', { width: 50 }),
-          tcell('Signature: ___________________________', { width: 50 }),
-        ]}),
-        new D.TableRow({ children: [
-          tcell('Name: ___________________________', { width: 50 }),
-          tcell('Name: ___________________________', { width: 50 }),
-        ]}),
-        new D.TableRow({ children: [
-          tcell('Title: ___________________________', { width: 50 }),
-          tcell('Title: ___________________________', { width: 50 }),
-        ]}),
-        new D.TableRow({ children: [
-          tcell('Date: ___________________________', { width: 50 }),
-          tcell('Date: ___________________________', { width: 50 }),
-        ]}),
-      ],
-    }),
-    spacer(),
-    para('This Statement of Work, together with the Master Services Agreement and any attachments hereto, constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior discussions, representations, and agreements.', { italics: true, color: GREY }),
-  ];
+  // 7. Location
+  html += '<div class="section"><h1>7.&nbsp;&nbsp;LOCATION OF SERVICES</h1>';
+  html += '<p>Services will be performed primarily remotely from Accenture offices and home office locations in [COUNTRY]. On-site client presence will be required for:</p><ul>';
+  html += '<li>Week 1 project kick-off workshop (1 day)</li>';
+  html += '<li>Phase gate reviews (4 hours per gate, as agreed)</li>';
+  html += '<li>UAT sessions (2 weeks on-site or hybrid)</li>';
+  html += '<li>Go-live support (1 week on-site, hypercare period)</li></ul>';
+  html += '<p>All data processing will occur within the European Economic Area (EEA). Azure services will be deployed in West Europe or North Europe regions.</p></div>';
 
-  // ---- assemble document ----
-  var allChildren = [].concat(
-    titleBlock, [spacer()],
-    termSection, [spacer()],
-    servicesSection, [spacer()],
-    deliverablesSection, [spacer()],
-    responsibilitiesSection, [spacer()],
-    dependenciesSection, [spacer()],
-    oosSection, [spacer()],
-    locationSection, [spacer()],
-    feesSection, [spacer()],
-    sigSection
-  );
+  // 8. Resources
+  html += '<div class="section"><h1>8.&nbsp;&nbsp;FEES AND EXPENSES</h1>';
+  html += '<h2>8.1 Resource Schedule</h2>';
+  html += '<table><tr><th>Role</th><th>Grade</th><th>Location Model</th><th>Headcount</th><th>Day Rate (EUR)</th><th>Days</th><th>Total (EUR)</th></tr>'+resRows+'</table>';
+  html += '<p><strong>Accenture Fees Total: '+esc(ld.cost)+'</strong> (excl. T&amp;E and third-party costs). T&amp;E estimated at 10% of fees. External pen test ~€30,000 (accredited vendor, billed separately).</p>';
+  html += '<h2>8.2 Travel &amp; Expenses</h2>';
+  html += '<p>Travel and expenses are billed at cost, capped at 10% of Accenture fees. Expenses are invoiced monthly with supporting documentation. Air travel above economy class requires prior written approval.</p>';
+  html += '</div>';
 
-  var doc = new D.Document({
-    creator: 'Accenture',
-    title: 'SOW — AI ICS Dashboard — ' + ld.label,
-    description: 'Statement of Work for AI-Powered ICS Dashboard Implementation',
-    sections: [{
-      properties: {
-        page: {
-          margin: { top: mmTwip(20), bottom: mmTwip(20), left: mmTwip(20), right: mmTwip(20) },
-        },
-      },
-      children: allChildren,
-    }],
-  });
+  // 9. Invoicing
+  html += '<div class="section"><h1>9.&nbsp;&nbsp;INVOICING SCHEDULE</h1>';
+  html += '<table><tr><th>Milestone / Month</th><th>Trigger</th><th>% of Fees</th><th>Amount (EUR)</th></tr>'+invRows+'</table>';
+  html += '<p>Invoices are payable within 30 days of receipt. Late payments accrue interest at 1.5% per month. All amounts are exclusive of VAT. Amounts in [AMOUNT] fields are to be calculated as the stated percentage of the agreed Accenture fee total.</p>';
+  html += '</div>';
 
-  D.Packer.toBlob(doc).then(function(blob) {
-    var safeLabel = (ld.label || 'L' + level).replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
-    var filename = 'SoW-AI-ICS-Dashboard-' + safeLabel + '.docx';
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    setTimeout(function() { document.body.removeChild(a); URL.revokeObjectURL(url); }, 200);
-  }).catch(function(err) {
-    console.error('SoW generation failed:', err);
-    alert('Failed to generate Word document. See browser console for details.');
-  });
+  // Signatures
+  html += '<div class="section page-break"><h1>10.&nbsp;&nbsp;AGREED AND ACCEPTED</h1>';
+  html += '<p>By signing below, the parties agree to be bound by the terms of this Statement of Work and the Master Services Agreement referenced above.</p><div class="spacer"></div>';
+  html += '<table class="meta-table"><tr><td style="width:45%;vertical-align:bottom;"><p><strong>For and on behalf of [CLIENT NAME]:</strong></p><br><br><br><p>__________________________</p><p>Name:</p><p>Title:</p><p>Date:</p></td><td style="width:10%;"></td><td style="width:45%;vertical-align:bottom;"><p><strong>For and on behalf of Accenture [Entity]:</strong></p><br><br><br><p>__________________________</p><p>Name:</p><p>Title:</p><p>Date:</p></td></tr></table>';
+  html += '</div>';
+
+  html += '</body></html>';
+
+  var blob = new Blob(['﻿', html], { type: 'application/msword' });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement('a');
+  a.href = url;
+  a.download = 'SoW_ICS_Cockpit_L' + level + '_' + ld.label.replace(/[^a-zA-Z0-9]/g, '_') + '.doc';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function() { URL.revokeObjectURL(url); }, 2000);
 }
 </script>
 
