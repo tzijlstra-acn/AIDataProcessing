@@ -375,11 +375,10 @@ section { padding-top: 16px; margin-bottom: 40px; }
 
 /* GLOBAL MATURITY BAR */
 .maturity-bar {
-  position: sticky; top: 54px; z-index: 90;
-  background: var(--surface); border-bottom: 1px solid var(--borderS);
-  margin: -28px -40px 28px; padding: 10px 40px;
+  background: var(--surface); border: 2px solid var(--brandMid);
+  border-radius: var(--radiusL); margin: 0 0 32px; padding: 16px 24px;
   display: flex; align-items: center; gap: 12px;
-  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+  box-shadow: 0 2px 12px rgba(161,0,255,.08);
 }
 .maturity-bar-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--tm); flex-shrink: 0; }
 .matbar-chips { display: flex; gap: 6px; flex: 1; }
@@ -390,6 +389,16 @@ section { padding-top: 16px; margin-bottom: 40px; }
 .matbar-chip-base { display: none; font-size: 10px; font-weight: 400; opacity: .85; margin-left: 4px; }
 .matbar-desc { font-size: 12px; color: var(--tm); margin-left: 8px; flex: 1; max-width: 420px; border-left: 2px solid var(--border); padding-left: 12px; }
 @media (max-width: 900px) { .matbar-desc { display: none; } }
+
+/* LEVEL CONTEXT BANNER (in-section) */
+.level-ctx-banner { display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:var(--radius); margin-bottom:16px; font-size:13px; line-height:1.5; }
+.level-ctx-banner .lcb-icon { font-size:16px; flex-shrink:0; }
+.level-ctx-banner.lcb-ok  { background:var(--gb); border-left:3px solid var(--g); color:var(--ts); }
+.level-ctx-banner.lcb-warn { background:var(--ab); border-left:3px solid var(--a); color:var(--ts); }
+/* Feature rows locked at higher levels */
+tr.level-locked > td { opacity:.35; text-decoration:line-through; }
+tr.level-locked > td:last-child { text-decoration:none; }
+.level-min-chip { display:inline-block; font-size:10px; font-weight:700; padding:2px 7px; border-radius:10px; background:var(--s2); color:var(--tm); margin-left:4px; }
 
 /* JOURNEY COMPACT STEP */
 .journey-step-compact { display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 28px 24px; text-align: center; background: #0D1B2E; min-height: 200px; }
@@ -1130,36 +1139,7 @@ section { padding-top: 16px; margin-bottom: 40px; }
   <div class="section-header">
     <div class="section-tag">Section 4</div>
     <h2>Data Journey</h2>
-    <p>Trace risk record <strong>RSK-2024-0142</strong> from source to screen. Select a maturity level to see the corresponding data journey — from manual CSV (L1) through to fully autonomous AI write-back (L5).</p>
-  </div>
-
-  <!-- LEVEL SELECTOR -->
-  <div class="level-selector">
-    <div class="level-btn" data-level="1" onclick="setMaturityLevel(1)">
-      <div class="level-num">L1</div>
-      <div class="level-name">Static</div>
-      <div class="level-sub">Manual exports</div>
-    </div>
-    <div class="level-btn" data-level="2" onclick="setMaturityLevel(2)">
-      <div class="level-num">L2</div>
-      <div class="level-name">Connected</div>
-      <div class="level-sub">Live API + SSE</div>
-    </div>
-    <div class="level-btn active" data-level="3" onclick="setMaturityLevel(3)">
-      <div class="level-num">L3</div>
-      <div class="level-name">Assisted</div>
-      <div class="level-sub">Base case ★</div>
-    </div>
-    <div class="level-btn" data-level="4" onclick="setMaturityLevel(4)">
-      <div class="level-num">L4</div>
-      <div class="level-name">Active</div>
-      <div class="level-sub">AI-assisted actions</div>
-    </div>
-    <div class="level-btn" data-level="5" onclick="setMaturityLevel(5)">
-      <div class="level-num">L5</div>
-      <div class="level-name">Autonomous</div>
-      <div class="level-sub">AI write-back</div>
-    </div>
+    <p>Trace risk record <strong>RSK-2024-0142</strong> from source to screen. Use the <strong>AI Maturity Level</strong> selector at the top to switch journeys — from manual CSV (L1) through to fully autonomous AI write-back (L5).</p>
   </div>
 
   <!-- LEVEL DESCRIPTION CARD -->
@@ -2156,6 +2136,10 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
     <h2>Architecture</h2>
     <p>Azure architecture, AI/ML components, database schema, API catalogue, security design, and technology stack.</p>
   </div>
+  <div class="level-ctx-banner lcb-ok" id="level-ctx-arch">
+    <span class="lcb-icon">✓</span>
+    <span id="level-ctx-arch-text">L3 (Base Case) — Full stack active: ADF · dbt · PostgreSQL · Container Apps · Azure OpenAI · AI Search · Redis · APIM · Key Vault. All architecture components deployed.</span>
+  </div>
 
   <div data-tab-group="arch">
     <div class="tab-row">
@@ -2478,6 +2462,10 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
     <h2>Intelligence</h2>
     <p>Model placement rationale, context budget, token economics, and optimisation strategies.</p>
   </div>
+  <div class="level-ctx-banner lcb-ok" id="level-ctx-intel">
+    <span class="lcb-icon">✓</span>
+    <span id="level-ctx-intel-text">L3 (Base Case) — Full AI intelligence layer active: GPT-4o agent, GPT-4o-mini TPRM drafting, text-embedding-3-large for RAG. Token economics and context budgets shown below apply at this level.</span>
+  </div>
 
   <div data-tab-group="intel">
     <div class="tab-row">
@@ -2713,6 +2701,10 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
     <h2>Feature Map</h2>
     <p>Interaction patterns, AI agent UX design, state and event management, and build-vs-buy analysis.</p>
   </div>
+  <div class="level-ctx-banner lcb-ok" id="level-ctx-feat">
+    <span class="lcb-icon">✓</span>
+    <span id="level-ctx-feat-text">L3 (Base Case) — All core features available. Features requiring a higher level are greyed out in the Interactions table.</span>
+  </div>
 
   <div data-tab-group="feat">
     <div class="tab-row">
@@ -2725,20 +2717,22 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
     <div class="tab-content" id="feat-interactions">
       <div class="table-wrap">
         <table>
-          <thead><tr><th>Feature</th><th>Role(s)</th><th>Interaction Pattern</th><th>Phase</th></tr></thead>
+          <thead><tr><th>Feature</th><th>Role(s)</th><th>Interaction Pattern</th><th>Phase</th><th>Min Level</th></tr></thead>
           <tbody>
-            <tr><td><strong>5×5 Risk Heatmap</strong></td><td>All</td><td>Toggle inherent/residual. Click cell → drill into risk list. Color: Critical=deep red, High=amber, Medium=yellow, Low=green.</td><td>Phase 2</td></tr>
-            <tr><td><strong>Area Dashboard</strong></td><td>All</td><td>Click area card → load area-specific risk register, controls, RCSA tasks, open findings. Breadcrumb nav.</td><td>Phase 2</td></tr>
-            <tr><td><strong>RCSA Timeline</strong></td><td>All</td><td>Horizontal Gantt-style view of upcoming assessments by area. Colour-coded by status. Click → open assessment.</td><td>Phase 2</td></tr>
-            <tr><td><strong>AI Chat Panel</strong></td><td>All</td><td>Side panel (default collapsed). Type natural language question. SSE streaming response appears token-by-token. Conversation persists for session.</td><td>Phase 3</td></tr>
-            <tr><td><strong>Workflow Actions (RCSA)</strong></td><td>1LoD / 2LoD</td><td>Inline buttons on assessment: [Start], [Submit for Review], [Send Reminder], [Escalate]. Each triggers Durable Function via POST. Confirmation modal before action.</td><td>Phase 3</td></tr>
-            <tr><td><strong>TPRM Signal Review</strong></td><td>2LoD</td><td>Notification badge on nav. Panel shows pending AI-drafted risks. [Accept] creates draft risk in register. [Reject] prompts for reason. Animate out on decision.</td><td>Phase 3</td></tr>
-            <tr><td><strong>Risk Register Table</strong></td><td>All (edit: 2LoD)</td><td>Filterable table (status, rating, area, owner). Inline expand row → show control linkages and history. Click row → full risk detail modal.</td><td>Phase 2</td></tr>
-            <tr><td><strong>Trend Arrows</strong></td><td>All</td><td>Inline icon in risk table: ↑ Increasing (red), → Stable (grey), ↓ Decreasing (green). Tooltip shows calculation basis. Run weekly via Function.</td><td>Phase 3</td></tr>
-            <tr><td><strong>Real-time Push Notifications</strong></td><td>All</td><td>SSE stream from /api/events/stream. Notification toast when new TPRM signal arrives, when RCSA status changes, when assessment due today. No polling required.</td><td>Phase 3</td></tr>
-            <tr><td><strong>NL Query to SQL</strong></td><td>All</td><td>Agent chat converts natural language to SQL via SQLQueryTool. Displays result as formatted table in chat. Agent explains the query.</td><td>Phase 3</td></tr>
-            <tr><td><strong>Document RAG Search</strong></td><td>All</td><td>Agent chat detects document queries, uses DocumentRAGTool. Response includes cited document name + page number. Source chunks shown on expand.</td><td>Phase 3</td></tr>
-            <tr><td><strong>Export to PDF/Excel</strong></td><td>All</td><td>Export risk register or heatmap view to PDF (FastAPI + WeasyPrint) or Excel (openpyxl). Download triggered from dashboard button.</td><td>Phase 4</td></tr>
+            <tr data-min-level="1"><td><strong>5×5 Risk Heatmap</strong></td><td>All</td><td>Toggle inherent/residual. Click cell → drill into risk list. Color: Critical=deep red, High=amber, Medium=yellow, Low=green.</td><td>Phase 2</td><td><span class="level-min-chip">L1+</span></td></tr>
+            <tr data-min-level="1"><td><strong>Area Dashboard</strong></td><td>All</td><td>Click area card → load area-specific risk register, controls, RCSA tasks, open findings. Breadcrumb nav.</td><td>Phase 2</td><td><span class="level-min-chip">L1+</span></td></tr>
+            <tr data-min-level="1"><td><strong>RCSA Timeline</strong></td><td>All</td><td>Horizontal Gantt-style view of upcoming assessments by area. Colour-coded by status. Click → open assessment.</td><td>Phase 2</td><td><span class="level-min-chip">L1+</span></td></tr>
+            <tr data-min-level="1"><td><strong>Risk Register Table</strong></td><td>All (edit: 2LoD)</td><td>Filterable table (status, rating, area, owner). Inline expand row → show control linkages and history. Click row → full risk detail modal.</td><td>Phase 2</td><td><span class="level-min-chip">L1+</span></td></tr>
+            <tr data-min-level="1"><td><strong>Export to PDF/Excel</strong></td><td>All</td><td>Export risk register or heatmap view to PDF (FastAPI + WeasyPrint) or Excel (openpyxl). Download triggered from dashboard button.</td><td>Phase 4</td><td><span class="level-min-chip">L1+</span></td></tr>
+            <tr data-min-level="2"><td><strong>Trend Arrows</strong></td><td>All</td><td>Inline icon in risk table: ↑ Increasing (red), → Stable (grey), ↓ Decreasing (green). Tooltip shows calculation basis. Run weekly via Function.</td><td>Phase 2</td><td><span class="level-min-chip">L2+</span></td></tr>
+            <tr data-min-level="2"><td><strong>Real-time Push Notifications</strong></td><td>All</td><td>SSE stream from /api/events/stream. Notification toast when new TPRM signal arrives, when RCSA status changes, when assessment due today. No polling required.</td><td>Phase 2</td><td><span class="level-min-chip">L2+</span></td></tr>
+            <tr data-min-level="2"><td><strong>Workflow Actions (RCSA)</strong></td><td>1LoD / 2LoD</td><td>Inline buttons on assessment: [Start], [Submit for Review], [Send Reminder], [Escalate]. Each triggers Durable Function via POST. Confirmation modal before action.</td><td>Phase 3</td><td><span class="level-min-chip">L2+</span></td></tr>
+            <tr data-min-level="3"><td><strong>AI Chat Panel</strong></td><td>All</td><td>Side panel (default collapsed). Type natural language question. SSE streaming response appears token-by-token. Conversation persists for session.</td><td>Phase 3</td><td><span class="level-min-chip">L3+</span></td></tr>
+            <tr data-min-level="3"><td><strong>NL Query to SQL</strong></td><td>All</td><td>Agent chat converts natural language to SQL via SQLQueryTool. Displays result as formatted table in chat. Agent explains the query.</td><td>Phase 3</td><td><span class="level-min-chip">L3+</span></td></tr>
+            <tr data-min-level="3"><td><strong>Document RAG Search</strong></td><td>All</td><td>Agent chat detects document queries, uses DocumentRAGTool. Response includes cited document name + page number. Source chunks shown on expand.</td><td>Phase 3</td><td><span class="level-min-chip">L3+</span></td></tr>
+            <tr data-min-level="3"><td><strong>TPRM Signal Review</strong></td><td>2LoD</td><td>Notification badge on nav. Panel shows pending AI-drafted risks. [Accept] creates draft risk in register. [Reject] prompts for reason. Animate out on decision.</td><td>Phase 3</td><td><span class="level-min-chip">L3+</span></td></tr>
+            <tr data-min-level="4"><td><strong>AI-Proposed Actions</strong></td><td>2LoD</td><td>AI surfaces overdue RCSAs and proposed reminders/escalations for one-click approval. Human-in-the-loop via Durable Function external event. Never executes without approval.</td><td>Phase 3</td><td><span class="level-min-chip">L4+</span></td></tr>
+            <tr data-min-level="5"><td><strong>GRC Write-back</strong></td><td>2LoD + GRC Admin</td><td>AI detects policy change, proposes affected risk description updates, 2LoD approves, ICS Cockpit writes directly to GRC source system REST API. Full audit trail with 24h rollback.</td><td>Phase 5</td><td><span class="level-min-chip">L5</span></td></tr>
           </tbody>
         </table>
       </div>
@@ -3108,7 +3102,7 @@ const ROLES = {
     practiceColor: '#A100FF',
     fte: '1.0',
     phase: 'All phases',
-    summary: 'Owns end-to-end delivery. Plans sprints, manages RAID log, runs Steering Committee, and is the client's primary point of contact throughout the engagement.',
+    summary: 'Owns end-to-end delivery. Plans sprints, manages RAID log, runs Steering Committee, and is the client’s primary point of contact throughout the engagement.',
     handbook: [
       { label: 'Sprint cadence', value: '2-week sprints. Sprint planning Monday, retrospective + review Friday of week 2.' },
       { label: 'RAID log', value: 'Updated weekly in Azure DevOps. All risks ≥ High surfaced to SteerCo deck.' },
@@ -3465,39 +3459,89 @@ const MATBAR_SHORTS = {
   5: 'Full autonomous loop: AI detects policy changes, proposes GRC write-back, and closes the data circle with 2LoD sign-off.',
 };
 
+const LEVEL_ARCH_CTX = {
+  1: { ok: false, text: 'L1 (Static) — Only data ingestion is deployed: ADF pipelines, dbt models, PostgreSQL. Container Apps, Azure OpenAI, AI Search, Service Bus, Redis, Durable Functions are NOT deployed at this level.' },
+  2: { ok: true,  text: 'L2 (Connected) — Data ingestion layer + Container Apps (FastAPI + SSE) + Service Bus for TPRM webhooks. Azure OpenAI and AI Search are NOT yet deployed.' },
+  3: { ok: true,  text: 'L3 (Base Case) — Full stack active: ADF · dbt · PostgreSQL · Container Apps · Azure OpenAI · AI Search · Redis · APIM · Key Vault. All architecture components deployed.' },
+  4: { ok: true,  text: 'L4 (Active) — Full L3 stack + Azure Durable Functions orchestrating AI-proposed actions with human-in-the-loop external event approval pattern.' },
+  5: { ok: true,  text: 'L5 (Autonomous, optional) — Full L4 stack + optional outbound GRC write-back connector. Requires separate approval, rollback storage, and audit trail per DORA requirements.' },
+};
+
+const LEVEL_INTEL_CTX = {
+  1: { ok: false, text: 'L1 (Static) — No AI components. Intelligence section content does NOT apply at this level. GPT-4o, AI Search, and LangChain are not deployed.' },
+  2: { ok: false, text: 'L2 (Connected) — No AI components. Intelligence section content does NOT apply at this level. The data layer is live but AI is not yet active.' },
+  3: { ok: true,  text: 'L3 (Base Case) — Full intelligence layer active: GPT-4o agent for complex queries, GPT-4o-mini for TPRM drafts, text-embedding-3-large for RAG. Token economics and context budgets below apply at this level.' },
+  4: { ok: true,  text: 'L4 (Active) — Full L3 intelligence layer + additional LLM calls for AI-proposed action generation and workflow orchestration.' },
+  5: { ok: true,  text: 'L5 (Autonomous) — Full L4 intelligence layer + policy change detection prompts and write-back confirmation generation.' },
+};
+
+const LEVEL_FEAT_CTX = {
+  1: { ok: false, text: 'L1 (Static) — Only basic features available: Heatmap (read-only), Risk Register Table, Area Dashboard, RCSA Timeline, Export. Features requiring L2+ are greyed out below.' },
+  2: { ok: true,  text: 'L2 (Connected) — Adds real-time features: Trend Arrows, Push Notifications, basic Workflow Actions. AI features (L3+) are greyed out below.' },
+  3: { ok: true,  text: 'L3 (Base Case) — Full feature set: all core features plus AI Chat, NL Query, Document RAG, TPRM Signal Review. All features up to L3 are active.' },
+  4: { ok: true,  text: 'L4 (Active) — All L3 features plus AI-Proposed Actions review panel with human-in-the-loop approval workflow.' },
+  5: { ok: true,  text: 'L5 (Autonomous) — All L4 features plus GRC Write-back review and confirmation UI. The full autonomous loop is available.' },
+};
+
 function setMaturityLevel(level) {
-  // Update section-level card buttons (inside Data Journey section)
-  document.querySelectorAll('.level-btn').forEach(btn => {
-    btn.classList.toggle('active', parseInt(btn.dataset.level) === level);
-  });
   // Sync global maturity bar chips
-  document.querySelectorAll('.matbar-chip').forEach(chip => {
+  document.querySelectorAll('.matbar-chip').forEach(function(chip) {
     chip.classList.toggle('active', parseInt(chip.dataset.level) === level);
   });
   // Update global bar description
-  const matbarDesc = document.getElementById('matbarDesc');
+  var matbarDesc = document.getElementById('matbarDesc');
   if (matbarDesc) matbarDesc.innerHTML = MATBAR_SHORTS[level] || '';
-  // Show/hide content panels
-  document.querySelectorAll('[data-level-content]').forEach(panel => {
-    const show = parseInt(panel.dataset.levelContent) === level;
+
+  // Show/hide Data Journey content panels
+  document.querySelectorAll('[data-level-content]').forEach(function(panel) {
+    var show = parseInt(panel.dataset.levelContent) === level;
     panel.style.display = show ? '' : 'none';
     if (show) {
-      const player = panel.querySelector('.journey-player');
+      var player = panel.querySelector('.journey-player');
       if (player) initJourneyPlayer(player);
     }
   });
-  // Level description (in-section)
-  const desc = LEVEL_DESCS[level] || {};
-  const titleEl = document.getElementById('levelDescTitle');
-  const textEl = document.getElementById('levelDescText');
+  // Level description card (inside Data Journey section)
+  var desc = LEVEL_DESCS[level] || {};
+  var titleEl = document.getElementById('levelDescTitle');
+  var textEl  = document.getElementById('levelDescText');
   if (titleEl) titleEl.textContent = desc.title || '';
-  if (textEl) textEl.textContent = desc.text || '';
+  if (textEl)  textEl.textContent  = desc.text  || '';
   // Live doc callout (L2+)
-  const ldc = document.getElementById('liveDocCallout');
+  var ldc = document.getElementById('liveDocCallout');
   if (ldc) ldc.style.display = level >= 2 ? '' : 'none';
-  // L5 write-back
-  const wb = document.getElementById('l5WriteBack');
+  // L5 write-back block
+  var wb = document.getElementById('l5WriteBack');
   if (wb) wb.style.display = level === 5 ? '' : 'none';
+
+  // ── Architecture context banner ──────────────────────────────────────
+  var archCtx = LEVEL_ARCH_CTX[level] || {};
+  var archBanner = document.getElementById('level-ctx-arch');
+  var archText   = document.getElementById('level-ctx-arch-text');
+  if (archBanner) { archBanner.className = 'level-ctx-banner ' + (archCtx.ok ? 'lcb-ok' : 'lcb-warn'); }
+  if (archBanner) { archBanner.querySelector('.lcb-icon').textContent = archCtx.ok ? '✓' : '⚠'; }
+  if (archText)  archText.textContent = archCtx.text || '';
+
+  // ── Intelligence context banner ──────────────────────────────────────
+  var intelCtx = LEVEL_INTEL_CTX[level] || {};
+  var intelBanner = document.getElementById('level-ctx-intel');
+  var intelText   = document.getElementById('level-ctx-intel-text');
+  if (intelBanner) { intelBanner.className = 'level-ctx-banner ' + (intelCtx.ok ? 'lcb-ok' : 'lcb-warn'); }
+  if (intelBanner) { intelBanner.querySelector('.lcb-icon').textContent = intelCtx.ok ? '✓' : '⚠'; }
+  if (intelText)  intelText.textContent = intelCtx.text || '';
+
+  // ── Features context banner + row gating ────────────────────────────
+  var featCtx = LEVEL_FEAT_CTX[level] || {};
+  var featBanner = document.getElementById('level-ctx-feat');
+  var featText   = document.getElementById('level-ctx-feat-text');
+  if (featBanner) { featBanner.className = 'level-ctx-banner ' + (featCtx.ok ? 'lcb-ok' : 'lcb-warn'); }
+  if (featBanner) { featBanner.querySelector('.lcb-icon').textContent = featCtx.ok ? '✓' : '⚠'; }
+  if (featText)  featText.textContent = featCtx.text || '';
+  // Gray out features not available at this level
+  document.querySelectorAll('tr[data-min-level]').forEach(function(row) {
+    var minLevel = parseInt(row.dataset.minLevel);
+    row.classList.toggle('level-locked', level < minLevel);
+  });
 }
 
 /* =====================================================================
