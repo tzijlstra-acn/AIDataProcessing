@@ -136,9 +136,9 @@ tbody tr:nth-child(even) td { background: var(--s1); }
 .phase-title { font-size: 15px; font-weight: 700; color: var(--tp); }
 .phase-weeks { font-size: 12px; color: var(--tm); margin-left: auto; white-space: nowrap; }
 .phase-body { padding: 16px 20px; border-top: 1px solid var(--border); }
-.phase-objective { font-size: 13.5px; color: var(--ts); margin-bottom: 14px; font-style: italic; }
-.phase-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--tm); margin-bottom: 6px; margin-top: 12px; }
-.phase-body ul { padding-left: 18px; font-size: 13px; color: var(--ts); }
+.phase-objective { font-size: 12.5px; color: var(--ts); margin-bottom: 14px; font-style: italic; }
+.phase-section-title { font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--tm); margin-bottom: 4px; margin-top: 12px; }
+.phase-body ul { padding-left: 18px; font-size: 12px; color: var(--ts); }
 .phase-body ul li { margin-bottom: 4px; }
 .phase-body strong { color: var(--tp); }
 .deliverables-list { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
@@ -482,6 +482,11 @@ details.collapsible > div.details-body { padding: 16px; }
 .deliverable-item.clickable { cursor: pointer; color: var(--brandMid); text-decoration: underline; text-decoration-color: rgba(42,82,152,.3); }
 .deliverable-item.clickable:hover { background: var(--brandLight); border-radius: 4px; }
 .role-del-group { margin-bottom: 12px; }
+/* Collapsible deliverables-by-role toggle */
+.deliverables-toggle { display: flex; align-items: center; cursor: pointer; user-select: none; padding: 4px 6px; margin-left: -6px; margin-right: -6px; border-radius: 6px; transition: background .15s; }
+.deliverables-toggle:hover { background: var(--s1); }
+.deliverables-toggle .del-count { font-size: 10px; font-weight: 600; color: var(--ts); background: var(--s2); padding: 2px 7px; border-radius: 10px; margin-left: 6px; text-transform: none; letter-spacing: 0; }
+.deliverables-toggle .del-toggle-arrow { font-size: 11px; color: var(--tm); margin-left: auto; transition: transform .2s; transform: rotate(0deg); }
 .role-del-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; padding-top: 8px; border-top: 1px solid var(--border); }
 .role-del-header:first-child { border-top: none; padding-top: 0; }
 .role-del-badge { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 20px; color: #fff; }
@@ -1043,10 +1048,14 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Week 2:</strong> Data &amp; Platform Assessment — data audit (extract 100–500 records per entity); TPRM tool assessment; platform requirements workshop; Azure AD configuration review</li>
           <li><strong>Week 3:</strong> Draft Architecture Decision Record (ADR); DPIA draft with DPO</li>
           <li><strong>Week 4:</strong> Terraform apply (provision all Azure resources non-prod); CI/CD pipeline; Project Charter finalised</li>
-          <li><strong>AI Governance:</strong> Classify ICS Cockpit under EU AI Act (High Risk determination); define AI governance structure and accountabilities; initiate DORA Art.30 third-party assessment for Azure OpenAI</li>
+          <li><strong>AI Governance:</strong> EU AI Act classification (High-Risk); DORA Art.30 assessment initiated for Azure OpenAI</li>
         </ul>
-        <div class="phase-section-title">Deliverables by Role</div>
-        <div class="role-del-group">
+        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+          <span>Deliverables by Role</span>
+          <span class="del-count">8 across 4 roles — click to expand</span>
+          <span class="del-toggle-arrow">▶</span>
+        </div>
+        <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Project Charter')" title="View sample">Project Charter (W4)</span>
@@ -1087,10 +1096,14 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 7–8:</strong> ADF pipelines for remaining entities; dbt transformation layer; TPRM connector</li>
           <li><strong>Weeks 9–10:</strong> Document ingestion pipeline (blob→parse→chunk→embed→Azure AI Search)</li>
           <li><strong>Weeks 11–12:</strong> Static dashboard build (hardcoded, matching real client data structure); client design validation</li>
-          <li><strong>AI Governance:</strong> Draft AI data governance policy; document data lineage for AI inputs/outputs; prepare AI register entry in model inventory</li>
+          <li><strong>AI Governance:</strong> Draft AI data governance policy; AI model-inventory register entry</li>
         </ul>
-        <div class="phase-section-title">Deliverables by Role</div>
-        <div class="role-del-group">
+        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+          <span>Deliverables by Role</span>
+          <span class="del-count">9 across 4 roles — click to expand</span>
+          <span class="del-toggle-arrow">▶</span>
+        </div>
+        <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">DE1</span><span class="role-del-name">Data Engineer 1</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('ADF Pipeline documentation')" title="View sample">ADF Pipeline documentation (W10)</span>
@@ -1132,10 +1145,14 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 11–12:</strong> Connect frontend to live API; KPI cards, area cards, risk heatmap (inherent/residual toggle)</li>
           <li><strong>Weeks 13–14:</strong> Risk register and controls with full filter support; process detail view; RCSA timeline view</li>
           <li><strong>Weeks 15–16:</strong> Cross-area risk view; performance testing (&lt;500ms under 50 concurrent users); WCAG 2.1 AA review</li>
-          <li><strong>AI Governance:</strong> Draft Model Card for dashboard AI components; define logging requirements for Art.12 compliance; document human oversight rules for AI-labelled outputs</li>
+          <li><strong>AI Governance:</strong> Draft AI Model Card; Art.12 logging requirements; human-oversight rules for AI outputs</li>
         </ul>
-        <div class="phase-section-title">Deliverables by Role</div>
-        <div class="role-del-group">
+        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+          <span>Deliverables by Role</span>
+          <span class="del-count">7 across 4 roles — click to expand</span>
+          <span class="del-toggle-arrow">▶</span>
+        </div>
+        <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">BE1</span><span class="role-del-name">Backend Developer 1</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('FastAPI OpenAPI specification')" title="View sample">FastAPI OpenAPI specification (W14)</span>
@@ -1175,10 +1192,14 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 15–16:</strong> System prompt engineering with GRC Domain Expert; context injection; agent audit logging</li>
           <li><strong>Weeks 17–18:</strong> TPRM Signal Engine (Service Bus subscriber); signal review UI; accept/reject workflow</li>
           <li><strong>Weeks 19–20:</strong> Trend detection (weekly Azure Function, scipy linear regression); RCSA due-date monitor (daily 07:00 UTC)</li>
-          <li><strong>AI Governance:</strong> Finalise AI Risk Register; complete EU AI Act technical documentation (Art.11); validate model against EBA/SR11-7 proxy metrics (RAGAS); complete DORA Art.30 assessment for Azure OpenAI; conduct ISO 42001 gap assessment</li>
+          <li><strong>AI Governance:</strong> Finalise AI Risk Register; EU AI Act tech docs (Art.11); RAGAS model validation; DORA Art.30 + ISO 42001 gap assessment</li>
         </ul>
-        <div class="phase-section-title">Deliverables by Role</div>
-        <div class="role-del-group">
+        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+          <span>Deliverables by Role</span>
+          <span class="del-count">10 across 3 roles — click to expand</span>
+          <span class="del-toggle-arrow">▶</span>
+        </div>
+        <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">AI</span><span class="role-del-name">AI/ML Engineer</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Agent Quality Evaluation Report')" title="View sample">Agent Quality Evaluation Report (W20)</span>
@@ -1218,10 +1239,14 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 19–20:</strong> Azure Durable Functions — RCSA Assessment lifecycle (D-14 reminder, D-3 escalation)</li>
           <li><strong>Weeks 21–22:</strong> PUT /api/risks/{'{id}'}; risk update form; 2LoD review and comment workflow</li>
           <li><strong>Weeks 23–24:</strong> Full RBAC enforcement; role-based UI rendering; end-to-end workflow test</li>
-          <li><strong>AI Governance:</strong> Draft Human Oversight Protocol; define AI incident response procedure; update DORA Art.30 register; brief Risk Committee on AI governance framework</li>
+          <li><strong>AI Governance:</strong> AI incident-response procedure; DORA Art.30 register update; Risk Committee briefing</li>
         </ul>
-        <div class="phase-section-title">Deliverables by Role</div>
-        <div class="role-del-group">
+        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+          <span>Deliverables by Role</span>
+          <span class="del-count">7 across 4 roles — click to expand</span>
+          <span class="del-toggle-arrow">▶</span>
+        </div>
+        <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">BE2</span><span class="role-del-name">Backend Developer 2</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Workflow state diagram')" title="View sample">Workflow state diagram (W22)</span>
@@ -1261,10 +1286,14 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 22–24:</strong> Load testing (100 concurrent users); optimise indexes/Redis TTLs/Container Apps replicas</li>
           <li><strong>Weeks 24–26:</strong> UAT with 5–10 2LoD and 5–10 1LoD participants; Critical/High defects fixed within 48h</li>
           <li><strong>Weeks 25–28:</strong> User training (recorded videos); admin runbook; production provisioning; go-live + 2-week hypercare</li>
-          <li><strong>AI Governance:</strong> Complete EU AI Act conformity assessment; finalise AI model monitoring plan; conduct EBA model validation; file AI system in EU AI Act register; AI governance framework sign-off by AI System Owner</li>
+          <li><strong>AI Governance:</strong> EU AI Act conformity assessment + register filing; EBA model validation; governance sign-off</li>
         </ul>
-        <div class="phase-section-title">Deliverables by Role</div>
-        <div class="role-del-group">
+        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+          <span>Deliverables by Role</span>
+          <span class="del-count">13 across 4 roles — click to expand</span>
+          <span class="del-toggle-arrow">▶</span>
+        </div>
+        <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">SEC</span><span class="role-del-name">Security Engineer</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Pen Test scope &amp; findings')" title="View sample">Pen Test scope &amp; findings (W24)</span>
