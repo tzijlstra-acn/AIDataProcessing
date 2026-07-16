@@ -1043,6 +1043,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Week 2:</strong> Data &amp; Platform Assessment — data audit (extract 100–500 records per entity); TPRM tool assessment; platform requirements workshop; Azure AD configuration review</li>
           <li><strong>Week 3:</strong> Draft Architecture Decision Record (ADR); DPIA draft with DPO</li>
           <li><strong>Week 4:</strong> Terraform apply (provision all Azure resources non-prod); CI/CD pipeline; Project Charter finalised</li>
+          <li><strong>AI Governance:</strong> Classify ICS Cockpit under EU AI Act (High Risk determination); define AI governance structure and accountabilities; initiate DORA Art.30 third-party assessment for Azure OpenAI</li>
         </ul>
         <div class="phase-section-title">Deliverables by Role</div>
         <div class="role-del-group">
@@ -1059,6 +1060,8 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('GRC Data Model specification')" title="View sample">GRC Data Model specification (draft, W4)</span>
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Regulatory Mapping Table')" title="View sample">Regulatory Mapping Table (W4)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('AI system classification (EU AI Act)')" title="View sample">AI system classification — EU AI Act (W3)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('AI Governance scope document')" title="View sample">AI Governance scope document (W4)</span>
           </div>
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">SEC</span><span class="role-del-name">Security Engineer</span></div>
           <div class="deliverables-list">
@@ -1084,6 +1087,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 7–8:</strong> ADF pipelines for remaining entities; dbt transformation layer; TPRM connector</li>
           <li><strong>Weeks 9–10:</strong> Document ingestion pipeline (blob→parse→chunk→embed→Azure AI Search)</li>
           <li><strong>Weeks 11–12:</strong> Static dashboard build (hardcoded, matching real client data structure); client design validation</li>
+          <li><strong>AI Governance:</strong> Draft AI data governance policy; document data lineage for AI inputs/outputs; prepare AI register entry in model inventory</li>
         </ul>
         <div class="phase-section-title">Deliverables by Role</div>
         <div class="role-del-group">
@@ -1103,6 +1107,10 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Weekly Status Report')" title="View sample">Weekly Status Report (ongoing)</span>
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Sprint Plan &amp; Velocity Tracker')" title="View sample">Sprint Plan &amp; Velocity Tracker (ongoing)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">GRC</span><span class="role-del-name">GRC Expert / AI Risk Officer</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('AI data governance policy')" title="View sample">AI data governance policy (W8)</span>
           </div>
         </div>
         <div class="phase-section-title">Exit Criteria</div>
@@ -1124,6 +1132,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 11–12:</strong> Connect frontend to live API; KPI cards, area cards, risk heatmap (inherent/residual toggle)</li>
           <li><strong>Weeks 13–14:</strong> Risk register and controls with full filter support; process detail view; RCSA timeline view</li>
           <li><strong>Weeks 15–16:</strong> Cross-area risk view; performance testing (&lt;500ms under 50 concurrent users); WCAG 2.1 AA review</li>
+          <li><strong>AI Governance:</strong> Draft Model Card for dashboard AI components; define logging requirements for Art.12 compliance; document human oversight rules for AI-labelled outputs</li>
         </ul>
         <div class="phase-section-title">Deliverables by Role</div>
         <div class="role-del-group">
@@ -1141,6 +1150,10 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Steering Committee pack')" title="View sample">Steering Committee pack (bi-weekly)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">GRC</span><span class="role-del-name">GRC Expert / AI Risk Officer</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('AI Model Card')" title="View sample">AI Model Card — dashboard components (W14)</span>
           </div>
         </div>
         <div class="phase-section-title">Exit Criteria</div>
@@ -1162,6 +1175,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 15–16:</strong> System prompt engineering with GRC Domain Expert; context injection; agent audit logging</li>
           <li><strong>Weeks 17–18:</strong> TPRM Signal Engine (Service Bus subscriber); signal review UI; accept/reject workflow</li>
           <li><strong>Weeks 19–20:</strong> Trend detection (weekly Azure Function, scipy linear regression); RCSA due-date monitor (daily 07:00 UTC)</li>
+          <li><strong>AI Governance:</strong> Finalise AI Risk Register; complete EU AI Act technical documentation (Art.11); validate model against EBA/SR11-7 proxy metrics (RAGAS); complete DORA Art.30 assessment for Azure OpenAI; conduct ISO 42001 gap assessment</li>
         </ul>
         <div class="phase-section-title">Deliverables by Role</div>
         <div class="role-del-group">
@@ -1175,6 +1189,10 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Heatmap Threshold Sign-off')" title="View sample">Heatmap Threshold Sign-off (W16)</span>
             <span class="deliverable-item clickable" onclick="openDeliverableSample('DORA Article 30 Report Template')" title="View sample">DORA Article 30 Report Template (W20)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('AI Risk Register')" title="View sample">AI Risk Register v1.0 (W18)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('Human oversight protocol document')" title="View sample">Human Oversight Protocol (W20)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('DORA Art.30 AI provisions assessment')" title="View sample">DORA Art.30 AI provisions assessment (W20)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('ISO 42001 gap assessment')" title="View sample">ISO 42001 gap assessment (W20)</span>
           </div>
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">BE1</span><span class="role-del-name">Backend Developer 1</span></div>
           <div class="deliverables-list">
@@ -1200,6 +1218,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 19–20:</strong> Azure Durable Functions — RCSA Assessment lifecycle (D-14 reminder, D-3 escalation)</li>
           <li><strong>Weeks 21–22:</strong> PUT /api/risks/{'{id}'}; risk update form; 2LoD review and comment workflow</li>
           <li><strong>Weeks 23–24:</strong> Full RBAC enforcement; role-based UI rendering; end-to-end workflow test</li>
+          <li><strong>AI Governance:</strong> Draft Human Oversight Protocol; define AI incident response procedure; update DORA Art.30 register; brief Risk Committee on AI governance framework</li>
         </ul>
         <div class="phase-section-title">Deliverables by Role</div>
         <div class="role-del-group">
@@ -1217,6 +1236,10 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('RAID Log')" title="View sample">RAID Log (ongoing)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">GRC</span><span class="role-del-name">GRC Expert / AI Risk Officer</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('AI incident response procedure')" title="View sample">AI incident response procedure (W22)</span>
           </div>
         </div>
         <div class="phase-section-title">Exit Criteria</div>
@@ -1238,6 +1261,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 22–24:</strong> Load testing (100 concurrent users); optimise indexes/Redis TTLs/Container Apps replicas</li>
           <li><strong>Weeks 24–26:</strong> UAT with 5–10 2LoD and 5–10 1LoD participants; Critical/High defects fixed within 48h</li>
           <li><strong>Weeks 25–28:</strong> User training (recorded videos); admin runbook; production provisioning; go-live + 2-week hypercare</li>
+          <li><strong>AI Governance:</strong> Complete EU AI Act conformity assessment; finalise AI model monitoring plan; conduct EBA model validation; file AI system in EU AI Act register; AI governance framework sign-off by AI System Owner</li>
         </ul>
         <div class="phase-section-title">Deliverables by Role</div>
         <div class="role-del-group">
@@ -1256,6 +1280,9 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">GRC</span><span class="role-del-name">GRC Expert</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('UAT Sign-off')" title="View sample">UAT domain sign-off (W27)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('EU AI Act conformity assessment')" title="View sample">EU AI Act conformity assessment (W27)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('AI model monitoring plan')" title="View sample">AI model monitoring plan (W27)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('EBA model validation report')" title="View sample">EBA model validation report (W28)</span>
           </div>
           <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
           <div class="deliverables-list">
@@ -3579,14 +3606,14 @@ const ROLES = {
     practiceColor: '#A100FF',
     fte: '0.5',
     phase: 'Phase 1–2 (advisory) + Phase 3 sign-off',
-    summary: 'Domain expert for risk management, DORA compliance, and ICS/RCSA methodology. Designs data model and AI output validation rules. Not a developer.',
+    summary: 'Domain expert for risk management, DORA compliance, and ICS/RCSA methodology. Designs data model and AI output validation rules. Not a developer. Additionally serves as AI Risk Officer and AI Governance lead for the engagement: EU AI Act conformity, DORA Art.30 AI provisions, EBA/SR11-7 model validation, and ISO 42001 framework.',
     handbook: [
       { label: 'Data model sign-off', value: 'Reviews and approves core.risks schema, rating logic, and heatmap thresholds before Phase 2 dev begins.' },
       { label: 'Regulatory mapping', value: 'Maintains controls-to-DORA/EBA mapping table. Updated when new regulatory docs are uploaded.' },
       { label: 'AI output validation', value: 'Defines acceptance criteria for AI agent responses — what constitutes a correct answer to each of the 10 canned questions.' },
       { label: 'UAT support', value: 'Participates in UAT week to validate heatmap logic, RCSA workflow, and agent accuracy from domain perspective.' },
     ],
-    deliverables: ['GRC Data Model specification', 'Heatmap Threshold Sign-off', 'Regulatory Mapping Table', 'DORA Article 30 Report Template', 'TPRM classification rules', 'AI output validation criteria', 'Agent Quality Evaluation Report', 'UAT domain sign-off'],
+    deliverables: ['GRC Data Model specification', 'Heatmap Threshold Sign-off', 'Regulatory Mapping Table', 'DORA Article 30 Report Template', 'TPRM classification rules', 'AI output validation criteria', 'Agent Quality Evaluation Report', 'UAT domain sign-off', 'AI system classification (EU AI Act)', 'AI Risk Register', 'EU AI Act conformity assessment', 'AI model monitoring plan', 'EBA model validation report'],
     skills: {
       mustHave: ['DORA Article 30 deep knowledge', 'ICS/RCSA methodology', 'Risk heatmap design', 'GRC platform experience (ServiceNow/Archer)', 'UAT facilitation', 'AI output quality assessment'],
       niceToHave: ['EBA/ECB regulatory experience', 'TPRM lifecycle management', 'NLP prompt evaluation techniques', 'ISO 31000 / COSO framework'],
@@ -4609,6 +4636,198 @@ Rules:<br>
 <br>
 <div style="font-family:var(--font);font-size:11px;color:var(--ts);">Immutable after write — no UPDATE or DELETE. Row-level security prevents users from reading other areas' audit logs. Retained 7 years per DORA Article 30 record-keeping requirements.</div>
 </div>`,
+  },
+  'AI system classification (EU AI Act)': {
+    title: 'EU AI Act — AI System Classification & Scope',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Classification Assessment — ICS Cockpit v1.0</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+<tr style="background:var(--s2);"><td style="padding:6px 10px;font-weight:700;border-bottom:1px solid var(--border);">Criterion</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Assessment</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Source</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">GPAI model used?</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Yes — Azure OpenAI GPT-4o (GPAI model)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">EU AI Act Art. 51</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Annex III (High Risk)?</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">Likely YES — Annex III §2(b): AI used in administration of justice and democratic processes; §4: AI in access to essential private services [regulatory compliance automation]</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Art. 6(2), Annex III</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Human oversight?</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Yes — all AI-generated risk summaries and workflow actions require 2LoD analyst review before effect</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Art. 14</td></tr>
+<tr><td style="padding:6px 10px;font-weight:600;">Obligation level</td><td style="padding:6px 10px;font-weight:700;color:#B4322A;">High Risk Provider obligations apply: technical documentation (Art. 11), logging (Art. 12), transparency (Art. 13), human oversight (Art. 14), accuracy/robustness (Art. 15), conformity assessment (Art. 43)</td><td style="padding:6px 10px;">Chapter III, Section 2</td></tr>
+</table>
+<div style="font-size:11px;color:var(--ts);">To be reviewed by DPO and external legal counsel before go-live. Classification may be revised based on final deployment scope. Filed in AI governance register as GOV-001.</div>
+</div>`,
+  },
+  'AI Governance scope document': {
+    title: 'AI Governance Scope & Framework Charter',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Purpose</div>
+<p style="font-size:12px;">Defines the governance structures, accountabilities, and controls applied to the ICS Cockpit AI system throughout its lifecycle — design, build, deployment, and operation.</p>
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;margin-top:10px;">Governance Structure</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+<thead><tr style="background:var(--s2);"><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Role</th><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Accountable for</th><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Owner</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">AI System Owner</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Strategic accountability; EU AI Act Provider obligations</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">[CRO / Executive Sponsor]</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">AI Risk Officer</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Day-to-day model risk governance, AI Risk Register, SR 11-7 compliance</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">GRC Expert (Accenture) → 2LoD head (client)</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">DPO</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">DPIA, GDPR compliance for AI data processing</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">[CLIENT DPO]</td></tr>
+<tr><td style="padding:6px 8px;">AI Validator (independent)</td><td style="padding:6px 8px;">Independent model validation (EBA requirement); challenge function</td><td style="padding:6px 8px;">[Internal model validation team / external validator]</td></tr>
+</tbody></table>
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;margin-top:10px;">Framework Standards Applied</div>
+<div style="font-size:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px;">
+<div style="background:var(--s1);padding:8px;border-radius:6px;"><strong>EU AI Act</strong><br>High Risk classification; conformity assessment; Art. 11 technical documentation</div>
+<div style="background:var(--s1);padding:8px;border-radius:6px;"><strong>DORA Art.30</strong><br>Azure OpenAI as critical ICT third-party; contractual requirements; exit strategy</div>
+<div style="background:var(--s1);padding:8px;border-radius:6px;"><strong>EBA / SR 11-7</strong><br>Model risk policy; validation; ongoing monitoring; model inventory</div>
+<div style="background:var(--s1);padding:8px;border-radius:6px;"><strong>ISO 42001</strong><br>AI Management System; risk-based approach; continual improvement</div>
+</div>
+</div>`,
+  },
+  'AI data governance policy': {
+    title: 'AI Data Governance Policy — ICS Cockpit',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Policy Scope</div>
+<p style="font-size:12px;">Governs all data used to operate the ICS Cockpit AI system: training data (none — GPT-4o is a foundation model), inference input data (risk records, control descriptions, GRC documents), AI output data (generated summaries, risk assessments, workflow triggers), and evaluation data (RAGAS golden sets).</p>
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;margin-top:10px;">Key Rules</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:6px;border-bottom:1px solid var(--border);">Data Type</th><th style="padding:6px;border-bottom:1px solid var(--border);">Permitted Use</th><th style="padding:6px;border-bottom:1px solid var(--border);">Retention</th><th style="padding:6px;border-bottom:1px solid var(--border);">Restriction</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Risk records (GRC data)</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI inference input only — no model fine-tuning</td><td style="padding:6px;border-bottom:1px solid var(--border);">7 years (DORA)</td><td style="padding:6px;border-bottom:1px solid var(--border);">No transfer outside EEA</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">LLM prompts (full context)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Logged to agent_audit_log — not sent to Microsoft for training (Azure OpenAI opt-out enforced)</td><td style="padding:6px;border-bottom:1px solid var(--border);">90 days in hot; 7 years in cold storage</td><td style="padding:6px;border-bottom:1px solid var(--border);">Classified as Confidential</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">AI-generated outputs</td><td style="padding:6px;border-bottom:1px solid var(--border);">Must be reviewed by 2LoD analyst before acting on</td><td style="padding:6px;border-bottom:1px solid var(--border);">Stored in agent_audit_log indefinitely</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI-generated label required in UI</td></tr>
+<tr><td style="padding:6px;">RAGAS evaluation set</td><td style="padding:6px;">Model quality testing only</td><td style="padding:6px;">Indefinite (model governance)</td><td style="padding:6px;">Anonymised — no live risk IDs</td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:11px;color:var(--ts);">Policy owner: DPO. Reviewed annually and on material model change. Aligned with GDPR Art.5 data minimisation and EU AI Act Art.10 data governance.</div>
+</div>`,
+  },
+  'AI Model Card': {
+    title: 'Model Card — ICS Cockpit Risk Advisor (GPT-4o)',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<tr style="background:var(--s2);"><td style="padding:6px 10px;font-weight:700;border-bottom:1px solid var(--border);width:35%;">Field</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Value</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Model ID</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">gpt-4o (Azure OpenAI, West Europe deployment)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Version</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">2024-11-20 (pinned — version lock enforced)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Intended use</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Summarise GRC risk records; draft RCSA narratives; answer analyst NL queries; classify TPRM signals — all subject to human review</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Out-of-scope use</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Autonomous risk decisions without human review; PII processing; use outside ICS Cockpit application boundary</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Performance metrics (Phase 3)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">RAGAS Faithfulness: 0.91 · Answer Relevancy: 0.88 · Context Recall: 0.84 · Hallucination rate: 3.2% (golden set, 50 questions)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Known limitations</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">May hallucinate regulatory citations not in retrieved context. Cannot reason over numeric trends without explicit data in prompt. Performance degrades on non-English GRC documents.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Human oversight mechanism</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">All AI outputs labelled "AI-generated — review required". Workflow actions require 2LoD explicit approval. Override logged to agent_audit_log.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Monitoring cadence</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Weekly RAGAS run vs. golden set. Monthly drift review. Re-validation trigger: RAGAS faithfulness drops below 0.80.</td></tr>
+<tr><td style="padding:6px 10px;font-weight:600;">EU AI Act registration</td><td style="padding:6px 10px;">Filed in EU AI Act database as High Risk system — ID: [GOV-AI-001]</td></tr>
+</table>
+<div style="margin-top:8px;font-size:11px;color:var(--ts);">Model card version: v1.0. Owner: AI Risk Officer. Review trigger: model version change, major prompt change, RAGAS drift.</div>`,
+  },
+  'AI Risk Register': {
+    title: 'AI Risk Register — ICS Cockpit v1.0',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:7px;border-bottom:1px solid var(--border);">Risk ID</th><th style="padding:7px;border-bottom:1px solid var(--border);">Risk</th><th style="padding:7px;border-bottom:1px solid var(--border);">Category</th><th style="padding:7px;border-bottom:1px solid var(--border);">Likelihood</th><th style="padding:7px;border-bottom:1px solid var(--border);">Impact</th><th style="padding:7px;border-bottom:1px solid var(--border);">Mitigation</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">AI-R01</td><td style="padding:6px;border-bottom:1px solid var(--border);">Hallucinated regulatory citations — model fabricates DORA article references</td><td style="padding:6px;border-bottom:1px solid var(--border);">Model quality</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#B4322A;">High</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#B4322A;">High</td><td style="padding:6px;border-bottom:1px solid var(--border);">Citation grounding rule in system prompt; RAGAS hallucination tracking; mandatory 2LoD review</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">AI-R02</td><td style="padding:6px;border-bottom:1px solid var(--border);">Model drift — GPT-4o version update degrades GRC query performance</td><td style="padding:6px;border-bottom:1px solid var(--border);">Operational</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#9A6500;">Medium</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#9A6500;">Medium</td><td style="padding:6px;border-bottom:1px solid var(--border);">Version pinning (api_version locked); weekly RAGAS regression; change control before upgrade</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">AI-R03</td><td style="padding:6px;border-bottom:1px solid var(--border);">Azure OpenAI service outage — AI features unavailable during incident</td><td style="padding:6px;border-bottom:1px solid var(--border);">Third-party (DORA)</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#9A6500;">Medium</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#B4322A;">High</td><td style="padding:6px;border-bottom:1px solid var(--border);">Circuit breaker; graceful degradation (dashboard works without AI); DORA Art.30 exit strategy documented</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">AI-R04</td><td style="padding:6px;border-bottom:1px solid var(--border);">Prompt injection — malicious GRC document manipulates agent behaviour</td><td style="padding:6px;border-bottom:1px solid var(--border);">Security</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#9A6500;">Medium</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#B4322A;">High</td><td style="padding:6px;border-bottom:1px solid var(--border);">Input sanitisation; system prompt hardening; output validation before workflow execution</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">AI-R05</td><td style="padding:6px;border-bottom:1px solid var(--border);">EU AI Act non-compliance — High Risk obligations not met at go-live</td><td style="padding:6px;border-bottom:1px solid var(--border);">Regulatory</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#9A6500;">Medium</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#B4322A;">High</td><td style="padding:6px;border-bottom:1px solid var(--border);">Conformity assessment completed Ph5; legal review; AI register filing before go-live</td></tr>
+<tr><td style="padding:6px;">AI-R06</td><td style="padding:6px;">Bias in TPRM risk classification — AI systematically over/under-rates vendor risk by geography</td><td style="padding:6px;">Model fairness</td><td style="padding:6px;color:#1A7A52;">Low</td><td style="padding:6px;color:#9A6500;">Medium</td><td style="padding:6px;">Bias evaluation in RAGAS golden set (stratified by vendor geography); GRC expert qualitative review quarterly</td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:11px;color:var(--ts);">Owner: AI Risk Officer. Reviewed quarterly and on model change. Escalation: AI-R01–AI-R05 residual ≥ High → mandatory escalation to AI System Owner.</div>`,
+  },
+  'Human oversight protocol document': {
+    title: 'Human Oversight Protocol — AI-Generated Decisions',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Scope (EU AI Act Art. 14 compliance)</div>
+<p style="font-size:12px;">Defines how human oversight is exercised over every AI-generated output before it produces an effect on ICS records, RCSA workflow, or regulatory reporting.</p>
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;margin-top:10px;">Oversight Rules by Output Type</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:6px;border-bottom:1px solid var(--border);">AI Output</th><th style="padding:6px;border-bottom:1px solid var(--border);">Review Required</th><th style="padding:6px;border-bottom:1px solid var(--border);">Reviewer</th><th style="padding:6px;border-bottom:1px solid var(--border);">Max Review Time</th><th style="padding:6px;border-bottom:1px solid var(--border);">Outcome</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Risk summary narrative (read-only display)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Yes — "AI-generated" label shown; analyst reads before relying on it</td><td style="padding:6px;border-bottom:1px solid var(--border);">2LoD Analyst</td><td style="padding:6px;border-bottom:1px solid var(--border);">Discretionary</td><td style="padding:6px;border-bottom:1px solid var(--border);">Analyst accepts or edits</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">RCSA task assignment (workflow trigger)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Explicit approval required before dispatch</td><td style="padding:6px;border-bottom:1px solid var(--border);">2LoD Reviewer</td><td style="padding:6px;border-bottom:1px solid var(--border);">5 business days</td><td style="padding:6px;border-bottom:1px solid var(--border);">Approve / Reject / Edit</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">TPRM risk classification (draft)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Explicit approval required before score is committed</td><td style="padding:6px;border-bottom:1px solid var(--border);">2LoD Analyst</td><td style="padding:6px;border-bottom:1px solid var(--border);">3 business days</td><td style="padding:6px;border-bottom:1px solid var(--border);">Approve / Override score</td></tr>
+<tr><td style="padding:6px;">DORA Article 30 report draft</td><td style="padding:6px;">Full review by GRC Expert + legal sign-off</td><td style="padding:6px;">GRC Expert + Compliance</td><td style="padding:6px;">10 business days</td><td style="padding:6px;">Approve / Reject / Materially edit</td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:11px;color:var(--ts);">All override decisions logged to agent_audit_log (approved_by, reasoning, timestamp). Analyst training (Module 2) covers how to exercise this oversight. EU AI Act Art.14(4): persons responsible for oversight are named in Model Card.</div>
+</div>`,
+  },
+  'DORA Art.30 AI provisions assessment': {
+    title: 'DORA Article 30 — AI ICT Third-Party Risk Assessment (Azure OpenAI)',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">DORA Criticality Assessment — Azure OpenAI</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+<thead><tr style="background:var(--s2);"><th style="padding:6px;border-bottom:1px solid var(--border);">DORA Art.30 Requirement</th><th style="padding:6px;border-bottom:1px solid var(--border);">Assessment</th><th style="padding:6px;border-bottom:1px solid var(--border);">Evidence</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Criticality of function supported</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">Critical — AI layer supports regulatory reporting automation. Outage degrades RCSA &amp; DORA report output.</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI Risk Register AI-R03</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Contractual requirements (Art.30(2))</td><td style="padding:6px;border-bottom:1px solid var(--border);">Microsoft Azure DPA + GDPR SCCs in place. Service availability SLA: 99.9%. Incident notification: 72h. Audit rights: via Microsoft compliance portal (not direct audit).</td><td style="padding:6px;border-bottom:1px solid var(--border);">Azure Customer Agreement, DPA</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Sub-processing / concentration risk</td><td style="padding:6px;border-bottom:1px solid var(--border);">Azure OpenAI is Microsoft-operated. Microsoft uses its own GPU infrastructure. No sub-processors handling client data. Concentration risk: high dependency on single provider.</td><td style="padding:6px;border-bottom:1px solid var(--border);">Microsoft Sub-processor list</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Data location &amp; sovereignty</td><td style="padding:6px;border-bottom:1px solid var(--border);">West Europe (Amsterdam) deployment. EU data residency guaranteed. No cross-border data transfer.</td><td style="padding:6px;border-bottom:1px solid var(--border);">Azure region policy</td></tr>
+<tr><td style="padding:6px;">Exit strategy</td><td style="padding:6px;">Graceful degradation (dashboard functions without AI). Alternative: self-hosted Llama 3 70B on Azure GPU VM. Switchover estimated 4–6 weeks. Documented in DR runbook.</td><td style="padding:6px;">AI Governance scope document</td></tr>
+</tbody></table>
+<div style="font-size:11px;color:var(--ts);">DORA Art.30 register entry: ICT-TP-001. Reviewed annually and on material service change. Escalation to CRO if concentration risk classification changes.</div>
+</div>`,
+  },
+  'AI incident response procedure': {
+    title: 'AI Incident Response Procedure — ICS Cockpit',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Incident Classification</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+<thead><tr style="background:var(--s2);"><th style="padding:6px;border-bottom:1px solid var(--border);">Severity</th><th style="padding:6px;border-bottom:1px solid var(--border);">Trigger</th><th style="padding:6px;border-bottom:1px solid var(--border);">Response</th><th style="padding:6px;border-bottom:1px solid var(--border);">Notification</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">P1 — Critical</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI outputs materially incorrect risk rating that affects regulatory submission; Azure OpenAI data breach; prompt injection confirmed</td><td style="padding:6px;border-bottom:1px solid var(--border);">Disable AI features immediately; manual fallback; 24h root cause analysis</td><td style="padding:6px;border-bottom:1px solid var(--border);">CRO + DPO within 1h; Regulator if DORA threshold met (72h)</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">P2 — High</td><td style="padding:6px;border-bottom:1px solid var(--border);">RAGAS faithfulness drops below 0.80; Azure OpenAI outage &gt;1h; repeated hallucination pattern detected</td><td style="padding:6px;border-bottom:1px solid var(--border);">Alert AI Risk Officer; suspend AI auto-trigger workflows; investigate within 4h</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI System Owner within 4h</td></tr>
+<tr><td style="padding:6px;">P3 — Medium</td><td style="padding:6px;">Single incorrect output caught by reviewer; model version change without testing; RAGAS 0.80–0.85</td><td style="padding:6px;">Log in AI Risk Register; investigate within 5 business days</td><td style="padding:6px;">AI Risk Officer; monthly report to AI System Owner</td></tr>
+</tbody></table>
+<div style="font-size:12px;color:var(--ts);">All incidents logged in AI incident log (separate from agent_audit_log). Post-incident review mandatory for P1/P2. Feeds back into AI Risk Register. Aligned with DORA ICT incident classification requirements.</div>
+</div>`,
+  },
+  'EU AI Act conformity assessment': {
+    title: 'EU AI Act Conformity Assessment — ICS Cockpit (High Risk)',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:7px;border-bottom:1px solid var(--border);">Art.</th><th style="padding:7px;border-bottom:1px solid var(--border);">Requirement</th><th style="padding:7px;border-bottom:1px solid var(--border);">Status</th><th style="padding:7px;border-bottom:1px solid var(--border);">Evidence</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Art.9</td><td style="padding:6px;border-bottom:1px solid var(--border);">Risk Management System</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Complete</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI Risk Register (GOV-RR-001)</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Art.10</td><td style="padding:6px;border-bottom:1px solid var(--border);">Data Governance (training/inference data)</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Complete</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI data governance policy; no training data (GPAI model)</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Art.11</td><td style="padding:6px;border-bottom:1px solid var(--border);">Technical Documentation</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Complete</td><td style="padding:6px;border-bottom:1px solid var(--border);">Model Card (GOV-MC-001); ADR repository; architecture documentation</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Art.12</td><td style="padding:6px;border-bottom:1px solid var(--border);">Record-Keeping / Logging</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Complete</td><td style="padding:6px;border-bottom:1px solid var(--border);">agent_audit_log; immutable; 7-year retention</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Art.13</td><td style="padding:6px;border-bottom:1px solid var(--border);">Transparency — users informed of AI</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Complete</td><td style="padding:6px;border-bottom:1px solid var(--border);">"AI-generated" label on all AI outputs in UI</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Art.14</td><td style="padding:6px;border-bottom:1px solid var(--border);">Human Oversight</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Complete</td><td style="padding:6px;border-bottom:1px solid var(--border);">Human Oversight Protocol (GOV-HOP-001); mandatory approval gates</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Art.15</td><td style="padding:6px;border-bottom:1px solid var(--border);">Accuracy, Robustness, Cybersecurity</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">✓ Complete</td><td style="padding:6px;border-bottom:1px solid var(--border);">RAGAS metrics ≥0.80 threshold; pen test findings remediated</td></tr>
+<tr><td style="padding:6px;">Art.43</td><td style="padding:6px;">Conformity Assessment Procedure</td><td style="padding:6px;color:#1A7A52;">✓ Complete — internal assessment (self-assessment permitted for this category)</td><td style="padding:6px;">This document (GOV-CA-001)</td></tr>
+</tbody></table>
+<div style="font-size:12px;color:var(--ts);"><strong>Outcome: Conformity confirmed.</strong> EU AI Act registration required before go-live. Filed in EU AI Act database by AI System Owner. Next review: annual or on material model/scope change.</div>
+</div>`,
+  },
+  'AI model monitoring plan': {
+    title: 'AI Model Monitoring Plan — Post-Go-Live',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:7px;border-bottom:1px solid var(--border);">Metric</th><th style="padding:7px;border-bottom:1px solid var(--border);">Measurement</th><th style="padding:7px;border-bottom:1px solid var(--border);">Threshold</th><th style="padding:7px;border-bottom:1px solid var(--border);">Frequency</th><th style="padding:7px;border-bottom:1px solid var(--border);">Action if breached</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);font-weight:600;">RAGAS Faithfulness</td><td style="padding:6px;border-bottom:1px solid var(--border);">Automated RAGAS eval vs. 50-Q golden set</td><td style="padding:6px;border-bottom:1px solid var(--border);">≥ 0.85 (warn at 0.80)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Weekly</td><td style="padding:6px;border-bottom:1px solid var(--border);">P2 incident; suspend auto-workflows; investigate</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);font-weight:600;">Answer Relevancy</td><td style="padding:6px;border-bottom:1px solid var(--border);">RAGAS eval</td><td style="padding:6px;border-bottom:1px solid var(--border);">≥ 0.85</td><td style="padding:6px;border-bottom:1px solid var(--border);">Weekly</td><td style="padding:6px;border-bottom:1px solid var(--border);">Review system prompt; expand golden set</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);font-weight:600;">Human override rate</td><td style="padding:6px;border-bottom:1px solid var(--border);">agent_audit_log: % outputs overridden by reviewers</td><td style="padding:6px;border-bottom:1px solid var(--border);">&lt; 15% (above = model underperforming)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Monthly</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI Risk Officer review; prompt refinement; re-validation</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);font-weight:600;">Hallucination count</td><td style="padding:6px;border-bottom:1px solid var(--border);">P1/P2 incidents with confirmed hallucination root cause</td><td style="padding:6px;border-bottom:1px solid var(--border);">0 in any rolling 30 days</td><td style="padding:6px;border-bottom:1px solid var(--border);">Per incident</td><td style="padding:6px;border-bottom:1px solid var(--border);">Immediate P1 response; disable AI; root cause</td></tr>
+<tr><td style="padding:6px;">Azure OpenAI availability</td><td style="padding:6px;">Azure Monitor alert; circuit breaker trip log</td><td style="padding:6px;">99.9% monthly (per SLA)</td><td style="padding:6px;">Real-time alert</td><td style="padding:6px;">Graceful degradation; AI Risk Officer notified; DORA incident log if &gt;1h</td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:11px;color:var(--ts);">Monitoring dashboard: Azure Monitor + custom RAGAS dashboard in Operations tooling. Monthly report to AI System Owner and Risk Committee. Annual independent model validation by internal model validation team (EBA/SR11-7).</div>`,
+  },
+  'EBA model validation report': {
+    title: 'EBA / SR 11-7 Model Validation Report — ICS Cockpit AI (Annual)',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">Model Inventory Entry</div>
+<table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
+<tr style="background:var(--s2);"><td style="padding:6px 10px;font-weight:700;border-bottom:1px solid var(--border);">Field</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Value</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Model ID</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">MDL-AI-001</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Model type</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Vendor GPAI (GPT-4o) used in workflow automation — classed as Tier 2 model (significant impact, not direct capital calculation)</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Use</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Regulatory reporting support; RCSA workflow automation; TPRM classification</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Validation approach</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Qualitative (cannot statistically validate GPAI against historic outcomes). RAGAS proxy metrics used as performance indicators.</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Validation findings</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Finding 1 (Medium): Model cannot explain regulatory citations — explainability gap. Mitigation: citation grounding rule; mandatory analyst review.<br>Finding 2 (Low): Performance on non-English documents untested. Mitigation: scope limited to English-language GRC content until tested.</td></tr>
+<tr><td style="padding:6px 10px;font-weight:600;">Overall rating</td><td style="padding:6px 10px;color:#9A6500;font-weight:700;">Acceptable with conditions — use as decision-support tool only (not autonomous decision-maker). Monitoring plan required.</td></tr>
+</table>
+<div style="font-size:11px;color:var(--ts);">Next annual validation due: [GO-LIVE DATE + 12 months]. Validator: [Internal Model Validation / External validator]. All findings tracked in model inventory system.</div>
+</div>`,
+  },
+  'ISO 42001 gap assessment': {
+    title: 'ISO 42001 Gap Assessment — AI Management System',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:12px;">
+<thead><tr style="background:var(--s2);"><th style="padding:7px;border-bottom:1px solid var(--border);">ISO 42001 Clause</th><th style="padding:7px;border-bottom:1px solid var(--border);">Requirement</th><th style="padding:7px;border-bottom:1px solid var(--border);">Current State</th><th style="padding:7px;border-bottom:1px solid var(--border);">Gap</th><th style="padding:7px;border-bottom:1px solid var(--border);">Priority</th></tr></thead>
+<tbody>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">4.1–4.4</td><td style="padding:6px;border-bottom:1px solid var(--border);">Context &amp; AI governance structure</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI Governance scope document in place</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">Minor — formalise into management system policy</td><td style="padding:6px;border-bottom:1px solid var(--border);">Low</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">5.2</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI Policy</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI data governance policy covers data; no standalone AI policy</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#9A6500;">Gap — standalone AI Policy document needed</td><td style="padding:6px;border-bottom:1px solid var(--border);">Medium</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">6.1</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI risk assessment</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI Risk Register in place (6 risks)</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">Minor — formalise risk treatment plan</td><td style="padding:6px;border-bottom:1px solid var(--border);">Low</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">8.4</td><td style="padding:6px;border-bottom:1px solid var(--border);">Documentation of AI system</td><td style="padding:6px;border-bottom:1px solid var(--border);">Model Card, ADRs, architecture docs in place</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">Minor — assemble into single AI System File</td><td style="padding:6px;border-bottom:1px solid var(--border);">Low</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">9.1</td><td style="padding:6px;border-bottom:1px solid var(--border);">Performance monitoring</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI Model Monitoring Plan in place; RAGAS weekly</td><td style="padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;">None</td><td style="padding:6px;border-bottom:1px solid var(--border);">—</td></tr>
+<tr><td style="padding:6px;">10.1</td><td style="padding:6px;">Continual improvement</td><td style="padding:6px;">Quarterly AI Risk Register review; annual model validation</td><td style="padding:6px;color:#9A6500;">Gap — formal improvement cycle not yet documented</td><td style="padding:6px;">Medium</td></tr>
+</tbody></table>
+<div style="margin-top:8px;font-size:11px;color:var(--ts);">Overall maturity: ~70% aligned with ISO 42001. Full certification not required — gap assessment demonstrates good-faith compliance posture for regulatory conversations. Remediation roadmap: 2 Medium gaps addressed in 90 days post-go-live.</div>`,
   },
 };
 
