@@ -297,6 +297,83 @@ section { padding-top: 16px; margin-bottom: 40px; }
   .team-panels { grid-template-columns: 1fr; }
   .journey-body { grid-template-columns: 1fr; }
 }
+
+/* MODAL */
+.modal-overlay {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(14,26,46,.55); backdrop-filter: blur(4px);
+  align-items: center; justify-content: center; padding: 20px;
+}
+.modal-overlay.open { display: flex; }
+.modal-box {
+  background: var(--surface); border-radius: var(--radiusL);
+  box-shadow: 0 24px 64px rgba(0,0,0,.22); width: 100%;
+  max-width: 680px; max-height: 88vh; overflow-y: auto;
+  animation: modal-in .18s ease;
+}
+@keyframes modal-in { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
+.modal-header {
+  padding: 22px 24px 18px; border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 14px; position: sticky; top: 0; background: var(--surface); z-index: 2;
+}
+.modal-header-icon { width: 40px; height: 40px; border-radius: var(--radius); display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+.modal-title { font-size: 17px; font-weight: 700; color: var(--tp); }
+.modal-subtitle { font-size: 13px; color: var(--tm); margin-top: 2px; }
+.modal-close {
+  margin-left: auto; width: 32px; height: 32px; border-radius: 50%;
+  border: none; background: var(--s2); cursor: pointer; font-size: 18px; color: var(--ts);
+  display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+}
+.modal-close:hover { background: var(--s1); }
+.modal-body { padding: 20px 24px 24px; }
+.modal-tabs { display: flex; gap: 4px; margin-bottom: 20px; padding: 3px; background: var(--s2); border-radius: var(--radius); }
+.modal-tab { padding: 6px 14px; border-radius: 6px; border: none; background: transparent; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--ts); transition: all .15s; }
+.modal-tab.active { background: var(--surface); color: var(--tp); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,.1); }
+.modal-tab-content { display: none; }
+.modal-tab-content.active { display: block; }
+
+/* LEVEL SELECTOR */
+.level-selector { display: grid; grid-template-columns: repeat(5,1fr); gap: 8px; margin-bottom: 24px; }
+.level-btn { background: var(--surface); border: 2px solid var(--border); border-radius: var(--radiusL); padding: 14px 10px; text-align: center; cursor: pointer; transition: all .2s; }
+.level-btn:hover { border-color: var(--brandMid); }
+.level-btn.active { border-color: var(--brandMid); background: var(--brandLight); }
+.level-num { font-size: 18px; font-weight: 800; color: var(--brand); }
+.level-name { font-size: 13px; font-weight: 700; color: var(--tp); margin-top: 2px; }
+.level-sub { font-size: 11px; color: var(--tm); margin-top: 2px; }
+
+/* REQ GRID */
+.req-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 24px; }
+.req-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radiusL); overflow: hidden; }
+.req-card-header { padding: 14px 16px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; background: var(--s1); }
+.req-card-header i { font-size: 18px; color: var(--brandMid); }
+.req-card-title { font-size: 14px; font-weight: 700; color: var(--tp); }
+.req-card-count { margin-left: auto; font-size: 12px; color: var(--tm); }
+.req-item { display: flex; align-items: flex-start; gap: 10px; padding: 10px 16px; border-bottom: 1px solid var(--border); }
+.req-item:last-child { border-bottom: none; }
+.req-item-num { font-size: 11px; font-weight: 700; color: var(--tm); width: 20px; flex-shrink: 0; padding-top: 2px; }
+.req-item-body { flex: 1; min-width: 0; }
+.req-item-name { font-size: 13px; font-weight: 600; color: var(--tp); }
+.req-item-meta { font-size: 11.5px; color: var(--tm); margin-top: 2px; }
+.req-priority { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; margin-top: 2px; }
+.req-p-critical { background: #FCEAE9; color: #B4322A; }
+.req-p-high { background: #FEF3DC; color: #9A6500; }
+.req-p-medium { background: var(--s2); color: var(--ts); }
+
+/* FOOTER FIX */
+.site-footer { background: var(--brand); padding: 24px; margin-top: 40px; }
+.footer-inner { display: flex; align-items: center; gap: 16px; justify-content: center; flex-wrap: wrap; }
+.footer-logo { display: flex; align-items: center; gap: 8px; color: #fff; font-weight: 700; font-size: 15px; }
+.footer-copy { color: rgba(255,255,255,.7); font-size: 13px; text-align: center; }
+
+/* GANTT GOVERNANCE */
+.gc-gov { display: flex; align-items: center; justify-content: center; border-bottom: 1px solid var(--border); min-height: 22px; font-size: 8px; }
+.gl-gov { font-size: 10px; font-weight: 700; letter-spacing: .04em; text-transform: uppercase; color: var(--tm); padding: 0 8px 0 0; display: flex; align-items: center; min-height: 22px; border-bottom: 1px solid var(--border); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.gl-gov-grp { font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--brandMid); padding: 0 8px; display: flex; align-items: center; min-height: 20px; border-bottom: 2px solid var(--borderS); background: var(--brandLight); }
+.gc-gov-grp { background: var(--brandLight); border-bottom: 2px solid var(--borderS); min-height: 20px; }
+
+/* JOURNEY COMPACT STEP */
+.journey-step-compact { display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 28px 24px; text-align: center; background: #0D1B2E; min-height: 200px; }
+.optional-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: #9A6500; color: #fff; margin-bottom: 10px; }
 </style>
 </head>
 <body>
@@ -414,84 +491,94 @@ section { padding-top: 16px; margin-bottom: 40px; }
       <div class="team-panel-head accenture-head"><i class="ti ti-building"></i>Accenture Delivery Team (10 Roles)</div>
       <div class="role-grid" style="grid-template-columns:1fr;">
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('pm')">
           <div class="role-card-header">
             <div><div class="role-name">Programme Manager</div><div class="role-seniority">Senior Manager (L7)</div><div class="role-practice">Finance &amp; Risk / Delivery Management</div></div>
-            <span class="fte-badge">1.0 FTE all phases</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 FTE all phases</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
           </div>
           <div class="role-resp"><ul><li>Overall delivery accountability</li><li>Steering Committee facilitation</li><li>Scope change and commercial management</li><li>Phase gate management</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('grc')">
           <div class="role-card-header">
             <div><div class="role-name">ICS / GRC Domain Expert</div><div class="role-seniority">Manager or Senior Manager (L6–7)</div><div class="role-practice">Finance &amp; Risk / Operational Risk</div></div>
-            <span class="fte-badge">1.0 Ph0–3 · 0.5 Ph4–5</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph0–3 · 0.5 Ph4–5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
           </div>
           <div class="role-resp"><ul><li>Translate RCSA methodology into functional specs</li><li>Validate risk data model and heatmap logic</li><li>Review AI agent test queries</li><li>DORA/GDPR/CRR regulatory mapping</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('sa')">
           <div class="role-card-header">
             <div><div class="role-name">Solution Architect</div><div class="role-seniority">Senior Manager / Architect (L7)</div><div class="role-practice">Technology Architecture / Azure</div></div>
-            <span class="fte-badge">1.0 Ph0–2 · 0.5 Ph3–5</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph0–2 · 0.5 Ph3–5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
           </div>
           <div class="role-resp"><ul><li>Own end-to-end technical architecture</li><li>Lead Architecture Decision Record (ADR)</li><li>Define all Azure resources in Terraform</li><li>Design API contract</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('de1')">
           <div class="role-card-header">
             <div><div class="role-name">Data Engineer 1 — GRC/ETL</div><div class="role-seniority">Consultant or Senior Consultant (L4–5)</div><div class="role-practice">Data &amp; AI</div></div>
-            <span class="fte-badge">2.0 Ph1–2 · 1.0 Ph3–5</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">2.0 Ph1–2 · 1.0 Ph3–5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
           </div>
           <div class="role-resp"><ul><li>Build GRC platform connectors</li><li>Azure Data Factory pipeline architecture</li><li>Watermark-based incremental ingestion</li><li>dbt staging-to-core transformation layer</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('de2')">
           <div class="role-card-header">
             <div><div class="role-name">Data Engineer 2 — DB/Docs</div><div class="role-seniority">Consultant or Senior Consultant (L4–5)</div><div class="role-practice">Data &amp; AI</div></div>
-            <span class="fte-badge">2.0 Ph1–2 · 1.0 Ph3–5</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">2.0 Ph1–2 · 1.0 Ph3–5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
           </div>
           <div class="role-resp"><ul><li>Deploy and maintain PostgreSQL schema</li><li>Document ingestion pipeline (blob→parse→chunk→embed→index)</li><li>Azure AI Search index management</li><li>TPRM vendor registry connector</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('ai')">
           <div class="role-card-header">
             <div><div class="role-name">AI/ML Engineer</div><div class="role-seniority">Consultant or Senior Consultant (L4–5)</div><div class="role-practice">Data &amp; AI</div></div>
-            <span class="fte-badge">0.5 Ph1 · 1.5 Ph3–4 · 1.0 Ph5</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph1 · 1.5 Ph3–4 · 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
           </div>
           <div class="role-resp"><ul><li>LangChain-based LLM agent (RAG, tool use, SSE streaming)</li><li>TPRM Signal Engine</li><li>Trend detection algorithm (scipy linear regression)</li><li>Natural Language Query Interface</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('be1')">
           <div class="role-card-header">
             <div><div class="role-name">Backend Developer 1 — Core API</div><div class="role-seniority">Consultant or Senior Consultant (L4–5)</div><div class="role-practice">Technology</div></div>
-            <span class="fte-badge">0.5 Ph1 · 2.0 Ph2–4 · 1.0 Ph5</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph1 · 2.0 Ph2–4 · 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
           </div>
           <div class="role-resp"><ul><li>All REST API endpoints (FastAPI, Python)</li><li>Azure AD authentication middleware and JWT validation</li><li>RBAC enforcement</li><li>Redis caching layer</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('be2')">
           <div class="role-card-header">
             <div><div class="role-name">Backend Developer 2 — Workflow</div><div class="role-seniority">Consultant or Senior Consultant (L4–5)</div><div class="role-practice">Technology</div></div>
-            <span class="fte-badge">0.5 Ph1 · 2.0 Ph2–4 · 1.0 Ph5</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph1 · 2.0 Ph2–4 · 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
           </div>
           <div class="role-resp"><ul><li>Azure Durable Functions for RCSA lifecycle orchestration</li><li>1LoD task engine (creation/reminders/escalation)</li><li>Notification service (email + Teams webhook)</li><li>End-to-end workflow testing</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('sec')">
           <div class="role-card-header">
             <div><div class="role-name">Security Architect</div><div class="role-seniority">Manager or Senior Manager (L6–7)</div><div class="role-practice">Accenture Security</div></div>
-            <span class="fte-badge">0.5 Ph0 · 0.25 Ph1–4 · 0.75 Ph5</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph0 · 0.25 Ph1–4 · 0.75 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
           </div>
           <div class="role-resp"><ul><li>Security architecture review (Private Endpoints/NSGs/RBAC)</li><li>Threat modelling for LLM agent</li><li>Coordinate external penetration test (Phase 5)</li><li>DPIA data flow mapping</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card">
+        <div class="role-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('cm')">
           <div class="role-card-header">
             <div><div class="role-name">Change Management Lead</div><div class="role-seniority">Senior Consultant or Manager (L5–6)</div><div class="role-practice">Talent &amp; Organisation</div></div>
-            <span class="fte-badge">0.25 Ph0–2 · 0.5 Ph3–4 · 1.0 Ph5</span>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.25 Ph0–2 · 0.5 Ph3–4 · 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
           </div>
           <div class="role-resp"><ul><li>Change management plan</li><li>Stakeholder analysis (1LoD/2LoD)</li><li>Role-based training materials</li><li>Adoption metrics tracking</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role →</span></div>
         </div>
 
       </div>
@@ -502,7 +589,7 @@ section { padding-top: 16px; margin-bottom: 40px; }
       <div class="team-panel-head client-head"><i class="ti ti-building-community"></i>Client SMEs Required (6 Roles)</div>
       <div class="role-grid" style="grid-template-columns:1fr;">
 
-        <div class="role-card client-card">
+        <div class="role-card client-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('sponsor')">
           <div class="role-card-header">
             <div><div class="role-name">Project Sponsor</div><div class="role-seniority">CFO / CRO / COO</div><div class="role-practice">Executive Leadership</div></div>
             <span class="fte-badge">Bi-weekly + escalation</span>
@@ -510,9 +597,10 @@ section { padding-top: 16px; margin-bottom: 40px; }
           <div class="role-phase">All phases; intensive Ph0 kickoff, Ph5 go-live</div>
           <div class="role-resp"><ul><li>Phase gate approvals</li><li>Scope change decisions</li><li>Budget sign-off</li><li>Go-live approval</li></ul></div>
           <div class="client-needs"><div class="client-needs-label">Needs from Accenture</div><div style="font-size:12px;color:var(--ts);">Clear phase gate reports, escalation protocols, KPI dashboards</div></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--g);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card client-card">
+        <div class="role-card client-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('grcAdmin')">
           <div class="role-card-header">
             <div><div class="role-name">GRC System Admin</div><div class="role-seniority">IT / GRC Platform team</div><div class="role-practice">Information Technology</div></div>
             <span class="fte-badge">2–3 days/wk Ph0–1</span>
@@ -520,9 +608,10 @@ section { padding-top: 16px; margin-bottom: 40px; }
           <div class="role-phase">Critical Ph0–1; ongoing Ph2–5</div>
           <div class="role-resp"><ul><li>GRC API access &amp; sandbox environment</li><li>Data exports and field mapping documentation</li><li>Schema changes and API credentials</li><li>Incident escalation path for API issues</li></ul></div>
           <div class="client-needs"><div class="client-needs-label">Needs from Accenture</div><div style="font-size:12px;color:var(--ts);">API requirements doc (Ph0 W1), data mapping spec (Ph0 W2)</div></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--g);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card client-card">
+        <div class="role-card client-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('riskSme')">
           <div class="role-card-header">
             <div><div class="role-name">Risk Management SME — 2LoD</div><div class="role-seniority">Head of Operational Risk</div><div class="role-practice">Risk Management</div></div>
             <span class="fte-badge">3 days/wk Ph0–1</span>
@@ -530,6 +619,7 @@ section { padding-top: 16px; margin-bottom: 40px; }
           <div class="role-phase">Every phase; intensive UAT Ph5</div>
           <div class="role-resp"><ul><li>Validate risk data model</li><li>Confirm thresholds (Crit&#8805;15 / High&#8805;9 / Med&#8805;4)</li><li>Review AI agent test queries</li><li>RCSA methodology and UAT sign-off</li></ul></div>
           <div class="client-needs"><div class="client-needs-label">Needs from Accenture</div><div style="font-size:12px;color:var(--ts);">Data quality report (Ph1 W10), AI agent test set (Ph3 W14), UAT test scripts (Ph5 W24)</div></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--g);font-weight:600">View role →</span></div>
         </div>
 
         <div class="role-card client-card">
@@ -870,6 +960,74 @@ section { padding-top: 16px; margin-bottom: 40px; }
         <!-- Production hardening (row 24) W24-W27 → 25/29 -->
         <div class="gl sub" style="grid-column:1;grid-row:24;">→ Production hardening</div>
         <div class="gc" style="grid-column:25/29;grid-row:24;"><div class="gbar sub" style="background:#7a8a99;"></div></div>
+
+        <!-- GOVERNANCE CADENCE GROUP LABEL (row 25) -->
+        <div class="gl-gov-grp" style="grid-column:1;grid-row:25;">GOVERNANCE CADENCE</div>
+        <div class="gc-gov-grp" style="grid-column:2/30;grid-row:25;"></div>
+
+        <!-- STEERING COMMITTEE (row 26) — bi-weekly W2,W4,...W28 = cols 3,5,7,...29 -->
+        <div class="gl-gov" style="grid-column:1;grid-row:26;color:#2A5298;">SteerCo</div>
+        <div class="gc-gov" style="grid-column:3;grid-row:26;" title="W2 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:5;grid-row:26;" title="W4 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:7;grid-row:26;" title="W6 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:9;grid-row:26;" title="W8 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:11;grid-row:26;" title="W10 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:13;grid-row:26;" title="W12 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:15;grid-row:26;" title="W14 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:17;grid-row:26;" title="W16 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:19;grid-row:26;" title="W18 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:21;grid-row:26;" title="W20 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:23;grid-row:26;" title="W22 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:25;grid-row:26;" title="W24 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:27;grid-row:26;" title="W26 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:29;grid-row:26;" title="W28 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+
+        <!-- TECH REVIEW (row 27) — weekly all weeks = cols 2-29 -->
+        <div class="gl-gov" style="grid-column:1;grid-row:27;color:#6D28D9;">Tech Review</div>
+        <div class="gc-gov" style="grid-column:2;grid-row:27;" title="W1"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:3;grid-row:27;" title="W2"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:4;grid-row:27;" title="W3"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:5;grid-row:27;" title="W4"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:6;grid-row:27;" title="W5"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:7;grid-row:27;" title="W6"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:8;grid-row:27;" title="W7"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:9;grid-row:27;" title="W8"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:10;grid-row:27;" title="W9"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:11;grid-row:27;" title="W10"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:12;grid-row:27;" title="W11"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:13;grid-row:27;" title="W12"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:14;grid-row:27;" title="W13"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:15;grid-row:27;" title="W14"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:16;grid-row:27;" title="W15"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:17;grid-row:27;" title="W16"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:18;grid-row:27;" title="W17"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:19;grid-row:27;" title="W18"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:20;grid-row:27;" title="W19"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:21;grid-row:27;" title="W20"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:22;grid-row:27;" title="W21"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:23;grid-row:27;" title="W22"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:24;grid-row:27;" title="W23"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:25;grid-row:27;" title="W24"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:26;grid-row:27;" title="W25"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:27;grid-row:27;" title="W26"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:28;grid-row:27;" title="W27"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:29;grid-row:27;" title="W28"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+
+        <!-- SPRINT REVIEW (row 28) — bi-weekly W3,W5,...W27 = cols 4,6,...28 -->
+        <div class="gl-gov" style="grid-column:1;grid-row:28;color:#1A7A52;">Sprint Review</div>
+        <div class="gc-gov" style="grid-column:4;grid-row:28;" title="W3 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:6;grid-row:28;" title="W5 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:8;grid-row:28;" title="W7 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:10;grid-row:28;" title="W9 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:12;grid-row:28;" title="W11 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:14;grid-row:28;" title="W13 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:16;grid-row:28;" title="W15 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:18;grid-row:28;" title="W17 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:20;grid-row:28;" title="W19 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:22;grid-row:28;" title="W21 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:24;grid-row:28;" title="W23 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:26;grid-row:28;" title="W25 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:28;grid-row:28;" title="W27 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
       </div>
     </div>
     <div class="gantt-legend">
@@ -881,6 +1039,9 @@ section { padding-top: 16px; margin-bottom: 40px; }
       <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#3A4657;"></span>Phase 5</div>
       <div class="gantt-legend-item"><span style="color:#2A5298;font-size:14px;line-height:1;">◆</span> Milestone</div>
       <div class="gantt-legend-item"><span style="color:#B8860B;font-size:14px;line-height:1;">★</span> Go-Live W28</div>
+      <div class="gantt-legend-item"><span style="color:#2A5298;font-size:12px;">◆</span> Steering Committee (bi-weekly)</div>
+      <div class="gantt-legend-item"><span style="color:#6D28D9;font-size:9px;">●</span> Tech Review (weekly)</div>
+      <div class="gantt-legend-item"><span style="color:#1A7A52;font-size:12px;">◆</span> Sprint Review (bi-weekly)</div>
     </div>
   </div>
 
@@ -936,9 +1097,288 @@ section { padding-top: 16px; margin-bottom: 40px; }
   <div class="section-header">
     <div class="section-tag">Section 4</div>
     <h2>Data Journey</h2>
-    <p>Live trace of risk record <strong>RSK-2024-0142</strong> — "Inadequate access controls on financial reporting system" — from GRC source through connector, pipelines, database, API, and React frontend to the user's heatmap click. Use the player controls or click any filmstrip dot.</p>
+    <p>Trace risk record <strong>RSK-2024-0142</strong> from source to screen. Select a maturity level to see the corresponding data journey — from manual CSV (L1) through to fully autonomous AI write-back (L5).</p>
   </div>
 
+  <!-- LEVEL SELECTOR -->
+  <div class="level-selector">
+    <div class="level-btn" data-level="1" onclick="setMaturityLevel(1)">
+      <div class="level-num">L1</div>
+      <div class="level-name">Static</div>
+      <div class="level-sub">Manual exports</div>
+    </div>
+    <div class="level-btn" data-level="2" onclick="setMaturityLevel(2)">
+      <div class="level-num">L2</div>
+      <div class="level-name">Connected</div>
+      <div class="level-sub">Live API + SSE</div>
+    </div>
+    <div class="level-btn active" data-level="3" onclick="setMaturityLevel(3)">
+      <div class="level-num">L3</div>
+      <div class="level-name">Assisted</div>
+      <div class="level-sub">AI agent + RAG</div>
+    </div>
+    <div class="level-btn" data-level="4" onclick="setMaturityLevel(4)">
+      <div class="level-num">L4</div>
+      <div class="level-name">Active</div>
+      <div class="level-sub">AI-assisted actions</div>
+    </div>
+    <div class="level-btn" data-level="5" onclick="setMaturityLevel(5)">
+      <div class="level-num">L5</div>
+      <div class="level-name">Autonomous</div>
+      <div class="level-sub">AI write-back</div>
+    </div>
+  </div>
+
+  <!-- LEVEL DESCRIPTION CARD -->
+  <div id="levelDesc" style="margin-bottom:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radiusL);border-left:4px solid var(--brandMid);">
+    <div id="levelDescTitle" style="font-weight:700;color:var(--tp);margin-bottom:4px;font-size:14px;"></div>
+    <div id="levelDescText" style="font-size:13px;color:var(--ts);line-height:1.7;"></div>
+  </div>
+
+  <!-- LIVE DOCUMENT CALLOUT (L2+) -->
+  <div id="liveDocCallout" style="display:none;margin-bottom:20px;padding:14px 18px;background:var(--gb);border:1px solid rgba(26,122,82,.2);border-radius:var(--radius);">
+    <div style="font-size:12px;font-weight:700;color:var(--g);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Live Document Re-ingestion — Active from Level 2</div>
+    <p style="font-size:13px;color:var(--ts);line-height:1.7;margin:0">When a policy document is updated in Azure Blob Storage, an Azure Function triggers automatically within seconds. The document is re-parsed, re-chunked, re-embedded, and re-indexed in Azure AI Search. The AI agent's answers reflect the updated policy within ~15 minutes. Uploading a new DORA guideline or updated RCSA procedure immediately improves agent answer quality — no manual intervention needed.</p>
+  </div>
+
+  <!-- ===================== LEVEL 1 PLAYER ===================== -->
+  <div data-level-content="1" style="display:none;">
+  <div class="journey-player">
+    <div class="journey-filmstrip">
+      <div class="journey-dot active" title="Step 1: Manual CSV Export"><div class="journey-dot-circle">1</div><div class="journey-dot-label">CSV Export</div></div>
+      <div class="journey-dot" title="Step 2: Blob Upload"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Blob Upload</div></div>
+      <div class="journey-dot" title="Step 3: ADF Copy Activity"><div class="journey-dot-circle">3</div><div class="journey-dot-label">ADF Copy</div></div>
+      <div class="journey-dot" title="Step 4: dbt Transform"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Transform</div></div>
+      <div class="journey-dot" title="Step 5: PostgreSQL Core Table"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Database</div></div>
+      <div class="journey-dot" title="Step 6: Static Dashboard"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Dashboard</div></div>
+    </div>
+    <div class="journey-step" data-step="0">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">Manual CSV Export — ServiceNow → Excel → CSV</div>
+          <pre><span class="jc"># Risk manager exports manually from ServiceNow
+# Administration → Reports → Export → CSV</span>
+
+risk_id,title,likelihood,impact,state,owner,category
+RSK-2024-0142,"Inadequate access controls...",4,4,Open,jane.smith@client.com,IT &amp; Security
+RSK-2024-0098,"Segregation of duties gap...",3,5,Open,john.doe@client.com,Finance
+RSK-2024-0201,"Data retention policy breach",2,4,Open,alice.b@client.com,Data &amp; Privacy
+
+<span class="jc"># Exported: 2024-10-14 08:00 UTC (manual, ad hoc)
+# Data is now STALE — any changes in ServiceNow
+# after this point are NOT reflected until next export
+# Typical staleness: 12–48 hours</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component"><div class="comp-name">ServiceNow (manual export)</div><div class="comp-timing">No API connection. Export is point-in-time snapshot. Ops team must repeat this step whenever data is needed.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">GRC System Admin / Risk Analyst</div>Manually exports the risk register CSV approximately weekly. Risk of human error in selecting the right filters.</div></div>
+          </div>
+          <div class="journey-warning"><strong>L1 Limitation</strong>Data is stale by definition. No real-time connection. No TPRM signals. No AI agent.</div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="1">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">Azure SDK — Upload CSV to Blob Storage</div>
+          <pre><span class="jc"># Ops team uploads CSV to Azure Blob Storage
+# (manual drag-and-drop via Storage Explorer or CLI)</span>
+
+az storage blob upload \
+  --account-name icscockpitstorage \
+  --container-name grc-exports \
+  --name "risks/risks_2024-10-14.csv" \
+  --file "./risks_export_20241014.csv" \
+  --auth-mode login
+
+<span class="jc"># Blob triggers ADF pipeline on upload event
+# BlobCreated → ADF trigger → pl_csv_risks_load</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component"><div class="comp-name">Azure Blob Storage — grc-exports container</div><div class="comp-timing">Manual upload by Ops team. Blob trigger fires ADF pipeline. Storage: LRS, ~5 MB per export.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">IT / Azure Lead</div>Configured the Blob storage container and Shared Access Signature for the Ops team upload account.</div></div>
+            <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">Data Engineer 1</div>Configured the Blob trigger event subscription in ADF to fire on new CSV arrival.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="2">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">ADF Copy Activity — CSV → staging.risks_raw</div>
+          <pre><span class="jc">// ADF Pipeline: pl_csv_risks_load
+// Copy Activity: act_csv_to_staging</span>
+{
+  <span class="jk">"source"</span>: {
+    <span class="jk">"type"</span>: <span class="js">"DelimitedTextSource"</span>,
+    <span class="jk">"path"</span>: <span class="js">"grc-exports/risks/*.csv"</span>
+  },
+  <span class="jk">"sink"</span>: {
+    <span class="jk">"type"</span>: <span class="js">"AzurePostgreSQLSink"</span>,
+    <span class="jk">"tableName"</span>: <span class="js">"staging.risks_raw"</span>,
+    <span class="jk">"writeBehavior"</span>: <span class="js">"upsert"</span>
+  },
+  <span class="jk">"status"</span>: <span class="js">"Succeeded"</span>,
+  <span class="jk">"rowsCopied"</span>: 612
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component"><div class="comp-name">ADF Copy Activity (CSV mode)</div><div class="comp-timing">No watermark — full load every run. 612 rows in ~8 seconds. No incremental delta detection.</div></div>
+          <div class="journey-warning"><strong>Full load every time</strong>Every upload replaces all staging data. No change detection. All 612 risks re-processed on every CSV upload.</div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="3">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">dbt Transform — staging → core.risks</div>
+          <pre><span class="jc">-- models/core/risks.sql (full-refresh mode at L1)</span>
+{{ config(materialized='table') }}
+
+<span class="jk">SELECT</span>
+  source_id,
+  title,
+  likelihood::int,
+  impact::int,
+  status,
+  owner_email,
+  category,
+  process_id,
+  NOW() <span class="jk">AS</span> dbt_updated_at
+<span class="jk">FROM</span> staging.risks_raw</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component"><div class="comp-name">dbt Core — full-refresh materialization</div><div class="comp-timing">Full table rebuild on every run. ~4s for 612 rows. GENERATED columns compute scores and ratings automatically.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="4">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">core.risks — RSK-2024-0142 after dbt</div>
+          <pre><span class="jc">-- core.risks row for RSK-2024-0142</span>
+{
+  source_id:      <span class="js">"RSK-2024-0142"</span>,
+  title:          <span class="js">"Inadequate access controls..."</span>,
+  likelihood:     4, impact: 4,
+  inherent_score: 16,  <span class="jc">-- GENERATED: 4×4</span>
+  rating:         <span class="js">"High"</span>,  <span class="jc">-- GENERATED: score≥9</span>
+  status:         <span class="js">"Open"</span>,
+  dbt_updated_at: <span class="js">"2024-10-14T08:45:00Z"</span>
+}
+<span class="jc">-- Data age: ~45 min from manual export
+-- Next update: next time Ops uploads a new CSV</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component"><div class="comp-name">PostgreSQL — core.risks</div><div class="comp-timing">GENERATED columns ensure computed values are always consistent. Data is correct but potentially 12–48h stale.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="5">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">FastAPI — Static serving (no cache, no SSE)</div>
+          <pre><span class="jc"># GET /api/heatmap — served from PostgreSQL directly
+# No Redis cache, no real-time push
+# User must refresh page to see updated data</span>
+
+{
+  mode: <span class="js">"inherent"</span>,
+  matrix: { <span class="js">"4_4"</span>: { count: 3, max_rating: <span class="js">"High"</span> } }
+}
+
+<span class="jc"># LIMITATION: No SSE stream. Dashboard shows data
+# as of last CSV upload. Users see stale heatmap.
+# No AI agent. No TPRM signals. No trend arrows.
+# Value: A consistent, browsable view of GRC data
+# that was previously only available in spreadsheets.</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component"><div class="comp-name">L1 Dashboard — Read-only, page-refresh only</div><div class="comp-timing">No live connection. No AI. No workflows. But: significant value vs. spreadsheets — searchable, filterable, visualised.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Sees the heatmap with data from last CSV upload. Manually refreshes the page. Understands the data is not live.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-controls">
+      <button class="journey-btn journey-prev-btn">&#8592; Prev</button>
+      <button class="journey-btn primary journey-play-btn">&#9654; Play</button>
+      <button class="journey-btn journey-next-btn">Next &#8594;</button>
+      <div class="journey-progress-track"><div class="journey-progress-fill" style="width:0%;"></div></div>
+      <span class="journey-step-counter">Step 1 of 6</span>
+    </div>
+  </div>
+  </div>
+
+  <!-- ===================== LEVEL 2 PLAYER ===================== -->
+  <div data-level-content="2" style="display:none;">
+  <div class="journey-player">
+    <div class="journey-filmstrip">
+      <div class="journey-dot active" title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
+      <div class="journey-dot" title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
+      <div class="journey-dot" title="Step 3: ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
+      <div class="journey-dot" title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
+      <div class="journey-dot" title="Step 5: dbt Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
+      <div class="journey-dot" title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
+      <div class="journey-dot" title="Step 7: FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
+      <div class="journey-dot" title="Step 8: SSE Push — NEW at L2"><div class="journey-dot-circle">8</div><div class="journey-dot-label">SSE Push</div></div>
+    </div>
+    <div class="journey-step" data-step="0"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">1</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">GRC API — ServiceNow REST API</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Live incremental pull via OAuth2. Watermark-based: only records updated since last run. Runs every 15 minutes via ADF trigger. 600 req/hr rate limit managed by connector.</div><div style="margin-top:14px;font-size:11px;color:rgba(255,255,255,.35)">See Level 3 for full technical detail including connector code</div></div></div></div>
+    <div class="journey-step" data-step="1"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">2</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Python GRCConnector — ServiceNowAdapter</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Abstract base class + ServiceNow implementation. Pydantic RiskRecord validation. Exponential backoff on 429/503. Normalises raw API response into typed domain object.</div></div></div></div>
+    <div class="journey-step" data-step="2"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">3</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Azure Data Factory — pl_grc_risks_incremental</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Scheduled trigger every 15 min. 5 activities: get_watermark → fetch_servicenow → run_connector → stage_upsert → update_watermark. Total run ~1.6s. Watermark only advances on success.</div></div></div></div>
+    <div class="journey-step" data-step="3"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">4</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL — staging.risks_raw UPSERT</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">JSONB raw payload stored alongside pipeline_run_id. ON CONFLICT UPSERT is idempotent. Immutable source of truth per extraction run. Enables full replay on connector bug.</div></div></div></div>
+    <div class="journey-step" data-step="4"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">5</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">dbt Core — Incremental transformation</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Incremental model processes only rows newer than last dbt run. dbt tests: not_null, unique, accepted_values. Sub-second transform for incremental runs. GENERATED columns for scores.</div></div></div></div>
+    <div class="journey-step" data-step="5"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">6</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL — core.risks (analytical model)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">GENERATED columns: inherent_score, inherent_rating, residual_score, residual_rating. Partial index on Open risks. Heatmap query executes in ~8ms.</div></div></div></div>
+    <div class="journey-step" data-step="6"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">7</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">FastAPI + Redis — GET /api/heatmap</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Redis cache-aside (5 min TTL). Cache HIT ~2ms, MISS ~12ms. JWT validated. RBAC scoped. ARRAY_AGG(source_id) embeds risk IDs in response for drill-down without second request.</div></div></div></div>
+    <div class="journey-step" data-step="7">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">SSE Push — risk_updated event to all browsers (NEW at L2)</div>
+          <pre><span class="jc"># FastAPI SSE endpoint: GET /api/events/stream
+# When ADF pipeline completes and dbt refreshes data,
+# FastAPI publishes a server-sent event:</span>
+
+data: {
+  "type": <span class="js">"risk_updated"</span>,
+  "payload": {
+    "risk_id": <span class="js">"RSK-2024-0142"</span>,
+    "old_rating": <span class="js">"High"</span>,
+    "new_rating": <span class="js">"Critical"</span>,
+    "area": <span class="js">"IT &amp; Security"</span>,
+    "timestamp": <span class="js">"2024-10-14T08:36:00Z"</span>
+  }
+}
+
+<span class="jc"># React EventSource listener in browser:
+# → invalidates TanStack Query heatmap cache
+# → dashboard re-fetches and re-renders
+# → Red cell at (4,4) updates WITHOUT page refresh
+# Time from ServiceNow change to browser update: ~15 min</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component"><div class="comp-name">Server-Sent Events (SSE) — /api/events/stream</div><div class="comp-timing">Long-lived HTTP connection. FastAPI publishes events when pipeline completes. Browser auto-reconnects on disconnect.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">Backend Dev 1 (SSE endpoint)</div>FastAPI async generator serves the SSE stream. Redis Pub/Sub used to fan out events from ADF completion webhook to all connected browser sessions.</div></div>
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Dashboard updates automatically when risk ratings change — no need to refresh the page. Sees toast notification: "RSK-2024-0142 moved to Critical".</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-controls">
+      <button class="journey-btn journey-prev-btn">&#8592; Prev</button>
+      <button class="journey-btn primary journey-play-btn">&#9654; Play</button>
+      <button class="journey-btn journey-next-btn">Next &#8594;</button>
+      <div class="journey-progress-track"><div class="journey-progress-fill" style="width:0%;"></div></div>
+      <span class="journey-step-counter">Step 1 of 8</span>
+    </div>
+  </div>
+  </div>
+
+  <!-- ===================== LEVEL 3 PLAYER (existing) ===================== -->
+  <div data-level-content="3">
   <div class="journey-player">
     <!-- Filmstrip -->
     <div class="journey-filmstrip">
@@ -1421,13 +1861,259 @@ CREATE INDEX idx_risks_heatmap
 
     <!-- Controls -->
     <div class="journey-controls">
-      <button class="journey-btn" id="jPrevBtn">&#8592; Prev</button>
-      <button class="journey-btn primary" id="jPlayBtn">&#9654; Play</button>
-      <button class="journey-btn" id="jNextBtn">Next &#8594;</button>
-      <div class="journey-progress-track"><div class="journey-progress-fill" id="jProgressFill" style="width:10%;"></div></div>
-      <span class="journey-step-counter" id="jStepCounter">Step 1 of 10</span>
+      <button class="journey-btn journey-prev-btn">&#8592; Prev</button>
+      <button class="journey-btn primary journey-play-btn">&#9654; Play</button>
+      <button class="journey-btn journey-next-btn">Next &#8594;</button>
+      <div class="journey-progress-track"><div class="journey-progress-fill" style="width:0%;"></div></div>
+      <span class="journey-step-counter">Step 1 of 10</span>
     </div>
   </div>
+  </div><!-- end level 3 content -->
+
+  <!-- ===================== LEVEL 4 PLAYER ===================== -->
+  <div data-level-content="4" style="display:none;">
+  <div class="journey-player">
+    <div class="journey-filmstrip">
+      <div class="journey-dot active" title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
+      <div class="journey-dot" title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
+      <div class="journey-dot" title="Step 3: Data Factory"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
+      <div class="journey-dot" title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
+      <div class="journey-dot" title="Step 5: Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
+      <div class="journey-dot" title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
+      <div class="journey-dot" title="Step 7: API Layer"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
+      <div class="journey-dot" title="Step 8: Browser"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
+      <div class="journey-dot" title="Step 9: Heatmap"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
+      <div class="journey-dot" title="Step 10: User Click"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
+      <div class="journey-dot" title="Step 11: AI Proposes Action — NEW at L4"><div class="journey-dot-circle" style="border-color:rgba(154,101,0,.6)">11</div><div class="journey-dot-label">AI Proposes</div></div>
+      <div class="journey-dot" title="Step 12: Human Approves — NEW at L4"><div class="journey-dot-circle" style="border-color:rgba(154,101,0,.6)">12</div><div class="journey-dot-label">Human OKs</div></div>
+    </div>
+    <!-- Steps 1-10: compact versions (same as L3) -->
+    <div class="journey-step" data-step="0"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">1</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">GRC API — ServiceNow REST (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Live incremental pull via OAuth2 every 15 minutes. Watermark-based: only records updated since last run. Full technical detail at Level 3.</div></div></div></div>
+    <div class="journey-step" data-step="1"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">2</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Python GRCConnector (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">ServiceNowAdapter implements abstract GRCConnector. Pydantic validation, exponential backoff, normalised RiskRecord output.</div></div></div></div>
+    <div class="journey-step" data-step="2"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">3</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Azure Data Factory (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">pl_grc_risks_incremental pipeline. 5 activities. Watermark advances only on success. Total run ~1.6s.</div></div></div></div>
+    <div class="journey-step" data-step="3"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">4</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL staging.risks_raw (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">JSONB raw payload + pipeline_run_id. Idempotent UPSERT. Immutable source for replay.</div></div></div></div>
+    <div class="journey-step" data-step="4"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">5</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">dbt Incremental Transform (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Incremental model, dbt tests, GENERATED columns for scores and ratings.</div></div></div></div>
+    <div class="journey-step" data-step="5"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">6</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL core.risks (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">GENERATED columns, partial index on Open risks, ~8ms heatmap query.</div></div></div></div>
+    <div class="journey-step" data-step="6"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">7</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">FastAPI + Redis (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Redis cache-aside, 5 min TTL, JWT validation, RBAC scoping, SSE stream active.</div></div></div></div>
+    <div class="journey-step" data-step="7"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">8</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">React Browser — useHeatmapData (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">TanStack Query, staleTime 60s, refetchOnWindowFocus, SSE-driven cache invalidation.</div></div></div></div>
+    <div class="journey-step" data-step="8"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">9</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">HeatmapCell Component (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">5×5 grid, colour by max_rating, WCAG 2.1 AA, risk IDs in cell for drill-down.</div></div></div></div>
+    <div class="journey-step" data-step="9"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">10</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">User Click — Risk Detail Panel (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Drill-down to risk list. 2LoD sees RSK-2024-0142 detail. AI agent chat available in panel.</div></div></div></div>
+    <!-- Step 11: NEW at L4 — AI Proposes Action -->
+    <div class="journey-step" data-step="10">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">AI Agent — Identifies overdue RCSA, generates reminder proposal</div>
+          <pre><span class="jc"># RCSA Due-Date Monitor (daily 07:00 UTC) detects:
+# Finance Q3 RCSA — due 2024-10-31 — status: Not Started
+# Days remaining: 17 → triggers D-14 reminder logic
+
+# Agent generates a proposal for 2LoD dashboard:</span>
+{
+  <span class="jk">"proposal_id"</span>: <span class="js">"prop-20241014-0047"</span>,
+  <span class="jk">"type"</span>: <span class="js">"send_reminder"</span>,
+  <span class="jk">"assessment_id"</span>: <span class="js">"RCSA-2024-Q3-FIN"</span>,
+  <span class="jk">"process"</span>: <span class="js">"Finance — Reporting &amp; Controls"</span>,
+  <span class="jk">"assigned_to"</span>: <span class="js">"jan.de.vries@client.com"</span>,
+  <span class="jk">"due_date"</span>: <span class="js">"2024-10-31"</span>,
+  <span class="jk">"days_remaining"</span>: 17,
+  <span class="jk">"draft_message"</span>: <span class="js">"Reminder: Your Finance Q3 RCSA is due in 17 days..."</span>,
+  <span class="jk">"status"</span>: <span class="js">"AWAITING_APPROVAL"</span>
+}
+
+<span class="jc"># Proposal appears as a yellow banner in 2LoD dashboard:
+# "AI recommends: Send reminder to Jan de Vries [Approve] [Edit] [Dismiss]"</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component" style="background:#FEF3DC;border-color:rgba(154,101,0,.2);"><div class="comp-name" style="color:#9A6500;">AI Proposes — Human decides</div><div class="comp-timing">At L4, AI can identify issues and draft actions — but CANNOT execute without explicit human approval. Every AI-proposed action requires a click from 2LoD.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">AI/ML Engineer + Backend Dev 2</div>RCSA monitor generates the proposal. POST /api/notifications/remind creates the pending action. Durable Function is in "waiting for external event" state.</div></div>
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Sees the AI proposal in the dashboard. Reviews the draft message. Decides to approve, edit, or dismiss. Has full control.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 12: NEW at L4 — Human Approves -->
+    <div class="journey-step" data-step="11">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">2LoD Approves → Durable Function executes → task marked reminded</div>
+          <pre><span class="jc"># 2LoD clicks "Approve" on the reminder proposal
+# → POST /api/notifications/remind</span>
+{
+  <span class="jk">"proposal_id"</span>: <span class="js">"prop-20241014-0047"</span>,
+  <span class="jk">"approved_by"</span>: <span class="js">"sarah.jones@client.com"</span>,
+  <span class="jk">"approved_at"</span>: <span class="js">"2024-10-14T09:12:33Z"</span>
+}
+
+<span class="jc"># Durable Function receives ExternalEvent "approved"
+# → sends email to jan.de.vries@client.com
+# → sends Teams card to Finance channel
+# → updates workflow_tasks: status = "Reminded"
+# → updates agent_audit_log with approval chain
+
+# Result:</span>
+{
+  <span class="jk">"email_sent"</span>: <span class="js">true</span>,
+  <span class="jk">"teams_card_sent"</span>: <span class="js">true</span>,
+  <span class="jk">"task_status"</span>: <span class="js">"Reminded"</span>,
+  <span class="jk">"audit_entry"</span>: <span class="js">"AI-proposed, human-approved by sarah.jones"</span>
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component" style="background:var(--gb);border-color:rgba(26,122,82,.2);"><div class="comp-name" style="color:var(--g);">Human-in-the-Loop — Every time</div><div class="comp-timing">The Durable Function does not execute the reminder automatically. It waits for the human's external event signal. This is the critical safety mechanism at L4.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD) — Sarah Jones</div>Clicked "Approve." Received confirmation toast: "Reminder sent to Jan de Vries for Finance Q3 RCSA." Audit log entry created with her approval.</div></div>
+            <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">Backend Dev 2 (Durable Functions)</div>Orchestrator pattern: create_timer → wait_for_external_event("approved") → call_activity("send_reminder"). The wait can be hours or days.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-controls">
+      <button class="journey-btn journey-prev-btn">&#8592; Prev</button>
+      <button class="journey-btn primary journey-play-btn">&#9654; Play</button>
+      <button class="journey-btn journey-next-btn">Next &#8594;</button>
+      <div class="journey-progress-track"><div class="journey-progress-fill" style="width:0%;"></div></div>
+      <span class="journey-step-counter">Step 1 of 12</span>
+    </div>
+  </div>
+  </div>
+
+  <!-- ===================== LEVEL 5 PLAYER ===================== -->
+  <div data-level-content="5" style="display:none;">
+  <div class="journey-player">
+    <div class="journey-filmstrip">
+      <div class="journey-dot active" title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
+      <div class="journey-dot" title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
+      <div class="journey-dot" title="Step 3: Data Factory"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
+      <div class="journey-dot" title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
+      <div class="journey-dot" title="Step 5: Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
+      <div class="journey-dot" title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
+      <div class="journey-dot" title="Step 7: API Layer"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
+      <div class="journey-dot" title="Step 8: Browser"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
+      <div class="journey-dot" title="Step 9: Heatmap"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
+      <div class="journey-dot" title="Step 10: User Click"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
+      <div class="journey-dot" title="Step 11: AI Proposes"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Proposes</div></div>
+      <div class="journey-dot" title="Step 12: Human OKs"><div class="journey-dot-circle">12</div><div class="journey-dot-label">Human OKs</div></div>
+      <div class="journey-dot" title="Step 13: Policy Update Detected — OPTIONAL"><div class="journey-dot-circle" style="border-color:rgba(154,101,0,.8)">13</div><div class="journey-dot-label">Policy Update</div></div>
+      <div class="journey-dot" title="Step 14: Write-back to GRC — OPTIONAL"><div class="journey-dot-circle" style="border-color:rgba(154,101,0,.8)">14</div><div class="journey-dot-label">Write-back</div></div>
+    </div>
+    <!-- Steps 1-12 compact -->
+    <div class="journey-step" data-step="0"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">1</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">GRC API — ServiceNow REST (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Live incremental pull via OAuth2 every 15 minutes. See Level 3 for full technical detail.</div></div></div></div>
+    <div class="journey-step" data-step="1"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">2</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Python GRCConnector (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">ServiceNowAdapter, Pydantic validation, watermark pattern.</div></div></div></div>
+    <div class="journey-step" data-step="2"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">3</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Azure Data Factory (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">pl_grc_risks_incremental. 5 activities. ~1.6s total run.</div></div></div></div>
+    <div class="journey-step" data-step="3"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">4</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL staging (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">JSONB raw payload, idempotent UPSERT, immutable audit trail.</div></div></div></div>
+    <div class="journey-step" data-step="4"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">5</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">dbt Incremental (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Incremental model, dbt tests, GENERATED columns.</div></div></div></div>
+    <div class="journey-step" data-step="5"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">6</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL core.risks (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">GENERATED columns, partial index, ~8ms heatmap query.</div></div></div></div>
+    <div class="journey-step" data-step="6"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">7</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">FastAPI + Redis (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Redis cache, JWT, RBAC, SSE stream.</div></div></div></div>
+    <div class="journey-step" data-step="7"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">8</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">React Browser (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">TanStack Query, SSE-driven cache invalidation.</div></div></div></div>
+    <div class="journey-step" data-step="8"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">9</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">HeatmapCell (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">5×5 heatmap, colour by rating, WCAG 2.1 AA compliant.</div></div></div></div>
+    <div class="journey-step" data-step="9"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">10</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">User Click — Risk Detail Panel (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Drill-down to risk list, AI agent chat, workflow actions.</div></div></div></div>
+    <div class="journey-step" data-step="10"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">11</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">AI Proposes Action (same as L4)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">RCSA monitor identifies overdue assessment, drafts reminder proposal, surfaces to 2LoD for approval. Human-in-the-loop required.</div></div></div></div>
+    <div class="journey-step" data-step="11"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">12</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Human Approves (same as L4)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">2LoD approves, Durable Function executes email + Teams notification, audit log updated.</div></div></div></div>
+    <!-- Step 13: NEW at L5 — Policy Update Detected -->
+    <div class="journey-step" data-step="12">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">NEW DORA RTS uploaded → doc re-indexed → AI detects impact on 3 existing risks</div>
+          <pre><span class="jc"># New PDF uploaded to ics-documents Blob container:
+# "DORA_RTS_ICT_Risk_Management_2024.pdf"
+# → Azure Function blob trigger fires within seconds</span>
+
+<span class="jc"># Document ingestion pipeline:</span>
+PDF parsed (PyMuPDF): 47 pages, 12,300 words
+Chunked: 89 chunks (400 tok each, 60 tok overlap)
+Embedded: text-embedding-3-large (89 × 3072 dims)
+Indexed: AI Search upsert (keyed: doc_id + chunk_idx)
+Time to searchable: <span class="js">~4 minutes</span>
+
+<span class="jc"># AI agent (nightly analysis, 02:00 UTC) detects:
+# 3 existing risks reference DORA articles
+# that have been updated by the new RTS document</span>
+{
+  <span class="jk">"policy_change_detected"</span>: <span class="js">true</span>,
+  <span class="jk">"affected_risks"</span>: [
+    { <span class="jk">"risk_id"</span>: <span class="js">"RSK-2024-0142"</span>,
+      <span class="jk">"reason"</span>: <span class="js">"DORA RTS Art.12 ICT incident reporting now requires 4h initial notification (was 24h)"</span>,
+      <span class="jk">"proposed_update"</span>: <span class="js">"Update risk description to reflect 4h reporting obligation"</span> }
+  ],
+  <span class="jk">"requires_human_approval"</span>: <span class="js">true</span>
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component" style="background:#FEF3DC;border-color:rgba(154,101,0,.2);"><div class="comp-name" style="color:#9A6500;"><span class="optional-badge" style="font-size:10px;padding:1px 6px;">OPTIONAL FEATURE</span> Policy Change Detection</div><div class="comp-timing">Requires "Enable AI write-back" setting in admin panel. Adds nightly GPT-4o analysis comparing new document versions against existing risk descriptions. ~€0.15/analysis run.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">AI/ML Engineer</div>Nightly Azure Function runs comparison prompt: "Given new policy doc [chunks], which existing risks need description updates?" Structured JSON output. Stored in pending_ai_updates table.</div></div>
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Next morning, sees notification: "3 risk descriptions may need updating following new DORA RTS. AI has proposed changes — review and approve."</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Step 14: NEW at L5 — Write-back to GRC -->
+    <div class="journey-step" data-step="13">
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">2LoD approves → PUT /api/grc/write-back → ServiceNow updated → circle complete</div>
+          <pre><span class="jc"># 2LoD reviews AI proposal, edits if needed, approves
+# → PUT /api/grc/write-back</span>
+{
+  <span class="jk">"update_id"</span>: <span class="js">"aiu-20241014-003"</span>,
+  <span class="jk">"risk_id"</span>: <span class="js">"RSK-2024-0142"</span>,
+  <span class="jk">"field"</span>: <span class="js">"risk_description"</span>,
+  <span class="jk">"old_value"</span>: <span class="js">"...24h reporting..."</span>,
+  <span class="jk">"new_value"</span>: <span class="js">"...4h initial notification under DORA RTS Art.12..."</span>,
+  <span class="jk">"approved_by"</span>: <span class="js">"sarah.jones@client.com"</span>
+}
+
+<span class="jc"># Azure Function calls ServiceNow Table API:</span>
+PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
+{ "risk_description": "...4h initial notification under DORA RTS Art.12..." }
+<span class="jc">→ 200 OK
+
+# Next ADF incremental pull (15 min later):
+# ServiceNow returns updated record
+# → staging → dbt → core.risks UPDATED
+# → Full loop closed. ← THE CIRCLE IS COMPLETE</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component" style="background:#FEF3DC;border-color:rgba(154,101,0,.3);"><div class="comp-name" style="color:#9A6500;"><span class="optional-badge" style="font-size:10px;padding:1px 6px;">OPTIONAL FEATURE</span> GRC Write-back</div><div class="comp-timing">Requires GRC platform Write API access (negotiated separately), additional governance process, and quarterly IA review of write-back audit log.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Reviewed the AI-proposed change. Confirmed it is accurate. Clicked "Approve and write back." ServiceNow is now the source of truth — and the ICS Cockpit helped keep it accurate.</div></div>
+            <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">Backend Dev 2 (write-back function)</div>Rollback capability: previous value stored for 24h. One-click rollback available. agent_audit_log records full reasoning trace: source document chunk, proposed change, approver, timestamp.</div></div>
+          </div>
+          <div class="journey-component" style="background:var(--gb);border-color:rgba(26,122,82,.2);"><div class="comp-name" style="color:var(--g);">Full Circle — Level 5 Complete</div><div class="comp-timing">GRC platform → ICS Cockpit → AI analysis → human approval → GRC platform updated. The system learns from new policies and helps keep the GRC source-of-truth accurate.</div></div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-controls">
+      <button class="journey-btn journey-prev-btn">&#8592; Prev</button>
+      <button class="journey-btn primary journey-play-btn">&#9654; Play</button>
+      <button class="journey-btn journey-next-btn">Next &#8594;</button>
+      <div class="journey-progress-track"><div class="journey-progress-fill" style="width:0%;"></div></div>
+      <span class="journey-step-counter">Step 1 of 14</span>
+    </div>
+  </div>
+
+  <!-- L5 Write-back stack table -->
+  <div id="l5WriteBack" style="display:none;margin-top:24px;padding:20px;border:2px solid #9A6500;border-radius:var(--radiusL);background:#FFFBF0;">
+    <div style="font-size:12px;font-weight:700;color:#9A6500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">OPTIONAL — AI Write-Back Stack (Level 5 only)</div>
+    <div class="table-wrap" style="margin-bottom:0;">
+      <table>
+        <thead><tr><th>Component</th><th>Acquired/Built</th><th>Additional Cost</th><th>Risk Level</th></tr></thead>
+        <tbody>
+          <tr><td><strong>GRC Write API access</strong></td><td>Acquired (client negotiates with vendor)</td><td>€0–€30K/year</td><td><span class="chip chip-medium">Medium</span></td></tr>
+          <tr><td>pending_ai_updates table</td><td>Built (DE2, 1 day)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+          <tr><td>POST /api/agent/propose-update</td><td>Built (BE Dev 1, 2 days)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+          <tr><td>Azure Function write-back</td><td>Built (BE Dev 2, 3 days)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+          <tr><td>Rollback UI</td><td>Built (FE Dev, 2 days)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+          <tr><td>Monthly write-back audit report</td><td>Process (GRC Expert writes template)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+          <tr><td>Quarterly IA review</td><td>Process (client Internal Audit)</td><td>Client cost</td><td><span class="chip chip-low">Low</span></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  </div><!-- end level 5 content -->
+
 </section>
 
 <!-- ===== SECTION 5: ARCHITECTURE ===== -->
@@ -1881,62 +2567,107 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
     <div class="card" style="background:var(--ab);border-left:3px solid var(--a);margin-bottom:18px;">
       <p style="font-size:12.5px;color:var(--ts);">Tick each item off when data has been received and validated. All data stays within the Azure tenant — no external transfers. Estimated total ingestion size: <strong>~5 GB structured + ~15 GB documents</strong>.</p>
     </div>
-    <div class="checklist-grid">
-      <!-- GRC -->
-      <div class="checklist-group">
-        <div class="checklist-group-title">GRC Core Data</div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Risk register export</strong> — Full risk register (all active + historical risks). Format: CSV or GRC API export. Volume: ~2,000–5,000 rows.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Control catalogue</strong> — All controls with type, owner, effectiveness rating, test date. Format: CSV or GRC API. Volume: ~1,500–4,000 rows.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Risk-control linkage table</strong> — Many-to-many mapping of risks to controls. Format: CSV. Volume: ~3,000–10,000 rows.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>RCSA cycle schedule</strong> — Upcoming assessment due dates by process/area. Format: CSV or calendar export.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Risk rating history</strong> — Historical inherent/residual ratings per risk (quarterly). Required for trend detection. Minimum 3 quarters.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Audit findings log</strong> — Internal audit findings with status and link to risks/controls.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>KRI/KCI threshold values</strong> — Defined thresholds for Key Risk/Control Indicators.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Risk appetite statement (structured)</strong> — Numeric thresholds per risk category for appetite-breach detection.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Control test results</strong> — Historical control test outcomes for effectiveness scoring. Format: CSV or GRC export.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Action plan / remediation tracker</strong> — Open action items linked to risks or audit findings.</span></div>
+    <div class="req-grid">
+      <!-- Card 1: GRC System Data -->
+      <div class="req-card">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--s2);">
+          <span class="ti ti-database" style="font-size:20px;color:var(--brandMid);"></span>
+          <div>
+            <div style="font-weight:700;font-size:13px;color:var(--tp);">GRC System Data</div>
+            <div style="font-size:11px;color:var(--ts);">ServiceNow / Archer / custom GRC tool</div>
+          </div>
+          <span class="req-priority" style="margin-left:auto;background:#B91C1C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">CRITICAL</span>
+        </div>
+        <div style="padding:12px 16px;">
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">01</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Risk register export</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">CSV or API · 2,000–5,000 rows · all active + historical</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">02</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Control catalogue</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">CSV or API · 1,500–4,000 rows · owner, effectiveness, test date</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">03</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Risk-control linkage table</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Many-to-many mapping · CSV · 3,000–10,000 rows</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">04</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">RCSA cycle schedule</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">CSV or calendar export · due dates by process/area</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">05</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Risk rating history</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Quarterly inherent/residual · minimum 3 quarters · for trend detection</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">06</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Audit findings log</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Internal audit findings · status + risk/control linkage</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">07</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">KRI/KCI threshold values</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Numeric thresholds per indicator for breach alerts</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">08</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Risk appetite statement (structured)</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Numeric thresholds per category · heatmap appetite lines</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">09</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Action plan / remediation tracker</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Open items linked to risks or audit findings</div></div></div>
+        </div>
       </div>
 
-      <!-- Org -->
-      <div class="checklist-group">
-        <div class="checklist-group-title">Organisational Data</div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Organisational hierarchy</strong> — Area → Department → Process tree. Required for RBAC scoping and dashboard drill-down. Format: CSV or HR system export.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>User directory</strong> — All users with role (1LoD/2LoD/ReadOnly/Admin), area assignment, email, manager. Format: Azure AD export or CSV.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Process catalogue</strong> — All in-scope business processes with owner and area mapping. Volume: ~100–400 processes.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Area/entity definitions</strong> — Business areas (e.g. Treasury, Compliance, Finance) with assigned 2LoD reviewer. Volume: ~10–30 areas.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>RBAC configuration</strong> — Confirmation of role assignments per user. Required before UAT.</span></div>
+      <!-- Card 2: TPRM Data -->
+      <div class="req-card">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--s2);">
+          <span class="ti ti-building-factory" style="font-size:20px;color:var(--brandMid);"></span>
+          <div>
+            <div style="font-weight:700;font-size:13px;color:var(--tp);">TPRM &amp; Vendor Data</div>
+            <div style="font-size:11px;color:var(--ts);">Third-party risk management tool</div>
+          </div>
+          <span class="req-priority" style="margin-left:auto;background:#9A6500;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">HIGH</span>
+        </div>
+        <div style="padding:12px 16px;">
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">01</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Vendor master list</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">CSV or API · category, criticality tier, risk owner per vendor</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">02</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">TPRM change event feed</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Webhook or polling API · reclassifications and status changes</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">03</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">TPRM risk assessments</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Historical assessments per vendor · CSV or TPRM API</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">04</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Vendor SLA/contract summary</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Key SLA metrics + contract end dates for critical vendors</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">05</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">TPRM tool API credentials</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Client ID / secret · stored in Azure Key Vault</div></div></div>
+        </div>
       </div>
 
-      <!-- TPRM -->
-      <div class="checklist-group">
-        <div class="checklist-group-title">TPRM &amp; Vendor Data</div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Vendor master list</strong> — All active third-party vendors with category, criticality tier, and assigned risk owner. Format: CSV or TPRM tool export.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>TPRM tool change event feed</strong> — Webhook or polling API for vendor reclassifications and status changes. See Data Journey for event schema.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>TPRM risk assessments</strong> — Historical third-party risk assessments per vendor. Format: CSV or TPRM API.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Vendor SLA/contract summary</strong> — Key SLA metrics and contract end dates for critical vendors.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>TPRM tool API credentials</strong> — Client ID / secret for TPRM tool integration. Stored in Azure Key Vault.</span></div>
+      <!-- Card 3: Organisational Data -->
+      <div class="req-card">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--s2);">
+          <span class="ti ti-users" style="font-size:20px;color:var(--brandMid);"></span>
+          <div>
+            <div style="font-weight:700;font-size:13px;color:var(--tp);">Organisational Data</div>
+            <div style="font-size:11px;color:var(--ts);">HR system / Azure Active Directory</div>
+          </div>
+          <span class="req-priority" style="margin-left:auto;background:#B91C1C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">CRITICAL</span>
+        </div>
+        <div style="padding:12px 16px;">
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">01</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Organisational hierarchy</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Area → Department → Process tree · CSV or HR export · for RBAC scoping</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">02</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">User directory</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Azure AD export · role, area, email, manager per user</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">03</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Process catalogue</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">~100–400 in-scope processes · owner + area mapping</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">04</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Area/entity definitions</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">~10–30 business areas · 2LoD reviewer per area</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">05</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">RBAC configuration</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Role assignments per user confirmed · required before UAT</div></div></div>
+        </div>
       </div>
 
-      <!-- Regulatory -->
-      <div class="checklist-group">
-        <div class="checklist-group-title">Regulatory &amp; Policy Documents</div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Internal risk policy PDFs</strong> — Risk appetite policy, operational risk framework, GRC methodology. Format: PDF. Used for RAG document search. Volume: ~10–30 documents.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Control framework documentation</strong> — Internal control standards and procedures. Format: PDF or Word.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Regulatory mapping table</strong> — Which controls map to which regulatory requirements (DORA, CRR, EBA ICT Guidelines). Format: CSV or spreadsheet.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Previous audit reports</strong> — Internal/external audit reports (last 2 cycles). Format: PDF. Used for RAG. Volume: ~5–15 documents.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Risk heatmap configuration</strong> — Confirmation of 5×5 thresholds (Critical≥15, High≥9, Medium≥4, Low&lt;4) and any custom appetite lines.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Regulatory reference documents</strong> — DORA regulation text, EBA/ECB guideline PDFs, BCBS 239 document. For RAG grounding. Format: PDF.</span></div>
+      <!-- Card 4: Policy Documents -->
+      <div class="req-card">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--s2);">
+          <span class="ti ti-file-text" style="font-size:20px;color:var(--brandMid);"></span>
+          <div>
+            <div style="font-weight:700;font-size:13px;color:var(--tp);">Policy Documents</div>
+            <div style="font-size:11px;color:var(--ts);">PDF/Word · loaded into AI Search for RAG</div>
+          </div>
+          <span class="req-priority" style="margin-left:auto;background:#9A6500;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">HIGH</span>
+        </div>
+        <div style="padding:12px 16px;">
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">01</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Internal risk policy PDFs</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Risk appetite, op-risk framework, GRC methodology · ~10–30 docs</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">02</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Control framework documentation</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Internal control standards and procedures · PDF or Word</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">03</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Regulatory mapping table</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Controls → DORA / CRR / EBA ICT · CSV or spreadsheet</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">04</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Previous audit reports</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Internal/external · last 2 cycles · PDF · ~5–15 docs</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">05</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Risk heatmap configuration</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">5×5 thresholds confirmed · Critical≥15, High≥9, Medium≥4, Low&lt;4</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">06</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Regulatory reference documents</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">DORA text, EBA/ECB guidelines, BCBS 239 · for RAG grounding · PDF</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">07</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Control test results</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Historical test outcomes for effectiveness scoring · CSV or GRC export</div></div></div>
+        </div>
       </div>
 
-      <!-- Technical -->
-      <div class="checklist-group">
-        <div class="checklist-group-title">Technical &amp; Integration</div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Azure subscription access</strong> — Accenture team needs Contributor role on target subscription (or dedicated resource group). Required by Week 1.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Azure OpenAI quota confirmation</strong> — GPT-4o and GPT-4o-mini deployments provisioned in EU region (Netherlands or Sweden). Required by Week 3.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>GRC system API documentation</strong> — API reference for source GRC tool (ServiceNow/Archer/custom). Required to design ADF linked service.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>HR/IAM system integration spec</strong> — How to pull user list and role assignments from HR system / Azure AD. Format: API doc or agreed CSV export.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Email notification domains whitelist</strong> — Client mail gateway must whitelist Azure Communication Services sending domain for reminder emails.</span></div>
-        <div class="checklist-item"><span class="check-box"></span><span><strong>Network/firewall approval for Private Endpoints</strong> — Network team to approve Private Endpoint creation in client VNet. Required by Phase 1 infra sprint.</span></div>
+      <!-- Card 5: Technical Access -->
+      <div class="req-card" style="grid-column:1/-1;">
+        <div style="display:flex;align-items:center;gap:10px;padding:14px 16px;border-bottom:1px solid var(--border);background:var(--s2);">
+          <span class="ti ti-server-bolt" style="font-size:20px;color:var(--brandMid);"></span>
+          <div>
+            <div style="font-weight:700;font-size:13px;color:var(--tp);">Technical Access &amp; Integration</div>
+            <div style="font-size:11px;color:var(--ts);">Required by Accenture team before development starts</div>
+          </div>
+          <span class="req-priority" style="margin-left:auto;background:#B91C1C;color:#fff;font-size:10px;font-weight:700;padding:2px 8px;border-radius:20px;">CRITICAL — Week 1</span>
+        </div>
+        <div style="padding:12px 16px;display:grid;grid-template-columns:1fr 1fr;gap:0 24px;">
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">01</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Azure subscription access</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Contributor role on subscription or resource group · required Week 1</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">02</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Azure OpenAI quota confirmation</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">GPT-4o + GPT-4o-mini in EU region · required Week 3</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">03</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">GRC system API documentation</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">API reference for ServiceNow/Archer/custom · for ADF linked service design</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">04</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">HR/IAM integration spec</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Azure AD or CSV export for user roles · API doc or agreed format</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">05</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Email notification domain whitelist</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Client mail gateway must whitelist Azure Communication Services domain</div></div></div>
+          <div class="req-item" style="display:flex;align-items:flex-start;gap:10px;padding:8px 0;font-size:13px;"><span class="req-item-num" style="font-size:10px;font-weight:700;color:var(--ts);min-width:18px;padding-top:2px;">06</span><div class="req-item-body"><div class="req-item-name" style="font-weight:600;color:var(--tp);">Network/firewall approval for Private Endpoints</div><div class="req-item-meta" style="color:var(--ts);font-size:12px;">Network team approval for Private Endpoint creation in client VNet</div></div></div>
+        </div>
       </div>
     </div>
   </div>
@@ -2285,103 +3016,484 @@ useEffect(() =&gt; {
   });
 })();
 
-// ====================================================
-// JOURNEY PLAYER
-// ====================================================
-(function() {
-  const player = document.querySelector('.journey-player');
-  if (!player) return;
+/* =====================================================================
+   MODAL SYSTEM
+   ===================================================================== */
+function openModal(headerHTML, bodyHTML) {
+  document.getElementById('modalHeader').innerHTML = headerHTML;
+  document.getElementById('modalBody').innerHTML = bodyHTML;
+  document.getElementById('mainModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeModal() {
+  document.getElementById('mainModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+document.addEventListener('click', function(e) {
+  if (!e.target.classList.contains('modal-tab')) return;
+  const group = e.target.closest('[data-modal-tab-group]');
+  if (!group) return;
+  const target = e.target.dataset.tab;
+  group.querySelectorAll('.modal-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === target));
+  group.querySelectorAll('.modal-tab-pane').forEach(p => p.classList.toggle('hidden', p.id !== target));
+});
 
+/* =====================================================================
+   ROLE DATA
+   ===================================================================== */
+const ROLES = {
+  pm: {
+    title: 'Project Manager',
+    practice: 'Consulting',
+    practiceColor: '#A100FF',
+    fte: '1.0',
+    phase: 'All phases',
+    summary: 'Owns end-to-end delivery. Plans sprints, manages RAID log, runs Steering Committee, and is the client's primary point of contact throughout the engagement.',
+    handbook: [
+      { label: 'Sprint cadence', value: '2-week sprints. Sprint planning Monday, retrospective + review Friday of week 2.' },
+      { label: 'RAID log', value: 'Updated weekly in Azure DevOps. All risks ≥ High surfaced to SteerCo deck.' },
+      { label: 'Status report', value: 'Sent every Friday COB. RAG status per workstream. Blockers highlighted.' },
+      { label: 'SteerCo deck', value: 'Bi-weekly. Slide 1: RAG summary. Slide 2: Milestone progress. Slide 3: Risks/decisions.' },
+      { label: 'Change control', value: 'Any scope change >2 person-days requires written Change Request signed by Sponsor and PM.' },
+    ],
+    deliverables: ['Project Charter', 'Weekly Status Report', 'RAID Log', 'Steering Committee pack', 'Sprint Plan & Velocity Tracker', 'Lessons Learned Report'],
+  },
+  grc: {
+    title: 'GRC Expert',
+    practice: 'Consulting',
+    practiceColor: '#A100FF',
+    fte: '0.5',
+    phase: 'Phase 1–2 (advisory) + Phase 3 sign-off',
+    summary: 'Domain expert for risk management, DORA compliance, and ICS/RCSA methodology. Designs data model and AI output validation rules. Not a developer.',
+    handbook: [
+      { label: 'Data model sign-off', value: 'Reviews and approves core.risks schema, rating logic, and heatmap thresholds before Phase 2 dev begins.' },
+      { label: 'Regulatory mapping', value: 'Maintains controls-to-DORA/EBA mapping table. Updated when new regulatory docs are uploaded.' },
+      { label: 'AI output validation', value: 'Defines acceptance criteria for AI agent responses — what constitutes a correct answer to each of the 10 canned questions.' },
+      { label: 'UAT support', value: 'Participates in UAT week to validate heatmap logic, RCSA workflow, and agent accuracy from domain perspective.' },
+    ],
+    deliverables: ['GRC Data Model specification', 'Heatmap Threshold Sign-off', 'Regulatory Mapping Table', 'Agent Quality Evaluation Report'],
+  },
+  sa: {
+    title: 'Solution Architect',
+    practice: 'Technology',
+    practiceColor: '#1E3A6E',
+    fte: '0.5',
+    phase: 'Phase 1 (design) + Phase 3–4 (review)',
+    summary: 'Owns the Azure architecture. Produces ADRs, reviews all infrastructure code, and is the final decision-maker on technology choices. Participates in tech reviews bi-weekly.',
+    handbook: [
+      { label: 'ADR process', value: 'Architecture Decision Records written in Markdown. Stored in /docs/adr/. Each ADR: context, decision, consequences, alternatives considered.' },
+      { label: 'Tech review', value: 'Attends bi-weekly Tech Review meeting. Reviews PRs for infra/ and terraform/ directories.' },
+      { label: 'Security review', value: 'Reviews IaC for Private Endpoint config, RBAC assignments, Key Vault access policies before each deployment to production.' },
+    ],
+    deliverables: ['Architecture Decision Record', 'Azure Architecture Diagram', 'Network & Security Design Doc', 'Tech Review meeting notes'],
+  },
+  de1: {
+    title: 'Data Engineer 1',
+    practice: 'Technology',
+    practiceColor: '#1E3A6E',
+    fte: '1.0',
+    phase: 'Phase 2–3',
+    summary: 'Builds ADF pipelines, GRC connector, and dbt models. Primary owner of the data ingestion layer from GRC source to core.risks in PostgreSQL.',
+    handbook: [
+      { label: 'Pipeline naming', value: 'pl_{source}_{entity}_{pattern} — e.g. pl_grc_risks_incremental. All pipelines parameterised.' },
+      { label: 'dbt conventions', value: 'Models in /models/staging/ and /models/core/. All models have schema.yml with dbt tests (not_null, unique, accepted_values).' },
+      { label: 'Watermark pattern', value: 'pipeline_watermarks table. Advance watermark only on success (in finally block). Never on failure.' },
+      { label: 'Data quality', value: 'dbt tests run in CI. Pipeline fails on test failure. DQ report auto-generated weekly.' },
+    ],
+    deliverables: ['ADF Pipeline documentation', 'dbt model documentation', 'Data Quality Report', 'GRC Connector spec'],
+  },
+  de2: {
+    title: 'Data Engineer 2',
+    practice: 'Technology',
+    practiceColor: '#1E3A6E',
+    fte: '1.0',
+    phase: 'Phase 2–3',
+    summary: 'Builds TPRM event ingestion, Durable Function orchestrators, and the write-back integration (L5 optional). Secondary owner of data pipelines.',
+    handbook: [
+      { label: 'Event schema', value: 'All TPRM events must conform to TPRMEvent Pydantic model before storage. Invalid events written to dead_letter_queue.' },
+      { label: 'Durable Functions', value: 'Orchestrator → Activity → Wait-for-external-event pattern. No direct DB writes from orchestrators.' },
+      { label: 'Write-back (L5)', value: 'Requires separate approval from GRC Expert and client Risk Management SME before implementation begins. Rollback stored for 24h.' },
+    ],
+    deliverables: ['TPRM Integration spec', 'Durable Functions design doc', 'Write-back Technical Design (L5)'],
+  },
+  ai: {
+    title: 'AI/ML Engineer',
+    practice: 'Technology',
+    practiceColor: '#1E3A6E',
+    fte: '1.0',
+    phase: 'Phase 3',
+    summary: 'Builds the LangChain agent, RAG pipeline, Azure AI Search indexing, and all GPT-4o prompt templates. Owns agent evaluation and the AI accuracy test suite.',
+    handbook: [
+      { label: 'Agent pattern', value: 'LangChain ReAct agent with 4 tools: SQLQueryTool, DocumentRAGTool, StructuredAnalysisTool, WorkflowTool. Max 5 iterations per request.' },
+      { label: 'Prompt versioning', value: 'All system prompts versioned in /prompts/ directory. Change requires PR review from GRC Expert.' },
+      { label: 'Evaluation', value: 'RAGAS metrics: faithfulness ≥0.85, answer relevance ≥0.80, context precision ≥0.75. Run weekly against 50-question golden dataset.' },
+      { label: 'Cost guardrails', value: 'Token usage logged per request. Alert if daily cost exceeds €50. Rate limiting: 60 requests/user/hour.' },
+    ],
+    deliverables: ['Agent Quality Evaluation Report', 'Prompt library', 'RAG pipeline documentation', 'AI cost monitoring dashboard'],
+  },
+  be1: {
+    title: 'Backend Developer 1',
+    practice: 'Technology',
+    practiceColor: '#1E3A6E',
+    fte: '1.0',
+    phase: 'Phase 2–3',
+    summary: 'Builds the FastAPI application: all REST endpoints, JWT authentication, RBAC middleware, Redis caching layer, and the SSE event stream.',
+    handbook: [
+      { label: 'API conventions', value: 'REST. /api/v1/ prefix. Pydantic request/response models. OpenAPI docs at /docs. All endpoints require JWT.' },
+      { label: 'RBAC', value: 'role_required() decorator. Roles: ReadOnly, Analyst, Reviewer, Admin. Area scoping via area_id claim in JWT.' },
+      { label: 'SSE stream', value: 'GET /api/events/stream. Yields text/event-stream. Client reconnects on disconnect (EventSource auto-reconnect). Max 1,000 concurrent connections per Container App instance.' },
+      { label: 'Redis TTL', value: '300s for heatmap. 60s for risk list. Invalidated on SSE risk_updated event. Never cache user-specific data with shared keys.' },
+    ],
+    deliverables: ['FastAPI OpenAPI specification', 'RBAC design doc', 'Redis caching strategy doc'],
+  },
+  be2: {
+    title: 'Backend Developer 2',
+    practice: 'Technology',
+    practiceColor: '#1E3A6E',
+    fte: '1.0',
+    phase: 'Phase 3–4',
+    summary: 'Builds Durable Function orchestrators for workflow actions (RCSA reminders, TPRM signals, write-back). Owns notification delivery via Azure Communication Services.',
+    handbook: [
+      { label: 'Orchestrator pattern', value: 'create_timer → wait_for_external_event → call_activity. Orchestrators are deterministic — no I/O, no randomness, no DateTime.Now.' },
+      { label: 'Notification channels', value: 'Email via Azure Communication Services. Teams via Webhook. Both have retry logic (3 attempts, exponential backoff).' },
+      { label: 'Audit trail', value: 'Every action logged to agent_audit_log with: action_type, triggered_by, approved_by, reasoning_trace, timestamp. Immutable after write.' },
+    ],
+    deliverables: ['Durable Functions design doc', 'Notification template library', 'Audit log schema doc'],
+  },
+  sec: {
+    title: 'Security & Compliance Engineer',
+    practice: 'Technology',
+    practiceColor: '#1E3A6E',
+    fte: '0.5',
+    phase: 'Phase 1 (design) + Phase 4 (pen-test)',
+    summary: 'Owns threat model, IaC security review, penetration test coordination, and ISO 27001 compliance artefacts. Not a developer — reviews and certifies.',
+    handbook: [
+      { label: 'Threat model', value: 'STRIDE model per Azure service. Documented in /docs/security/threat-model.md. Updated when architecture changes.' },
+      { label: 'IaC review', value: 'All Terraform changes require Security sign-off before merge to main. Checklist: Private Endpoints, RBAC least-privilege, Key Vault access, network rules.' },
+      { label: 'Pen test', value: 'Coordinated with external vendor in Week 22–23. Scope: APIM, Container Apps, Key Vault. Critical findings must be remediated before go-live.' },
+      { label: 'Data residency', value: 'All services deployed in West Europe or North Europe Azure regions. No data leaves EU. Confirmed in Architecture Decision Record.' },
+    ],
+    deliverables: ['Threat Model document', 'Security Review Checklist', 'Pen Test scope & findings', 'ISO 27001 control mapping'],
+  },
+  cm: {
+    title: 'Change Manager',
+    practice: 'Consulting',
+    practiceColor: '#A100FF',
+    fte: '0.3',
+    phase: 'Phase 2 onwards',
+    summary: 'Manages adoption and user readiness. Produces training materials, runs change impact assessment, and measures adoption KPIs post go-live.',
+    handbook: [
+      { label: 'Stakeholder map', value: 'RACI per stakeholder group. Updated monthly. Key groups: 1LoD users, 2LoD reviewers, IT admin, Internal Audit, Executive sponsor.' },
+      { label: 'Training plan', value: 'Role-based training decks. 2-hour workshop per role group in Week 26–27. Recorded for async viewing.' },
+      { label: 'Adoption KPIs', value: 'Dashboard: weekly active users, AI chat queries/week, RCSA completion rate, time-to-close findings. Reported monthly post go-live.' },
+    ],
+    deliverables: ['Change Impact Assessment', 'Training materials', 'Adoption KPI dashboard', 'Stakeholder Communication Plan'],
+  },
+};
+
+const CLIENT_ROLES = {
+  sponsor: {
+    title: 'Executive Sponsor',
+    practice: 'Client',
+    practiceColor: '#1A7A52',
+    fte: '0.1',
+    phase: 'All phases (bi-weekly touchpoint)',
+    summary: 'Chairs the Steering Committee. Has decision authority for budget changes, scope changes, and go/no-go milestones. Primary escalation point for the Accenture PM.',
+    handbook: [
+      { label: 'Commitment', value: '2 hours per sprint for SteerCo. 30 min monthly for informal PM touchpoint. Decision turnaround: within 48h for critical items.' },
+      { label: 'Decisions owned', value: 'Go/no-go for each phase gate. Budget approval for Change Requests. Prioritisation of deferred features.' },
+    ],
+    deliverables: ['Signed Project Charter', 'Phase gate approvals', 'Change Request sign-offs'],
+  },
+  grcAdmin: {
+    title: 'GRC Platform Administrator',
+    practice: 'Client',
+    practiceColor: '#1A7A52',
+    fte: '0.3',
+    phase: 'Phase 1–2 (data extraction) + Phase 3 (API access)',
+    summary: 'Provides GRC system API access, extracts data exports, and supports connector configuration. Key technical contact for the Accenture Data Engineer.',
+    handbook: [
+      { label: 'Week 1 actions', value: 'Provision read-only API credentials for GRC system. Share API documentation. Confirm available endpoints and rate limits.' },
+      { label: 'Ongoing', value: 'Available for 2h/week to support integration questions. Notifies Accenture of GRC system changes that may affect connector.' },
+    ],
+    deliverables: ['GRC API credentials', 'Data extract CSVs', 'API documentation access'],
+  },
+  riskSme: {
+    title: 'Risk Management SME (2LoD)',
+    practice: 'Client',
+    practiceColor: '#1A7A52',
+    fte: '0.4',
+    phase: 'Phase 2 (requirements) + Phase 3–4 (UAT + go-live)',
+    summary: 'Domain expert who validates data model, UAT participant, and primary user of the 2LoD workflow features. Approves AI-proposed actions in L4/L5 deployment.',
+    handbook: [
+      { label: 'Requirements', value: 'Joins workshop in Week 2 to validate risk rating logic, heatmap thresholds, and RCSA workflow steps.' },
+      { label: 'UAT', value: '40 hours across 2 weeks. Tests all 2LoD features: workflow actions, TPRM signal review, AI chat. Signs UAT sign-off form.' },
+      { label: 'L4/L5', value: 'Designated approver for AI-proposed actions. Receives daily summary of pending proposals. SLA: respond within 24h.' },
+    ],
+    deliverables: ['UAT sign-off', 'User acceptance test scripts (review)'],
+  },
+};
+
+function openRoleModal(key) {
+  const role = ROLES[key] || CLIENT_ROLES[key];
+  if (!role) return;
+  const tabGroupId = 'roleTabGroup_' + key;
+  const headerHTML = `
+    <div style="padding:24px 24px 0;display:flex;align-items:flex-start;gap:16px;">
+      <div style="flex:1;">
+        <div style="display:flex;align-items:center;gap:10px;margin-bottom:6px;">
+          <h2 style="margin:0;font-size:20px;color:var(--tp);">${role.title}</h2>
+          <span style="background:${role.practiceColor};color:#fff;font-size:11px;font-weight:700;padding:2px 10px;border-radius:20px;">${role.practice}</span>
+        </div>
+        <div style="font-size:13px;color:var(--ts);">FTE: <strong style="color:var(--tp);">${role.fte}</strong> &nbsp;·&nbsp; ${role.phase}</div>
+      </div>
+      <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;font-size:22px;color:var(--ts);line-height:1;padding:0 4px;" title="Close">&times;</button>
+    </div>
+    <div data-modal-tab-group="${tabGroupId}" style="display:flex;gap:4px;padding:16px 24px 0;border-bottom:1px solid var(--border);">
+      <button class="modal-tab active" data-tab="rt_overview_${key}" style="background:none;border:none;border-bottom:2px solid var(--brandMid);padding:6px 14px;font-size:13px;font-weight:600;color:var(--brandMid);cursor:pointer;">Overview</button>
+      <button class="modal-tab" data-tab="rt_handbook_${key}" style="background:none;border:none;border-bottom:2px solid transparent;padding:6px 14px;font-size:13px;color:var(--ts);cursor:pointer;">Handbook</button>
+      <button class="modal-tab" data-tab="rt_deliverables_${key}" style="background:none;border:none;border-bottom:2px solid transparent;padding:6px 14px;font-size:13px;color:var(--ts);cursor:pointer;">Deliverables</button>
+    </div>`;
+
+  const handbookRows = (role.handbook || []).map(h =>
+    `<tr><td style="font-weight:600;color:var(--tp);padding:10px 16px;border-bottom:1px solid var(--border);white-space:nowrap;vertical-align:top;">${h.label}</td><td style="padding:10px 16px;border-bottom:1px solid var(--border);font-size:13px;color:var(--ts);line-height:1.6;">${h.value}</td></tr>`
+  ).join('');
+
+  const deliverablesList = (role.deliverables || []).map(d =>
+    `<div style="display:flex;align-items:center;gap:10px;padding:10px 0;border-bottom:1px solid var(--border);">
+      <span style="width:6px;height:6px;border-radius:50%;background:var(--brandMid);flex-shrink:0;"></span>
+      <span style="font-size:13px;color:var(--tp);font-weight:500;flex:1;">${d}</span>
+      <button onclick="openDeliverableSample('${d}')" style="font-size:11px;color:var(--brandMid);background:var(--brandLight);border:1px solid var(--brandMid);border-radius:4px;padding:3px 8px;cursor:pointer;white-space:nowrap;">View sample →</button>
+    </div>`
+  ).join('');
+
+  const bodyHTML = `
+    <div data-modal-tab-group="${tabGroupId}">
+      <div id="rt_overview_${key}" class="modal-tab-pane" style="padding:20px 24px;">
+        <p style="font-size:14px;color:var(--tp);line-height:1.7;margin-bottom:16px;">${role.summary}</p>
+      </div>
+      <div id="rt_handbook_${key}" class="modal-tab-pane hidden" style="padding:16px 0;">
+        <table style="width:100%;border-collapse:collapse;">${handbookRows}</table>
+      </div>
+      <div id="rt_deliverables_${key}" class="modal-tab-pane hidden" style="padding:16px 24px;">
+        ${deliverablesList || '<p style="color:var(--ts);font-size:13px;">No deliverables listed.</p>'}
+      </div>
+    </div>`;
+  openModal(headerHTML, bodyHTML);
+}
+
+/* =====================================================================
+   DELIVERABLE SAMPLES
+   ===================================================================== */
+const DELIVERABLE_SAMPLES = {
+  'Project Charter': {
+    title: 'Project Charter — ICS Cockpit',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:13px;">
+<tr style="background:var(--s2);"><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Field</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Value</th></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;">Project name</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">ICS Cockpit — AI-Powered Risk Intelligence Platform</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;">Sponsor</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">[Client Executive Sponsor Name]</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;">PM</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">[Accenture PM Name]</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;">Start / End</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Week 1 — Week 28 (7 months)</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;">Budget</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">[€TBD] — governed by Change Request process</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;">Objectives</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">1. Live risk heatmap replacing manual exports. 2. AI agent for NL risk queries. 3. Automated RCSA reminders. 4. TPRM signal ingestion.</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;">In scope</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Azure infrastructure, data pipelines, AI agent, React dashboard, Phase 1–4 deliverables</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;">Out of scope</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">GRC system replacement, regulatory submission tooling, mobile app</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;">Success criteria</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">UAT sign-off by Risk SME. AI accuracy ≥80% on golden dataset. Heatmap latency &lt;2s. Zero Sev-1 issues at go-live.</td></tr>
+<tr><td style="padding:8px 12px;font-weight:600;">Signed</td><td style="padding:8px 12px;">[Sponsor signature] &nbsp;·&nbsp; [PM signature] &nbsp;·&nbsp; Date: __________</td></tr>
+</table>`,
+  },
+  'Architecture Decision Record': {
+    title: 'ADR-001 — PostgreSQL on Azure Database for PostgreSQL Flexible Server',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.7;">
+<div style="margin-bottom:12px;"><strong>Status:</strong> <span style="background:#D1FAE5;color:#065F46;padding:2px 8px;border-radius:4px;font-size:12px;">Accepted</span> &nbsp;·&nbsp; <strong>Date:</strong> Week 1</div>
+<div style="margin-bottom:12px;"><strong>Context:</strong> The ICS Cockpit requires a relational database for structured GRC data (risks, controls, RCSAs) with JSONB support for semi-structured vendor data, full-text search, and sub-10ms heatmap queries at ~5,000 risk records.</div>
+<div style="margin-bottom:12px;"><strong>Decision:</strong> Use Azure Database for PostgreSQL Flexible Server (General Purpose, 4 vCores, 16 GB) in the West Europe region.</div>
+<div style="margin-bottom:12px;"><strong>Rationale:</strong> (1) JSONB native support for vendor event payloads. (2) GENERATED columns for score computation without application logic. (3) Partial indexes on status='Open' reduce heatmap query to ~8ms. (4) Managed service — no DBA overhead. (5) Azure-native VNET integration via Private Endpoint.</div>
+<div style="margin-bottom:12px;"><strong>Alternatives considered:</strong> Azure SQL Database (no JSONB, higher cost for feature parity). Azure Cosmos DB (no JOIN support, complex for relational GRC data). Self-hosted PostgreSQL on AKS (operational overhead not justified).</div>
+<div><strong>Consequences:</strong> Team must be proficient in PostgreSQL-specific syntax (GENERATED columns, partial indexes). Migration to another DB requires rewriting dbt models. Acceptable trade-off given team skills.</div>
+</div>`,
+  },
+  'Data Quality Report': {
+    title: 'Weekly Data Quality Report — Sample',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:13px;">
+<thead><tr style="background:var(--s2);"><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">dbt Test</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Model</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Status</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Failures</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">not_null(risk_id)</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">core.risks</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#D1FAE5;color:#065F46;padding:2px 6px;border-radius:4px;">PASS</span></td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">0</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">unique(risk_id)</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">core.risks</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#D1FAE5;color:#065F46;padding:2px 6px;border-radius:4px;">PASS</span></td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">0</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">accepted_values(status)</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">core.risks</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#FEF3DC;color:#9A6500;padding:2px 6px;border-radius:4px;">WARN</span></td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">3 rows with status='Draft' (not in expected set)</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">not_null(inherent_score)</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">core.risks</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#D1FAE5;color:#065F46;padding:2px 6px;border-radius:4px;">PASS</span></td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">0</td></tr>
+<tr><td style="padding:8px 12px;">relationships(control_id)</td><td style="padding:8px 12px;">core.risk_controls</td><td style="padding:8px 12px;"><span style="background:#FEE2E2;color:#B91C1C;padding:2px 6px;border-radius:4px;">FAIL</span></td><td style="padding:8px 12px;">12 orphaned control references — GRC Admin notified</td></tr>
+</tbody>
+</table>
+<div style="margin-top:12px;font-size:12px;color:var(--ts);">Run date: Mondays 06:00 UTC. Owner: Data Engineer 1. Escalation: any FAIL triggers Slack alert to #ics-data-quality.</div>`,
+  },
+  'Agent Quality Evaluation Report': {
+    title: 'Agent Quality Evaluation — Sprint 6 Sample',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px;">
+<thead><tr style="background:var(--s2);"><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Metric</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Target</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Actual</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Status</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">RAGAS Faithfulness</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">≥ 0.85</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">0.88</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#D1FAE5;color:#065F46;padding:2px 6px;border-radius:4px;">PASS</span></td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Answer Relevance</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">≥ 0.80</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">0.83</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#D1FAE5;color:#065F46;padding:2px 6px;border-radius:4px;">PASS</span></td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Context Precision</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">≥ 0.75</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">0.71</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#FEF3DC;color:#9A6500;padding:2px 6px;border-radius:4px;">BELOW TARGET</span></td></tr>
+<tr><td style="padding:8px 12px;">Avg response latency</td><td style="padding:8px 12px;">&lt; 4s</td><td style="padding:8px 12px;">2.8s</td><td style="padding:8px 12px;"><span style="background:#D1FAE5;color:#065F46;padding:2px 6px;border-radius:4px;">PASS</span></td></tr>
+</tbody>
+</table>
+<div style="font-size:13px;color:var(--tp);line-height:1.6;"><strong>Action:</strong> Context Precision below target due to DORA document chunks being too long (avg 520 tokens vs target 400). AI/ML Engineer to re-chunk DORA PDF with 400-token max and 60-token overlap. Re-run evaluation in Sprint 7.</div>`,
+  },
+  'Heatmap Threshold Sign-off': {
+    title: 'Heatmap Threshold Sign-off Document',
+    content: `<table style="width:100%;border-collapse:collapse;font-size:13px;margin-bottom:16px;">
+<thead><tr style="background:var(--s2);"><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Rating</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Score range</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Colour</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Appetite</th></tr></thead>
+<tbody>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;color:#B91C1C;">Critical</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">≥ 15</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#B91C1C;color:#fff;padding:2px 8px;border-radius:4px;">Deep red</span></td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Zero tolerance — immediate escalation required</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;color:#9A6500;">High</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">9–14</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#D97706;color:#fff;padding:2px 8px;border-radius:4px;">Amber</span></td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Requires documented treatment plan within 30 days</td></tr>
+<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;color:#2563EB;">Medium</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">4–8</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);"><span style="background:#FBBF24;color:#000;padding:2px 8px;border-radius:4px;">Yellow</span></td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Monitor quarterly. Treatment at management discretion.</td></tr>
+<tr><td style="padding:8px 12px;font-weight:600;color:#065F46;">Low</td><td style="padding:8px 12px;">&lt; 4</td><td style="padding:8px 12px;"><span style="background:#10B981;color:#fff;padding:2px 8px;border-radius:4px;">Green</span></td><td style="padding:8px 12px;">Accept. Review annually.</td></tr>
+</tbody>
+</table>
+<div style="font-size:12px;color:var(--ts);line-height:1.6;">Signed by GRC Expert: __________ &nbsp;·&nbsp; Risk Management SME (2LoD): __________ &nbsp;·&nbsp; Date: __________<br>These thresholds are implemented as GENERATED column logic in core.risks and are immutable without a new signed sign-off document.</div>`,
+  },
+  'Steering Committee pack': {
+    title: 'Steering Committee Pack — Sprint 4 Sample',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.7;">
+<div style="background:var(--s2);border-radius:6px;padding:12px 16px;margin-bottom:12px;"><strong>Slide 1 — RAG Status</strong><br>
+<span style="color:var(--g);">■</span> Data Pipelines &nbsp;|&nbsp; <span style="color:var(--g);">■</span> Infrastructure &nbsp;|&nbsp; <span style="color:#D97706;">■</span> AI Agent (context precision below target — action in progress) &nbsp;|&nbsp; <span style="color:var(--g);">■</span> React Dashboard &nbsp;|&nbsp; <span style="color:var(--g);">■</span> Security</div>
+<div style="background:var(--s2);border-radius:6px;padding:12px 16px;margin-bottom:12px;"><strong>Slide 2 — Milestones</strong><br>
+✅ Phase 1 complete (Week 4). ✅ ADF pipelines live (Week 6). 🔄 AI Agent in development (Week 8 target). ⏳ UAT planned Week 24–25.</div>
+<div style="background:var(--s2);border-radius:6px;padding:12px 16px;margin-bottom:12px;"><strong>Slide 3 — Risks &amp; Decisions</strong><br>
+<strong>Risk R-04:</strong> GRC API rate limit lower than documented (100/hr vs expected 1,000/hr). Mitigation: staggered polling. No schedule impact.<br>
+<strong>Decision needed:</strong> Confirm deployment region (West Europe vs North Europe). Required by Week 10 for Private Endpoint provisioning.</div>
+<div style="font-size:12px;color:var(--ts);">Prepared by: PM &nbsp;·&nbsp; Distribution: Sponsor, GRC Expert, SA, PM &nbsp;·&nbsp; Next SteerCo: Week 6</div>
+</div>`,
+  },
+};
+
+function openDeliverableSample(name) {
+  const sample = DELIVERABLE_SAMPLES[name];
+  if (!sample) {
+    openModal(
+      `<div style="padding:24px 24px 16px;display:flex;justify-content:space-between;align-items:center;"><h3 style="margin:0;font-size:16px;">${name}</h3><button onclick="closeModal()" style="background:none;border:none;cursor:pointer;font-size:22px;color:var(--ts);">&times;</button></div>`,
+      `<div style="padding:16px 24px 24px;font-size:13px;color:var(--ts);">No sample available for this deliverable yet.</div>`
+    );
+    return;
+  }
+  openModal(
+    `<div style="padding:24px 24px 16px;display:flex;justify-content:space-between;align-items:start;border-bottom:1px solid var(--border);">
+       <div><div style="font-size:11px;font-weight:700;color:var(--ts);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px;">Sample Deliverable</div><h3 style="margin:0;font-size:15px;color:var(--tp);">${sample.title}</h3></div>
+       <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;font-size:22px;color:var(--ts);flex-shrink:0;padding:0 4px;">&times;</button>
+     </div>`,
+    `<div style="padding:20px 24px 24px;">${sample.content}</div>`
+  );
+}
+
+/* =====================================================================
+   MATURITY LEVEL SELECTOR
+   ===================================================================== */
+const LEVEL_DESCS = {
+  1: { title: 'L1 — Static Export', text: 'GRC data is extracted manually as CSV files, uploaded to Azure Blob Storage, transformed by ADF and dbt, and loaded into PostgreSQL. The dashboard is read-only and refreshed on a fixed schedule (e.g. weekly). No real-time data, no AI, no automation.' },
+  2: { title: 'L2 — Connected Live Feed', text: 'GRC system is connected via API with incremental polling every 15 minutes. Changes are pushed to the dashboard in near-real-time via Server-Sent Events. TPRM system webhooks deliver vendor change signals automatically. Dashboard is always current — no manual exports needed.' },
+  3: { title: 'L3 — AI-Assisted (Recommended)', text: 'The full AI agent is active: natural language risk queries, document RAG search, and structured analysis. RCSA reminders are sent automatically. AI drafts risk descriptions for TPRM signals. All AI outputs are clearly labelled and the user remains in full control.' },
+  4: { title: 'L4 — Active Proposals', text: 'The AI proactively monitors for overdue RCSAs and other conditions, generates proposed actions (reminders, escalations), and surfaces them in the 2LoD dashboard for one-click approval. The AI never executes automatically — every action requires explicit human approval via a Durable Function external event.' },
+  5: { title: 'L5 — Autonomous with Write-back (Optional)', text: 'Extends L4 with optional policy change detection and GRC write-back. When a new regulatory document is uploaded, the AI identifies affected risk descriptions and proposes updates. 2LoD approves and the ICS Cockpit writes directly to the GRC source system via its REST API, closing the full data loop.' },
+};
+
+function setMaturityLevel(level) {
+  // Update button active states
+  document.querySelectorAll('.level-btn').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.dataset.level) === level);
+  });
+  // Show/hide content panels
+  document.querySelectorAll('[data-level-content]').forEach(panel => {
+    const show = parseInt(panel.dataset.levelContent) === level;
+    panel.style.display = show ? '' : 'none';
+    if (show) {
+      const player = panel.querySelector('.journey-player');
+      if (player) initJourneyPlayer(player);
+    }
+  });
+  // Level description
+  const desc = LEVEL_DESCS[level] || {};
+  const titleEl = document.getElementById('levelDescTitle');
+  const textEl = document.getElementById('levelDescText');
+  if (titleEl) titleEl.textContent = desc.title || '';
+  if (textEl) textEl.textContent = desc.text || '';
+  // Live doc callout (L2+)
+  const ldc = document.getElementById('liveDocCallout');
+  if (ldc) ldc.style.display = level >= 2 ? '' : 'none';
+  // L5 write-back
+  const wb = document.getElementById('l5WriteBack');
+  if (wb) wb.style.display = level === 5 ? '' : 'none';
+}
+
+/* =====================================================================
+   JOURNEY PLAYER — replaces old IIFE, supports multiple players
+   ===================================================================== */
+function initJourneyPlayer(player) {
   const steps = player.querySelectorAll('.journey-step');
   const dots = player.querySelectorAll('.journey-dot');
-  const btnPrev = player.querySelector('.journey-prev');
-  const btnNext = player.querySelector('.journey-next');
-  const btnPlay = player.querySelector('.journey-play-btn');
-  const progressBar = player.querySelector('.journey-progress-fill');
+  const fill = player.querySelector('.journey-progress-fill');
+  const counter = player.querySelector('.journey-step-counter');
+  const prevBtn = player.querySelector('.journey-prev-btn');
+  const playBtn = player.querySelector('.journey-play-btn');
+  const nextBtn = player.querySelector('.journey-next-btn');
 
+  if (!steps.length) return;
   let current = 0;
-  let isPlaying = false;
-  let autoTimer = null;
-  const AUTO_INTERVAL = 4500;
+  let timer = null;
+  let playing = false;
 
-  function showStep(index) {
-    // Clamp
-    index = Math.max(0, Math.min(steps.length - 1, index));
-    current = index;
-
-    // Show/hide steps
-    steps.forEach((step, i) => {
-      step.style.display = i === index ? 'grid' : 'none';
-    });
-
-    // Update dots
-    dots.forEach((dot, i) => {
-      dot.classList.toggle('active', i === index);
-    });
-
-    // Update progress bar
-    if (progressBar) {
-      const pct = ((index) / (steps.length - 1)) * 100;
-      progressBar.style.width = pct + '%';
-    }
-
-    // Update prev/next button states
-    if (btnPrev) btnPrev.disabled = index === 0;
-    if (btnNext) btnNext.disabled = index === steps.length - 1;
+  function showStep(idx) {
+    idx = Math.max(0, Math.min(steps.length - 1, idx));
+    current = idx;
+    steps.forEach((s, i) => s.classList.toggle('active', i === idx));
+    dots.forEach((d, i) => d.classList.toggle('active', i === idx));
+    if (fill) fill.style.width = ((idx / (steps.length - 1)) * 100) + '%';
+    if (counter) counter.textContent = 'Step ' + (idx + 1) + ' of ' + steps.length;
+    if (prevBtn) prevBtn.disabled = idx === 0;
+    if (nextBtn) nextBtn.disabled = idx === steps.length - 1;
   }
 
-  function startAutoPlay() {
-    if (isPlaying) return;
-    isPlaying = true;
-    if (btnPlay) {
-      btnPlay.innerHTML = '<i class="ti ti-player-pause"></i>';
-      btnPlay.title = 'Pause';
-    }
-    autoTimer = setInterval(() => {
-      if (current < steps.length - 1) {
-        showStep(current + 1);
-      } else {
-        stopAutoPlay();
-        showStep(0);
-      }
-    }, AUTO_INTERVAL);
+  function stopPlay() {
+    playing = false;
+    clearInterval(timer);
+    if (playBtn) { playBtn.textContent = '▶ Play'; playBtn.classList.remove('playing'); }
   }
 
-  function stopAutoPlay() {
-    isPlaying = false;
-    clearInterval(autoTimer);
-    autoTimer = null;
-    if (btnPlay) {
-      btnPlay.innerHTML = '<i class="ti ti-player-play"></i>';
-      btnPlay.title = 'Play';
-    }
+  function startPlay() {
+    playing = true;
+    if (playBtn) { playBtn.textContent = '⏸ Pause'; playBtn.classList.add('playing'); }
+    timer = setInterval(function() {
+      if (current >= steps.length - 1) { stopPlay(); return; }
+      showStep(current + 1);
+    }, 3200);
   }
 
-  // Wire up controls
-  if (btnPrev) btnPrev.addEventListener('click', () => { stopAutoPlay(); showStep(current - 1); });
-  if (btnNext) btnNext.addEventListener('click', () => { stopAutoPlay(); showStep(current + 1); });
-  if (btnPlay) btnPlay.addEventListener('click', () => { isPlaying ? stopAutoPlay() : startAutoPlay(); });
+  if (prevBtn) prevBtn.addEventListener('click', function() { stopPlay(); showStep(current - 1); });
+  if (nextBtn) nextBtn.addEventListener('click', function() { stopPlay(); showStep(current + 1); });
+  if (playBtn) playBtn.addEventListener('click', function() { if (playing) { stopPlay(); } else { if (current >= steps.length - 1) showStep(0); startPlay(); } });
 
-  dots.forEach((dot, i) => {
-    dot.addEventListener('click', () => { stopAutoPlay(); showStep(i); });
+  dots.forEach(function(dot, i) {
+    dot.addEventListener('click', function() { stopPlay(); showStep(i); });
   });
 
-  // IntersectionObserver to trigger autoplay when player scrolls into view
-  const autoObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !isPlaying) {
-        startAutoPlay();
-      } else if (!entry.isIntersecting && isPlaying) {
-        stopAutoPlay();
-      }
-    });
-  }, { threshold: 0.5 });
-  autoObserver.observe(player);
-
-  // Init
   showStep(0);
-})();
+}
+
+// Initialise default level
+setMaturityLevel(3);
 </script>
+
+<!-- Modal overlay -->
+<div class="modal-overlay" id="mainModal" onclick="if(event.target===this)closeModal()">
+  <div class="modal-box" id="modalBox">
+    <div id="modalHeader"></div>
+    <div id="modalBody"></div>
+  </div>
+</div>
+
 </body>
 </html>
 
