@@ -479,6 +479,7 @@ details.collapsible > div.details-body { padding: 16px; }
 .glance-link:hover { text-decoration: underline; }
 .practice-divider { padding: 6px 0 3px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--brandMid); border-top: 1px solid var(--border); margin-top: 4px; }
 </style>
+<script src="https://unpkg.com/docx@8.5.0/build/index.min.js"></script>
 </head>
 <body>
 
@@ -525,6 +526,11 @@ details.collapsible > div.details-body { padding: 16px; }
     <button class="matbar-chip active" data-level="3" onclick="setMaturityLevel(3)">L3 · AI-Assisted <span class="matbar-chip-base">(base case)</span></button>
     <button class="matbar-chip" data-level="4" onclick="setMaturityLevel(4)">L4 · Active</button>
     <button class="matbar-chip" data-level="5" onclick="setMaturityLevel(5)">L5 · Autonomous</button>
+  </div>
+  <div style="margin-top:10px;text-align:center;">
+    <button id="sow-download-btn" onclick="generateSoW(currentLevel)" style="background:var(--brand);color:#fff;border:none;border-radius:6px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
+      <i class="ti ti-file-download"></i> Download SoW Template
+    </button>
   </div>
   <div class="matbar-desc" id="matbarDesc">AI agent + RAG over GRC documents. Real-time heatmap, natural-language query, TPRM signal drafts. <strong>Reference dashboard level.</strong></div>
 </div>
@@ -3184,11 +3190,11 @@ useEffect(() =&gt; {
         <thead><tr><th>Phase</th><th>Weeks</th><th>Lead roles</th><th>Person-days</th><th>Blended rate</th><th>Phase cost</th></tr></thead>
         <tbody>
           <tr><td>Phase 0 — Discovery &amp; Setup</td><td>W1–4</td><td>PM, SA, GRC Expert, Security</td><td>~80</td><td>€2,800</td><td>€224,000</td></tr>
-          <tr><td>Phase 1 — Data Foundation</td><td>W5–12</td><td>PM, SA, GRC, DE1, DE2, FE1, AI (part)</td><td>~280</td><td>€2,100</td><td>€588,000</td></tr>
-          <tr><td>Phase 2 — Core Dashboard</td><td>W9–16</td><td>PM, BE1, BE2, FE1, FE2, SA (part)</td><td>~260</td><td>€2,000</td><td>€520,000</td></tr>
-          <tr><td>Phase 3 — AI Layer</td><td>W13–20</td><td>PM, AI/ML Eng, BE1, SA (part), GRC (part)</td><td>~220</td><td>€2,100</td><td>€462,000</td></tr>
-          <tr><td>Phase 4 — Workflow &amp; Actions</td><td>W17–24</td><td>PM, BE2, FE1, FE2, CM Lead</td><td>~200</td><td>€2,000</td><td>€400,000</td></tr>
-          <tr><td>Phase 5 — Hardening &amp; Rollout</td><td>W21–28</td><td>PM, Security, CM Lead (full), SA, BE (part)</td><td>~160</td><td>€2,200</td><td>€352,000</td></tr>
+          <tr><td>Phase 1 — Data Foundation</td><td>W5–12</td><td>PM, SA, GRC, DE1, DE2, AI (part)</td><td>~240</td><td>€2,150</td><td>€516,000</td></tr>
+          <tr><td>Phase 2 — Core Dashboard</td><td>W9–16</td><td>PM, BE1, BE2, SA (part)</td><td>~200</td><td>€1,950</td><td>€390,000</td></tr>
+          <tr><td>Phase 3 — AI Layer</td><td>W13–20</td><td>PM, AI/ML Eng, BE1, SA (part), GRC (part)</td><td>~200</td><td>€2,100</td><td>€420,000</td></tr>
+          <tr><td>Phase 4 — Workflow &amp; Actions</td><td>W17–24</td><td>PM, BE2, AI/ML, CM Lead</td><td>~160</td><td>€2,000</td><td>€320,000</td></tr>
+          <tr><td>Phase 5 — Hardening &amp; Rollout</td><td>W21–28</td><td>PM, Security, CM Lead (full), SA, BE (part)</td><td>~120</td><td>€2,300</td><td>€276,000</td></tr>
           <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--s1);"><td><strong>Accenture fees</strong></td><td><strong>28 weeks</strong></td><td>10 roles</td><td><strong>~1,000</strong></td><td><strong>€2,150 avg</strong></td><td><strong>€2,146,000</strong></td></tr>
           <tr><td>Travel &amp; Expenses (T&amp;E)</td><td colspan="4">~10% of fees (on-site client visits, workshops, UAT sessions)</td><td>€215,000</td></tr>
           <tr><td>External penetration test</td><td colspan="4">Accredited security firm — full web app + API scope</td><td>€30,000</td></tr>
@@ -3984,7 +3990,9 @@ const LEVEL_DATA = {
   }
 };
 
+var currentLevel = 3;
 function setMaturityLevel(level) {
+  currentLevel = level;
   // Sync global maturity bar chips
   document.querySelectorAll('.matbar-chip').forEach(function(chip) {
     chip.classList.toggle('active', parseInt(chip.dataset.level) === level);
@@ -4178,6 +4186,503 @@ function initJourneyPlayer(player) {
 
 // Initialise default level
 setMaturityLevel(3);
+
+/* ================================================================
+   SOW GENERATION — level-specific Word document download
+   ================================================================ */
+var SOW_CONTENT = {
+  services: {
+    1: 'Accenture will support [CLIENT NAME] in the delivery of a Static ICS Dashboard (Maturity Level 1), establishing the foundational Azure data infrastructure and a read-only risk visualisation capability. This engagement covers discovery workshops, infrastructure provisioning, GRC source data ingestion pipelines via Azure Data Factory, and a static risk heatmap and register dashboard (no live API).\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4): Requirements gathering, ADR, network design, Terraform IaC, Azure provisioning\n  Phase 1 — Data Foundation (W5–W12): GRC data ingestion via ADF, PostgreSQL v16 schema, data quality baseline\n  Phase 2 (stub) — Static Dashboard: Read-only React risk heatmap and register seeded from PostgreSQL',
+    2: 'Accenture will support [CLIENT NAME] in the delivery of a Connected ICS Dashboard (Maturity Level 2), adding live GRC API connectors, a FastAPI backend on Azure Container Apps, rules-based alerting, and trend detection on top of the L1 data foundation.\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4)\n  Phase 1 — Data Foundation (W5–W12)\n  Phase 2 — Core Connected Dashboard (W9–W16): FastAPI, APIM, Redis caching, live GRC connectors, Service Bus eventing\n  Phase 3 (partial) — Connected Intelligence (W13–W20): Trend detection (scipy), RCSA due-date monitor, push notifications',
+    3: 'Accenture will support [CLIENT NAME] in the delivery of a full AI-Assisted ICS Dashboard (Maturity Level 3 — Base Case), comprising a production-grade LangChain RAG agent, TPRM Signal Engine, natural language query interface, DORA Article 30 report template, and full production go-live on Azure.\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4)\n  Phase 1 — Data Foundation (W5–W12)\n  Phase 2 — Core Connected Dashboard (W9–W16)\n  Phase 3 — AI Layer (W13–W20): LangChain RAG agent, Azure OpenAI (GPT-4o), TPRM Signal Engine, AI Search document index\n  Phase 4 — Workflow & Actions (W17–W24): NL query UI, AI-assisted reporting, workflow automation stub\n  Phase 5 — Hardening & Go-Live (W21–W28): Penetration test, UAT, DPIA, production cutover, AI governance framework',
+    4: 'Accenture will support [CLIENT NAME] in the delivery of an Active ICS Dashboard (Maturity Level 4), extending the L3 base case with 1LoD workflow automation via Azure Durable Functions, AI-proposed action routing with human-in-the-loop approval, and a 4-week workflow extension phase (W25–W32).\n\nScope: All L3 phases (W1–W28) plus:\n  Workflow Automation Extension (W25–W32): Azure Durable Functions RCSA lifecycle engine, AI-proposed task routing, escalation management, human-in-the-loop approval panel',
+    5: 'Accenture will support [CLIENT NAME] in the delivery of a fully Autonomous ICS Dashboard (Maturity Level 5), extending L4 with autonomous write-back agents, self-healing data quality, and AI-drafted regulatory submission automation.\n\nScope: All L4 phases (W1–W32) plus:\n  Autonomous Extension (W29–W36): Write-back agents with rollback and audit trail, self-healing data quality module, DORA Article 30 auto-draft using GPT-4o, DPO review workflow'
+  },
+  outOfScope: {
+    1: ['Live API layer and GRC connectors (L2+)', 'LLM / AI components (L3+)', 'Workflow automation (L4+)', 'Autonomous write-back agents (L5)', 'External penetration testing (L3+)', 'DORA Article 30 report automation', 'Operational execution post go-live', 'Regulatory filing or direct supervisory engagement'],
+    2: ['LLM agent and RAG interface (L3+)', 'TPRM Signal Engine (L3+)', 'Workflow automation (L4+)', 'Autonomous write-back agents (L5)', 'External penetration testing (L3+)', 'DORA Article 30 automation', 'Operational execution post go-live'],
+    3: ['Autonomous write-back agents (L5)', 'Self-healing data quality automation (L5)', 'Regulatory submission automation (L5)', 'Operational execution of data management post go-live', 'Regulatory filing or direct engagement with supervisory authorities', 'Vendor or tool procurement beyond agreed Azure stack'],
+    4: ['Autonomous write-back agents (L5)', 'Self-healing data quality automation (L5)', 'Regulatory submission automation (L5)', 'Operational execution post go-live', 'Regulatory filing or direct supervisory engagement'],
+    5: ['Operational execution post go-live', 'Direct regulatory filing or supervisory engagement', 'Vendor or tool procurement', 'Expert testimony or litigation support', 'Penetration testing beyond agreed scope']
+  },
+  deliverables: {
+    1: [
+      ['1.1','Project Charter & Governance Framework','pptx','Project charter, RACI matrix, steering committee cadence, phase gate criteria.','W2','Prepare charter, RACI, governance documentation.','Review and approve; nominate steering committee.'],
+      ['1.2','Architecture Decision Record (ADR)','pptx/Visio','Azure architecture decisions: network design, security model, Terraform IaC.','W4','Define architecture, document trade-offs, produce Terraform plan.','Provide Azure subscription; approve network/NSG decisions.'],
+      ['1.3','Source Data Inventory & Gap Analysis','pptx/xlsx','GRC source system field mapping, data quality assessment, lineage.','W8','Conduct discovery workshops, map source fields.','Provide GRC system access; validate field mappings with risk SME.'],
+      ['1.4','Data Ingestion Pipeline (Azure Data Factory)','Deployed code','ADF pipelines with watermark-based incremental ingestion to PostgreSQL v16.','W10','Build, test, deploy ADF pipelines; document error handling.','Provide GRC API credentials; validate data completeness.'],
+      ['1.5','Static Risk Dashboard','Deployed app','Read-only React dashboard: 5×5 risk heatmap and risk register table. No live API.','W12','Build and deploy dashboard; conduct UAT walkthrough.','Validate risk data presentation; sign off dashboard design.'],
+      ['1.6','Data Quality Baseline Report','xlsx/pptx','Completeness, accuracy, consistency scores per source system, with remediation recommendations.','W10','Analyse source data; produce quality metrics.','Review findings; confirm business rules.'],
+      ['1.7','Project Closure & Knowledge Transfer','pptx','Lessons learned, handover documentation, transition-to-operations guide.','W12','Produce handover pack; facilitate knowledge transfer session.','Attend handover session; confirm operational readiness.'],
+    ],
+    2: [
+      ['1.1','Project Charter & Governance Framework','pptx','Project charter, RACI matrix, steering committee cadence.','W2','Prepare charter and governance documentation.','Review and approve; nominate steering committee.'],
+      ['1.2','Architecture Decision Record (ADR)','pptx/Visio','Azure architecture including API layer, Service Bus, APIM, Redis, network design.','W4','Define architecture; document trade-offs; produce Terraform plan.','Provide Azure subscription; approve network decisions.'],
+      ['1.3','Source Data Inventory & GRC Connector Specification','pptx/xlsx','Full GRC source inventory, field mapping, live connector specification, data quality assessment.','W8','Map source fields; specify GRC API connector requirements.','Provide GRC API access and documentation; validate connector specs.'],
+      ['1.4','Data Ingestion Pipelines & GRC Connectors','Deployed code','ADF pipelines plus live GRC API connectors and event-driven updates via Azure Service Bus.','W10','Build, test, deploy pipelines and connectors; document integration architecture.','Provide API credentials; validate live data against source.'],
+      ['1.5','Connected Dashboard v1.0 (Live API)','Deployed app','React dashboard connected to FastAPI backend: real-time GRC data, 5×5 heatmap, RCSA timeline.','W16','Build FastAPI backend, deploy on Container Apps with APIM; conduct UAT.','Validate live data; provide UAT sign-off.'],
+      ['1.6','Trend Detection & RCSA Monitor','Deployed code','Python-based trend detection and RCSA due-date monitor with email notifications.','W20','Build, test, deploy; document algorithm and thresholds.','Validate trend outputs; approve notification templates.'],
+      ['1.7','Data Quality Baseline Report','xlsx/pptx','Data quality findings with remediation recommendations.','W10','Analyse source data; produce quality metrics.','Review findings; confirm business rules.'],
+      ['1.8','Project Closure & Knowledge Transfer','pptx','Lessons learned, handover, transition-to-operations guide.','W20','Produce handover pack; facilitate knowledge transfer.','Confirm operational readiness; transition to BAU team.'],
+    ],
+    3: [
+      ['1.1','Project Charter & Governance Framework','pptx','Project charter, RACI matrix, steering committee cadence, AI governance principles.','W2','Prepare charter, RACI, AI governance framework.','Approve charter; nominate workstream leads.'],
+      ['1.2','Architecture Decision Record (ADR)','pptx/Visio','Full Azure architecture: APIM, Azure OpenAI, Private Endpoints, NSGs, Terraform IaC.','W4','Define architecture; document all ADRs; produce Terraform plan.','Provide Azure subscription; approve network and Private Endpoint design.'],
+      ['1.3','Source Data Inventory & GRC Connector Specification','pptx/xlsx','GRC source inventory, field mapping, document corpus inventory for RAG, connector specification.','W8','Map source fields; inventory documents for RAG ingestion.','Provide GRC and document access; validate with risk SME.'],
+      ['1.4','Data Ingestion Pipelines & GRC Connectors','Deployed code','ADF pipelines, GRC connectors, and document ingestion pipeline (blob→parse→chunk→embed→AI Search).','W12','Build and deploy all pipelines; document embedding strategy.','Provide API and blob storage access; validate data completeness.'],
+      ['1.5','Connected Dashboard v1.0 (Live API)','Deployed app','React dashboard connected to FastAPI backend: real-time GRC data, 5×5 heatmap, RCSA timeline.','W16','Build FastAPI, deploy on Container Apps with APIM; conduct UAT.','Validate live data; provide UAT sign-off for dashboard v1.0.'],
+      ['1.6','LLM Agent & RAG Interface','Deployed code','LangChain RAG agent with SQLQueryTool, DocumentRAGTool, StructuredAnalysisTool, WorkflowTool; SSE streaming; NL query UI.','W20','Build and test LLM agent; run 80% test-set pass validation; document system prompt.','Provide test question set; validate regulatory query accuracy.'],
+      ['1.7','TPRM Signal Engine','Deployed code','Event-driven TPRM signal processor: rule-based pre-filter → LLM risk drafting → 2LoD review workflow.','W20','Build and deploy signal engine; document signal flow and LLM prompts.','Provide TPRM event feed access; validate classification accuracy.'],
+      ['1.8','DORA Article 30 Report Template','pptx/xlsx','DORA Article 30 report template pre-populated from dashboard data, with manual field guidance.','W24','Analyse DORA Art. 30 requirements; build template; validate with GRC expert.','Review template against regulatory obligations; confirm data field mappings.'],
+      ['1.9','Security Review & Penetration Test','pptx','Threat model, DPIA data flow mapping, security review report, external pen test findings.','W26','Conduct threat modelling; coordinate external pen test; produce security report.','Provide access for pen test; review and prioritise remediation findings.'],
+      ['1.10','UAT Sign-Off & Go-Live Package','pptx','UAT test scripts, sign-off document, go-live checklist, operational runbook, cutover plan.','W28','Prepare UAT scripts; run UAT sessions; produce go-live checklist and runbook.','Lead UAT with risk SME; provide sign-off; confirm production readiness.'],
+      ['1.11','AI Governance Framework','pptx','AI model card, human-in-the-loop protocols, model monitoring plan, audit trail documentation.','W28','Define AI governance framework; document model card and monitoring.','Review and approve framework; nominate AI governance owner.'],
+      ['1.12','Project Closure & Knowledge Transfer','pptx','Lessons learned, operational handover documentation, post-go-live support SLA.','W28','Produce handover pack; facilitate knowledge transfer session.','Attend sessions; confirm BAU readiness; transition to operations team.'],
+    ],
+    4: [
+      ['1.1–1.12','All L3 (Base Case) Deliverables','See L3 SoW','Complete L3 deliverable set including LLM Agent, TPRM Signal Engine, DORA template, security review, and UAT.','W28','All L3 Accenture responsibilities.','All L3 client responsibilities.'],
+      ['2.1','1LoD Workflow Engine','Deployed code','Azure Durable Functions RCSA lifecycle: task creation, D-14 reminders, D-3 escalation, 2LoD routing.','W32','Build and deploy workflow engine; conduct end-to-end testing.','Validate workflow routing; test RCSA lifecycle with 1LoD champion; sign off.'],
+      ['2.2','AI-Proposed Action Review Panel','Deployed code','UI for 2LoD reviewers to approve, reject, or modify AI-proposed risk actions before write-back.','W32','Build UI panel; implement human-in-the-loop approval workflow; conduct UAT.','Review proposed action logic; validate approval workflow with risk SME.'],
+      ['2.3','Extended Go-Live Package & AI Workflow Governance','pptx','Updated AI governance framework covering workflow automation and AI-proposed action audit trail.','W32','Update governance documentation; produce workflow operational runbook.','Approve extended governance; nominate workflow governance owner.'],
+    ],
+    5: [
+      ['1.1–2.3','All L4 (Active) Deliverables','See L4 SoW','Complete L4 deliverable set including 1LoD workflow engine and AI-proposed action review panel.','W32','All L4 Accenture responsibilities.','All L4 client responsibilities.'],
+      ['3.1','Autonomous Write-Back Agent','Deployed code','AI agent that writes to GRC systems (risk status updates, finding closures) following human approval. Includes audit trail and rollback.','W36','Build write-back agent with rollback; implement audit trail; security review.','Define write-back governance rules; approve agent actions policy; validate with DPO.'],
+      ['3.2','Self-Healing Data Quality Module','Deployed code','Automated data quality remediation: detects anomalies, applies configurable fix rules, flags edge cases for human review.','W36','Build self-healing module; define fix rule library; integrate with monitoring.','Validate fix rules with data stewards; approve remediation governance policy.'],
+      ['3.3','Regulatory Submission Automation','Deployed code','AI-assisted DORA Art. 30 report drafting: populates template from dashboard data, generates narrative with GPT-4o, routes for DPO review.','W36','Build submission automation; validate regulatory accuracy; conduct pilot.','Review AI-generated narratives; approve submission workflow; engage DPO.'],
+    ],
+  },
+  resources: {
+    1: [
+      ['Programme Manager','Senior Manager (L7)','Onshore','1','€3,000','60','€180,000'],
+      ['ICS / GRC Domain Expert','Manager (L6)','Onshore','1','€2,500','48','€120,000'],
+      ['Solution Architect','Senior Manager (L7)','Onshore','1','€3,000','52','€156,000'],
+      ['Data Engineer 1 (ETL/ADF)','Consultant (L4–5)','Blended','1','€1,400','40','€56,000'],
+    ],
+    2: [
+      ['Programme Manager','Senior Manager (L7)','Onshore','1','€3,000','80','€240,000'],
+      ['ICS / GRC Domain Expert','Manager (L6)','Onshore','1','€2,500','70','€175,000'],
+      ['Solution Architect','Senior Manager (L7)','Onshore','1','€3,000','60','€180,000'],
+      ['Change Management Lead','Manager (L5–6)','Onshore','1','€2,200','40','€88,000'],
+      ['Data Engineer 1 (ETL/ADF)','Consultant (L4–5)','Blended','1','€1,400','55','€77,000'],
+      ['Data Engineer 2 (DB/Docs)','Consultant (L4–5)','Blended','1','€1,400','50','€70,000'],
+      ['Backend Developer 1 (API)','Consultant (L4–5)','Blended','1','€1,400','50','€70,000'],
+      ['Security Architect','Manager (L6–7)','Blended','1','€2,000','30','€60,000'],
+    ],
+    3: [
+      ['Programme Manager','Senior Manager (L7)','Onshore','1','€3,000','120','€360,000'],
+      ['ICS / GRC Domain Expert','Manager (L6)','Onshore','1','€2,500','100','€250,000'],
+      ['Solution Architect','Senior Manager (L7)','Onshore','1','€3,000','80','€240,000'],
+      ['Change Management Lead','Manager (L5–6)','Onshore','1','€2,200','80','€176,000'],
+      ['Data Engineer 1 (ETL/ADF)','Consultant (L4–5)','Blended','1','€1,400','100','€140,000'],
+      ['Data Engineer 2 (DB/Docs)','Consultant (L4–5)','Blended','1','€1,400','100','€140,000'],
+      ['AI / ML Engineer','Consultant (L4–5)','Blended','1','€1,400','110','€154,000'],
+      ['Backend Developer 1 (Core API)','Consultant (L4–5)','Blended','1','€1,400','110','€154,000'],
+      ['Backend Developer 2 (Workflow)','Consultant (L4–5)','Blended','1','€1,400','100','€140,000'],
+      ['Security Architect','Manager (L6–7)','Blended','1','€2,000','71','€142,000'],
+    ],
+    4: [
+      ['Programme Manager','Senior Manager (L7)','Onshore','1','€3,000','136','€408,000'],
+      ['ICS / GRC Domain Expert','Manager (L6)','Onshore','1','€2,500','115','€287,500'],
+      ['Solution Architect','Senior Manager (L7)','Onshore','1','€3,000','90','€270,000'],
+      ['Change Management Lead','Manager (L5–6)','Onshore','1','€2,200','90','€198,000'],
+      ['Data Engineer 1 (ETL/ADF)','Consultant (L4–5)','Blended','1','€1,400','110','€154,000'],
+      ['Data Engineer 2 (DB/Docs)','Consultant (L4–5)','Blended','1','€1,400','110','€154,000'],
+      ['AI / ML Engineer','Consultant (L4–5)','Blended','1','€1,400','125','€175,000'],
+      ['Backend Developer 1 (Core API)','Consultant (L4–5)','Blended','1','€1,400','125','€175,000'],
+      ['Backend Developer 2 (Workflow)','Consultant (L4–5)','Blended','1','€1,400','120','€168,000'],
+      ['Security Architect','Manager (L6–7)','Blended','1','€2,000','80','€160,000'],
+    ],
+    5: [
+      ['Programme Manager','Senior Manager (L7)','Onshore','1','€3,000','152','€456,000'],
+      ['ICS / GRC Domain Expert','Manager (L6)','Onshore','1','€2,500','130','€325,000'],
+      ['Solution Architect','Senior Manager (L7)','Onshore','1','€3,000','100','€300,000'],
+      ['Change Management Lead','Manager (L5–6)','Onshore','1','€2,200','100','€220,000'],
+      ['Data Engineer 1 (ETL/ADF)','Consultant (L4–5)','Blended','1','€1,400','120','€168,000'],
+      ['Data Engineer 2 (DB/Docs)','Consultant (L4–5)','Blended','1','€1,400','120','€168,000'],
+      ['AI / ML Engineer','Consultant (L4–5)','Blended','1','€1,400','140','€196,000'],
+      ['Backend Developer 1 (Core API)','Consultant (L4–5)','Blended','1','€1,400','140','€196,000'],
+      ['Backend Developer 2 (Workflow)','Consultant (L4–5)','Blended','1','€1,400','135','€189,000'],
+      ['Security Architect','Manager (L6–7)','Blended','1','€2,000','90','€180,000'],
+    ],
+  },
+  invoiceSchedule: {
+    1: [['Month 1','Project Charter, ADR, mobilisation','30%','[AMOUNT]'],['Month 2','Data pipeline delivered and tested','40%','[AMOUNT]'],['Month 3','Dashboard delivery and project closure','30%','[AMOUNT]']],
+    2: [['Month 1','Project Charter, ADR, mobilisation','20%','[AMOUNT]'],['Month 2','Data foundation and GRC connectors','25%','[AMOUNT]'],['Month 3','Connected dashboard v1.0 go-live','30%','[AMOUNT]'],['Month 4–5','Intelligence layer, testing, project closure','25%','[AMOUNT]']],
+    3: [['Month 1','Project Charter, ADR, mobilisation','15%','[AMOUNT]'],['Month 2','Data foundation milestone','20%','[AMOUNT]'],['Month 3','Dashboard v1.0 go-live','20%','[AMOUNT]'],['Month 4–5','AI layer and workflow delivery','25%','[AMOUNT]'],['Month 6–7','Hardening, UAT, go-live, project closure','20%','[AMOUNT]']],
+    4: [['Month 1','Project Charter, ADR, mobilisation','12%','[AMOUNT]'],['Month 2','Data foundation milestone','17%','[AMOUNT]'],['Month 3','Dashboard v1.0 go-live','18%','[AMOUNT]'],['Month 4–5','AI layer and workflow delivery','23%','[AMOUNT]'],['Month 6–7','Hardening, UAT, go-live','18%','[AMOUNT]'],['Month 8','Workflow automation extension and closure','12%','[AMOUNT]']],
+    5: [['Month 1','Project Charter, ADR, mobilisation','10%','[AMOUNT]'],['Month 2','Data foundation milestone','15%','[AMOUNT]'],['Month 3','Dashboard v1.0 go-live','15%','[AMOUNT]'],['Month 4–5','AI layer and workflow delivery','20%','[AMOUNT]'],['Month 6–7','Hardening, UAT, go-live','15%','[AMOUNT]'],['Month 8','Workflow automation extension','10%','[AMOUNT]'],['Month 9','Autonomous extension and project closure','15%','[AMOUNT]']],
+  },
+};
+
+function generateSoW(level) {
+  if (!window.docx) {
+    alert('Word document library not yet loaded. Please wait a moment and try again (requires internet connection).');
+    return;
+  }
+  var ld = LEVEL_DATA[level] || LEVEL_DATA[3];
+  var sd = SOW_CONTENT;
+  var D = window.docx;
+
+  // ---- helpers ----
+  var PURPLE = '6A2B7C', DARK = '1A1A2E', GREY = '4A4A6A', LGREY = 'A0A0B0', WHITE = 'FFFFFF';
+  var mmTwip = function(mm) { return Math.round(mm * 56.69); };
+
+  function h1(text) {
+    return new D.Paragraph({
+      children: [new D.TextRun({ text: text, bold: true, color: WHITE, size: 28, font: 'Calibri' })],
+      shading: { type: D.ShadingType.SOLID, color: PURPLE },
+      spacing: { before: mmTwip(4), after: mmTwip(2) },
+      indent: { left: mmTwip(4), right: mmTwip(4) },
+    });
+  }
+  function h2(text) {
+    return new D.Paragraph({
+      children: [new D.TextRun({ text: text, bold: true, color: PURPLE, size: 26, font: 'Calibri' })],
+      spacing: { before: mmTwip(6), after: mmTwip(2) },
+      border: { bottom: { color: PURPLE, space: 1, style: D.BorderStyle.SINGLE, size: 6 } },
+    });
+  }
+  function h3(text) {
+    return new D.Paragraph({
+      children: [new D.TextRun({ text: text, bold: true, color: DARK, size: 22, font: 'Calibri' })],
+      spacing: { before: mmTwip(4), after: mmTwip(1) },
+    });
+  }
+  function para(text, opts) {
+    return new D.Paragraph({
+      children: [new D.TextRun(Object.assign({ text: text, size: 20, font: 'Calibri', color: DARK }, opts || {}))],
+      spacing: { after: mmTwip(2) },
+    });
+  }
+  function paraMultiLine(text) {
+    var lines = text.split('\n');
+    var runs = [];
+    lines.forEach(function(line, i) {
+      runs.push(new D.TextRun({ text: line, size: 20, font: 'Calibri', color: DARK, break: i > 0 ? 1 : 0 }));
+    });
+    return new D.Paragraph({ children: runs, spacing: { after: mmTwip(2) } });
+  }
+  function bullet(text) {
+    return new D.Paragraph({
+      children: [new D.TextRun({ text: text, size: 20, font: 'Calibri', color: DARK })],
+      bullet: { level: 0 },
+      spacing: { after: mmTwip(1) },
+    });
+  }
+  function spacer() {
+    return new D.Paragraph({ children: [new D.TextRun({ text: '' })], spacing: { after: mmTwip(2) } });
+  }
+  function labelValue(label, value) {
+    return new D.Paragraph({
+      children: [
+        new D.TextRun({ text: label + ': ', bold: true, size: 20, font: 'Calibri', color: DARK }),
+        new D.TextRun({ text: value, size: 20, font: 'Calibri', color: DARK }),
+      ],
+      spacing: { after: mmTwip(1) },
+    });
+  }
+  function tcell(text, opts) {
+    var o = opts || {};
+    return new D.TableCell({
+      children: [new D.Paragraph({
+        children: [new D.TextRun({ text: text, bold: o.bold || false, size: 18, font: 'Calibri', color: o.color || DARK })],
+        spacing: { before: 60, after: 60 },
+      })],
+      width: o.width ? { size: o.width, type: D.WidthType.PERCENTAGE } : undefined,
+      shading: o.shading ? { type: D.ShadingType.SOLID, color: o.shading } : undefined,
+      verticalAlign: D.VerticalAlign.CENTER,
+      margins: { left: mmTwip(2), right: mmTwip(2), top: 60, bottom: 60 },
+    });
+  }
+  function headerRow(cols) {
+    return new D.TableRow({
+      children: cols.map(function(c) { return tcell(c, { bold: true, shading: PURPLE, color: WHITE }); }),
+      tableHeader: true,
+    });
+  }
+
+  // ---- title block ----
+  var titleBlock = [
+    new D.Paragraph({
+      children: [new D.TextRun({ text: 'STATEMENT OF WORK', bold: true, size: 52, font: 'Calibri', color: PURPLE })],
+      alignment: D.AlignmentType.CENTER,
+      spacing: { before: mmTwip(8), after: mmTwip(2) },
+    }),
+    new D.Paragraph({
+      children: [new D.TextRun({ text: 'AI-Powered ICS Dashboard Implementation', size: 32, font: 'Calibri', color: GREY })],
+      alignment: D.AlignmentType.CENTER,
+      spacing: { after: mmTwip(2) },
+    }),
+    new D.Paragraph({
+      children: [new D.TextRun({ text: ld.label, bold: true, size: 28, font: 'Calibri', color: PURPLE })],
+      alignment: D.AlignmentType.CENTER,
+      spacing: { after: mmTwip(6) },
+      shading: { type: D.ShadingType.SOLID, color: 'F3EDF7' },
+    }),
+    new D.Table({
+      width: { size: 100, type: D.WidthType.PERCENTAGE },
+      rows: [
+        new D.TableRow({ children: [
+          tcell('Client', { bold: true, width: 25 }), tcell('[CLIENT NAME]', { width: 25 }),
+          tcell('MMS / Ref ID', { bold: true, width: 25 }), tcell('[MMS-XXXXXXXX]', { width: 25 }),
+        ]}),
+        new D.TableRow({ children: [
+          tcell('Accenture Entity', { bold: true, width: 25 }), tcell('Accenture [NL/UK/CH] B.V.', { width: 25 }),
+          tcell('Version', { bold: true, width: 25 }), tcell('v1.0 — Draft for Review', { width: 25 }),
+        ]}),
+        new D.TableRow({ children: [
+          tcell('Date', { bold: true, width: 25 }), tcell('[DATE]', { width: 25 }),
+          tcell('Classification', { bold: true, width: 25 }), tcell('Confidential', { width: 25 }),
+        ]}),
+        new D.TableRow({ children: [
+          tcell('Maturity Level', { bold: true, width: 25 }), tcell(ld.label, { width: 25 }),
+          tcell('Estimated Investment', { bold: true, width: 25 }), tcell(ld.cost + ' (excl. VAT)', { width: 25 }),
+        ]}),
+      ],
+    }),
+    spacer(),
+    new D.Paragraph({
+      children: [new D.TextRun({ text: 'IMPORTANT: This document is a template. Highlighted placeholders (e.g. [CLIENT NAME], [MMS-ID], [DATE], [AMOUNT]) must be completed before execution. Rates shown are indicative market rates — actual rates are governed by the applicable Master Services Agreement (MSA) or Framework Agreement.', size: 16, font: 'Calibri', color: GREY, italics: true })],
+      spacing: { after: mmTwip(4) },
+    }),
+  ];
+
+  // ---- 1. Term ----
+  var termSection = [
+    h1('1.  TERM'),
+    spacer(),
+    labelValue('Commencement Date', '[START DATE]'),
+    labelValue('Completion Date', '[END DATE] (approximately ' + ld.weeks + ' weeks from commencement)'),
+    para('This Statement of Work is entered into under the Master Services Agreement (MSA) reference [MSA REFERENCE DATE] between [CLIENT NAME] and Accenture [Entity]. This SOW is subject to the terms and conditions of the MSA. In the event of any conflict, the MSA shall prevail.'),
+  ];
+
+  // ---- 2. Services ----
+  var servicesSection = [
+    h1('2.  SERVICES'),
+    spacer(),
+    paraMultiLine(sd.services[level] || sd.services[3]),
+  ];
+
+  // ---- 3. Deliverables ----
+  var delRows = (sd.deliverables[level] || sd.deliverables[3]).map(function(d) {
+    return new D.TableRow({ children: [
+      tcell(d[0], { width: 5 }),
+      tcell(d[1], { bold: true, width: 18 }),
+      tcell(d[2], { width: 10 }),
+      tcell(d[3], { width: 29 }),
+      tcell(d[4], { width: 8 }),
+      tcell(d[5], { width: 15 }),
+      tcell(d[6], { width: 15 }),
+    ]});
+  });
+  var deliverablesSection = [
+    h1('3.  DELIVERABLES'),
+    spacer(),
+    para('The following deliverables will be provided by Accenture under this Statement of Work. Acceptance criteria and sign-off procedures are defined in the Project Charter (Deliverable 1.1).'),
+    spacer(),
+    new D.Table({
+      width: { size: 100, type: D.WidthType.PERCENTAGE },
+      rows: [headerRow(['#','Deliverable','Format','Description','Due Date','Accenture Responsibility','Client Responsibility'])].concat(delRows),
+    }),
+  ];
+
+  // ---- 4. Responsibilities & Assumptions ----
+  var responsibilitiesSection = [
+    h1('4.  RESPONSIBILITIES AND ASSUMPTIONS'),
+    spacer(),
+    h3('4.1  Accenture Responsibilities'),
+    bullet('Provide qualified personnel with appropriate skills and experience for each role defined in Section 8'),
+    bullet('Maintain a Project Manager as single point of accountability for delivery quality, timeline, and scope'),
+    bullet('Follow Accenture delivery methodology and quality gates; surface scope changes via formal Change Request process'),
+    bullet('Ensure all deliverables comply with applicable data protection legislation (GDPR/AVG) and Accenture information security policy'),
+    bullet('Maintain professional indemnity and required insurance throughout the engagement'),
+    bullet('Provide weekly status reports and attend fortnightly steering committee meetings'),
+    spacer(),
+    h3('4.2  Client Responsibilities'),
+    bullet('[CLIENT NAME] will designate a named Project Sponsor and Programme Director with authority to approve deliverables and escalate decisions'),
+    bullet('Provide timely access to GRC source systems, Azure subscription, and relevant IT infrastructure within 5 business days of request'),
+    bullet('Ensure availability of subject-matter experts (DPO, 1LoD Champion, IT Lead, Risk Owners) for workshops and UAT — minimum 20% of time commitment per SME during active phases'),
+    bullet('Provide written acceptance or rejection of deliverables within 10 business days of submission; deliverables not responded to within 14 business days are deemed accepted'),
+    bullet('Review and approve architecture decisions (ADR) within 5 business days of submission'),
+    bullet('Maintain infrastructure and licensing costs (Azure subscription, Microsoft 365, OpenAI service agreement) separate from this SOW'),
+    bullet('Ensure all regulatory filings and supervisory communications are handled by authorised client personnel only'),
+    bullet('Complete data protection impact assessment (DPIA) review and approval in coordination with DPO by W18'),
+  ];
+
+  // ---- 5. Dependencies ----
+  var dependenciesSection = [
+    h1('5.  DEPENDENCIES'),
+    spacer(),
+    para('Accenture\'s ability to deliver on time and within budget is contingent on the following dependencies being met by [CLIENT NAME]:'),
+    spacer(),
+    bullet('(a) Azure subscription with Contributor-level access granted to Accenture technical team within 5 business days of SOW execution'),
+    bullet('(b) GRC source system API credentials and sandbox environment available by W3'),
+    bullet('(c) Nominated ICS/GRC SME available for discovery workshops in W1–W4'),
+    bullet('(d) IT security and network team available to review and approve Private Endpoint and NSG configuration by W4'),
+    bullet('(e) Document corpus for RAG ingestion (policies, regulatory guidelines, ICS procedures) provided in accessible format by W8'),
+    bullet('(f) Azure OpenAI service provisioning and quota allocation approved by client IT by W10'),
+    bullet('(g) UAT participants (2LoD risk analysts, 1LoD Champion) available and committed for W24–W26'),
+    bullet('(h) External penetration test scope approved and test window confirmed by W20'),
+    bullet('(i) DPO available to co-review DPIA and AI governance framework by W18'),
+    bullet('(j) Production Azure environment provisioned and accessible for cutover by W26'),
+    bullet('(k) Change Management communications approved by W16 for internal awareness campaign'),
+    para('Any delay in the above dependencies will result in a corresponding delay to the project timeline. Accenture will raise a formal Dependency at-Risk notification if any dependency is overdue by more than 5 business days.'),
+  ];
+
+  // ---- 6. Out of Scope ----
+  var oos = sd.outOfScope[level] || sd.outOfScope[3];
+  var oosSection = [
+    h1('6.  OUT OF SCOPE'),
+    spacer(),
+    para('The following items are explicitly out of scope for this Statement of Work. Any in-scope request for these items will require a separate SOW or Change Request:'),
+    spacer(),
+  ].concat(oos.map(function(o) { return bullet('• ' + o); }));
+
+  // ---- 7. Location ----
+  var locationSection = [
+    h1('7.  LOCATION OF SERVICES'),
+    spacer(),
+    para('Services will be delivered using a hybrid model:'),
+    bullet('Client site ([CLIENT OFFICE ADDRESS]) — for discovery workshops, steering committee meetings, and UAT sessions (approximately 2–3 days per fortnight for senior roles)'),
+    bullet('Accenture offices ([ACCENTURE OFFICE CITY]) — for delivery, architecture, and development work'),
+    bullet('Blended onshore / nearshore delivery — technology roles (Data Engineers, AI/ML Engineer, Backend Developers) may include nearshore delivery from Accenture\'s European delivery centres, with onshore architects directing nearshore developers'),
+    para('All work involving access to client data or systems will be conducted in compliance with the data residency requirements agreed in the MSA. No client data will be processed outside the agreed Azure region ([AZURE REGION, e.g. West Europe — Netherlands]).'),
+  ];
+
+  // ---- 8. Fees & Expenses ----
+  var resData = sd.resources[level] || sd.resources[3];
+  var resRows = resData.map(function(r) {
+    return new D.TableRow({ children: [
+      tcell(r[0], { width: 22 }),
+      tcell(r[1], { width: 18 }),
+      tcell(r[2], { width: 12 }),
+      tcell(r[3], { width: 8 }),
+      tcell(r[4] + ' *', { width: 13 }),
+      tcell(r[5], { width: 12 }),
+      tcell(r[6] + ' *', { width: 15 }),
+    ]});
+  });
+  var invData = sd.invoiceSchedule[level] || sd.invoiceSchedule[3];
+  var invRows = invData.map(function(inv) {
+    return new D.TableRow({ children: [
+      tcell(inv[0], { width: 15 }),
+      tcell(inv[1], { width: 55 }),
+      tcell(inv[2], { width: 15 }),
+      tcell(inv[3], { width: 15 }),
+    ]});
+  });
+  var feesSection = [
+    h1('8.  FEES & EXPENSES'),
+    spacer(),
+    h3('8.1  Resource Rates and Estimated Fees'),
+    para('The following table sets out the indicative resource allocation for this engagement. Day rates are indicative market rates and are subject to confirmation in the commercial schedule attached to the MSA or applicable framework agreement.'),
+    spacer(),
+    new D.Table({
+      width: { size: 100, type: D.WidthType.PERCENTAGE },
+      rows: [headerRow(['Role','Seniority / Grade','Location','Count','Day Rate *','Est. Days','Est. Fees *'])].concat(resRows).concat([
+        new D.TableRow({ children: [
+          tcell('TOTAL', { bold: true, width: 22 }), tcell('', { width: 18 }), tcell('', { width: 12 }), tcell('', { width: 8 }),
+          tcell('', { width: 13 }), tcell('', { width: 12 }),
+          tcell(ld.cost + ' (approx.)', { bold: true, width: 15 }),
+        ]}),
+      ]),
+    }),
+    spacer(),
+    para('* Rates are indicative and subject to MSA commercial schedule. Figures exclude VAT, travel & expenses (T&E), and third-party costs.', { italics: true, color: GREY }),
+    spacer(),
+    h3('8.2  Additional Costs'),
+    bullet('Travel & Expenses: Estimated at ~10% of Accenture fees, invoiced at cost with receipts. Governed by Accenture\'s T&E policy and MSA expense provisions.'),
+    level >= 3 ? bullet('External Penetration Test: ~€30,000 (fixed fee, third-party specialist firm). Scope and vendor subject to client IT security approval.') : bullet('External Penetration Test: Not in scope for this maturity level (L3+ only).'),
+    bullet('Azure infrastructure and licensing costs are client-borne and are not included in the above fees.'),
+    spacer(),
+    h3('8.3  Invoicing Schedule'),
+    new D.Table({
+      width: { size: 100, type: D.WidthType.PERCENTAGE },
+      rows: [headerRow(['Invoice Period','Milestone / Trigger','% of Fees','Amount (EUR)'])].concat(invRows),
+    }),
+    spacer(),
+    para('Invoices are payable within 30 days of the invoice date. Invoices will be raised in EUR and are subject to applicable VAT. Disputes must be raised within 10 business days of invoice receipt.', { italics: true }),
+  ];
+
+  // ---- 9. Agreed & Accepted ----
+  var sigSection = [
+    h1('9.  AGREED AND ACCEPTED'),
+    spacer(),
+    para('By signing below, the parties agree to be bound by the terms of this Statement of Work and the Master Services Agreement referenced herein.'),
+    spacer(),
+    new D.Table({
+      width: { size: 100, type: D.WidthType.PERCENTAGE },
+      rows: [
+        new D.TableRow({ children: [
+          tcell('For and on behalf of Accenture', { bold: true, shading: 'F3EDF7', width: 50 }),
+          tcell('For and on behalf of [CLIENT NAME]', { bold: true, shading: 'F3EDF7', width: 50 }),
+        ]}),
+        new D.TableRow({ children: [
+          tcell('Signature: ___________________________', { width: 50 }),
+          tcell('Signature: ___________________________', { width: 50 }),
+        ]}),
+        new D.TableRow({ children: [
+          tcell('Name: ___________________________', { width: 50 }),
+          tcell('Name: ___________________________', { width: 50 }),
+        ]}),
+        new D.TableRow({ children: [
+          tcell('Title: ___________________________', { width: 50 }),
+          tcell('Title: ___________________________', { width: 50 }),
+        ]}),
+        new D.TableRow({ children: [
+          tcell('Date: ___________________________', { width: 50 }),
+          tcell('Date: ___________________________', { width: 50 }),
+        ]}),
+      ],
+    }),
+    spacer(),
+    para('This Statement of Work, together with the Master Services Agreement and any attachments hereto, constitutes the entire agreement between the parties with respect to the subject matter hereof and supersedes all prior discussions, representations, and agreements.', { italics: true, color: GREY }),
+  ];
+
+  // ---- assemble document ----
+  var allChildren = [].concat(
+    titleBlock, [spacer()],
+    termSection, [spacer()],
+    servicesSection, [spacer()],
+    deliverablesSection, [spacer()],
+    responsibilitiesSection, [spacer()],
+    dependenciesSection, [spacer()],
+    oosSection, [spacer()],
+    locationSection, [spacer()],
+    feesSection, [spacer()],
+    sigSection
+  );
+
+  var doc = new D.Document({
+    creator: 'Accenture',
+    title: 'SOW — AI ICS Dashboard — ' + ld.label,
+    description: 'Statement of Work for AI-Powered ICS Dashboard Implementation',
+    sections: [{
+      properties: {
+        page: {
+          margin: { top: mmTwip(20), bottom: mmTwip(20), left: mmTwip(20), right: mmTwip(20) },
+        },
+      },
+      children: allChildren,
+    }],
+  });
+
+  D.Packer.toBlob(doc).then(function(blob) {
+    var safeLabel = (ld.label || 'L' + level).replace(/[^a-zA-Z0-9]/g, '-').replace(/-+/g, '-');
+    var filename = 'SoW-AI-ICS-Dashboard-' + safeLabel + '.docx';
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    setTimeout(function() { document.body.removeChild(a); URL.revokeObjectURL(url); }, 200);
+  }).catch(function(err) {
+    console.error('SoW generation failed:', err);
+    alert('Failed to generate Word document. See browser console for details.');
+  });
+}
 </script>
 
 <!-- Modal overlay -->
