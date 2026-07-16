@@ -452,7 +452,10 @@ details.collapsible > div.details-body { padding: 16px; }
 
 /* ===== CHANGE 3: OVERVIEW ROLE CARDS AT A GLANCE ===== */
 .glance-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 12px; margin-bottom: 24px; }
-.glance-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 14px 16px; box-shadow: 0 1px 4px rgba(161,0,255,.07); display: flex; flex-direction: column; gap: 8px; }
+.glance-card { background: var(--surface); border-radius: var(--radius); border: 1px solid var(--border); padding: 14px 16px; box-shadow: 0 1px 4px rgba(161,0,255,.07); display: flex; flex-direction: column; gap: 8px; position: relative; transition: opacity .2s, filter .2s; }
+.glance-card.glance-dimmed { opacity: 0.28; filter: grayscale(0.7); pointer-events: none; }
+.glance-card.glance-dimmed::after { content: 'Not needed at this level'; position: absolute; top: 7px; right: 7px; font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: .04em; background: var(--s2); color: var(--tm); padding: 2px 6px; border-radius: 20px; }
+.gantt-phase-dimmed { opacity: 0.18 !important; filter: grayscale(1) !important; }
 .glance-card-header { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
 .glance-role-name { font-size: 13px; font-weight: 700; color: var(--tp); }
 .glance-practice-badge { font-size: 10px; font-weight: 700; padding: 2px 7px; border-radius: 20px; white-space: nowrap; flex-shrink: 0; }
@@ -524,10 +527,11 @@ details.collapsible > div.details-body { padding: 16px; }
   </div>
 
   <div class="stat-row">
-    <div class="stat-tile"><div class="stat-val">28</div><div class="stat-label">Weeks</div><div class="stat-sub">Total delivery duration</div></div>
-    <div class="stat-tile"><div class="stat-val">~200</div><div class="stat-label">FTE-weeks</div><div class="stat-sub">Accenture effort</div></div>
-    <div class="stat-tile"><div class="stat-val">9+</div><div class="stat-label">Roles</div><div class="stat-sub">Accenture team members</div></div>
-    <div class="stat-tile"><div class="stat-val">6</div><div class="stat-label">Phases</div><div class="stat-sub">Delivery phases</div></div>
+    <div class="stat-tile"><div class="stat-val" id="stat-weeks">28</div><div class="stat-label">Weeks</div><div class="stat-sub" id="stat-weeks-sub">Total delivery duration</div></div>
+    <div class="stat-tile"><div class="stat-val" id="stat-fte">~200</div><div class="stat-label">FTE-weeks</div><div class="stat-sub">Accenture effort</div></div>
+    <div class="stat-tile"><div class="stat-val" id="stat-roles">10</div><div class="stat-label">Roles</div><div class="stat-sub">Accenture team members</div></div>
+    <div class="stat-tile"><div class="stat-val" id="stat-phases">6</div><div class="stat-label">Phases</div><div class="stat-sub">Delivery phases</div></div>
+    <div class="stat-tile"><div class="stat-val" id="stat-cost">~€2.4M</div><div class="stat-label">Investment</div><div class="stat-sub">Implementation budget</div></div>
   </div>
 
   <div class="card" style="margin-bottom:24px;">
@@ -535,65 +539,69 @@ details.collapsible > div.details-body { padding: 16px; }
     <p>This implementation guide defines everything required to design, build, and deploy an AI-powered Internal Control System (ICS) Cockpit for a financial services institution. It covers the complete team structure, phased delivery roadmap, data ingestion requirements, AI/ML architecture, and feature-level interaction specification. This document is the contract between Accenture delivery and the client — every team member, every data source, and every user-facing feature described here must be agreed, provisioned, or delivered before the corresponding phase exit gate is passed.</p>
   </div>
 
-  <!-- CHANGE 3: Delivery Team at a Glance -->
+  <!-- Delivery Team at a Glance -->
   <div class="subsec">
     <div class="subsec-title"><i class="ti ti-users-group"></i>Delivery Team at a Glance</div>
+    <div class="level-ctx-banner lcb-ok" id="level-ctx-overview" style="margin-bottom:14px;">
+      <span class="lcb-icon">✓</span>
+      <span id="level-ctx-overview-text">L3 (Base Case) — Full 10-role team, 28-week delivery, ~€2.4M investment. AI agent + RAG, real-time heatmap, TPRM signals, natural-language queries.</span>
+    </div>
     <div class="glance-grid">
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="1">
         <div class="glance-card-header"><span class="glance-role-name">Programme Manager</span><span class="glance-practice-badge glance-practice-consulting">Consulting</span></div>
         <div class="glance-objective">Drives end-to-end delivery, stakeholder alignment, and risk management.</div>
         <div class="glance-skills"><span class="glance-skill">Programme Management</span><span class="glance-skill">Stakeholder Engagement</span><span class="glance-skill">Agile Delivery</span></div>
         <div class="glance-link" onclick="openRoleModal('pm')">View full profile &rarr;</div>
       </div>
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="1">
         <div class="glance-card-header"><span class="glance-role-name">GRC Expert</span><span class="glance-practice-badge glance-practice-consulting">Consulting</span></div>
         <div class="glance-objective">Translates regulatory requirements into data models and AI validation rules.</div>
         <div class="glance-skills"><span class="glance-skill">DORA/EBA Regulation</span><span class="glance-skill">Risk Assessment</span><span class="glance-skill">ICS/RCSA Methodology</span></div>
         <div class="glance-link" onclick="openRoleModal('grc')">View full profile &rarr;</div>
       </div>
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="2">
         <div class="glance-card-header"><span class="glance-role-name">Change Manager</span><span class="glance-practice-badge glance-practice-consulting">Consulting</span></div>
         <div class="glance-objective">Ensures user adoption, training delivery, and communication planning.</div>
         <div class="glance-skills"><span class="glance-skill">Change Management</span><span class="glance-skill">Training Design</span><span class="glance-skill">Stakeholder Communication</span></div>
         <div class="glance-link" onclick="openRoleModal('cm')">View full profile &rarr;</div>
       </div>
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="1">
         <div class="glance-card-header"><span class="glance-role-name">Solution Architect</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Owns Azure architecture decisions and technical governance.</div>
         <div class="glance-skills"><span class="glance-skill">Azure Architecture</span><span class="glance-skill">Security Design</span><span class="glance-skill">API Design</span></div>
         <div class="glance-link" onclick="openRoleModal('sa')">View full profile &rarr;</div>
       </div>
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="1">
         <div class="glance-card-header"><span class="glance-role-name">Data Engineer 1</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Builds GRC data pipelines (ADF, dbt, PostgreSQL ingestion).</div>
         <div class="glance-skills"><span class="glance-skill">Azure Data Factory</span><span class="glance-skill">dbt</span><span class="glance-skill">PostgreSQL</span><span class="glance-skill">Python</span></div>
         <div class="glance-link" onclick="openRoleModal('de1')">View full profile &rarr;</div>
       </div>
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="2">
         <div class="glance-card-header"><span class="glance-role-name">Data Engineer 2</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Builds GRC data pipelines and data quality framework.</div>
         <div class="glance-skills"><span class="glance-skill">Azure Data Factory</span><span class="glance-skill">dbt</span><span class="glance-skill">Data Quality</span><span class="glance-skill">SQL</span></div>
         <div class="glance-link" onclick="openRoleModal('de2')">View full profile &rarr;</div>
       </div>
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="3">
         <div class="glance-card-header"><span class="glance-role-name">AI/ML Engineer</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Implements LangChain RAG agent, Azure OpenAI integration, embeddings pipeline.</div>
         <div class="glance-skills"><span class="glance-skill">LangChain</span><span class="glance-skill">Azure OpenAI</span><span class="glance-skill">RAG Architecture</span><span class="glance-skill">Python</span></div>
         <div class="glance-link" onclick="openRoleModal('ai')">View full profile &rarr;</div>
       </div>
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="2">
         <div class="glance-card-header"><span class="glance-role-name">Backend Developer 1</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Builds FastAPI backend, SSE streaming, RBAC layer.</div>
         <div class="glance-skills"><span class="glance-skill">FastAPI</span><span class="glance-skill">Python</span><span class="glance-skill">PostgreSQL</span><span class="glance-skill">Azure Container Apps</span></div>
         <div class="glance-link" onclick="openRoleModal('be1')">View full profile &rarr;</div>
       </div>
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="3">
         <div class="glance-card-header"><span class="glance-role-name">Backend Developer 2</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Builds Durable Functions orchestration, Service Bus consumers.</div>
         <div class="glance-skills"><span class="glance-skill">Azure Durable Functions</span><span class="glance-skill">Python</span><span class="glance-skill">Service Bus</span><span class="glance-skill">API Design</span></div>
         <div class="glance-link" onclick="openRoleModal('be2')">View full profile &rarr;</div>
       </div>
-      <div class="glance-card">
+      <div class="glance-card" data-min-level="2">
         <div class="glance-card-header"><span class="glance-role-name">Security Engineer</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Designs and validates security controls, IaC review, pen-test coordination.</div>
         <div class="glance-skills"><span class="glance-skill">Azure Security</span><span class="glance-skill">RBAC/IAM</span><span class="glance-skill">Penetration Testing</span></div>
@@ -1124,6 +1132,10 @@ details.collapsible > div.details-body { padding: 16px; }
 
   <div class="subsec">
     <div class="subsec-title"><i class="ti ti-timeline"></i>Visual Gantt — W01 to W28</div>
+    <div class="level-ctx-banner lcb-ok" id="gantt-scope-banner" style="margin-bottom:10px;">
+      <span class="lcb-icon">✓</span>
+      <span id="gantt-scope-text">L3 (Base Case) — Full scope: W1–W28 · All 6 phases active (Ph0–Ph5). Phases not applicable at the selected level are grayed out.</span>
+    </div>
     <div class="gantt-outer">
       <div class="gantt-grid">
         <!-- HEADER ROW (row 1) -->
@@ -1153,67 +1165,67 @@ details.collapsible > div.details-body { padding: 16px; }
         <!-- PHASE 1 (row 5) W5-W12 → 6/14 -->
         <div class="gl ph" style="grid-column:1;grid-row:5;">Ph1 — Data Foundation</div>
         <div class="gc" style="grid-column:6/14;grid-row:5;"><div class="gbar ph" style="background:#1A7A52;"></div></div>
-        <!-- GRC Connector (row 6) W5-W7 → 6/9 -->
-        <div class="gl sub" style="grid-column:1;grid-row:6;">→ GRC Connector build</div>
-        <div class="gc" style="grid-column:6/9;grid-row:6;"><div class="gbar sub" style="background:#6ab890;"></div></div>
+        <!-- GRC Connector (row 6) W5-W7 → 6/9 — L2+ live connector -->
+        <div class="gl sub" style="grid-column:1;grid-row:6;" data-gantt-min-level="2">→ GRC Connector build</div>
+        <div class="gc" style="grid-column:6/9;grid-row:6;" data-gantt-min-level="2"><div class="gbar sub" style="background:#6ab890;"></div></div>
         <!-- ADF Pipelines (row 7) W7-W11 → 8/13 -->
         <div class="gl sub" style="grid-column:1;grid-row:7;">→ ADF Pipelines</div>
         <div class="gc" style="grid-column:8/13;grid-row:7;"><div class="gbar sub" style="background:#6ab890;"></div></div>
-        <!-- Document Ingestion (row 8) W9-W12 → 10/14 -->
-        <div class="gl sub" style="grid-column:1;grid-row:8;">→ Document Ingestion</div>
-        <div class="gc" style="grid-column:10/14;grid-row:8;"><div class="gbar sub" style="background:#6ab890;"></div></div>
+        <!-- Document Ingestion (row 8) W9-W12 → 10/14 — L3+ RAG documents -->
+        <div class="gl sub" style="grid-column:1;grid-row:8;" data-gantt-min-level="3">→ Document Ingestion</div>
+        <div class="gc" style="grid-column:10/14;grid-row:8;" data-gantt-min-level="3"><div class="gbar sub" style="background:#6ab890;"></div></div>
 
         <!-- PHASE 2 (row 9) W9-W16 → 10/18 -->
         <div class="gl ph" style="grid-column:1;grid-row:9;">Ph2 — Core Dashboard</div>
         <div class="gc" style="grid-column:10/18;grid-row:9;"><div class="gbar ph" style="background:#6D28D9;"></div></div>
-        <!-- API skeleton (row 10) W9-W11 → 10/13 -->
-        <div class="gl sub" style="grid-column:1;grid-row:10;">→ API skeleton + Auth</div>
-        <div class="gc" style="grid-column:10/13;grid-row:10;"><div class="gbar sub" style="background:#a97ee8;"></div></div>
-        <!-- Core endpoints (row 11) W11-W15 → 12/17 -->
-        <div class="gl sub" style="grid-column:1;grid-row:11;">→ Core API endpoints</div>
-        <div class="gc" style="grid-column:12/17;grid-row:11;"><div class="gbar sub" style="background:#a97ee8;"></div></div>
-        <!-- Static Dashboard (row 12) W11-W13 → 12/15 -->
+        <!-- API skeleton (row 10) W9-W11 → 10/13 — L2+ FastAPI -->
+        <div class="gl sub" style="grid-column:1;grid-row:10;" data-gantt-min-level="2">→ API skeleton + Auth</div>
+        <div class="gc" style="grid-column:10/13;grid-row:10;" data-gantt-min-level="2"><div class="gbar sub" style="background:#a97ee8;"></div></div>
+        <!-- Core endpoints (row 11) W11-W15 → 12/17 — L2+ -->
+        <div class="gl sub" style="grid-column:1;grid-row:11;" data-gantt-min-level="2">→ Core API endpoints</div>
+        <div class="gc" style="grid-column:12/17;grid-row:11;" data-gantt-min-level="2"><div class="gbar sub" style="background:#a97ee8;"></div></div>
+        <!-- Static Dashboard (row 12) W11-W13 → 12/15 — L1 static view -->
         <div class="gl sub" style="grid-column:1;grid-row:12;">→ Static Dashboard</div>
         <div class="gc" style="grid-column:12/15;grid-row:12;"><div class="gbar sub" style="background:#a97ee8;"></div></div>
-        <!-- Live Dashboard v1 (row 13) W11-W17 → 12/19 -->
-        <div class="gl sub" style="grid-column:1;grid-row:13;">→ Live Dashboard v1</div>
-        <div class="gc" style="grid-column:12/19;grid-row:13;"><div class="gbar sub" style="background:#a97ee8;"></div></div>
+        <!-- Live Dashboard v1 (row 13) W11-W17 → 12/19 — L2+ real-time -->
+        <div class="gl sub" style="grid-column:1;grid-row:13;" data-gantt-min-level="2">→ Live Dashboard v1</div>
+        <div class="gc" style="grid-column:12/19;grid-row:13;" data-gantt-min-level="2"><div class="gbar sub" style="background:#a97ee8;"></div></div>
 
-        <!-- PHASE 3 (row 14) W13-W20 → 14/22 -->
-        <div class="gl ph" style="grid-column:1;grid-row:14;">Ph3 — AI Layer</div>
-        <div class="gc" style="grid-column:14/22;grid-row:14;"><div class="gbar ph" style="background:#9A6500;"></div></div>
-        <!-- LLM Agent (row 15) W13-W17 → 14/19 -->
-        <div class="gl sub" style="grid-column:1;grid-row:15;">→ LLM Agent</div>
-        <div class="gc" style="grid-column:14/19;grid-row:15;"><div class="gbar sub" style="background:#d4a340;"></div></div>
-        <!-- AI components UI (row 16) W17-W19 → 18/21 -->
-        <div class="gl sub" style="grid-column:1;grid-row:16;">→ AI components UI</div>
-        <div class="gc" style="grid-column:18/21;grid-row:16;"><div class="gbar sub" style="background:#d4a340;"></div></div>
-        <!-- TPRM Signal Engine (row 17) W17-W19 → 18/21 -->
-        <div class="gl sub" style="grid-column:1;grid-row:17;">→ TPRM Signal Engine</div>
-        <div class="gc" style="grid-column:18/21;grid-row:17;"><div class="gbar sub" style="background:#d4a340;"></div></div>
-        <!-- Trend Detection (row 18) W19-W21 → 20/23 -->
-        <div class="gl sub" style="grid-column:1;grid-row:18;">→ Trend Detection</div>
-        <div class="gc" style="grid-column:20/23;grid-row:18;"><div class="gbar sub" style="background:#d4a340;"></div></div>
+        <!-- PHASE 3 (row 14) W13-W20 → 14/22 — requires L3 -->
+        <div class="gl ph" style="grid-column:1;grid-row:14;" data-gantt-min-level="3">Ph3 — AI Layer</div>
+        <div class="gc" style="grid-column:14/22;grid-row:14;" data-gantt-min-level="3"><div class="gbar ph" style="background:#9A6500;"></div></div>
+        <!-- LLM Agent (row 15) W13-W17 → 14/19 — L3+ -->
+        <div class="gl sub" style="grid-column:1;grid-row:15;" data-gantt-min-level="3">→ LLM Agent</div>
+        <div class="gc" style="grid-column:14/19;grid-row:15;" data-gantt-min-level="3"><div class="gbar sub" style="background:#d4a340;"></div></div>
+        <!-- AI components UI (row 16) W17-W19 → 18/21 — L3+ -->
+        <div class="gl sub" style="grid-column:1;grid-row:16;" data-gantt-min-level="3">→ AI components UI</div>
+        <div class="gc" style="grid-column:18/21;grid-row:16;" data-gantt-min-level="3"><div class="gbar sub" style="background:#d4a340;"></div></div>
+        <!-- TPRM Signal Engine (row 17) W17-W19 → 18/21 — L3+ -->
+        <div class="gl sub" style="grid-column:1;grid-row:17;" data-gantt-min-level="3">→ TPRM Signal Engine</div>
+        <div class="gc" style="grid-column:18/21;grid-row:17;" data-gantt-min-level="3"><div class="gbar sub" style="background:#d4a340;"></div></div>
+        <!-- Trend Detection (row 18) W19-W21 → 20/23 — L2+ -->
+        <div class="gl sub" style="grid-column:1;grid-row:18;" data-gantt-min-level="2">→ Trend Detection</div>
+        <div class="gc" style="grid-column:20/23;grid-row:18;" data-gantt-min-level="2"><div class="gbar sub" style="background:#d4a340;"></div></div>
 
-        <!-- PHASE 4 (row 19) W17-W24 → 18/26 -->
-        <div class="gl ph" style="grid-column:1;grid-row:19;">Ph4 — Workflow &amp; Actions</div>
-        <div class="gc" style="grid-column:18/26;grid-row:19;"><div class="gbar ph" style="background:#B4322A;"></div></div>
-        <!-- Workflow Engine (row 20) W19-W25 → 20/27 -->
-        <div class="gl sub" style="grid-column:1;grid-row:20;">→ Workflow Engine</div>
-        <div class="gc" style="grid-column:20/27;grid-row:20;"><div class="gbar sub" style="background:#e07878;"></div></div>
-        <!-- Workflow UI (row 21) W21-W25 → 22/27 -->
-        <div class="gl sub" style="grid-column:1;grid-row:21;">→ Workflow UI</div>
-        <div class="gc" style="grid-column:22/27;grid-row:21;"><div class="gbar sub" style="background:#e07878;"></div></div>
+        <!-- PHASE 4 (row 19) W17-W24 → 18/26 — requires L4 -->
+        <div class="gl ph" style="grid-column:1;grid-row:19;" data-gantt-min-level="4">Ph4 — Workflow &amp; Actions</div>
+        <div class="gc" style="grid-column:18/26;grid-row:19;" data-gantt-min-level="4"><div class="gbar ph" style="background:#B4322A;"></div></div>
+        <!-- Workflow Engine (row 20) W19-W25 → 20/27 — L4+ -->
+        <div class="gl sub" style="grid-column:1;grid-row:20;" data-gantt-min-level="4">→ Workflow Engine</div>
+        <div class="gc" style="grid-column:20/27;grid-row:20;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
+        <!-- Workflow UI (row 21) W21-W25 → 22/27 — L4+ -->
+        <div class="gl sub" style="grid-column:1;grid-row:21;" data-gantt-min-level="4">→ Workflow UI</div>
+        <div class="gc" style="grid-column:22/27;grid-row:21;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
 
-        <!-- PHASE 5 (row 22) W21-W28 → 22/30 -->
-        <div class="gl ph" style="grid-column:1;grid-row:22;">Ph5 — Hardening &amp; Rollout</div>
-        <div class="gc" style="grid-column:22/30;grid-row:22;"><div class="gbar ph" style="background:#3A4657;"></div></div>
-        <!-- Pen Test (row 23) W21-W24 → 22/26 -->
-        <div class="gl sub" style="grid-column:1;grid-row:23;">→ Pen Test</div>
-        <div class="gc" style="grid-column:22/26;grid-row:23;"><div class="gbar sub" style="background:#7a8a99;"></div></div>
-        <!-- Production hardening (row 24) W24-W27 → 25/29 -->
-        <div class="gl sub" style="grid-column:1;grid-row:24;">→ Production hardening</div>
-        <div class="gc" style="grid-column:25/29;grid-row:24;"><div class="gbar sub" style="background:#7a8a99;"></div></div>
+        <!-- PHASE 5 (row 22) W21-W28 → 22/30 — requires L3 -->
+        <div class="gl ph" style="grid-column:1;grid-row:22;" data-gantt-min-level="3">Ph5 — Hardening &amp; Rollout</div>
+        <div class="gc" style="grid-column:22/30;grid-row:22;" data-gantt-min-level="3"><div class="gbar ph" style="background:#3A4657;"></div></div>
+        <!-- Pen Test (row 23) W21-W24 → 22/26 — L3+ -->
+        <div class="gl sub" style="grid-column:1;grid-row:23;" data-gantt-min-level="3">→ Pen Test</div>
+        <div class="gc" style="grid-column:22/26;grid-row:23;" data-gantt-min-level="3"><div class="gbar sub" style="background:#7a8a99;"></div></div>
+        <!-- Production hardening (row 24) W24-W27 → 25/29 — L2+ -->
+        <div class="gl sub" style="grid-column:1;grid-row:24;" data-gantt-min-level="2">→ Production hardening</div>
+        <div class="gc" style="grid-column:25/29;grid-row:24;" data-gantt-min-level="2"><div class="gbar sub" style="background:#7a8a99;"></div></div>
 
         <!-- GOVERNANCE CADENCE GROUP LABEL (row 25) -->
         <div class="gl-gov-grp" style="grid-column:1;grid-row:25;">GOVERNANCE CADENCE</div>
@@ -3459,7 +3471,7 @@ const ROLES = {
     title: 'Change Manager',
     practice: 'Consulting',
     practiceColor: '#A100FF',
-    fte: '0.3',
+    fte: '0.5',
     phase: 'Phase 2 onwards',
     summary: 'Manages adoption and user readiness. Produces training materials, runs change impact assessment, and measures adoption KPIs post go-live.',
     handbook: [
@@ -3887,6 +3899,52 @@ function updateArchComponents(level) {
   });
 }
 
+/* =====================================================================
+   LEVEL_DATA — single source of truth for per-level stats
+   ===================================================================== */
+const LEVEL_DATA = {
+  1: {
+    label: 'L1 — Static',
+    weeks: '12', fteWeeks: '~42', roles: '4', phases: '3', cost: '~€440K',
+    ganttMinWeek: 1, ganttMaxWeek: 12,
+    ganttScope: 'W1–W12 · Ph0 Foundation → Ph2 Data Pipeline only',
+    overviewCtx: 'L1 (Static) — Minimal engagement: 4 roles, 12-week delivery, ~€440K. Covers foundation, data ingestion, and a basic static dashboard. No AI or automation. Suitable for a PoC or readiness assessment.',
+    overviewOk: false
+  },
+  2: {
+    label: 'L2 — Connected',
+    weeks: '20', fteWeeks: '~100', roles: '7', phases: '4', cost: '~€1.1M',
+    ganttMinWeek: 1, ganttMaxWeek: 20,
+    ganttScope: 'W1–W20 · Ph0–Ph2 + Ph3 partial (no LLM agent)',
+    overviewCtx: 'L2 (Connected) — 7 roles, 20-week delivery, ~€1.1M. Adds GRC connectors, API layer, and a live connected dashboard. Rules-based alerting but no generative AI. Good for clients prioritising data connectivity before AI.',
+    overviewOk: false
+  },
+  3: {
+    label: 'L3 — AI-Assisted (Base Case)',
+    weeks: '28', fteWeeks: '~200', roles: '10', phases: '6', cost: '~€2.4M',
+    ganttMinWeek: 1, ganttMaxWeek: 28,
+    ganttScope: 'W1–W28 · Full scope: Ph0–Ph5 all active',
+    overviewCtx: 'L3 (Base Case) — Full 10-role team, 28-week delivery, ~€2.4M. Includes LLM-powered RAG agent, TPRM Signal Engine, AI-driven risk summaries, and DORA Article 30 reporting. This is the recommended engagement scope.',
+    overviewOk: true
+  },
+  4: {
+    label: 'L4 — Active',
+    weeks: '32', fteWeeks: '~240', roles: '10', phases: '6', cost: '~€2.8M',
+    ganttMinWeek: 1, ganttMaxWeek: 32,
+    ganttScope: 'W1–W32 · Ph0–Ph5 + 4-week workflow automation extension',
+    overviewCtx: 'L4 (Active) — 10 roles, 32-week delivery, ~€2.8M. Adds 1LoD workflow automation (Durable Functions), AI-driven RCSA assignment routing, and remediation tracking. Requires mature data governance as prerequisite.',
+    overviewOk: true
+  },
+  5: {
+    label: 'L5 — Autonomous',
+    weeks: '36', fteWeeks: '~290', roles: '10', phases: '7', cost: '~€3.3M',
+    ganttMinWeek: 1, ganttMaxWeek: 36,
+    ganttScope: 'W1–W36 · Ph0–Ph5 + write-back & autonomous agent phase',
+    overviewCtx: 'L5 (Autonomous) — 10 roles, 36-week delivery, ~€3.3M. Full autonomous operation: AI agents write back to GRC systems, self-heal data quality issues, and auto-generate regulatory submissions. Requires strong AI governance framework.',
+    overviewOk: true
+  }
+};
+
 function setMaturityLevel(level) {
   // Sync global maturity bar chips
   document.querySelectorAll('.matbar-chip').forEach(function(chip) {
@@ -3954,6 +4012,44 @@ function setMaturityLevel(level) {
 
   // ── Architecture component gating ────────────────────────────────────
   updateArchComponents(level);
+
+  // ── Stat tiles (Overview header) ─────────────────────────────────────
+  var ld = LEVEL_DATA[level] || LEVEL_DATA[3];
+  var sw = document.getElementById('stat-weeks');
+  var sf = document.getElementById('stat-fte');
+  var sr = document.getElementById('stat-roles');
+  var sp = document.getElementById('stat-phases');
+  var sc = document.getElementById('stat-cost');
+  if (sw) sw.textContent = ld.weeks;
+  if (sf) sf.textContent = ld.fteWeeks;
+  if (sr) sr.textContent = ld.roles;
+  if (sp) sp.textContent = ld.phases;
+  if (sc) sc.textContent = ld.cost;
+
+  // ── Overview context banner ──────────────────────────────────────────
+  var ovBanner = document.getElementById('level-ctx-overview');
+  var ovText   = document.getElementById('level-ctx-overview-text');
+  if (ovBanner) {
+    ovBanner.className = 'level-ctx-banner ' + (ld.overviewOk ? 'lcb-ok' : 'lcb-warn');
+    ovBanner.querySelector('.lcb-icon').textContent = ld.overviewOk ? '✓' : '⚠';
+  }
+  if (ovText) ovText.textContent = ld.overviewCtx || '';
+
+  // ── Glance-card dimming (Delivery Team at a Glance) ──────────────────
+  document.querySelectorAll('.glance-card[data-min-level]').forEach(function(card) {
+    var minL = parseInt(card.dataset.minLevel);
+    card.classList.toggle('glance-dimmed', level < minL);
+  });
+
+  // ── Gantt scope banner ───────────────────────────────────────────────
+  var ganttScopeEl = document.getElementById('gantt-scope-text');
+  if (ganttScopeEl) ganttScopeEl.textContent = ld.label + ' — ' + ld.ganttScope;
+
+  // ── Gantt bar dimming (rows tagged with data-gantt-min-level) ────────
+  document.querySelectorAll('[data-gantt-min-level]').forEach(function(el) {
+    var minL = parseInt(el.dataset.ganttMinLevel);
+    el.classList.toggle('gantt-phase-dimmed', level < minL);
+  });
 }
 
 /* =====================================================================
