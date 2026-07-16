@@ -58,7 +58,7 @@ body { font-family: var(--font); background: var(--canvas); color: var(--tp); li
 .nav-item i { font-size: 16px; flex-shrink: 0; }
 
 /* MAIN */
-.main { flex: 1; padding: 28px 32px; max-width: 900px; min-width: 0; }
+.main { flex: 1; padding: 28px 40px; min-width: 0; }
 
 /* SECTION HEADERS */
 .section-header { margin-bottom: 24px; padding-bottom: 14px; border-bottom: 2px solid var(--border); }
@@ -234,6 +234,7 @@ section { padding-top: 16px; margin-bottom: 40px; }
 .tab-btn { padding: 7px 16px; border-radius: 6px; border: none; background: transparent; font-size: 13px; font-weight: 500; cursor: pointer; color: var(--ts); transition: all .15s; }
 .tab-btn.active { background: var(--surface); color: var(--tp); font-weight: 600; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
 .tab-content.hidden { display: none; }
+.modal-tab-pane.hidden { display: none; }
 
 /* TEAM PANELS */
 .team-panels { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; margin-bottom: 28px; }
@@ -263,6 +264,7 @@ section { padding-top: 16px; margin-bottom: 40px; }
 .journey-dot-label { font-size: 10px; color: rgba(255,255,255,.4); white-space: nowrap; }
 .journey-dot.active .journey-dot-label { color: rgba(255,255,255,.9); }
 .journey-step { display: none; }
+.journey-step.active { display: grid; grid-template-columns: 1fr 1fr; min-height: 320px; }
 .journey-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; min-height: 380px; }
 .journey-data { padding: 18px; border-right: 1px solid var(--border); background: #0D1B2E; overflow-y: auto; max-height: 440px; }
 .journey-data pre { font-family: var(--mono); font-size: 11.5px; color: #A8C4E5; white-space: pre-wrap; line-height: 1.75; margin: 0; }
@@ -371,6 +373,24 @@ section { padding-top: 16px; margin-bottom: 40px; }
 .gl-gov-grp { font-size: 9px; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--brandMid); padding: 0 8px; display: flex; align-items: center; min-height: 20px; border-bottom: 2px solid var(--borderS); background: var(--brandLight); }
 .gc-gov-grp { background: var(--brandLight); border-bottom: 2px solid var(--borderS); min-height: 20px; }
 
+/* GLOBAL MATURITY BAR */
+.maturity-bar {
+  position: sticky; top: 54px; z-index: 90;
+  background: var(--surface); border-bottom: 1px solid var(--borderS);
+  margin: -28px -40px 28px; padding: 10px 40px;
+  display: flex; align-items: center; gap: 12px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.05);
+}
+.maturity-bar-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--tm); flex-shrink: 0; }
+.matbar-chips { display: flex; gap: 6px; flex: 1; }
+.matbar-chip { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 2px solid var(--border); color: var(--tp); background: transparent; transition: all .15s; white-space: nowrap; }
+.matbar-chip:hover { border-color: var(--brandMid); color: var(--brandMid); }
+.matbar-chip.active { background: var(--brand); border-color: var(--brand); color: #fff; }
+.matbar-chip.active .matbar-chip-base { display: inline; }
+.matbar-chip-base { display: none; font-size: 10px; font-weight: 400; opacity: .85; margin-left: 4px; }
+.matbar-desc { font-size: 12px; color: var(--tm); margin-left: 8px; flex: 1; max-width: 420px; border-left: 2px solid var(--border); padding-left: 12px; }
+@media (max-width: 900px) { .matbar-desc { display: none; } }
+
 /* JOURNEY COMPACT STEP */
 .journey-step-compact { display: flex; align-items: center; justify-content: center; flex-direction: column; padding: 28px 24px; text-align: center; background: #0D1B2E; min-height: 200px; }
 .optional-badge { display: inline-block; font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 20px; background: #9A6500; color: #fff; margin-bottom: 10px; }
@@ -411,6 +431,19 @@ section { padding-top: 16px; margin-bottom: 40px; }
 
 <!-- MAIN CONTENT -->
 <main class="main">
+
+<!-- GLOBAL MATURITY LEVEL BAR -->
+<div class="maturity-bar" id="globalMaturityBar">
+  <span class="maturity-bar-label"><i class="ti ti-circuit-switchboard" style="margin-right:5px;vertical-align:-2px;"></i>AI Maturity Level</span>
+  <div class="matbar-chips">
+    <button class="matbar-chip" data-level="1" onclick="setMaturityLevel(1)">L1 · Static</button>
+    <button class="matbar-chip" data-level="2" onclick="setMaturityLevel(2)">L2 · Connected</button>
+    <button class="matbar-chip active" data-level="3" onclick="setMaturityLevel(3)">L3 · AI-Assisted <span class="matbar-chip-base">(base case)</span></button>
+    <button class="matbar-chip" data-level="4" onclick="setMaturityLevel(4)">L4 · Active</button>
+    <button class="matbar-chip" data-level="5" onclick="setMaturityLevel(5)">L5 · Autonomous</button>
+  </div>
+  <div class="matbar-desc" id="matbarDesc">AI agent + RAG over GRC documents. Real-time heatmap, natural-language query, TPRM signal drafts. <strong>Reference dashboard level.</strong></div>
+</div>
 
 <!-- ===== SECTION 1: OVERVIEW ===== -->
 <section id="overview">
@@ -1115,7 +1148,7 @@ section { padding-top: 16px; margin-bottom: 40px; }
     <div class="level-btn active" data-level="3" onclick="setMaturityLevel(3)">
       <div class="level-num">L3</div>
       <div class="level-name">Assisted</div>
-      <div class="level-sub">AI agent + RAG</div>
+      <div class="level-sub">Base case ★</div>
     </div>
     <div class="level-btn" data-level="4" onclick="setMaturityLevel(4)">
       <div class="level-num">L4</div>
@@ -2829,12 +2862,12 @@ useEffect(() =&gt; {
     <div class="roi-headline">Business Case Summary</div>
     <div class="roi-grid">
       <div class="roi-metric">
-        <div class="roi-value">€73.8K</div>
-        <div class="roi-label">Net Annual Saving</div>
+        <div class="roi-value">~€348K</div>
+        <div class="roi-label">Net Annual Saving (quantified)</div>
       </div>
       <div class="roi-metric">
-        <div class="roi-value">2.3 yr</div>
-        <div class="roi-label">Payback Period</div>
+        <div class="roi-value">~7 yr</div>
+        <div class="roi-label">Payback (quantified only)</div>
       </div>
       <div class="roi-metric">
         <div class="roi-value">€16.1K</div>
@@ -2842,10 +2875,10 @@ useEffect(() =&gt; {
       </div>
       <div class="roi-metric">
         <div class="roi-value">40%</div>
-        <div class="roi-label">RCSA Time Reduction</div>
+        <div class="roi-label">RCSA Cycle Time Reduction</div>
       </div>
     </div>
-    <div class="roi-note">Annual time savings (RCSA + reporting + TPRM triage) valued at GRC analyst blended rate €75K/year. Infrastructure cost annualised from monthly estimates. Payback based on total implementation investment vs. annual net saving.</div>
+    <div class="roi-note">Quantified savings based on 4 2LoD risk analysts + 8 process owners at market-loaded rates. Payback ~7 years on quantified savings alone — primary investment driver is DORA Article 30 compliance and material-finding avoidance, where one regulatory action can represent 8–10× the implementation cost. At larger institutions (10+ analysts) payback compresses to ~4 years.</div>
   </div>
 
   <!-- Cost Tables -->
@@ -2876,20 +2909,32 @@ useEffect(() =&gt; {
 
   <div class="subsec">
     <div class="subsec-title"><i class="ti ti-users"></i>Implementation Investment (One-Time)</div>
+
+    <div class="card" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;">
+      <div><div style="font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Consultant / Senior Consultant</div><div style="font-size:22px;font-weight:800;color:var(--tp)">€1,900<span style="font-size:13px;font-weight:500;color:var(--tm)">/day</span></div><div style="font-size:12px;color:var(--tm);margin-top:4px">Data Eng, AI/ML, BE Dev, FE Dev, CM Lead</div></div>
+      <div><div style="font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Manager</div><div style="font-size:22px;font-weight:800;color:var(--tp)">€2,500<span style="font-size:13px;font-weight:500;color:var(--tm)">/day</span></div><div style="font-size:12px;color:var(--tm);margin-top:4px">GRC Domain Expert, Security Architect (M level)</div></div>
+      <div><div style="font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Senior Manager / Architect</div><div style="font-size:22px;font-weight:800;color:var(--tp)">€3,000<span style="font-size:13px;font-weight:500;color:var(--tm)">/day</span></div><div style="font-size:12px;color:var(--tm);margin-top:4px">Programme Manager, Solution Architect, GRC SM</div></div>
+    </div>
+
     <div class="table-wrap">
       <table>
-        <thead><tr><th>Phase</th><th>Duration</th><th>Accenture FTEs</th><th>Effort (days)</th><th>Indicative Cost</th></tr></thead>
+        <thead><tr><th>Phase</th><th>Weeks</th><th>Lead roles</th><th>Person-days</th><th>Blended rate</th><th>Phase cost</th></tr></thead>
         <tbody>
-          <tr><td>Phase 1 — Foundation &amp; Ingestion</td><td>8 weeks</td><td>PM + SA + AI + BE</td><td>215</td><td>€86,000</td></tr>
-          <tr><td>Phase 2 — Static Dashboard &amp; Data Layer</td><td>8 weeks</td><td>PM + SA + GRC + BE</td><td>215</td><td>€86,000</td></tr>
-          <tr><td>Phase 3 — AI Layer &amp; Live Integration</td><td>8 weeks</td><td>PM + AI + BE + SA</td><td>225</td><td>€90,000</td></tr>
-          <tr><td>Phase 4 — Export, Polish &amp; Handover</td><td>4 weeks</td><td>PM + BE + GRC</td><td>100</td><td>€40,000</td></tr>
-          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--s1);"><td><strong>Total Implementation</strong></td><td><strong>28 weeks</strong></td><td>—</td><td><strong>755</strong></td><td><strong>~€302,000</strong></td></tr>
+          <tr><td>Phase 0 — Discovery &amp; Setup</td><td>W1–4</td><td>PM, SA, GRC Expert, Security</td><td>~80</td><td>€2,800</td><td>€224,000</td></tr>
+          <tr><td>Phase 1 — Data Foundation</td><td>W5–12</td><td>PM, SA, GRC, DE1, DE2, FE1, AI (part)</td><td>~280</td><td>€2,100</td><td>€588,000</td></tr>
+          <tr><td>Phase 2 — Core Dashboard</td><td>W9–16</td><td>PM, BE1, BE2, FE1, FE2, SA (part)</td><td>~260</td><td>€2,000</td><td>€520,000</td></tr>
+          <tr><td>Phase 3 — AI Layer</td><td>W13–20</td><td>PM, AI/ML Eng, BE1, SA (part), GRC (part)</td><td>~220</td><td>€2,100</td><td>€462,000</td></tr>
+          <tr><td>Phase 4 — Workflow &amp; Actions</td><td>W17–24</td><td>PM, BE2, FE1, FE2, CM Lead</td><td>~200</td><td>€2,000</td><td>€400,000</td></tr>
+          <tr><td>Phase 5 — Hardening &amp; Rollout</td><td>W21–28</td><td>PM, Security, CM Lead (full), SA, BE (part)</td><td>~160</td><td>€2,200</td><td>€352,000</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--s1);"><td><strong>Accenture fees</strong></td><td><strong>28 weeks</strong></td><td>9 roles</td><td><strong>~1,000</strong></td><td><strong>€2,150 avg</strong></td><td><strong>€2,146,000</strong></td></tr>
+          <tr><td>Travel &amp; Expenses (T&amp;E)</td><td colspan="4">~10% of fees (on-site client visits, workshops, UAT sessions)</td><td>€215,000</td></tr>
+          <tr><td>External penetration test</td><td colspan="4">Accredited security firm — full web app + API scope</td><td>€30,000</td></tr>
+          <tr style="font-weight:700;background:var(--brandLight);"><td><strong>Total Implementation Investment</strong></td><td colspan="4">—</td><td><strong>~€2,391,000</strong></td></tr>
         </tbody>
       </table>
     </div>
-    <div class="card" style="background:var(--s1);margin-top:0;">
-      <p style="font-size:12.5px;color:var(--tm);">Blended rate: ~€400/day (mix of senior/mid). Excludes client internal time (estimated 30 days across all phases for data provisioning, UAT, and governance sign-offs). Does not include optional Phase 4 export module if de-scoped.</p>
+    <div class="card" style="background:var(--ab);border-left:3px solid var(--a);margin-top:0;">
+      <p style="font-size:13px;color:var(--ts);">⚠ <strong>Note on offshore/nearshore delivery:</strong> Hybrid delivery models (e.g. 40% nearshore for Data Engineers and Frontend) can reduce fees to ~€1.5–1.7M, but introduce timezone friction, communication overhead, and typically lower GRC domain familiarity. Offshore developer rates (~$500/day) apply only to well-defined development tasks — not architecture, domain expertise, or stakeholder engagement.</p>
     </div>
   </div>
 
@@ -2899,27 +2944,29 @@ useEffect(() =&gt; {
       <table>
         <thead><tr><th>Saving Category</th><th>Baseline (manual)</th><th>With ICS Cockpit</th><th>Annual Saving</th></tr></thead>
         <tbody>
-          <tr><td>RCSA reporting time</td><td>2.5 days/cycle × 4 cycles × 12 areas × 1 analyst</td><td>1.5 days/cycle (40% reduction via pre-population + AI summary)</td><td>€18,000</td></tr>
-          <tr><td>Risk register maintenance</td><td>0.5 day/week per 2LoD analyst × 2 analysts</td><td>0.3 day/week (automated data feeds, trend detection)</td><td>€15,600</td></tr>
-          <tr><td>TPRM signal triage</td><td>3h/vendor event × ~80 events/year × €75K rate</td><td>30 min (AI pre-drafted risk, 1-click accept/reject)</td><td>€18,000</td></tr>
-          <tr><td>Regulatory query response</td><td>1h/query × 120 queries/year × €75K rate</td><td>10 min (agent chat answers with citations)</td><td>€7,500</td></tr>
-          <tr><td>Board reporting pack preparation</td><td>3 days/quarter × 2 analysts</td><td>1 day/quarter (dashboard exports + AI narrative)</td><td>€18,000</td></tr>
-          <tr><td>Reduced audit findings (control visibility)</td><td>Estimated 2 material findings/year @ €25K remediation each</td><td>Estimated 1 finding/year (earlier detection via heatmap)</td><td>€25,000</td></tr>
-          <tr style="font-weight:700;border-top:2px solid var(--borderS);"><td><strong>Total Annual Saving</strong></td><td colspan="2">—</td><td><strong>€102,100</strong></td></tr>
-          <tr><td>Less: Annual infrastructure cost</td><td colspan="2">—</td><td>-€16,116</td></tr>
-          <tr><td>Less: Annual maintenance (Accenture)</td><td colspan="2">~10 days/year support</td><td>-€12,000</td></tr>
-          <tr style="font-weight:700;background:#E4F2EB;"><td><strong>Net Annual Saving</strong></td><td colspan="2">—</td><td><strong>€73,984</strong></td></tr>
-          <tr style="font-weight:700;background:#EEF3FB;"><td><strong>Payback period</strong></td><td colspan="2">€302,000 / €73,984</td><td><strong>~2.3 years</strong></td></tr>
+          <tr><td>2LoD analyst efficiency gain</td><td>4 risk analysts × €110K/year fully loaded; 100% of time on GRC tasks</td><td>35% time saving via pre-populated RCSA, auto-trend detection, AI summaries</td><td>€154,000</td></tr>
+          <tr><td>Process owner efficiency gain</td><td>8 process owners × €75K/year; ~20% of their time on control attestation</td><td>15% GRC time reduction (automated evidence collection, smart forms)</td><td>€90,000</td></tr>
+          <tr><td>TPRM signal processing</td><td>80 vendor events/year, 3h triage each — 0.5 FTE equivalent effort</td><td>AI pre-drafts structured risk; analyst reviews in 30 min — 0.5 FTE redeployed</td><td>€55,000</td></tr>
+          <tr><td>Reporting &amp; board pack prep</td><td>4 packs/quarter; 2 analysts × 3 days each per pack = 24 analyst-days/year</td><td>AI narrative + dashboard export → 2 analysts × 1 day per pack = 8 days/year</td><td>€18,000</td></tr>
+          <tr><td>External audit fee reduction</td><td>Auditors spend ~40 days on manual evidence gathering; €1,500/day fee</td><td>Real-time control dashboard + audit log: 8 fewer auditor-days required</td><td>€12,000</td></tr>
+          <tr><td>Avoided finding remediation costs</td><td>Avg 2 material findings/year @ €30K each (legal, operational, remediation)</td><td>Estimated 1.5 findings/year avoided (earlier heatmap detection + alerts)</td><td>€60,000</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);"><td><strong>Gross Annual Saving</strong></td><td colspan="2">—</td><td><strong>€389,000</strong></td></tr>
+          <tr><td>Less: Annual infrastructure cost</td><td colspan="2">Production + dev/test environment</td><td>-€16,116</td></tr>
+          <tr><td>Less: Annual maintenance (Accenture)</td><td colspan="2">~10 days/year × €2,500/day (Manager rate)</td><td>-€25,000</td></tr>
+          <tr style="font-weight:700;background:#E4F2EB;"><td><strong>Net Annual Saving</strong></td><td colspan="2">—</td><td><strong>€347,884</strong></td></tr>
+          <tr style="font-weight:700;background:#EEF3FB;"><td><strong>Payback period (quantified savings)</strong></td><td colspan="2">€2,391,000 ÷ €347,884/year</td><td><strong>~6.9 years</strong></td></tr>
+          <tr style="background:#FFF8E1;"><td><strong>Payback — large institution</strong></td><td colspan="2">10 analysts → ~€600K/year net; same investment</td><td><strong>~4.0 years</strong></td></tr>
         </tbody>
       </table>
     </div>
     <div class="card" style="background:var(--gb);border-left:3px solid var(--g);">
-      <h4 style="color:var(--g);">Additional Non-Quantified Benefits</h4>
+      <h4 style="color:var(--g);">Strategic Benefits (Not in Payback Calculation)</h4>
       <ul style="padding-left:18px;font-size:13px;color:var(--ts);line-height:2;">
-        <li>Regulatory fine avoidance: DORA Article 30 non-compliance penalties up to 1% of global turnover. One avoided finding = multi-million potential benefit.</li>
-        <li>Audit confidence: Real-time control dashboard typically results in lower external audit fees (auditors need less evidence-gathering time).</li>
-        <li>Staff retention: GRC professionals report high satisfaction from removing manual reconciliation work.</li>
-        <li>Scalability: Adding new areas or processes requires only data provisioning — no additional development cost.</li>
+        <li><strong>DORA compliance:</strong> DORA Article 30 non-compliance penalties reach up to 1% of global annual turnover. For a €5B-revenue institution that is €50M exposure. A single avoided supervisory finding represents 21× the implementation cost — this is the primary business case driver, not the labor savings.</li>
+        <li><strong>ECB/DNB supervisory confidence:</strong> Regulators increasingly expect real-time control dashboards as evidence of a mature ICS. Institutions with manual, spreadsheet-based ICS consistently receive higher finding rates in OSI inspections.</li>
+        <li><strong>Audit fee trajectory:</strong> External auditors (Big 4) typically reduce per-cycle fees 10–15% when evidence is pre-assembled and independently traceable. Not captured in the table above.</li>
+        <li><strong>Staff quality and retention:</strong> Senior GRC professionals spend up to 60% of their time on data reconciliation, not risk judgment. Automating the former improves quality of the latter — and is a meaningful recruitment differentiator.</li>
+        <li><strong>Scalability:</strong> Adding new business areas or control domains requires only data provisioning — no additional development cost. Each incremental area drives the effective cost-per-control down.</li>
       </ul>
     </div>
   </div>
@@ -3034,11 +3081,21 @@ document.addEventListener('keydown', function(e) {
 });
 document.addEventListener('click', function(e) {
   if (!e.target.classList.contains('modal-tab')) return;
-  const group = e.target.closest('[data-modal-tab-group]');
-  if (!group) return;
+  const groupEl = e.target.closest('[data-modal-tab-group]');
+  if (!groupEl) return;
+  const groupId = groupEl.dataset.modalTabGroup;
   const target = e.target.dataset.tab;
-  group.querySelectorAll('.modal-tab').forEach(t => t.classList.toggle('active', t.dataset.tab === target));
-  group.querySelectorAll('.modal-tab-pane').forEach(p => p.classList.toggle('hidden', p.id !== target));
+  // Search entire document for all elements sharing this group id (tabs may be in header, panes in body)
+  document.querySelectorAll('[data-modal-tab-group="' + groupId + '"] .modal-tab').forEach(function(t) {
+    const isActive = t.dataset.tab === target;
+    t.classList.toggle('active', isActive);
+    t.style.borderBottomColor = isActive ? 'var(--brandMid)' : 'transparent';
+    t.style.color = isActive ? 'var(--brandMid)' : 'var(--ts)';
+    t.style.fontWeight = isActive ? '600' : '400';
+  });
+  document.querySelectorAll('[data-modal-tab-group="' + groupId + '"] .modal-tab-pane').forEach(function(p) {
+    p.classList.toggle('hidden', p.id !== target);
+  });
 });
 
 /* =====================================================================
@@ -3395,16 +3452,31 @@ function openDeliverableSample(name) {
 const LEVEL_DESCS = {
   1: { title: 'L1 — Static Export', text: 'GRC data is extracted manually as CSV files, uploaded to Azure Blob Storage, transformed by ADF and dbt, and loaded into PostgreSQL. The dashboard is read-only and refreshed on a fixed schedule (e.g. weekly). No real-time data, no AI, no automation.' },
   2: { title: 'L2 — Connected Live Feed', text: 'GRC system is connected via API with incremental polling every 15 minutes. Changes are pushed to the dashboard in near-real-time via Server-Sent Events. TPRM system webhooks deliver vendor change signals automatically. Dashboard is always current — no manual exports needed.' },
-  3: { title: 'L3 — AI-Assisted (Recommended)', text: 'The full AI agent is active: natural language risk queries, document RAG search, and structured analysis. RCSA reminders are sent automatically. AI drafts risk descriptions for TPRM signals. All AI outputs are clearly labelled and the user remains in full control.' },
+  3: { title: 'L3 — AI-Assisted (Base Case — Reference Dashboard)', text: 'The full AI agent is active: natural language risk queries, document RAG search, and structured analysis. RCSA reminders are sent automatically. AI drafts risk descriptions for TPRM signals. All AI outputs are clearly labelled and the user remains in full control. This is the reference dashboard level.' },
   4: { title: 'L4 — Active Proposals', text: 'The AI proactively monitors for overdue RCSAs and other conditions, generates proposed actions (reminders, escalations), and surfaces them in the 2LoD dashboard for one-click approval. The AI never executes automatically — every action requires explicit human approval via a Durable Function external event.' },
   5: { title: 'L5 — Autonomous with Write-back (Optional)', text: 'Extends L4 with optional policy change detection and GRC write-back. When a new regulatory document is uploaded, the AI identifies affected risk descriptions and proposes updates. 2LoD approves and the ICS Cockpit writes directly to the GRC source system via its REST API, closing the full data loop.' },
 };
 
+const MATBAR_SHORTS = {
+  1: 'Manual CSV exports, weekly refresh, no AI. Static dashboard.',
+  2: 'Live API polling, near-real-time via SSE, TPRM webhooks. No AI yet.',
+  3: 'AI agent + RAG over GRC documents. Real-time heatmap, natural-language query, TPRM signal drafts. <strong>Reference dashboard level.</strong>',
+  4: 'AI proactively monitors and proposes actions; every action requires explicit 2LoD approval before executing.',
+  5: 'Full autonomous loop: AI detects policy changes, proposes GRC write-back, and closes the data circle with 2LoD sign-off.',
+};
+
 function setMaturityLevel(level) {
-  // Update button active states
+  // Update section-level card buttons (inside Data Journey section)
   document.querySelectorAll('.level-btn').forEach(btn => {
     btn.classList.toggle('active', parseInt(btn.dataset.level) === level);
   });
+  // Sync global maturity bar chips
+  document.querySelectorAll('.matbar-chip').forEach(chip => {
+    chip.classList.toggle('active', parseInt(chip.dataset.level) === level);
+  });
+  // Update global bar description
+  const matbarDesc = document.getElementById('matbarDesc');
+  if (matbarDesc) matbarDesc.innerHTML = MATBAR_SHORTS[level] || '';
   // Show/hide content panels
   document.querySelectorAll('[data-level-content]').forEach(panel => {
     const show = parseInt(panel.dataset.levelContent) === level;
@@ -3414,7 +3486,7 @@ function setMaturityLevel(level) {
       if (player) initJourneyPlayer(player);
     }
   });
-  // Level description
+  // Level description (in-section)
   const desc = LEVEL_DESCS[level] || {};
   const titleEl = document.getElementById('levelDescTitle');
   const textEl = document.getElementById('levelDescText');
