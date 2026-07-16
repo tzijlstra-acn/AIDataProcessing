@@ -93,7 +93,13 @@ tbody tr:nth-child(even) td { background: var(--s1); }
 
 /* ROLE CARDS GRID */
 .role-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 16px; margin-bottom: 16px; }
-.role-card { background: var(--surface); border-radius: var(--radiusL); border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 10px; }
+.role-card { background: var(--surface); border-radius: var(--radiusL); border: 1px solid var(--border); padding: 20px; display: flex; flex-direction: column; gap: 10px; position: relative; }
+.role-card.role-dimmed { opacity: 0.28; filter: grayscale(0.65); pointer-events: none; }
+.role-card.role-dimmed::after { content: 'Not in scope'; position: absolute; top: 8px; right: 8px; font-size: 9px; font-weight: 700; background: #9CA3AF; color: #fff; padding: 2px 7px; border-radius: 10px; }
+.gh.gantt-week-inactive { opacity: 0.18 !important; color: var(--tm) !important; }
+.ai-comp-card.arch-dimmed { opacity: 0.28; filter: grayscale(0.65); }
+.staffing-table tr.level-locked td { opacity: 0.2; text-decoration: line-through; color: var(--tm); }
+.brand-icon { font-size: 15px; vertical-align: -2px; margin-right: 3px; }
 .role-card-header { display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
 .role-name { font-size: 14px; font-weight: 700; color: var(--tp); }
 .role-seniority { font-size: 12px; color: var(--tm); margin-top: 2px; }
@@ -745,7 +751,7 @@ details.collapsible > div.details-body { padding: 16px; }
         <!-- Consulting Practice Group -->
         <div style="padding:6px 0 3px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6900A8;">Consulting Practice</div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #A100FF;" title="Click to view role details" onclick="openRoleModal('pm')">
+        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #A100FF;" title="Click to view role details" onclick="openRoleModal('pm')">
           <div class="role-card-header">
             <div><div class="role-name">Programme Manager</div><div class="role-seniority">Senior Manager (L7)</div><div class="role-practice">Finance &amp; Risk / Delivery Management</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 FTE all phases</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
@@ -754,7 +760,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #A100FF;" title="Click to view role details" onclick="openRoleModal('grc')">
+        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #A100FF;" title="Click to view role details" onclick="openRoleModal('grc')">
           <div class="role-card-header">
             <div><div class="role-name">ICS / GRC Domain Expert</div><div class="role-seniority">Manager or Senior Manager (L6&ndash;7)</div><div class="role-practice">Finance &amp; Risk / Operational Risk</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph0&ndash;3 &middot; 0.5 Ph4&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
@@ -763,7 +769,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #A100FF;" title="Click to view role details" onclick="openRoleModal('cm')">
+        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #A100FF;" title="Click to view role details" onclick="openRoleModal('cm')">
           <div class="role-card-header">
             <div><div class="role-name">Change Management Lead</div><div class="role-seniority">Senior Consultant or Manager (L5&ndash;6)</div><div class="role-practice">Talent &amp; Organisation</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph0&ndash;2 &middot; 1.0 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
@@ -775,7 +781,7 @@ details.collapsible > div.details-body { padding: 16px; }
         <!-- Technology Practice Group -->
         <div style="padding:8px 0 4px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#1E3A6E;border-top:1px solid var(--border);margin-top:4px;">Technology Practice</div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('sa')">
+        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('sa')">
           <div class="role-card-header">
             <div><div class="role-name">Solution Architect</div><div class="role-seniority">Senior Manager / Architect (L7)</div><div class="role-practice">Technology Architecture / Azure</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph0&ndash;2 &middot; 0.5 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -784,7 +790,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('de1')">
+        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('de1')">
           <div class="role-card-header">
             <div><div class="role-name">Data Engineer 1 &mdash; GRC/ETL</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Data &amp; AI</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph1&ndash;2 &middot; 1.0 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -793,7 +799,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('de2')">
+        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('de2')">
           <div class="role-card-header">
             <div><div class="role-name">Data Engineer 2 &mdash; DB/Docs</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Data &amp; AI</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph1&ndash;2 &middot; 1.0 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -802,7 +808,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('ai')">
+        <div class="role-card" data-min-level="3" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('ai')">
           <div class="role-card-header">
             <div><div class="role-name">AI/ML Engineer</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Data &amp; AI</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph3&ndash;4 &middot; 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -811,7 +817,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('be1')">
+        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('be1')">
           <div class="role-card-header">
             <div><div class="role-name">Backend Developer 1 &mdash; Core API</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Technology</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph2&ndash;4 &middot; 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -820,7 +826,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('be2')">
+        <div class="role-card" data-min-level="3" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('be2')">
           <div class="role-card-header">
             <div><div class="role-name">Backend Developer 2 &mdash; Workflow</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Technology</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph2&ndash;4 &middot; 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -829,7 +835,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('sec')">
+        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('sec')">
           <div class="role-card-header">
             <div><div class="role-name">Security Architect</div><div class="role-seniority">Manager or Senior Manager (L6&ndash;7)</div><div class="role-practice">Accenture Security</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph0 &middot; 0.5 Ph1&ndash;4 &middot; 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -916,25 +922,30 @@ details.collapsible > div.details-body { padding: 16px; }
   <!-- Staffing Timeline -->
   <div class="subsec">
     <div class="subsec-title"><i class="ti ti-chart-gantt"></i>Staffing Timeline</div>
+    <details class="collapsible" open>
+      <summary>Staffing by Phase — expand to view <span style="font-size:11px;font-weight:400;color:var(--tm);">(roles dimmed at lower maturity levels)</span></summary>
+      <div class="details-body">
     <p style="font-size:13px;color:var(--tm);margin-bottom:14px;"><span style="display:inline-block;width:12px;height:12px;background:#E4F2EB;border:1px solid #1A7A52;border-radius:2px;margin-right:4px;vertical-align:-1px;"></span>H = 1.0 FTE &nbsp;&nbsp; <span style="display:inline-block;width:12px;height:12px;background:#FEF3DC;border:1px solid #9A6500;border-radius:2px;margin-right:4px;vertical-align:-1px;"></span>M = 0.5 FTE &nbsp;&nbsp; <span style="display:inline-block;width:12px;height:12px;background:#fff;border:1px solid var(--border);border-radius:2px;margin-right:4px;vertical-align:-1px;"></span>– = Not engaged &nbsp;&nbsp; <span style="font-size:11px;color:var(--tm);">Working roles (DE, AI, BE) are either 100% or off; consulting/security roles use 50% in lighter phases.</span></p>
     <div class="table-wrap">
-      <table>
+      <table class="staffing-table">
         <thead><tr><th>Role</th><th>Ph0 W1–4</th><th>Ph1 W5–12</th><th>Ph2 W9–16</th><th>Ph3 W13–20</th><th>Ph4 W17–24</th><th>Ph5 W21–28</th></tr></thead>
         <tbody>
-          <tr><td>Programme Manager</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td></tr>
-          <tr><td>GRC Domain Expert</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-M">M</td><td class="fte-M">M</td></tr>
-          <tr><td>Solution Architect</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td></tr>
-          <tr><td>Data Eng 1 (ETL)</td><td class="fte-none">–</td><td class="fte-H">H</td><td class="fte-M">M</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-none">–</td></tr>
-          <tr><td>Data Eng 2 (DB)</td><td class="fte-none">–</td><td class="fte-H">H</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-none">–</td><td class="fte-none">–</td></tr>
-          <tr><td>AI/ML Engineer</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-M">M</td></tr>
-          <tr><td>Backend Dev 1 (API)</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-M">M</td></tr>
-          <tr><td>Backend Dev 2 (Workflow)</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-H">H</td><td class="fte-M">M</td></tr>
-          <tr><td>Security Architect</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td></tr>
-          <tr><td>Change Management Lead</td><td class="fte-none">–</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-H">H</td></tr>
+          <tr data-min-level="1"><td>Programme Manager</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td></tr>
+          <tr data-min-level="1"><td>GRC Domain Expert</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-M">M</td><td class="fte-M">M</td></tr>
+          <tr data-min-level="1"><td>Solution Architect</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td></tr>
+          <tr data-min-level="1"><td>Data Eng 1 (ETL)</td><td class="fte-none">–</td><td class="fte-H">H</td><td class="fte-M">M</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-none">–</td></tr>
+          <tr data-min-level="2"><td>Data Eng 2 (DB/Docs)</td><td class="fte-none">–</td><td class="fte-H">H</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-none">–</td><td class="fte-none">–</td></tr>
+          <tr data-min-level="3"><td>AI/ML Engineer</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-M">M</td></tr>
+          <tr data-min-level="2"><td>Backend Dev 1 (API)</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-H">H</td><td class="fte-M">M</td></tr>
+          <tr data-min-level="3"><td>Backend Dev 2 (Workflow)</td><td class="fte-none">–</td><td class="fte-none">–</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-H">H</td><td class="fte-M">M</td></tr>
+          <tr data-min-level="2"><td>Security Architect</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td></tr>
+          <tr data-min-level="2"><td>Change Management Lead</td><td class="fte-none">–</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-M">M</td><td class="fte-H">H</td></tr>
           <tr style="background:var(--s2);"><td><strong>Total FTE</strong></td><td class="fte-total">~3.5</td><td class="fte-total">~6.0</td><td class="fte-total">~6.5</td><td class="fte-total">~6.5</td><td class="fte-total">~6.0</td><td class="fte-total">~5.0</td></tr>
         </tbody>
       </table>
     </div>
+      </div>
+    </details>
   </div>
 
   <!-- Expanded RACI Matrix -->
@@ -1140,7 +1151,7 @@ details.collapsible > div.details-body { padding: 16px; }
       <div class="gantt-grid">
         <!-- HEADER ROW (row 1) -->
         <div class="gh" style="grid-column:1;grid-row:1;">Activity</div>
-        <div class="gh" style="grid-column:2;grid-row:1;">W1</div><div class="gh" style="grid-column:3;grid-row:1;">W2</div><div class="gh" style="grid-column:4;grid-row:1;">W3</div><div class="gh" style="grid-column:5;grid-row:1;">W4</div><div class="gh" style="grid-column:6;grid-row:1;">W5</div><div class="gh" style="grid-column:7;grid-row:1;">W6</div><div class="gh" style="grid-column:8;grid-row:1;">W7</div><div class="gh" style="grid-column:9;grid-row:1;">W8</div><div class="gh" style="grid-column:10;grid-row:1;">W9</div><div class="gh" style="grid-column:11;grid-row:1;">W10</div><div class="gh" style="grid-column:12;grid-row:1;">W11</div><div class="gh" style="grid-column:13;grid-row:1;">W12</div><div class="gh" style="grid-column:14;grid-row:1;">W13</div><div class="gh" style="grid-column:15;grid-row:1;">W14</div><div class="gh" style="grid-column:16;grid-row:1;">W15</div><div class="gh" style="grid-column:17;grid-row:1;">W16</div><div class="gh" style="grid-column:18;grid-row:1;">W17</div><div class="gh" style="grid-column:19;grid-row:1;">W18</div><div class="gh" style="grid-column:20;grid-row:1;">W19</div><div class="gh" style="grid-column:21;grid-row:1;">W20</div><div class="gh" style="grid-column:22;grid-row:1;">W21</div><div class="gh" style="grid-column:23;grid-row:1;">W22</div><div class="gh" style="grid-column:24;grid-row:1;">W23</div><div class="gh" style="grid-column:25;grid-row:1;">W24</div><div class="gh" style="grid-column:26;grid-row:1;">W25</div><div class="gh" style="grid-column:27;grid-row:1;">W26</div><div class="gh" style="grid-column:28;grid-row:1;">W27</div><div class="gh" style="grid-column:29;grid-row:1;">W28</div>
+        <div class="gh" data-gantt-week="1" style="grid-column:2;grid-row:1;">W1</div><div class="gh" data-gantt-week="2" style="grid-column:3;grid-row:1;">W2</div><div class="gh" data-gantt-week="3" style="grid-column:4;grid-row:1;">W3</div><div class="gh" data-gantt-week="4" style="grid-column:5;grid-row:1;">W4</div><div class="gh" data-gantt-week="5" style="grid-column:6;grid-row:1;">W5</div><div class="gh" data-gantt-week="6" style="grid-column:7;grid-row:1;">W6</div><div class="gh" data-gantt-week="7" style="grid-column:8;grid-row:1;">W7</div><div class="gh" data-gantt-week="8" style="grid-column:9;grid-row:1;">W8</div><div class="gh" data-gantt-week="9" style="grid-column:10;grid-row:1;">W9</div><div class="gh" data-gantt-week="10" style="grid-column:11;grid-row:1;">W10</div><div class="gh" data-gantt-week="11" style="grid-column:12;grid-row:1;">W11</div><div class="gh" data-gantt-week="12" style="grid-column:13;grid-row:1;">W12</div><div class="gh" data-gantt-week="13" style="grid-column:14;grid-row:1;">W13</div><div class="gh" data-gantt-week="14" style="grid-column:15;grid-row:1;">W14</div><div class="gh" data-gantt-week="15" style="grid-column:16;grid-row:1;">W15</div><div class="gh" data-gantt-week="16" style="grid-column:17;grid-row:1;">W16</div><div class="gh" data-gantt-week="17" style="grid-column:18;grid-row:1;">W17</div><div class="gh" data-gantt-week="18" style="grid-column:19;grid-row:1;">W18</div><div class="gh" data-gantt-week="19" style="grid-column:20;grid-row:1;">W19</div><div class="gh" data-gantt-week="20" style="grid-column:21;grid-row:1;">W20</div><div class="gh" data-gantt-week="21" style="grid-column:22;grid-row:1;">W21</div><div class="gh" data-gantt-week="22" style="grid-column:23;grid-row:1;">W22</div><div class="gh" data-gantt-week="23" style="grid-column:24;grid-row:1;">W23</div><div class="gh" data-gantt-week="24" style="grid-column:25;grid-row:1;">W24</div><div class="gh" data-gantt-week="25" style="grid-column:26;grid-row:1;">W25</div><div class="gh" data-gantt-week="26" style="grid-column:27;grid-row:1;">W26</div><div class="gh" data-gantt-week="27" style="grid-column:28;grid-row:1;">W27</div><div class="gh" data-gantt-week="28" style="grid-column:29;grid-row:1;">W28</div>
 
         <!-- MILESTONES ROW (row 2) -->
         <div class="gl ms-lbl" style="grid-column:1;grid-row:2;">◆ Milestones</div>
@@ -2435,15 +2446,16 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
     </div>
 
     <div class="tab-content hidden" id="arch-ai">
-      <div class="ai-comp-card">
-        <div class="ai-comp-title">LLM Agent Chat Panel</div>
+      <div class="ai-comp-card" data-arch-min-level="3">
+        <div class="ai-comp-title"><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;font-size:16px;"></i> LLM Agent Chat Panel <span class="arch-level-badge">Requires L3</span></div>
         <div class="ai-meta-row">
-          <span class="ai-meta-item"><strong>Model:</strong> Azure OpenAI GPT-4o (2024-11-20)</span>
+          <span class="ai-meta-item"><strong>Model:</strong> <i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i>Azure OpenAI GPT-4o (2024-11-20)</span>
           <span class="ai-meta-item"><strong>Framework:</strong> LangChain 0.2+</span>
           <span class="ai-meta-item"><strong>Streaming:</strong> SSE to frontend</span>
           <span class="ai-meta-item"><strong>Context:</strong> Up to 15,000 tokens/request</span>
         </div>
         <p style="font-size:13px;color:var(--ts);margin-bottom:10px;">Conversational chat panel. Four tools: SQLQueryTool, DocumentRAGTool, StructuredAnalysisTool, WorkflowTool.</p>
+        <details class="collapsible"><summary>View system prompt template</summary><div class="details-body">
         <div class="code-block"><span class="comment"># System Prompt Template (abridged)</span>
 You are an ICS Risk Advisor embedded in an Internal Control System dashboard.
 Rules:
@@ -2453,10 +2465,11 @@ Rules:
 - Never fabricate ratings, dates, or regulatory citations
 
 Current context: User: {user_name} | Role: {user_role} | View: {current_view}</div>
+        </div></details>
       </div>
 
-      <div class="ai-comp-card">
-        <div class="ai-comp-title">TPRM Signal Engine</div>
+      <div class="ai-comp-card" data-arch-min-level="3">
+        <div class="ai-comp-title"><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;font-size:16px;"></i> TPRM Signal Engine <span class="arch-level-badge">Requires L3</span></div>
         <div class="ai-meta-row">
           <span class="ai-meta-item"><strong>Trigger:</strong> Azure Service Bus (TPRM event feed)</span>
           <span class="ai-meta-item"><strong>Model:</strong> GPT-4o-mini</span>
@@ -2465,14 +2478,15 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
         <p style="font-size:13px;color:var(--ts);margin-bottom:10px;">Flow: Rule-based pre-filter → Fetch vendor context → Deduplication check → LLM risk drafting → Parse structured JSON → Persist signal → Push notification. Cost: ~$0.0003 per signal.</p>
       </div>
 
-      <div class="ai-comp-card">
-        <div class="ai-comp-title">Trend Detection Algorithm</div>
+      <div class="ai-comp-card" data-arch-min-level="2">
+        <div class="ai-comp-title"><i class="ti ti-brand-python brand-icon" style="color:#3776AB;font-size:16px;"></i> Trend Detection Algorithm <span class="arch-level-badge">Requires L2</span></div>
         <div class="ai-meta-row">
-          <span class="ai-meta-item"><strong>Schedule:</strong> Azure Function weekly (Sunday 03:00 UTC)</span>
+          <span class="ai-meta-item"><strong>Schedule:</strong> <i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Function weekly (Sunday 03:00 UTC)</span>
           <span class="ai-meta-item"><strong>Algorithm:</strong> scipy.stats.linregress</span>
           <span class="ai-meta-item"><strong>Min data points:</strong> 3 quarters</span>
           <span class="ai-meta-item"><strong>LLM cost:</strong> €0 — pure Python</span>
         </div>
+        <details class="collapsible"><summary>View Python implementation</summary><div class="details-body">
         <div class="code-block"><span class="key">def</span> detect_trends(risk_id: str, lookback_quarters: int = 4) -&gt; TrendResult:
     history = risk_rating_history_repo.get(risk_id, lookback_quarters)
     <span class="key">if</span> len(history) &lt; 3:
@@ -2484,10 +2498,11 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
     <span class="key">elif</span> slope &lt; -0.5: trend = <span class="str">'Decreasing'</span>
     <span class="key">else</span>: trend = <span class="str">'Stable'</span>
     <span class="key">return</span> TrendResult(risk_id=risk_id, trend=trend, slope=slope)</div>
+        </div></details>
       </div>
 
-      <div class="ai-comp-card">
-        <div class="ai-comp-title">RCSA Due-Date Monitor</div>
+      <div class="ai-comp-card" data-arch-min-level="2">
+        <div class="ai-comp-title"><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;font-size:16px;"></i> RCSA Due-Date Monitor <span class="arch-level-badge">Requires L2</span></div>
         <div class="ai-meta-row">
           <span class="ai-meta-item"><strong>Schedule:</strong> Azure Function daily (07:00 UTC)</span>
           <span class="ai-meta-item"><strong>LLM cost:</strong> €0 — date arithmetic only</span>
@@ -2495,8 +2510,8 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
         <p style="font-size:13px;color:var(--ts);">Logic: (1) Flag overdue assessments → update status to Overdue → alert 2LoD. (2) Find assessments due within 14 days → send reminder if no reminder sent in last 7 days. Jinja2 templates render email content — no LLM involved.</p>
       </div>
 
-      <div class="ai-comp-card">
-        <div class="ai-comp-title">1LoD Workflow Engine (Azure Durable Functions)</div>
+      <div class="ai-comp-card" data-arch-min-level="4">
+        <div class="ai-comp-title">1LoD Workflow Engine (Azure Durable Functions) <span class="arch-level-badge">Requires L4</span></div>
         <div class="ai-meta-row">
           <span class="ai-meta-item"><strong>Platform:</strong> Azure Durable Functions v4</span>
           <span class="ai-meta-item"><strong>Pattern:</strong> Human interaction pattern</span>
@@ -2520,7 +2535,10 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
     </div>
 
     <div class="tab-content hidden" id="arch-db">
-      <div class="subsec-title" style="margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);"><i class="ti ti-table-column" style="color:var(--brandMid);"></i>Key Table DDL (PostgreSQL 16)</div>
+      <div class="subsec-title" style="margin-bottom:14px;padding-bottom:8px;border-bottom:1px solid var(--border);"><i class="ti ti-brand-azure" style="color:#0078D4;"></i> <i class="ti ti-database" style="color:var(--brandMid);"></i> PostgreSQL 16 — Data Schema</div>
+      <details class="collapsible">
+        <summary>View DDL — risks, controls, rcsa_assessments</summary>
+        <div class="details-body">
       <div class="code-block"><span class="comment">-- Risks</span>
 <span class="key">CREATE TABLE</span> risks (
     risk_id                 <span class="str">VARCHAR(30) PRIMARY KEY</span>,
@@ -2595,9 +2613,14 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
     findings_count          <span class="str">INTEGER DEFAULT 0</span>,
     created_at              <span class="str">TIMESTAMPTZ DEFAULT NOW()</span>
 );</div>
+        </div>
+      </details>
     </div>
 
     <div class="tab-content hidden" id="arch-api">
+      <details class="collapsible" open>
+        <summary>FastAPI endpoint catalogue — 16 endpoints</summary>
+        <div class="details-body">
       <div class="table-wrap" style="margin-bottom:0;">
         <table>
           <thead><tr><th>Method</th><th>Path</th><th>Auth</th><th>Description</th></tr></thead>
@@ -2621,6 +2644,8 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
           </tbody>
         </table>
       </div>
+        </div>
+      </details>
     </div>
 
     <div class="tab-content hidden" id="arch-security">
@@ -2659,24 +2684,25 @@ Current context: User: {user_name} | Role: {user_role} | View: {current_view}</d
         <table>
           <thead><tr><th>Layer</th><th>Technology</th><th>Version / Tier</th><th>Notes</th></tr></thead>
           <tbody>
-            <tr><td>Frontend</td><td>React</td><td>18.x (TypeScript, Vite)</td><td>Azure Static Web Apps</td></tr>
-            <tr><td>API Framework</td><td>FastAPI</td><td>0.110+, Python 3.11</td><td>Auto-scales to zero</td></tr>
-            <tr><td>API Hosting</td><td><span class="brand-badge azure-badge">Az</span>Azure Container Apps</td><td>Consumption plan</td><td>Per-request billing in non-prod</td></tr>
-            <tr><td>API Gateway</td><td><span class="brand-badge azure-badge">Az</span>Azure API Management</td><td>Standard tier</td><td>Rate limiting, caching headers</td></tr>
-            <tr><td>ETL Orchestration</td><td><span class="brand-badge azure-badge">Az</span>Azure Data Factory</td><td>v2</td><td>Linked service per GRC system</td></tr>
-            <tr data-arch-min-level="2"><td>Event Bus</td><td><span class="brand-badge azure-badge">Az</span>Azure Service Bus<span class="arch-level-badge">Requires L2</span></td><td>Standard tier</td><td>TPRM change events</td></tr>
-            <tr data-arch-min-level="4"><td>Serverless</td><td><span class="brand-badge azure-badge">Az</span>Azure Durable Functions<span class="arch-level-badge">Requires L4</span></td><td>v4</td><td>RCSA monitor, doc ingestion, TPRM engine</td></tr>
-            <tr><td>Relational DB</td><td><span class="brand-badge azure-badge">Az</span>Azure PostgreSQL Flexible Server</td><td>v16, 8 vCores</td><td>Primary operational store</td></tr>
-            <tr><td>Cache</td><td><span class="brand-badge azure-badge">Az</span>Azure Cache for Redis</td><td>C2 Standard</td><td>API response caching, session store</td></tr>
-            <tr data-arch-min-level="3"><td>Vector Search</td><td><span class="brand-badge search-badge">AI</span>Azure AI Search<span class="arch-level-badge">Requires L3</span></td><td>Standard S1</td><td>Hybrid BM25 + vector (RRF)</td></tr>
-            <tr data-arch-min-level="3"><td>LLM</td><td><span class="brand-badge openai-badge">OA</span>Azure OpenAI (GPT-4o)<span class="arch-level-badge">Requires L3</span></td><td>2024-11-20</td><td>Within client tenant, EU region</td></tr>
-            <tr data-arch-min-level="3"><td>Embeddings</td><td><span class="brand-badge openai-badge">OA</span>Azure OpenAI (text-embedding-3-large)<span class="arch-level-badge">Requires L3</span></td><td>Standard</td><td>Document chunk embeddings (3072 dims)</td></tr>
-            <tr><td>RAG Framework</td><td>LangChain</td><td>0.2+</td><td>Agent orchestration and RAG pipeline</td></tr>
-            <tr><td>Notifications</td><td>Azure Communication Services (Email)</td><td>Standard</td><td>+ Teams Webhook</td></tr>
-            <tr><td>Identity</td><td>Azure Active Directory</td><td>—</td><td>SSO, RBAC, app registration</td></tr>
-            <tr><td>Secret Management</td><td>Azure Key Vault</td><td>Standard</td><td>All credentials and connection strings</td></tr>
-            <tr><td>IaC</td><td>Terraform</td><td>1.7+</td><td>All Azure resources defined as code</td></tr>
-            <tr><td>Monitoring</td><td>Azure Monitor + Application Insights</td><td>—</td><td>Metrics, distributed traces, alerts</td></tr>
+            <tr><td>Frontend</td><td><i class="ti ti-brand-react brand-icon" style="color:#61DAFB;"></i>React + TypeScript</td><td>18.x (Vite)</td><td>Azure Static Web Apps</td></tr>
+            <tr><td>API Framework</td><td><i class="ti ti-brand-python brand-icon" style="color:#3776AB;"></i>FastAPI (Python 3.11)</td><td>0.110+</td><td>Auto-scales to zero</td></tr>
+            <tr><td>API Hosting</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Container Apps</td><td>Consumption plan</td><td>Per-request billing in non-prod</td></tr>
+            <tr><td>API Gateway</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure API Management</td><td>Standard tier</td><td>Rate limiting, caching headers</td></tr>
+            <tr><td>ETL Orchestration</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Data Factory</td><td>v2</td><td>Linked service per GRC system</td></tr>
+            <tr data-arch-min-level="2"><td>Event Bus</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Service Bus <span class="arch-level-badge">Requires L2</span></td><td>Standard tier</td><td>TPRM change events</td></tr>
+            <tr data-arch-min-level="4"><td>Serverless</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Durable Functions <span class="arch-level-badge">Requires L4</span></td><td>v4</td><td>RCSA monitor, doc ingestion, TPRM engine</td></tr>
+            <tr><td>Relational DB</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i><i class="ti ti-database brand-icon" style="color:#336791;"></i>Azure PostgreSQL v16</td><td>Flexible Server, 8 vCores</td><td>Primary operational store</td></tr>
+            <tr><td>Cache</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i><i class="ti ti-brand-redis brand-icon" style="color:#DC382D;"></i>Azure Cache for Redis</td><td>C2 Standard</td><td>API response caching, session store</td></tr>
+            <tr data-arch-min-level="3"><td>Vector Search</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure AI Search <span class="arch-level-badge">Requires L3</span></td><td>Standard S1</td><td>Hybrid BM25 + vector (RRF)</td></tr>
+            <tr data-arch-min-level="3"><td>LLM</td><td><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i>Azure OpenAI — GPT-4o <span class="arch-level-badge">Requires L3</span></td><td>2024-11-20</td><td>Within client tenant, EU region</td></tr>
+            <tr data-arch-min-level="3"><td>Embeddings</td><td><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i>Azure OpenAI — text-embedding-3-large <span class="arch-level-badge">Requires L3</span></td><td>Standard</td><td>Document chunk embeddings (3072 dims)</td></tr>
+            <tr data-arch-min-level="3"><td>RAG Framework</td><td><i class="ti ti-link brand-icon" style="color:#1C7A3A;"></i>LangChain</td><td>0.2+</td><td>Agent orchestration and RAG pipeline</td></tr>
+            <tr><td>Notifications</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Communication Services</td><td>Standard</td><td>Email + Teams Webhook</td></tr>
+            <tr><td>Identity</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Active Directory</td><td>—</td><td>SSO, RBAC, app registration</td></tr>
+            <tr><td>Secret Management</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Key Vault</td><td>Standard</td><td>All credentials and connection strings</td></tr>
+            <tr><td>IaC</td><td><i class="ti ti-brand-terraform brand-icon" style="color:#7B42BC;"></i>Terraform</td><td>1.7+</td><td>All Azure resources defined as code</td></tr>
+            <tr><td>Monitoring</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Monitor + App Insights</td><td>—</td><td>Metrics, distributed traces, alerts</td></tr>
+            <tr><td>Source Control</td><td><i class="ti ti-brand-github brand-icon" style="color:#24292e;"></i>GitHub + GitHub Actions</td><td>—</td><td>CI/CD, branch protection, secrets</td></tr>
           </tbody>
         </table>
       </div>
@@ -3889,13 +3915,17 @@ const LEVEL_FEAT_CTX = {
    CHANGE 6: ARCHITECTURE COMPONENT GATING
    ===================================================================== */
 function updateArchComponents(level) {
-  // Fade rows in the tech stack table and inline badges
   document.querySelectorAll('[data-arch-min-level]').forEach(function(el) {
     var minLevel = parseInt(el.dataset.archMinLevel);
-    el.style.opacity = level >= minLevel ? '1' : '0.35';
-    el.style.filter = level >= minLevel ? 'none' : 'grayscale(1)';
+    var active = level >= minLevel;
+    el.style.opacity = active ? '1' : '0.35';
+    el.style.filter = active ? 'none' : 'grayscale(1)';
     var badge = el.querySelector('.arch-level-badge');
-    if (badge) badge.style.display = level >= minLevel ? 'none' : 'inline-block';
+    if (badge) badge.style.display = active ? 'none' : 'inline-block';
+    // AI comp cards get the arch-dimmed class too
+    if (el.classList.contains('ai-comp-card')) {
+      el.classList.toggle('arch-dimmed', !active);
+    }
   });
 }
 
@@ -4041,9 +4071,28 @@ function setMaturityLevel(level) {
     card.classList.toggle('glance-dimmed', level < minL);
   });
 
+  // ── Role card dimming (full role cards in Team section) ───────────────
+  document.querySelectorAll('.role-card[data-min-level]').forEach(function(card) {
+    var minL = parseInt(card.dataset.minLevel);
+    card.classList.toggle('role-dimmed', level < minL);
+  });
+
+  // ── Staffing timeline row dimming ─────────────────────────────────────
+  document.querySelectorAll('.staffing-table tr[data-min-level]').forEach(function(row) {
+    var minL = parseInt(row.dataset.minLevel);
+    row.classList.toggle('level-locked', level < minL);
+  });
+
   // ── Gantt scope banner ───────────────────────────────────────────────
   var ganttScopeEl = document.getElementById('gantt-scope-text');
   if (ganttScopeEl) ganttScopeEl.textContent = ld.label + ' — ' + ld.ganttScope;
+
+  // ── Gantt week header dimming (weeks beyond level's max week) ─────────
+  var maxW = ld.ganttMaxWeek;
+  document.querySelectorAll('.gh[data-gantt-week]').forEach(function(cell) {
+    var w = parseInt(cell.dataset.ganttWeek);
+    cell.classList.toggle('gantt-week-inactive', w > maxW);
+  });
 
   // ── Gantt bar dimming (rows tagged with data-gantt-min-level) ────────
   document.querySelectorAll('[data-gantt-min-level]').forEach(function(el) {
