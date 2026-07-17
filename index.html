@@ -1394,7 +1394,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Week 2:</strong> Data &amp; Platform Assessment — data audit (extract 100–500 records per entity); TPRM tool assessment; platform requirements workshop; Azure AD configuration review</li>
           <li><strong>Week 3:</strong> Draft Architecture Decision Record (ADR); DPIA draft with DPO</li>
           <li><strong>Week 4:</strong> Terraform apply (provision all Azure resources non-prod); CI/CD pipeline; Project Charter finalised</li>
-          <li class="ai-gov"><strong>AI Governance:</strong> EU AI Act classification (High-Risk); DORA Art.30 assessment initiated for Azure OpenAI</li>
+          <li class="ai-gov"><strong>AI Governance:</strong> EU AI Act classification (precautionary High-Risk, pending legal review); DORA Art.28/30 ICT third-party assessment initiated for Azure OpenAI</li>
         </ul>
         <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
           <span>Deliverables by Role</span>
@@ -1484,7 +1484,7 @@ details.collapsible > div.details-body { padding: 16px; }
         <span class="phase-weeks">Weeks 9–16</span>
       </div>
       <div class="phase-body">
-        <p class="phase-objective">Connect dashboard to live API; deliver fully functional read-only dashboard with real data but no AI features.</p>
+        <p class="phase-objective">Connect dashboard to live API; deliver fully functional read-only dashboard with real data but no AI features. <em>Runs in parallel with Phase 1 from Week 9 (overlap W9–12): the GRC data pipelines feed early API development while Phase 1 completes its data-quality validation.</em></p>
         <div class="phase-section-title">Key Activities</div>
         <ul>
           <li><strong>Weeks 9–10:</strong> FastAPI skeleton; Azure AD auth middleware; RBAC; GET /api/overview, /api/areas, /api/processes; Redis caching</li>
@@ -1555,7 +1555,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">GRC</span><span class="role-del-name">GRC Expert</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Heatmap Threshold Sign-off')" title="View sample">Heatmap Threshold Sign-off (W16)</span>
-            <span class="deliverable-item clickable" onclick="openDeliverableSample('DORA Article 30 Report Template')" title="View sample">DORA Article 30 Report Template (W20)</span>
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('DORA ICT Third-Party Register (Art.28/30)')" title="View sample">DORA ICT Third-Party Register — Art.28/30 (W20)</span>
             <span class="deliverable-item clickable" onclick="openDeliverableSample('AI Risk Register')" title="View sample">AI Risk Register v1.0 (W18)</span>
             <span class="deliverable-item clickable" onclick="openDeliverableSample('Human oversight protocol document')" title="View sample">Human Oversight Protocol (W20)</span>
             <span class="deliverable-item clickable" onclick="openDeliverableSample('DORA Art.30 AI provisions assessment')" title="View sample">DORA Art.30 AI provisions assessment (W20)</span>
@@ -3727,7 +3727,7 @@ useEffect(() =&gt; {
         <div class="roi-label">2LoD Analyst Time Saving</div>
       </div>
     </div>
-    <div class="roi-note" id="roi-note">Quantified savings based on 4 2LoD risk analysts + 8 process owners at market-loaded rates. Payback ~7 years on quantified savings alone — primary investment driver is DORA Article 30 compliance and material-finding avoidance, where one regulatory action can represent 8–10× the implementation cost. At larger institutions (10+ analysts) payback compresses to ~4 years.</div>
+    <div class="roi-note" id="roi-note">Quantified savings based on 4 2LoD risk analysts + 8 process owners at market-loaded rates. Payback ~7 years on quantified savings alone — primary investment driver is DORA ICT risk compliance and material-finding avoidance, where one supervisory action can represent 8× or more of the implementation cost (up to ~21× at a €5B-revenue institution). At larger institutions (10+ analysts) payback compresses to ~4 years.</div>
   </div>
 
   <!-- Cost Tables -->
@@ -3988,7 +3988,7 @@ const ROLES = {
       { label: 'AI output validation', value: 'Defines acceptance criteria for AI agent responses — what constitutes a correct answer to each of the 10 canned questions.' },
       { label: 'UAT support', value: 'Participates in UAT week to validate heatmap logic, RCSA workflow, and agent accuracy from domain perspective.' },
     ],
-    deliverables: ['GRC Data Model specification', 'Heatmap Threshold Sign-off', 'Regulatory Mapping Table', 'DORA Article 30 Report Template', 'TPRM classification rules', 'AI output validation criteria', 'Agent Quality Evaluation Report', 'UAT domain sign-off', 'AI system classification (EU AI Act)', 'AI Risk Register', 'EU AI Act conformity assessment', 'AI model monitoring plan', 'EBA model validation report'],
+    deliverables: ['GRC Data Model specification', 'Heatmap Threshold Sign-off', 'Regulatory Mapping Table', 'DORA ICT Third-Party Register (Art.28/30)', 'TPRM classification rules', 'AI output validation criteria', 'Agent Quality Evaluation Report', 'UAT domain sign-off', 'AI system classification (EU AI Act)', 'AI Risk Register', 'EU AI Act conformity assessment', 'AI model monitoring plan', 'EBA model validation report'],
     skills: {
       mustHave: ['DORA Article 30 deep knowledge', 'ICS/RCSA methodology', 'Risk heatmap design', 'GRC platform experience (ServiceNow/Archer)', 'UAT facilitation', 'AI output quality assessment'],
       niceToHave: ['EBA/ECB regulatory experience', 'TPRM lifecycle management', 'NLP prompt evaluation techniques', 'ISO 31000 / COSO framework'],
@@ -4653,8 +4653,8 @@ CROSS-CUTTING SERVICES (no subnet, Azure-managed):<br>
 </table>
 <div style="font-size:12px;color:var(--ts);">This document authorises the ICS Cockpit v1.0 to proceed to production provisioning and go-live (Week 28). All Critical and High defects have been remediated and regression-tested. Medium/Low defects will be addressed in the first post-go-live patch sprint.</div>`,
   },
-  'DORA Article 30 Report Template': {
-    title: 'DORA Article 30 — ICT Third-Party Register Template',
+  'DORA ICT Third-Party Register (Art.28/30)': {
+    title: 'DORA ICT Third-Party Register (Art. 28/30)',
     content: `<table style="width:100%;border-collapse:collapse;font-size:12px;">
 <thead><tr style="background:var(--s2);"><th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Field</th><th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Example Value</th><th style="padding:8px;text-align:left;border-bottom:1px solid var(--border);">Source</th></tr></thead>
 <tbody>
@@ -4741,7 +4741,7 @@ CROSS-CUTTING SERVICES (no subnet, Azure-managed):<br>
 <tr style="background:var(--s2);"><td style="padding:6px 10px;font-weight:700;border-bottom:1px solid var(--border);">Parameter</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Value</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Base URL</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">[CLIENT_GRC_API_URL]/v1</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Auth method</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">OAuth 2.0 client credentials — token from [CLIENT_AUTH_ENDPOINT]</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Rate limit</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">200 req/min — connector implements exponential backoff + jitter</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Rate limit</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">600 req/hr (ServiceNow standard tenant) — connector implements exponential backoff + jitter</td></tr>
 <tr><td style="padding:6px 10px;font-weight:600;">Pagination</td><td style="padding:6px 10px;">Cursor-based: ?cursor=&lt;token&gt;&limit=500</td></tr>
 </table>
 <div style="font-weight:700;color:var(--brandMid);margin-bottom:6px;">Field Mapping (Risk Entity)</div>
@@ -5019,9 +5019,9 @@ Rules:<br>
 <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
 <tr style="background:var(--s2);"><td style="padding:6px 10px;font-weight:700;border-bottom:1px solid var(--border);">Criterion</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Assessment</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Source</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">GPAI model used?</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Yes — Azure OpenAI GPT-4o (GPAI model)</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">EU AI Act Art. 51</td></tr>
-<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Annex III (High Risk)?</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">Likely YES — Annex III §2(b): AI used in administration of justice and democratic processes; §4: AI in access to essential private services [regulatory compliance automation]</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Art. 6(2), Annex III</td></tr>
+<tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Annex III (High Risk)?</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Contested — no Annex III category applies cleanly (the system supports internal risk analysts rather than making binding decisions on persons). Precautionary treatment as High Risk under Art. 6 read with Annex III, given automated decision-support in regulatory risk management; to be confirmed with legal counsel. If assessed as Limited Risk, Art. 50 transparency obligations apply instead.</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Art. 6, Annex III; Art. 50</td></tr>
 <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Human oversight?</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Yes — all AI-generated risk summaries and workflow actions require 2LoD analyst review before effect</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);">Art. 14</td></tr>
-<tr><td style="padding:6px 10px;font-weight:600;">Obligation level</td><td style="padding:6px 10px;font-weight:700;color:#B4322A;">High Risk Provider obligations apply: technical documentation (Art. 11), logging (Art. 12), transparency (Art. 13), human oversight (Art. 14), accuracy/robustness (Art. 15), conformity assessment (Art. 43)</td><td style="padding:6px 10px;">Chapter III, Section 2</td></tr>
+<tr><td style="padding:6px 10px;font-weight:600;">Obligation level</td><td style="padding:6px 10px;font-weight:700;color:#9A6500;">Precautionary High-Risk provider obligations applied pending legal confirmation: technical documentation (Art. 11), logging (Art. 12), transparency (Art. 13), human oversight (Art. 14), accuracy/robustness (Art. 15), conformity assessment (Art. 43). If confirmed Limited Risk, only Art. 50 transparency obligations apply.</td><td style="padding:6px 10px;">Chapter III, Section 2; Art. 50</td></tr>
 </table>
 <div style="font-size:11px;color:var(--ts);">To be reviewed by DPO and external legal counsel before go-live. Classification may be revised based on final deployment scope. Filed in AI governance register as GOV-001.</div>
 </div>`,
@@ -5036,7 +5036,7 @@ Rules:<br>
 <thead><tr style="background:var(--s2);"><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Role</th><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Accountable for</th><th style="padding:6px 8px;border-bottom:1px solid var(--border);">Owner</th></tr></thead>
 <tbody>
 <tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">AI System Owner</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Strategic accountability; EU AI Act Provider obligations</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">[CRO / Executive Sponsor]</td></tr>
-<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">AI Risk Officer</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Day-to-day model risk governance, AI Risk Register, SR 11-7 compliance</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">GRC Expert (Accenture) → 2LoD head (client)</td></tr>
+<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">AI Risk Officer</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Day-to-day model risk governance, AI Risk Register, model risk compliance (SR 11-7 / EBA GL 2021/04 equivalent)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">GRC Expert (Accenture) → 2LoD head (client)</td></tr>
 <tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">DPO</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">DPIA, GDPR compliance for AI data processing</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">[CLIENT DPO]</td></tr>
 <tr><td style="padding:6px 8px;">AI Validator (independent)</td><td style="padding:6px 8px;">Independent model validation (EBA requirement); challenge function</td><td style="padding:6px 8px;">[Internal model validation team / external validator]</td></tr>
 </tbody></table>
@@ -5044,7 +5044,7 @@ Rules:<br>
 <div style="font-size:12px;display:grid;grid-template-columns:1fr 1fr;gap:6px;">
 <div style="background:var(--s1);padding:8px;border-radius:6px;"><strong>EU AI Act</strong><br>High Risk classification; conformity assessment; Art. 11 technical documentation</div>
 <div style="background:var(--s1);padding:8px;border-radius:6px;"><strong>DORA Art.30</strong><br>Azure OpenAI as critical ICT third-party; contractual requirements; exit strategy</div>
-<div style="background:var(--s1);padding:8px;border-radius:6px;"><strong>EBA / SR 11-7</strong><br>Model risk policy; validation; ongoing monitoring; model inventory</div>
+<div style="background:var(--s1);padding:8px;border-radius:6px;"><strong>EBA GL 2021/04 / SR 11-7</strong><br>Model risk policy; validation; ongoing monitoring; model inventory</div>
 <div style="background:var(--s1);padding:8px;border-radius:6px;"><strong>ISO 42001</strong><br>AI Management System; risk-based approach; continual improvement</div>
 </div>
 </div>`,
@@ -5310,7 +5310,7 @@ const LEVEL_DATA = {
     weeks: '28', fteWeeks: '~200', roles: '10', phases: '6', cost: '~€2.4M',
     ganttMinWeek: 1, ganttMaxWeek: 28,
     ganttScope: 'W1–W28 · Full scope: Ph0–Ph5 all active',
-    overviewCtx: 'L3 (Base Case) — Full 10-role team, 28-week delivery, ~€2.4M. Includes LLM-powered RAG agent, TPRM Signal Engine, AI-driven risk summaries, and DORA Article 30 reporting. This is the recommended engagement scope.',
+    overviewCtx: 'L3 (Base Case) — Full 10-role team, 28-week delivery, ~€2.4M. Includes LLM-powered RAG agent, TPRM Signal Engine, AI-driven risk summaries, and the DORA ICT third-party register (Art. 28/30). This is the recommended engagement scope.',
     overviewOk: true
   },
   4: {
@@ -5595,7 +5595,7 @@ var SOW_CONTENT = {
   services: {
     1: 'Accenture will support [CLIENT NAME] in the delivery of a Static ICS Dashboard (Maturity Level 1), establishing the foundational Azure data infrastructure and a read-only risk visualisation capability. This engagement covers discovery workshops, infrastructure provisioning, GRC source data ingestion pipelines via Azure Data Factory, and a static risk heatmap and register dashboard (no live API).\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4): Requirements gathering, ADR, network design, Terraform IaC, Azure provisioning\n  Phase 1 — Data Foundation (W5–W12): GRC data ingestion via ADF, PostgreSQL v16 schema, data quality baseline\n  Phase 2 (stub) — Static Dashboard: Read-only React risk heatmap and register seeded from PostgreSQL',
     2: 'Accenture will support [CLIENT NAME] in the delivery of a Connected ICS Dashboard (Maturity Level 2), adding live GRC API connectors, a FastAPI backend on Azure Container Apps, rules-based alerting, and trend detection on top of the L1 data foundation.\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4)\n  Phase 1 — Data Foundation (W5–W12)\n  Phase 2 — Core Connected Dashboard (W9–W16): FastAPI, APIM, Redis caching, live GRC connectors, Service Bus eventing\n  Phase 3 (partial) — Connected Intelligence (W13–W20): Trend detection (scipy), RCSA due-date monitor, push notifications',
-    3: 'Accenture will support [CLIENT NAME] in the delivery of a full AI-Assisted ICS Dashboard (Maturity Level 3 — Base Case), comprising a production-grade LangChain RAG agent, TPRM Signal Engine, natural language query interface, DORA Article 30 report template, and full production go-live on Azure.\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4)\n  Phase 1 — Data Foundation (W5–W12)\n  Phase 2 — Core Connected Dashboard (W9–W16)\n  Phase 3 — AI Layer (W13–W20): LangChain RAG agent, Azure OpenAI (GPT-4o), TPRM Signal Engine, AI Search document index\n  Phase 4 — Workflow & Actions (W17–W24): NL query UI, AI-assisted reporting, workflow automation stub\n  Phase 5 — Hardening & Go-Live (W21–W28): Penetration test, UAT, DPIA, production cutover, AI governance framework',
+    3: 'Accenture will support [CLIENT NAME] in the delivery of a full AI-Assisted ICS Dashboard (Maturity Level 3 — Base Case), comprising a production-grade LangChain RAG agent, TPRM Signal Engine, natural language query interface, DORA ICT third-party register (Art. 28/30), and full production go-live on Azure.\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4)\n  Phase 1 — Data Foundation (W5–W12)\n  Phase 2 — Core Connected Dashboard (W9–W16)\n  Phase 3 — AI Layer (W13–W20): LangChain RAG agent, Azure OpenAI (GPT-4o), TPRM Signal Engine, AI Search document index\n  Phase 4 — Workflow & Actions (W17–W24): NL query UI, AI-assisted reporting, workflow automation stub\n  Phase 5 — Hardening & Go-Live (W21–W28): Penetration test, UAT, DPIA, production cutover, AI governance framework',
     4: 'Accenture will support [CLIENT NAME] in the delivery of an Active ICS Dashboard (Maturity Level 4), extending the L3 base case with 1LoD workflow automation via Azure Durable Functions, AI-proposed action routing with human-in-the-loop approval, and a 4-week workflow extension phase (W25–W32).\n\nScope: All L3 phases (W1–W28) plus:\n  Workflow Automation Extension (W25–W32): Azure Durable Functions RCSA lifecycle engine, AI-proposed task routing, escalation management, human-in-the-loop approval panel',
     5: 'Accenture will support [CLIENT NAME] in the delivery of a fully Autonomous ICS Dashboard (Maturity Level 5), extending L4 with autonomous write-back agents, self-healing data quality, and AI-drafted regulatory submission automation.\n\nScope: All L4 phases (W1–W32) plus:\n  Autonomous Extension (W29–W36): Write-back agents with rollback and audit trail, self-healing data quality module, DORA Article 30 auto-draft using GPT-4o, DPO review workflow'
   },
@@ -5634,7 +5634,7 @@ var SOW_CONTENT = {
       ['1.5','Connected Dashboard v1.0 (Live API)','Deployed app','React dashboard connected to FastAPI backend: real-time GRC data, 5×5 heatmap, RCSA timeline.','W16','Build FastAPI, deploy on Container Apps with APIM; conduct UAT.','Validate live data; provide UAT sign-off for dashboard v1.0.'],
       ['1.6','LLM Agent & RAG Interface','Deployed code','LangChain RAG agent with SQLQueryTool, DocumentRAGTool, StructuredAnalysisTool, WorkflowTool; SSE streaming; NL query UI.','W20','Build and test LLM agent; run 80% test-set pass validation; document system prompt.','Provide test question set; validate regulatory query accuracy.'],
       ['1.7','TPRM Signal Engine','Deployed code','Event-driven TPRM signal processor: rule-based pre-filter → LLM risk drafting → 2LoD review workflow.','W20','Build and deploy signal engine; document signal flow and LLM prompts.','Provide TPRM event feed access; validate classification accuracy.'],
-      ['1.8','DORA Article 30 Report Template','pptx/xlsx','DORA Article 30 report template pre-populated from dashboard data, with manual field guidance.','W24','Analyse DORA Art. 30 requirements; build template; validate with GRC expert.','Review template against regulatory obligations; confirm data field mappings.'],
+      ['1.8','DORA ICT Third-Party Register (Art. 28/30)','pptx/xlsx','DORA ICT third-party register (Register of Information, Art. 28) pre-populated from dashboard/TPRM data, plus an Art. 30 contractual-provisions checklist. Manual field guidance included.','W24','Analyse DORA Art. 28/30 requirements; build register + checklist; validate with GRC expert.','Review register against regulatory obligations; confirm data field mappings.'],
       ['1.9','Security Review & Penetration Test','pptx','Threat model, DPIA data flow mapping, security review report, external pen test findings.','W26','Conduct threat modelling; coordinate external pen test; produce security report.','Provide access for pen test; review and prioritise remediation findings.'],
       ['1.10','UAT Sign-Off & Go-Live Package','pptx','UAT test scripts, sign-off document, go-live checklist, operational runbook, cutover plan.','W28','Prepare UAT scripts; run UAT sessions; produce go-live checklist and runbook.','Lead UAT with risk SME; provide sign-off; confirm production readiness.'],
       ['1.11','AI Governance Framework','pptx','AI model card, human-in-the-loop protocols, model monitoring plan, audit trail documentation.','W28','Define AI governance framework; document model card and monitoring.','Review and approve framework; nominate AI governance owner.'],
@@ -5832,7 +5832,7 @@ function generateSoW(level) {
   html += '<div class="section"><h1>8.&nbsp;&nbsp;FEES AND EXPENSES</h1>';
   html += '<h2>8.1 Resource Schedule</h2>';
   html += '<table><tr><th>Role</th><th>Grade</th><th>Location Model</th><th>Headcount</th><th>Day Rate (EUR)</th><th>Days</th><th>Total (EUR)</th></tr>'+resRows+'</table>';
-  html += '<p><strong>Accenture Fees Total: '+esc(ld.cost)+'</strong> (excl. T&amp;E and third-party costs). T&amp;E estimated at 10% of fees. External pen test ~€30,000 (accredited vendor, billed separately).</p>';
+  html += '<p><strong>Indicative Total Project Investment: '+esc(ld.cost)+'</strong> (Accenture professional fees per schedule above, plus T&amp;E at 10% of fees and external pen test ~€30,000). Actual fees are governed by the applicable Master Services Agreement. Rates shown are indicative blended rates.</p>';
   html += '<h2>8.2 Travel &amp; Expenses</h2>';
   html += '<p>Travel and expenses are billed at cost, capped at 10% of Accenture fees. Expenses are invoiced monthly with supporting documentation. Air travel above economy class requires prior written approval.</p>';
   html += '</div>';
