@@ -406,6 +406,46 @@ section { padding-top: 16px; margin-bottom: 40px; }
 .journey-step { display: none; }
 .journey-step.active { display: block; }
 
+/* ===== JOURNEY ZONE BAR — economies of scope overlay ===== */
+.journey-zone-bar {
+  display: flex;
+  gap: 4px;
+  padding: 8px 20px 0;
+  background: linear-gradient(135deg, #0D1B2E 0%, #1E3A6E 100%);
+}
+.jzb-zone {
+  padding: 5px 10px;
+  border-radius: 5px 5px 0 0;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border-bottom: none;
+  min-width: 0;
+}
+.jzb-input {
+  background: rgba(26,122,82,.28);
+  color: #6EE7B7;
+  border: 1px solid rgba(26,122,82,.5);
+  border-bottom: none;
+}
+.jzb-core {
+  background: rgba(161,0,255,.22);
+  color: #C4B5FD;
+  border: 1px solid rgba(161,0,255,.45);
+  border-bottom: none;
+}
+.jzb-output {
+  background: rgba(154,101,0,.22);
+  color: #FCD34D;
+  border: 1px solid rgba(180,120,0,.38);
+  border-bottom: none;
+}
+
 /* ── Content area: clean white grid ── */
 .journey-body {
   display: grid;
@@ -1981,6 +2021,17 @@ details.collapsible > div.details-body { padding: 16px; }
     <p>Trace risk record <strong>RSK-2024-0142</strong> from source to screen. Use the <strong>AI Maturity Level</strong> selector at the top to switch journeys — from manual CSV (L1) through to fully autonomous AI write-back (L5).</p>
   </div>
 
+  <!-- ECONOMIES OF SCOPE CALLOUT -->
+  <div style="margin-bottom:20px;padding:16px 20px;background:linear-gradient(135deg,#F5EEFF 0%,#EDE0FF 100%);border:1px solid rgba(161,0,255,.15);border-radius:var(--radiusL);border-left:4px solid var(--brand);">
+    <div style="font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--brand);margin-bottom:8px;">Platform Economics — Economies of Scope</div>
+    <p style="font-size:13px;color:var(--ts);line-height:1.7;margin:0 0 12px;">The <strong>Platform Core</strong> (Data Factory → Staging → Transform → Database, steps 3–6) is built once and runs on your Azure tenant for any GRC-class dashboard. Only the <em>source connector</em> (steps 1–2) and <em>output layer</em> (steps 7+) vary between use cases — meaning a second deployment for a different domain (e.g. HR Compliance, Contract Risk, Vendor Due Diligence) carries roughly <strong>30–40% of the original investment</strong>, not a full rebuild.</p>
+    <div style="display:flex;gap:20px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:#1A7A52;font-weight:600;"><span style="width:10px;height:10px;border-radius:2px;background:#1A7A52;flex-shrink:0;display:inline-block;"></span>Input Connector — client-specific, ~1–2 wks to configure</div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--brand);font-weight:600;"><span style="width:10px;height:10px;border-radius:2px;background:var(--brand);flex-shrink:0;display:inline-block;"></span>Platform Core — built once, reused across all use cases</div>
+      <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:#9A6500;font-weight:600;"><span style="width:10px;height:10px;border-radius:2px;background:#9A6500;flex-shrink:0;display:inline-block;"></span>Output Layer — configurable per domain, ~2–4 wks</div>
+    </div>
+  </div>
+
   <!-- LEVEL DESCRIPTION CARD -->
   <div id="levelDesc" style="margin-bottom:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radiusL);border-left:4px solid var(--brandMid);">
     <div id="levelDescTitle" style="font-weight:700;color:var(--tp);margin-bottom:4px;font-size:14px;"></div>
@@ -1996,6 +2047,11 @@ details.collapsible > div.details-body { padding: 16px; }
   <!-- ===================== LEVEL 1 PLAYER ===================== -->
   <div data-level-content="1" style="display:none;">
   <div class="journey-player">
+    <div class="journey-zone-bar">
+      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — manual export, specific to source system">⬡ Input</div>
+      <div class="jzb-zone jzb-core" style="flex:3" title="Steps 3-5 — ADF + dbt + DB, built once and reused">◈ Platform Core</div>
+      <div class="jzb-zone jzb-output" style="flex:1" title="Step 6 — static dashboard, configurable per domain">◇ Output</div>
+    </div>
     <div class="journey-filmstrip">
       <div class="journey-dot active" title="Step 1: Manual CSV Export"><div class="journey-dot-circle">1</div><div class="journey-dot-label">CSV Export</div></div>
       <div class="journey-dot" title="Step 2: Blob Upload"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Blob Upload</div></div>
@@ -2174,6 +2230,11 @@ az storage blob upload \
   <!-- ===================== LEVEL 2 PLAYER ===================== -->
   <div data-level-content="2" style="display:none;">
   <div class="journey-player">
+    <div class="journey-zone-bar">
+      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — REST API connector, specific to source system">⬡ Input Connector</div>
+      <div class="jzb-zone jzb-core" style="flex:4" title="Steps 3-6 — ADF + Staging + dbt + DB, built once and reused across use cases">◈ Platform Core — Reusable</div>
+      <div class="jzb-zone jzb-output" style="flex:2" title="Steps 7-8 — FastAPI + SSE push layer, configurable per use case">◇ Output</div>
+    </div>
     <div class="journey-filmstrip">
       <div class="journey-dot active" title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
       <div class="journey-dot" title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
@@ -2545,6 +2606,11 @@ data: {
   <!-- ===================== LEVEL 3 PLAYER (existing) ===================== -->
   <div data-level-content="3">
   <div class="journey-player">
+    <div class="journey-zone-bar">
+      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — GRC source connector, client-specific">⬡ Input Connector</div>
+      <div class="jzb-zone jzb-core" style="flex:4" title="Steps 3-6 — ADF + Staging + dbt + AI Search, built once and reused">◈ Platform Core — Reusable</div>
+      <div class="jzb-zone jzb-output" style="flex:4" title="Steps 7-10 — API + React UI + heatmap, configurable per domain">◇ Configurable Output</div>
+    </div>
     <!-- Filmstrip -->
     <div class="journey-filmstrip">
       <div class="journey-dot active" title="Step 1: GRC Source — ServiceNow REST API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC Source</div></div>
@@ -3048,6 +3114,11 @@ CREATE INDEX idx_risks_heatmap
   <!-- ===================== LEVEL 4 PLAYER ===================== -->
   <div data-level-content="4" style="display:none;">
   <div class="journey-player">
+    <div class="journey-zone-bar">
+      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — GRC source connector, client-specific">⬡ Input Connector</div>
+      <div class="jzb-zone jzb-core" style="flex:4" title="Steps 3-6 — ADF + Staging + dbt + AI Search, built once and reused">◈ Platform Core — Reusable</div>
+      <div class="jzb-zone jzb-output" style="flex:6" title="Steps 7-12 — API + UI + AI-proposed workflow actions, configurable">◇ Output + AI Actions</div>
+    </div>
     <div class="journey-filmstrip">
       <div class="journey-dot active" title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
       <div class="journey-dot" title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
@@ -3603,6 +3674,11 @@ CREATE INDEX idx_risks_heatmap
   <!-- ===================== LEVEL 5 PLAYER ===================== -->
   <div data-level-content="5" style="display:none;">
   <div class="journey-player">
+    <div class="journey-zone-bar">
+      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — GRC source connector, client-specific">⬡ Input Connector</div>
+      <div class="jzb-zone jzb-core" style="flex:4" title="Steps 3-6 — ADF + Staging + dbt + AI Search, built once and reused">◈ Platform Core — Reusable</div>
+      <div class="jzb-zone jzb-output" style="flex:8" title="Steps 7-14 — API + UI + autonomous write-back, configurable per domain">◇ Output + Autonomous Write-back</div>
+    </div>
     <div class="journey-filmstrip">
       <div class="journey-dot active" title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
       <div class="journey-dot" title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
@@ -5154,39 +5230,37 @@ useEffect(() =&gt; {
 
 <script>
 // ====================================================
-// NAVIGATION — IntersectionObserver for active state
+// NAVIGATION — Scroll Spy + smooth click
 // ====================================================
 (function() {
-  const navItems = document.querySelectorAll('.nav-item[data-section]');
-  const sections = document.querySelectorAll('section[id]');
+  const navItems = Array.from(document.querySelectorAll('.nav-item[data-section]'));
+  const sections = Array.from(document.querySelectorAll('section[id]'));
 
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        const id = entry.target.id;
-        navItems.forEach(n => {
-          n.classList.toggle('active', n.dataset.section === id);
-        });
-      }
-    });
-  }, { threshold: 0.2, rootMargin: '-60px 0px -60% 0px' });
+  function updateActive() {
+    // Activate the last section whose top edge is within the upper 35% of the viewport
+    const trigger = window.scrollY + window.innerHeight * 0.35;
+    let current = sections[0];
+    for (const s of sections) {
+      if (s.offsetTop <= trigger) current = s;
+    }
+    navItems.forEach(n => n.classList.toggle('active', n.dataset.section === current.id));
+  }
 
-  sections.forEach(s => observer.observe(s));
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) { requestAnimationFrame(() => { updateActive(); ticking = false; }); ticking = true; }
+  }, { passive: true });
 
-  // Smooth scroll on nav click
   navItems.forEach(item => {
     item.addEventListener('click', function(e) {
       e.preventDefault();
       const target = document.getElementById(this.dataset.section);
-      if (target) {
-        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      }
-      // Close sidebar on mobile
-      if (window.innerWidth < 768) {
-        document.getElementById('sidebar').classList.remove('open');
-      }
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (window.innerWidth < 768) document.getElementById('sidebar').classList.remove('open');
     });
   });
+
+  updateActive();
 })();
 
 // ====================================================
