@@ -237,8 +237,37 @@ tbody tr:nth-child(even) td { background: var(--s1); }
 .fte-none { background: #fff; color: var(--tm); text-align: center; }
 .fte-total { background: var(--s2); font-weight: 700; text-align: center; color: var(--tp); }
 
-/* ARCH DIAGRAM */
-.arch-block { background: #14202E; color: #c8d8e8; font-family: var(--mono); font-size: 12.5px; padding: 20px; border-radius: var(--radius); overflow-x: auto; margin-bottom: 20px; line-height: 1.8; white-space: pre; }
+/* ARCH DIAGRAM — Visual layer diagram */
+.arch-diagram-visual { display:flex; flex-direction:column; gap:0; margin-bottom:20px; }
+.arch-layer { border:1.5px solid; border-radius:var(--radiusL); padding:14px 18px; }
+.arch-layer-label { font-size:9.5px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; margin-bottom:10px; display:flex; align-items:center; gap:6px; }
+.arch-layer-chips { display:flex; flex-wrap:wrap; gap:8px; }
+.arch-chip { padding:8px 13px; border-radius:var(--radius); font-size:12px; border:1px solid transparent; flex:0 0 auto; }
+.arch-chip-name { font-weight:700; line-height:1.3; }
+.arch-chip-sub { font-size:10.5px; font-weight:400; opacity:.72; margin-top:2px; line-height:1.3; }
+.arch-chip-wide { flex:1 1 auto; }
+.arch-conn { text-align:center; padding:7px 0 4px; }
+.arch-conn-arrow { font-size:20px; color:var(--border); line-height:1; }
+.arch-conn-label { font-size:10.5px; color:var(--tm); font-style:italic; margin-top:1px; }
+/* Per-layer palette */
+.adl-ext    { background:var(--s1);                  border-color:var(--border); }
+.adl-ext    .arch-layer-label { color:var(--tm); }
+.adl-ext    .arch-chip { background:var(--surface); border-color:var(--border); color:var(--ts); }
+.adl-ingest { background:rgba(42,82,152,.05);         border-color:rgba(42,82,152,.22); }
+.adl-ingest .arch-layer-label { color:#2A5298; }
+.adl-ingest .arch-chip { background:rgba(42,82,152,.08); border-color:rgba(42,82,152,.18); color:#2A5298; }
+.adl-data   { background:rgba(26,122,82,.05);         border-color:rgba(26,122,82,.22); }
+.adl-data   .arch-layer-label { color:#1A7A52; }
+.adl-data   .arch-chip { background:rgba(26,122,82,.08); border-color:rgba(26,122,82,.18); color:#1A7A52; }
+.adl-ai     { background:rgba(109,40,217,.05);        border-color:rgba(109,40,217,.22); }
+.adl-ai     .arch-layer-label { color:#6D28D9; }
+.adl-ai     .arch-chip { background:rgba(109,40,217,.08); border-color:rgba(109,40,217,.18); color:#6D28D9; }
+.adl-api    { background:rgba(154,101,0,.05);         border-color:rgba(154,101,0,.22); }
+.adl-api    .arch-layer-label { color:#9A6500; }
+.adl-api    .arch-chip { background:rgba(154,101,0,.08); border-color:rgba(154,101,0,.18); color:#9A6500; }
+.adl-front  { background:rgba(30,58,110,.06);         border-color:rgba(30,58,110,.22); }
+.adl-front  .arch-layer-label { color:#1E3A6E; }
+.adl-front  .arch-chip { background:rgba(30,58,110,.08); border-color:rgba(30,58,110,.18); color:#1E3A6E; }
 
 /* PRINCIPLE CARDS */
 .principle-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; margin-bottom: 24px; }
@@ -4324,44 +4353,84 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
     <div class="tab-content" id="arch-diagram">
       <div class="subsec">
         <div class="subsec-title"><i class="ti ti-topology-star"></i>System Architecture</div>
-        <div class="arch-block">&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
-&#x2502;                     EXTERNAL DATA SOURCES                          &#x2502;
-&#x2502;  GRC Platform (ServiceNow/Archer)  &#x2502;  TPRM Tool  &#x2502;  HR/IAM  &#x2502; Docs &#x2502;
-&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2534;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
-                              | REST APIs / Exports / Webhooks
-                              v
-&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
-&#x2502;                      INGESTION &amp; ETL LAYER                           &#x2502;
-&#x2502;  Azure Data Factory  &#x2502;  Python GRC Connectors  &#x2502;  Doc Ingestion Fn  &#x2502;
-&#x2502;  Data validation gates  &#x2502;  Schema normalisation  &#x2502;  Change events    &#x2502;
-&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2534;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
-                              v
-&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
-&#x2502;                       DATA PLATFORM LAYER                             &#x2502;
-&#x2502;  Azure PostgreSQL v16    &#x2502;  Azure AI Search       &#x2502;  Azure Blob       &#x2502;
-&#x2502;  Risks, Controls, RCSA  &#x2502;  Vector embeddings     &#x2502;  Documents, PDFs  &#x2502;
-&#x2502;  Processes, Users, Tasks &#x2502;  BM25 + Vector (RRF)  &#x2502;  GRC exports      &#x2502;
-&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2534;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
-                              v
-&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
-&#x2502;                     AI / ML SERVICES LAYER                            &#x2502;
-&#x2502;  LLM Agent (Azure OpenAI GPT-4o) + RAG Pipeline (LangChain)           &#x2502;
-&#x2502;  TPRM Signal Engine  &#x2502;  Trend Detection  &#x2502;  RCSA Due-Date Monitor    &#x2502;
-&#x2502;  1LoD Workflow Engine (Durable Functions) &#x2502;  NL Query Interface       &#x2502;
-&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2534;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
-                              v
-&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
-&#x2502;                       API GATEWAY LAYER                                &#x2502;
-&#x2502;  Azure API Management (APIM) &#x2502;  FastAPI (Azure Container Apps)       &#x2502;
-&#x2502;  Azure AD OAuth2 / OIDC &#x2502;  Redis caching &#x2502;  Audit logging            &#x2502;
-&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2534;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;
-                              | HTTPS
-                              v
-&#x250C;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2510;
-&#x2502;                        FRONTEND LAYER                                  &#x2502;
-&#x2502;  React 18 SPA (TypeScript, Vite) &#x2502;  Azure Static Web Apps            &#x2502;
-&#x2502;  ICS Cockpit: heatmaps, RCSA timeline, AI chat, workflow actions         &#x2502;
-&#x2514;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2500;&#x2518;</div>
+        <div class="arch-diagram-visual">
+
+          <!-- Layer 1 — External sources (client systems, not our stack) -->
+          <div class="arch-layer adl-ext">
+            <div class="arch-layer-label">External Data Sources</div>
+            <div class="arch-layer-chips">
+              <div class="arch-chip"><div class="arch-chip-name">GRC Platform</div><div class="arch-chip-sub">ServiceNow · Archer</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">TPRM Tool</div><div class="arch-chip-sub">Vendor event feed</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">HR / IAM</div><div class="arch-chip-sub">User identities</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Documents</div><div class="arch-chip-sub">Policy · procedures · PDFs</div></div>
+            </div>
+          </div>
+
+          <div class="arch-conn"><div class="arch-conn-arrow">↓</div><div class="arch-conn-label">REST APIs · CSV exports · Webhooks</div></div>
+
+          <!-- Layer 2 — Ingestion & ETL -->
+          <div class="arch-layer adl-ingest">
+            <div class="arch-layer-label"><i class="ti ti-bolt"></i>Ingestion &amp; ETL</div>
+            <div class="arch-layer-chips">
+              <div class="arch-chip"><div class="arch-chip-name">Azure Data Factory</div><div class="arch-chip-sub">Scheduled pipelines · incremental pull</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Python GRC Connectors</div><div class="arch-chip-sub">Schema normalisation · validation gates</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Doc Ingestion Function</div><div class="arch-chip-sub">Azure Fn · Blob trigger · change events</div></div>
+            </div>
+          </div>
+
+          <div class="arch-conn"><div class="arch-conn-arrow">↓</div><div class="arch-conn-label">Normalised records · file events · dbt transform</div></div>
+
+          <!-- Layer 3 — Data Platform -->
+          <div class="arch-layer adl-data">
+            <div class="arch-layer-label"><i class="ti ti-database"></i>Data Platform</div>
+            <div class="arch-layer-chips">
+              <div class="arch-chip arch-chip-wide"><div class="arch-chip-name">Azure PostgreSQL v16</div><div class="arch-chip-sub">Risks · Controls · RCSA · Processes · Users · Tasks · Audit</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Azure AI Search</div><div class="arch-chip-sub">BM25 + Vector (RRF) · 50 GB index</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Azure Blob Storage</div><div class="arch-chip-sub">Documents · PDFs · GRC exports</div></div>
+            </div>
+          </div>
+
+          <div class="arch-conn"><div class="arch-conn-arrow">↓</div><div class="arch-conn-label">SQL queries · vector search · file reads</div></div>
+
+          <!-- Layer 4 — AI/ML -->
+          <div class="arch-layer adl-ai">
+            <div class="arch-layer-label"><i class="ti ti-brain"></i>AI / ML Services</div>
+            <div class="arch-layer-chips">
+              <div class="arch-chip arch-chip-wide"><div class="arch-chip-name">LLM Agent — Azure OpenAI GPT-4o</div><div class="arch-chip-sub">LangChain RAG · 4 tools: SQLQuery · DocumentRAG · Analysis · Workflow</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">TPRM Signal Engine</div><div class="arch-chip-sub">GPT-4o-mini · auto-draft · ~$0.0003/signal</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Trend Detection</div><div class="arch-chip-sub">Python · scipy · weekly Azure Fn</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Workflow Engine</div><div class="arch-chip-sub">Durable Functions · human-in-loop · L4+</div></div>
+            </div>
+          </div>
+
+          <div class="arch-conn"><div class="arch-conn-arrow">↓</div><div class="arch-conn-label">Structured responses · proposed actions · audit events</div></div>
+
+          <!-- Layer 5 — API Gateway -->
+          <div class="arch-layer adl-api">
+            <div class="arch-layer-label"><i class="ti ti-api"></i>API Gateway</div>
+            <div class="arch-layer-chips">
+              <div class="arch-chip"><div class="arch-chip-name">Azure APIM</div><div class="arch-chip-sub">JWT auth · rate-limiting · developer portal</div></div>
+              <div class="arch-chip arch-chip-wide"><div class="arch-chip-name">FastAPI — Azure Container Apps</div><div class="arch-chip-sub">REST endpoints · SSE streaming · audit logging</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Azure AD OAuth2 / OIDC</div><div class="arch-chip-sub">RBAC · role-gated endpoints · Key Vault</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Redis Cache</div><div class="arch-chip-sub">API response cache · session store</div></div>
+            </div>
+          </div>
+
+          <div class="arch-conn"><div class="arch-conn-arrow">↓</div><div class="arch-conn-label">HTTPS · Server-Sent Events</div></div>
+
+          <!-- Layer 6 — Frontend -->
+          <div class="arch-layer adl-front">
+            <div class="arch-layer-label"><i class="ti ti-device-desktop"></i>Frontend — Azure Static Web Apps</div>
+            <div class="arch-layer-chips">
+              <div class="arch-chip arch-chip-wide"><div class="arch-chip-name">React 18 SPA</div><div class="arch-chip-sub">TypeScript · Vite · Azure Static Web Apps · global CDN</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Risk Heatmap</div><div class="arch-chip-sub">Live risk matrix</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">RCSA Timeline</div><div class="arch-chip-sub">Assessment tracker</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">AI Chat Panel</div><div class="arch-chip-sub">NL query interface</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Workflow Actions</div><div class="arch-chip-sub">1LoD approvals · L4+</div></div>
+            </div>
+          </div>
+
+        </div>
       </div>
       <div class="subsec">
         <div class="subsec-title"><i class="ti ti-diamond"></i>Design Principles</div>
