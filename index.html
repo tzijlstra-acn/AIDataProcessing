@@ -406,45 +406,27 @@ section { padding-top: 16px; margin-bottom: 40px; }
 .journey-step { display: none; }
 .journey-step.active { display: block; }
 
-/* ===== JOURNEY ZONE BAR — economies of scope overlay ===== */
-.journey-zone-bar {
-  display: flex;
-  gap: 4px;
-  padding: 8px 20px 0;
-  background: linear-gradient(135deg, #0D1B2E 0%, #1E3A6E 100%);
-}
-.jzb-zone {
-  padding: 5px 10px;
-  border-radius: 5px 5px 0 0;
-  font-size: 9px;
-  font-weight: 700;
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  text-align: center;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  border-bottom: none;
-  min-width: 0;
-}
-.jzb-input {
-  background: rgba(26,122,82,.28);
-  color: #6EE7B7;
-  border: 1px solid rgba(26,122,82,.5);
-  border-bottom: none;
-}
-.jzb-core {
-  background: rgba(161,0,255,.22);
-  color: #C4B5FD;
-  border: 1px solid rgba(161,0,255,.45);
-  border-bottom: none;
-}
-.jzb-output {
-  background: rgba(154,101,0,.22);
-  color: #FCD34D;
-  border: 1px solid rgba(180,120,0,.38);
-  border-bottom: none;
-}
+/* ===== JOURNEY ZONE MARKERS — colored dot rings per zone ===== */
+.journey-dot { position: relative; }
+.journey-dot[data-zone="input"]  .journey-dot-circle { border-color: rgba(110,231,183,.75); background: rgba(26,122,82,.18); }
+.journey-dot[data-zone="input"]  .journey-dot-label  { color: #9EE8C8; }
+.journey-dot[data-zone="core"]   .journey-dot-circle { border-color: rgba(196,181,253,.75); background: rgba(161,0,255,.14); }
+.journey-dot[data-zone="core"]   .journey-dot-label  { color: #D4C8FF; }
+.journey-dot[data-zone="output"] .journey-dot-circle { border-color: rgba(252,211,77,.65); background: rgba(154,101,0,.14); }
+.journey-dot[data-zone="output"] .journey-dot-label  { color: #FCDBA0; }
+/* Active / completed override zone colors */
+.journey-dot.active    .journey-dot-circle { border-color: var(--accent) !important; background: var(--accent) !important; }
+.journey-dot.completed .journey-dot-circle { border-color: rgba(255,255,255,.35) !important; background: rgba(255,255,255,.18) !important; }
+/* Thin separator before the first dot of each new zone */
+.journey-dot.zone-start { margin-left: 8px; }
+.journey-dot.zone-start::before { content:''; position:absolute; left:-4px; top:8px; bottom:8px; width:1px; background:rgba(255,255,255,.16); }
+/* Zone legend strip — sits below the filmstrip inside the dark header */
+.jz-legend { display:flex; flex-wrap:wrap; gap:0; padding:5px 22px 10px; background:linear-gradient(135deg,#0D1B2E 0%,#1E3A6E 100%); }
+.jz-item { display:flex; align-items:center; gap:5px; font-size:10px; font-weight:600; letter-spacing:.03em; padding-right:20px; }
+.jz-pip { width:7px; height:7px; border-radius:50%; flex-shrink:0; border:1.5px solid; }
+.jz-input  { color:#9EE8C8; } .jz-input  .jz-pip { border-color:rgba(110,231,183,.85); background:rgba(26,122,82,.28); }
+.jz-core   { color:#D4C8FF; } .jz-core   .jz-pip { border-color:rgba(196,181,253,.85); background:rgba(161,0,255,.22); }
+.jz-output { color:#FCDBA0; } .jz-output .jz-pip { border-color:rgba(252,211,77,.75); background:rgba(154,101,0,.2); }
 
 /* ── Content area: clean white grid ── */
 .journey-body {
@@ -981,10 +963,7 @@ details.collapsible > div.details-body { padding: 16px; }
     <div class="stat-tile"><div class="stat-val" id="stat-cost">~€2.4M</div><div class="stat-label">Investment</div><div class="stat-sub">Implementation budget</div></div>
   </div>
 
-  <div class="card" style="margin-bottom:24px;">
-    <h4>About This Blueprint</h4>
-    <p>This implementation guide defines everything required to design, build, and deploy an AI-powered Internal Control System (ICS) Cockpit for a financial services institution. It covers the complete team structure, phased delivery roadmap, data ingestion requirements, AI/ML architecture, and feature-level interaction specification. This document is the contract between Accenture delivery and the client — every team member, every data source, and every user-facing feature described here must be agreed, provisioned, or delivered before the corresponding phase exit gate is passed.</p>
-  </div>
+  <p style="font-size:13.5px;color:var(--ts);line-height:1.7;margin-bottom:24px;padding:0 2px;">This blueprint covers team structure, delivery roadmap, data requirements, AI architecture, and feature specification for a complete ICS Cockpit deployment. Every item described here is a delivery commitment — agreed, provisioned, or built before the corresponding phase exit gate.</p>
 
   <!-- Delivery Team at a Glance -->
   <div class="subsec">
@@ -2021,16 +2000,8 @@ details.collapsible > div.details-body { padding: 16px; }
     <p>Trace risk record <strong>RSK-2024-0142</strong> from source to screen. Use the <strong>AI Maturity Level</strong> selector at the top to switch journeys — from manual CSV (L1) through to fully autonomous AI write-back (L5).</p>
   </div>
 
-  <!-- ECONOMIES OF SCOPE CALLOUT -->
-  <div style="margin-bottom:20px;padding:16px 20px;background:linear-gradient(135deg,#F5EEFF 0%,#EDE0FF 100%);border:1px solid rgba(161,0,255,.15);border-radius:var(--radiusL);border-left:4px solid var(--brand);">
-    <div style="font-size:11px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--brand);margin-bottom:8px;">Platform Economics — Economies of Scope</div>
-    <p style="font-size:13px;color:var(--ts);line-height:1.7;margin:0 0 12px;">The <strong>Platform Core</strong> (Data Factory → Staging → Transform → Database, steps 3–6) is built once and runs on your Azure tenant for any GRC-class dashboard. Only the <em>source connector</em> (steps 1–2) and <em>output layer</em> (steps 7+) vary between use cases — meaning a second deployment for a different domain (e.g. HR Compliance, Contract Risk, Vendor Due Diligence) carries roughly <strong>30–40% of the original investment</strong>, not a full rebuild.</p>
-    <div style="display:flex;gap:20px;flex-wrap:wrap;">
-      <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:#1A7A52;font-weight:600;"><span style="width:10px;height:10px;border-radius:2px;background:#1A7A52;flex-shrink:0;display:inline-block;"></span>Input Connector — client-specific, ~1–2 wks to configure</div>
-      <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:var(--brand);font-weight:600;"><span style="width:10px;height:10px;border-radius:2px;background:var(--brand);flex-shrink:0;display:inline-block;"></span>Platform Core — built once, reused across all use cases</div>
-      <div style="display:flex;align-items:center;gap:7px;font-size:11.5px;color:#9A6500;font-weight:600;"><span style="width:10px;height:10px;border-radius:2px;background:#9A6500;flex-shrink:0;display:inline-block;"></span>Output Layer — configurable per domain, ~2–4 wks</div>
-    </div>
-  </div>
+  <!-- ZONE LEGEND INTRO -->
+  <p style="font-size:12.5px;color:var(--ts);line-height:1.6;margin-bottom:6px;">Each step below is colour-coded by zone. The <strong style="color:var(--brand);">Platform Core</strong> (steps 3–6) is built once and reused for any new use case on the same tenant — only the connectors and output layer need reconfiguring.</p>
 
   <!-- LEVEL DESCRIPTION CARD -->
   <div id="levelDesc" style="margin-bottom:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radiusL);border-left:4px solid var(--brandMid);">
@@ -2039,26 +2010,25 @@ details.collapsible > div.details-body { padding: 16px; }
   </div>
 
   <!-- LIVE DOCUMENT CALLOUT (L2+) -->
-  <div id="liveDocCallout" style="display:none;margin-bottom:20px;padding:14px 18px;background:var(--gb);border:1px solid rgba(26,122,82,.2);border-radius:var(--radius);">
-    <div style="font-size:12px;font-weight:700;color:var(--g);margin-bottom:6px;text-transform:uppercase;letter-spacing:.05em;">Live Document Re-ingestion — Active from Level 2</div>
-    <p style="font-size:13px;color:var(--ts);line-height:1.7;margin:0">When a policy document is updated in Azure Blob Storage, an Azure Function triggers automatically within seconds. The document is re-parsed, re-chunked, re-embedded, and re-indexed in Azure AI Search. The AI agent's answers reflect the updated policy within ~15 minutes. Uploading a new DORA guideline or updated RCSA procedure immediately improves agent answer quality — no manual intervention needed.</p>
+  <div id="liveDocCallout" style="display:none;margin-bottom:16px;padding:8px 14px;background:rgba(26,122,82,.06);border-left:3px solid rgba(26,122,82,.4);border-radius:4px;">
+    <span style="font-size:11px;font-weight:700;color:var(--g);letter-spacing:.04em;text-transform:uppercase;">Live Re-ingestion active from L2</span><span style="font-size:12px;color:var(--ts);margin-left:10px;">Policy update → Azure Function → re-indexed in AI Search within ~15 min. No manual action needed.</span>
   </div>
 
   <!-- ===================== LEVEL 1 PLAYER ===================== -->
   <div data-level-content="1" style="display:none;">
   <div class="journey-player">
-    <div class="journey-zone-bar">
-      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — manual export, specific to source system">⬡ Input</div>
-      <div class="jzb-zone jzb-core" style="flex:3" title="Steps 3-5 — ADF + dbt + DB, built once and reused">◈ Platform Core</div>
-      <div class="jzb-zone jzb-output" style="flex:1" title="Step 6 — static dashboard, configurable per domain">◇ Output</div>
-    </div>
     <div class="journey-filmstrip">
-      <div class="journey-dot active" title="Step 1: Manual CSV Export"><div class="journey-dot-circle">1</div><div class="journey-dot-label">CSV Export</div></div>
-      <div class="journey-dot" title="Step 2: Blob Upload"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Blob Upload</div></div>
-      <div class="journey-dot" title="Step 3: ADF Copy Activity"><div class="journey-dot-circle">3</div><div class="journey-dot-label">ADF Copy</div></div>
-      <div class="journey-dot" title="Step 4: dbt Transform"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot" title="Step 5: PostgreSQL Core Table"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot" title="Step 6: Static Dashboard"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Dashboard</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: Manual CSV Export"><div class="journey-dot-circle">1</div><div class="journey-dot-label">CSV Export</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Blob Upload"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Blob Upload</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: ADF Copy Activity"><div class="journey-dot-circle">3</div><div class="journey-dot-label">ADF Copy</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: dbt Transform"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: PostgreSQL Core Table"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Database</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 6: Static Dashboard"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Dashboard</div></div>
+    </div>
+    <div class="jz-legend">
+      <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
+      <div class="jz-item jz-core"><span class="jz-pip"></span>Platform Core — Reusable</div>
+      <div class="jz-item jz-output"><span class="jz-pip"></span>Configurable Output</div>
     </div>
     <div class="journey-step" data-step="0">
       <div class="journey-level-tag l1"><span class="jlt-icon">◆</span><span class="jlt-label">L1 Foundation — Static CSV Pipeline</span><span class="jlt-avail">L1 only</span></div>
@@ -2230,20 +2200,20 @@ az storage blob upload \
   <!-- ===================== LEVEL 2 PLAYER ===================== -->
   <div data-level-content="2" style="display:none;">
   <div class="journey-player">
-    <div class="journey-zone-bar">
-      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — REST API connector, specific to source system">⬡ Input Connector</div>
-      <div class="jzb-zone jzb-core" style="flex:4" title="Steps 3-6 — ADF + Staging + dbt + DB, built once and reused across use cases">◈ Platform Core — Reusable</div>
-      <div class="jzb-zone jzb-output" style="flex:2" title="Steps 7-8 — FastAPI + SSE push layer, configurable per use case">◇ Output</div>
-    </div>
     <div class="journey-filmstrip">
-      <div class="journey-dot active" title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
-      <div class="journey-dot" title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
-      <div class="journey-dot" title="Step 3: ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
-      <div class="journey-dot" title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
-      <div class="journey-dot" title="Step 5: dbt Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot" title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot" title="Step 7: FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
-      <div class="journey-dot" title="Step 8: SSE Push — NEW at L2"><div class="journey-dot-circle">8</div><div class="journey-dot-label">SSE Push</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: dbt Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 7: FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 8: SSE Push — NEW at L2"><div class="journey-dot-circle">8</div><div class="journey-dot-label">SSE Push</div></div>
+    </div>
+    <div class="jz-legend">
+      <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
+      <div class="jz-item jz-core"><span class="jz-pip"></span>Platform Core — Reusable</div>
+      <div class="jz-item jz-output"><span class="jz-pip"></span>Configurable Output</div>
     </div>
     <div class="journey-step" data-step="0">
       <div class="journey-level-tag l2"><span class="jlt-icon">✦</span><span class="jlt-label">Introduced at Level 2 — Live ServiceNow REST API replaces manual CSV export Introduced at Level 2 — Python GRCConnector abstracts source integration Introduced at Level 2 — Watermark-based incremental pipeline replaces full load Introduced at Level 2 — JSONB staging with idempotent UPSERT Introduced at Level 2 — Incremental model processes only new/changed rows Introduced at Level 2 — Live analytical model with GENERATED columns Introduced at Level 2 — Cache-aside API with JWT and RBAC scoping</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
@@ -2606,23 +2576,23 @@ data: {
   <!-- ===================== LEVEL 3 PLAYER (existing) ===================== -->
   <div data-level-content="3">
   <div class="journey-player">
-    <div class="journey-zone-bar">
-      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — GRC source connector, client-specific">⬡ Input Connector</div>
-      <div class="jzb-zone jzb-core" style="flex:4" title="Steps 3-6 — ADF + Staging + dbt + AI Search, built once and reused">◈ Platform Core — Reusable</div>
-      <div class="jzb-zone jzb-output" style="flex:4" title="Steps 7-10 — API + React UI + heatmap, configurable per domain">◇ Configurable Output</div>
-    </div>
     <!-- Filmstrip -->
     <div class="journey-filmstrip">
-      <div class="journey-dot active" title="Step 1: GRC Source — ServiceNow REST API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC Source</div></div>
-      <div class="journey-dot" title="Step 2: Connector — Python GRCConnector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
-      <div class="journey-dot" title="Step 3: Data Factory — ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
-      <div class="journey-dot" title="Step 4: Staging — PostgreSQL staging.risks_raw"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
-      <div class="journey-dot" title="Step 5: Transform — dbt models/core/risks.sql"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot" title="Step 6: Database — core.risks table"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot" title="Step 7: API Layer — FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
-      <div class="journey-dot" title="Step 8: Browser — React useHeatmapData hook"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
-      <div class="journey-dot" title="Step 9: Heatmap — HeatmapCell component"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
-      <div class="journey-dot" title="Step 10: User Click — process detail view"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC Source — ServiceNow REST API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC Source</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector — Python GRCConnector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: Data Factory — ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging — PostgreSQL staging.risks_raw"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: Transform — dbt models/core/risks.sql"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 6: Database — core.risks table"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 7: API Layer — FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 8: Browser — React useHeatmapData hook"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 9: Heatmap — HeatmapCell component"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 10: User Click — process detail view"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
+    </div>
+    <div class="jz-legend">
+      <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
+      <div class="jz-item jz-core"><span class="jz-pip"></span>Platform Core — Reusable</div>
+      <div class="jz-item jz-output"><span class="jz-pip"></span>Configurable Output</div>
     </div>
 
     <!-- STEP 0: GRC Source -->
@@ -3114,24 +3084,24 @@ CREATE INDEX idx_risks_heatmap
   <!-- ===================== LEVEL 4 PLAYER ===================== -->
   <div data-level-content="4" style="display:none;">
   <div class="journey-player">
-    <div class="journey-zone-bar">
-      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — GRC source connector, client-specific">⬡ Input Connector</div>
-      <div class="jzb-zone jzb-core" style="flex:4" title="Steps 3-6 — ADF + Staging + dbt + AI Search, built once and reused">◈ Platform Core — Reusable</div>
-      <div class="jzb-zone jzb-output" style="flex:6" title="Steps 7-12 — API + UI + AI-proposed workflow actions, configurable">◇ Output + AI Actions</div>
-    </div>
     <div class="journey-filmstrip">
-      <div class="journey-dot active" title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
-      <div class="journey-dot" title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
-      <div class="journey-dot" title="Step 3: Data Factory"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
-      <div class="journey-dot" title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
-      <div class="journey-dot" title="Step 5: Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot" title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot" title="Step 7: API Layer"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
-      <div class="journey-dot" title="Step 8: Browser"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
-      <div class="journey-dot" title="Step 9: Heatmap"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
-      <div class="journey-dot" title="Step 10: User Click"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
-      <div class="journey-dot" title="Step 11: AI Proposes Action — NEW at L4"><div class="journey-dot-circle" style="border-color:rgba(154,101,0,.6)">11</div><div class="journey-dot-label">AI Proposes</div></div>
-      <div class="journey-dot" title="Step 12: Human Approves — NEW at L4"><div class="journey-dot-circle" style="border-color:rgba(154,101,0,.6)">12</div><div class="journey-dot-label">Human OKs</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: Data Factory"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 7: API Layer"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 8: Browser"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 9: Heatmap"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 10: User Click"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 11: AI Proposes Action — NEW at L4"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Proposes</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 12: Human Approves — NEW at L4"><div class="journey-dot-circle">12</div><div class="journey-dot-label">Human OKs</div></div>
+    </div>
+    <div class="jz-legend">
+      <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
+      <div class="jz-item jz-core"><span class="jz-pip"></span>Platform Core — Reusable</div>
+      <div class="jz-item jz-output"><span class="jz-pip"></span>Configurable Output</div>
     </div>
     <!-- Steps 1-10: compact versions (same as L3) -->
     <div class="journey-step" data-step="0">
@@ -3674,26 +3644,26 @@ CREATE INDEX idx_risks_heatmap
   <!-- ===================== LEVEL 5 PLAYER ===================== -->
   <div data-level-content="5" style="display:none;">
   <div class="journey-player">
-    <div class="journey-zone-bar">
-      <div class="jzb-zone jzb-input" style="flex:2" title="Steps 1-2 — GRC source connector, client-specific">⬡ Input Connector</div>
-      <div class="jzb-zone jzb-core" style="flex:4" title="Steps 3-6 — ADF + Staging + dbt + AI Search, built once and reused">◈ Platform Core — Reusable</div>
-      <div class="jzb-zone jzb-output" style="flex:8" title="Steps 7-14 — API + UI + autonomous write-back, configurable per domain">◇ Output + Autonomous Write-back</div>
-    </div>
     <div class="journey-filmstrip">
-      <div class="journey-dot active" title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
-      <div class="journey-dot" title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
-      <div class="journey-dot" title="Step 3: Data Factory"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
-      <div class="journey-dot" title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
-      <div class="journey-dot" title="Step 5: Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot" title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot" title="Step 7: API Layer"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
-      <div class="journey-dot" title="Step 8: Browser"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
-      <div class="journey-dot" title="Step 9: Heatmap"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
-      <div class="journey-dot" title="Step 10: User Click"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
-      <div class="journey-dot" title="Step 11: AI Proposes"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Proposes</div></div>
-      <div class="journey-dot" title="Step 12: Human OKs"><div class="journey-dot-circle">12</div><div class="journey-dot-label">Human OKs</div></div>
-      <div class="journey-dot" title="Step 13: Policy Change Detection — Autonomous at L5"><div class="journey-dot-circle">13</div><div class="journey-dot-label">Policy Update</div></div>
-      <div class="journey-dot" title="Step 14: GRC Write-back — Core at L5"><div class="journey-dot-circle">14</div><div class="journey-dot-label">Write-back</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: Data Factory"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 7: API Layer"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 8: Browser"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 9: Heatmap"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 10: User Click"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 11: AI Proposes"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Proposes</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 12: Human OKs"><div class="journey-dot-circle">12</div><div class="journey-dot-label">Human OKs</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 13: Policy Change Detection — Autonomous at L5"><div class="journey-dot-circle">13</div><div class="journey-dot-label">Policy Update</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 14: GRC Write-back — Core at L5"><div class="journey-dot-circle">14</div><div class="journey-dot-label">Write-back</div></div>
+    </div>
+    <div class="jz-legend">
+      <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
+      <div class="jz-item jz-core"><span class="jz-pip"></span>Platform Core — Reusable</div>
+      <div class="jz-item jz-output"><span class="jz-pip"></span>Configurable Output</div>
     </div>
     <!-- Steps 1-12 compact -->
     <div class="journey-step" data-step="0">
@@ -5116,7 +5086,6 @@ useEffect(() =&gt; {
         <div class="roi-label">2LoD Analyst Time Saving</div>
       </div>
     </div>
-    <div class="roi-note" id="roi-note">Quantified savings based on 4 2LoD risk analysts + 8 process owners at market-loaded rates. Payback ~7 years on quantified savings alone — primary investment driver is DORA ICT risk compliance and material-finding avoidance, where one supervisory action can represent 8× or more of the implementation cost (up to ~21× at a €5B-revenue institution). At larger institutions (10+ analysts) payback compresses to ~4 years.</div>
   </div>
 
   <!-- Cost Tables -->
@@ -5131,13 +5100,8 @@ useEffect(() =&gt; {
           <tr><td>Azure AI Search</td><td>Standard S1, 1 unit</td><td>€225</td><td>Hybrid BM25 + vector search. 50 GB document index.</td></tr>
           <tr><td>Azure Cache for Redis</td><td>C2 Standard, 6 GB</td><td>€85</td><td>API response caching + session store.</td></tr>
           <tr><td>Azure OpenAI (GPT-4o + GPT-4o-mini)</td><td>Pay-as-you-go, ~5,200 agent calls/month</td><td>€72</td><td>See Intelligence section for per-call cost breakdown.</td></tr>
-          <tr><td>Azure Static Web Apps</td><td>Standard tier</td><td>€8</td><td>React SPA hosting. Global CDN included.</td></tr>
           <tr><td>Azure API Management</td><td>Standard tier</td><td>€70</td><td>Rate limiting, caching, developer portal.</td></tr>
-          <tr><td>Azure Service Bus</td><td>Standard tier, ~80 msg/month TPRM events</td><td>€1</td><td>Negligible — well within Standard free allowance.</td></tr>
-          <tr><td>Azure Blob Storage</td><td>LRS, ~15 GB documents + audit logs</td><td>€3</td><td>Document store + ADF staging + export files.</td></tr>
-          <tr><td>Azure Communication Services</td><td>Email, ~500 notifications/month</td><td>€1</td><td>Reminder + escalation emails.</td></tr>
-          <tr><td>Azure Monitor + Application Insights</td><td>5 GB logs/month ingestion</td><td>€7</td><td>Traces, metrics, alerts, dashboard.</td></tr>
-          <tr><td>Azure Key Vault</td><td>Standard, ~500 operations/month</td><td>€1</td><td>Credential and secret management.</td></tr>
+          <tr><td style="color:var(--ts);">Other Azure services</td><td style="color:var(--ts);font-size:12px;">Blob Storage, Static Web Apps, Service Bus, Monitor, Key Vault, Comms</td><td style="color:var(--ts);">€21</td><td style="color:var(--ts);font-size:12px;">Individually negligible; grouped for readability.</td></tr>
           <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--s1);"><td><strong>Total (production)</strong></td><td>—</td><td><strong>€1,173/month (€14,076/year)</strong></td><td>Dev/test environment ~30% of prod = €350/month additional.</td></tr>
           <tr style="font-weight:700;background:#EEF3FB;"><td><strong>Total with dev/test</strong></td><td>—</td><td><strong>~€1,343/month (€16,116/year)</strong></td><td>Within typical Azure EA agreement budget for mid-size GRC modernisation.</td></tr>
         </tbody>
@@ -5147,12 +5111,6 @@ useEffect(() =&gt; {
 
   <div class="subsec">
     <div class="subsec-title"><i class="ti ti-users"></i>Implementation Investment (One-Time)</div>
-
-    <div class="card" style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:16px;">
-      <div><div style="font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Consultant / Senior Consultant</div><div style="font-size:22px;font-weight:800;color:var(--tp)">€1,900<span style="font-size:13px;font-weight:500;color:var(--tm)">/day</span></div><div style="font-size:12px;color:var(--tm);margin-top:4px">Data Eng, AI/ML, BE Dev, FE Dev, CM Lead</div></div>
-      <div><div style="font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Manager</div><div style="font-size:22px;font-weight:800;color:var(--tp)">€2,500<span style="font-size:13px;font-weight:500;color:var(--tm)">/day</span></div><div style="font-size:12px;color:var(--tm);margin-top:4px">GRC Domain Expert, Security Architect (M level)</div></div>
-      <div><div style="font-size:11px;font-weight:700;color:var(--tm);letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">Senior Manager / Architect</div><div style="font-size:22px;font-weight:800;color:var(--tp)">€3,000<span style="font-size:13px;font-weight:500;color:var(--tm)">/day</span></div><div style="font-size:12px;color:var(--tm);margin-top:4px">Programme Manager, Solution Architect, GRC SM</div></div>
-    </div>
 
     <div class="table-wrap">
       <table>
@@ -5170,9 +5128,6 @@ useEffect(() =&gt; {
           <tr style="font-weight:700;background:var(--brandLight);"><td><strong>Total Implementation Investment</strong></td><td colspan="4">—</td><td><strong>~€2,391,000</strong></td></tr>
         </tbody>
       </table>
-    </div>
-    <div class="card" style="background:var(--ab);border-left:3px solid var(--a);margin-top:0;">
-      <p style="font-size:13px;color:var(--ts);">⚠ <strong>Note on offshore/nearshore delivery:</strong> Hybrid delivery models (e.g. 40% nearshore for Data Engineers and Frontend) can reduce fees to ~€1.5–1.7M, but introduce timezone friction, communication overhead, and typically lower GRC domain familiarity. Offshore developer rates (~$500/day) apply only to well-defined development tasks — not architecture, domain expertise, or stakeholder engagement.</p>
     </div>
     <div class="card" style="background:var(--brandLight);border-left:3px solid var(--brandMid);margin-top:8px;">
       <h4 style="color:var(--brandMid);margin-bottom:8px;">Blended Rate Model</h4>
@@ -5202,13 +5157,11 @@ useEffect(() =&gt; {
       </table>
     </div>
     <div class="card" style="background:var(--gb);border-left:3px solid var(--g);">
-      <h4 style="color:var(--g);">Strategic Benefits (Not in Payback Calculation)</h4>
-      <ul style="padding-left:18px;font-size:13px;color:var(--ts);line-height:2;">
-        <li><strong>DORA compliance:</strong> DORA Article 30 non-compliance penalties reach up to 1% of global annual turnover. For a €5B-revenue institution that is €50M exposure. A single avoided supervisory finding represents 21× the implementation cost — this is the primary business case driver, not the labor savings.</li>
-        <li><strong>ECB/DNB supervisory confidence:</strong> Regulators increasingly expect real-time control dashboards as evidence of a mature ICS. Institutions with manual, spreadsheet-based ICS consistently receive higher finding rates in OSI inspections.</li>
-        <li><strong>Audit fee trajectory:</strong> External auditors (Big 4) typically reduce per-cycle fees 10–15% when evidence is pre-assembled and independently traceable. Not captured in the table above.</li>
-        <li><strong>Staff quality and retention:</strong> Senior GRC professionals spend up to 60% of their time on data reconciliation, not risk judgment. Automating the former improves quality of the latter — and is a meaningful recruitment differentiator.</li>
-        <li><strong>Scalability:</strong> Adding new business areas or control domains requires only data provisioning — no additional development cost. Each incremental area drives the effective cost-per-control down.</li>
+      <h4 style="color:var(--g);margin-bottom:10px;">Strategic Benefits (Not in Payback Calculation)</h4>
+      <ul style="padding-left:18px;font-size:13px;color:var(--ts);line-height:2;margin:0;">
+        <li><strong>DORA compliance headroom:</strong> One avoided supervisory finding represents up to 21× the implementation cost (€50M exposure at a €5B-revenue institution). This — not the labour saving — is the primary business case driver.</li>
+        <li><strong>Supervisory credibility:</strong> Real-time control dashboards are increasingly expected by ECB/DNB in OSI inspections. Institutions with spreadsheet-based ICS consistently receive higher finding rates.</li>
+        <li><strong>Economies of scope:</strong> The platform core (data pipeline + AI layer) is built once and reused for subsequent use cases — HR Compliance, Contract Risk, Vendor Due Diligence. Each additional deployment costs roughly 30–40% of the original investment.</li>
       </ul>
     </div>
   </div>
