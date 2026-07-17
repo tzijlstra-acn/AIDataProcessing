@@ -837,6 +837,27 @@ details.collapsible > div.details-body { padding: 16px; }
 .role-del-header:first-child { border-top: none; padding-top: 0; }
 .role-del-badge { font-size: 9px; font-weight: 800; padding: 2px 6px; border-radius: 3px; letter-spacing: .05em; color: #fff; }
 .role-del-name { font-size: 12px; font-weight: 600; color: var(--ts); }
+/* ===== JOURNEY LEVEL TAGS ===== */
+.journey-level-tag {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 9px 20px;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+  border-bottom: 1px solid;
+}
+.jlt-icon { font-size: 13px; flex-shrink: 0; }
+.jlt-label { flex: 1; }
+.jlt-avail { font-size: 10px; font-weight: 600; opacity: .7; text-transform: none; letter-spacing: 0; white-space: nowrap; }
+.journey-level-tag.l1 { background: rgba(42,82,152,.07); border-color: rgba(42,82,152,.18); color: #2A5298; }
+.journey-level-tag.l2 { background: rgba(26,122,82,.07); border-color: rgba(26,122,82,.18); color: #1A7A52; }
+.journey-level-tag.l3 { background: rgba(154,101,0,.07); border-color: rgba(154,101,0,.18); color: #9A6500; }
+.journey-level-tag.l4 { background: rgba(180,50,42,.07); border-color: rgba(180,50,42,.18); color: #B4322A; }
+.journey-level-tag.l5 { background: rgba(109,40,217,.07); border-color: rgba(109,40,217,.18); color: #6D28D9; }
+.journey-level-tag.inherited { background: var(--s2); border-color: var(--border); color: var(--tm); }
 </style>
 <!-- docx library removed — SoW uses native HTML-to-Word blob generation -->
 </head>
@@ -1542,7 +1563,7 @@ details.collapsible > div.details-body { padding: 16px; }
         </ul>
         <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
           <span>Deliverables by Role</span>
-          <span class="del-count">10 across 3 roles — click to expand</span>
+          <span class="del-count">11 across 4 roles — click to expand</span>
           <span class="del-toggle-arrow">▶</span>
         </div>
         <div class="role-del-group" style="display:none;">
@@ -1564,6 +1585,10 @@ details.collapsible > div.details-body { padding: 16px; }
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">BE1</span><span class="role-del-name">Backend Developer 1</span></div>
           <div class="deliverables-list">
             <span class="deliverable-item clickable" onclick="openDeliverableSample('API integration test suite')" title="View sample">API integration test suite (W20)</span>
+          </div>
+          <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">SEC</span><span class="role-del-name">Security Engineer</span></div>
+          <div class="deliverables-list">
+            <span class="deliverable-item clickable" onclick="openDeliverableSample('AI Output RBAC Specification')" title="View sample">AI Output RBAC Specification (W18)</span>
           </div>
         </div>
         <div class="phase-section-title">Exit Criteria</div>
@@ -1783,8 +1808,8 @@ details.collapsible > div.details-body { padding: 16px; }
         <div class="gl sub" style="grid-column:1;grid-row:28;" data-gantt-min-level="4">→ AI Action Routing</div>
         <div class="gc" style="grid-column:32/34;grid-row:28;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
         <!-- L5 EXTENSION: Autonomous Operation (W29-W36) — row 28 -->
-        <div class="gl ph ph5" style="grid-column:1;grid-row:29;" data-gantt-min-level="5">L5 Ext — Autonomous</div>
-        <div class="gc" style="grid-column:30/38;grid-row:29;" data-gantt-min-level="5"><div class="gbar ph" style="background:#6D28D9;opacity:.75;" data-label="L5 Ext — Autonomous"></div></div>
+        <div class="gl ph ph5" style="grid-column:1;grid-row:29;" data-gantt-min-level="5">L5 — Autonomous Core</div>
+        <div class="gc" style="grid-column:30/38;grid-row:29;" data-gantt-min-level="5"><div class="gbar ph" style="background:#6D28D9;" data-label="L5 — Autonomous Write-back"></div></div>
         <!-- L5 Extension sub-tasks -->
         <div class="gl sub" style="grid-column:1;grid-row:30;" data-gantt-min-level="5">→ Write-back Agents</div>
         <div class="gc" style="grid-column:30/34;grid-row:30;" data-gantt-min-level="5"><div class="gbar sub" style="background:#a97ee8;"></div></div>
@@ -1884,7 +1909,7 @@ details.collapsible > div.details-body { padding: 16px; }
       <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#B4322A;"></span>Phase 4</div>
       <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#3A4657;"></span>Phase 5</div>
       <div class="gantt-legend-item" id="gantt-legend-l4ext" style="display:none;"><span class="gantt-legend-swatch" style="background:#B4322A;opacity:.75;"></span>L4 Workflow Ext</div>
-      <div class="gantt-legend-item" id="gantt-legend-l5ext" style="display:none;"><span class="gantt-legend-swatch" style="background:#6D28D9;opacity:.75;"></span>L5 Autonomous Ext</div>
+      <div class="gantt-legend-item" id="gantt-legend-l5ext" style="display:none;"><span class="gantt-legend-swatch" style="background:#6D28D9;"></span>L5 Autonomous Write-back</div>
       <div class="gantt-legend-item"><span style="color:#2A5298;font-size:14px;line-height:1;">◆</span> Milestone</div>
       <div class="gantt-legend-item"><span style="color:#B8860B;font-size:14px;line-height:1;">★</span> Go-Live W28 (L3) / W32 (L4) / W36 (L5)</div>
       <div class="gantt-legend-item"><span style="color:#2A5298;font-size:12px;">◆</span> Steering Committee (bi-weekly)</div>
@@ -1977,6 +2002,7 @@ details.collapsible > div.details-body { padding: 16px; }
       <div class="journey-dot" title="Step 6: Static Dashboard"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Dashboard</div></div>
     </div>
     <div class="journey-step" data-step="0">
+      <div class="journey-level-tag l1"><span class="jlt-icon">◆</span><span class="jlt-label">L1 Foundation — Static CSV Pipeline</span><span class="jlt-avail">L1 only</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">Manual CSV Export — ServiceNow → Excel → CSV</div>
@@ -2003,6 +2029,7 @@ RSK-2024-0201,"Data retention policy breach",2,4,Open,alice.b@client.com,Data &a
       </div>
     </div>
     <div class="journey-step" data-step="1">
+      <div class="journey-level-tag l1"><span class="jlt-icon">◆</span><span class="jlt-label">L1 Foundation — Static CSV Pipeline</span><span class="jlt-avail">L1 only</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">Azure SDK — Upload CSV to Blob Storage</div>
@@ -2029,6 +2056,7 @@ az storage blob upload \
       </div>
     </div>
     <div class="journey-step" data-step="2">
+      <div class="journey-level-tag l1"><span class="jlt-icon">◆</span><span class="jlt-label">L1 Foundation — Static CSV Pipeline</span><span class="jlt-avail">L1 only</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">ADF Copy Activity — CSV → staging.risks_raw</div>
@@ -2055,6 +2083,7 @@ az storage blob upload \
       </div>
     </div>
     <div class="journey-step" data-step="3">
+      <div class="journey-level-tag l1"><span class="jlt-icon">◆</span><span class="jlt-label">L1 Foundation — Static CSV Pipeline</span><span class="jlt-avail">L1 only</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">dbt Transform — staging → core.risks</div>
@@ -2079,6 +2108,7 @@ az storage blob upload \
       </div>
     </div>
     <div class="journey-step" data-step="4">
+      <div class="journey-level-tag l1"><span class="jlt-icon">◆</span><span class="jlt-label">L1 Foundation — Static CSV Pipeline</span><span class="jlt-avail">L1 only</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">core.risks — RSK-2024-0142 after dbt</div>
@@ -2101,6 +2131,7 @@ az storage blob upload \
       </div>
     </div>
     <div class="journey-step" data-step="5">
+      <div class="journey-level-tag l1"><span class="jlt-icon">◆</span><span class="jlt-label">L1 Foundation — Static CSV Pipeline</span><span class="jlt-avail">L1 only</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">FastAPI — Static serving (no cache, no SSE)</div>
@@ -2150,14 +2181,321 @@ az storage blob upload \
       <div class="journey-dot" title="Step 7: FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
       <div class="journey-dot" title="Step 8: SSE Push — NEW at L2"><div class="journey-dot-circle">8</div><div class="journey-dot-label">SSE Push</div></div>
     </div>
-    <div class="journey-step" data-step="0"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">1</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">GRC API — ServiceNow REST API</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Live incremental pull via OAuth2. Watermark-based: only records updated since last run. Runs every 15 minutes via ADF trigger. 600 req/hr rate limit managed by connector.</div><div style="margin-top:14px;font-size:11px;color:rgba(255,255,255,.35)">See Level 3 for full technical detail including connector code</div></div></div></div>
-    <div class="journey-step" data-step="1"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">2</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Python GRCConnector — ServiceNowAdapter</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Abstract base class + ServiceNow implementation. Pydantic RiskRecord validation. Exponential backoff on 429/503. Normalises raw API response into typed domain object.</div></div></div></div>
-    <div class="journey-step" data-step="2"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">3</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Azure Data Factory — pl_grc_risks_incremental</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Scheduled trigger every 15 min. 5 activities: get_watermark → fetch_servicenow → run_connector → stage_upsert → update_watermark. Total run ~1.6s. Watermark only advances on success.</div></div></div></div>
-    <div class="journey-step" data-step="3"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">4</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL — staging.risks_raw UPSERT</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">JSONB raw payload stored alongside pipeline_run_id. ON CONFLICT UPSERT is idempotent. Immutable source of truth per extraction run. Enables full replay on connector bug.</div></div></div></div>
-    <div class="journey-step" data-step="4"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">5</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">dbt Core — Incremental transformation</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Incremental model processes only rows newer than last dbt run. dbt tests: not_null, unique, accepted_values. Sub-second transform for incremental runs. GENERATED columns for scores.</div></div></div></div>
-    <div class="journey-step" data-step="5"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">6</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL — core.risks (analytical model)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">GENERATED columns: inherent_score, inherent_rating, residual_score, residual_rating. Partial index on Open risks. Heatmap query executes in ~8ms.</div></div></div></div>
-    <div class="journey-step" data-step="6"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">7</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">FastAPI + Redis — GET /api/heatmap</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Redis cache-aside (5 min TTL). Cache HIT ~2ms, MISS ~12ms. JWT validated. RBAC scoped. ARRAY_AGG(source_id) embeds risk IDs in response for drill-down without second request.</div></div></div></div>
+    <div class="journey-step" data-step="0">
+      <div class="journey-level-tag l2"><span class="jlt-icon">✦</span><span class="jlt-label">Introduced at Level 2 — Live ServiceNow REST API replaces manual CSV export Introduced at Level 2 — Python GRCConnector abstracts source integration Introduced at Level 2 — Watermark-based incremental pipeline replaces full load Introduced at Level 2 — JSONB staging with idempotent UPSERT Introduced at Level 2 — Incremental model processes only new/changed rows Introduced at Level 2 — Live analytical model with GENERATED columns Introduced at Level 2 — Cache-aside API with JWT and RBAC scoping</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">ServiceNow REST API — GET /api/now/table/sn_risk_risk</div>
+          <pre><span class="jc"># ServiceNow Table API — incremental pull (modified since last run)</span>
+GET https://client.service-now.com/api/now/table/sn_risk_risk
+  ?sysparm_query=sys_updated_on&gt;2024-10-14T06:00:00Z
+  &amp;sysparm_fields=number,short_description,risk_score,
+    likelihood,impact,state,owner,category,
+    u_process_id,sys_updated_on
+  &amp;sysparm_limit=500
+
+<span class="jc">// RSK-2024-0142 record in response:</span>
+{
+  <span class="jk">"number"</span>:           <span class="js">"RSK-2024-0142"</span>,
+  <span class="jk">"short_description"</span>: <span class="js">"Inadequate access controls on financial reporting system"</span>,
+  <span class="jk">"risk_score"</span>:        <span class="js">"16"</span>,
+  <span class="jk">"likelihood"</span>:        <span class="js">"4"</span>,
+  <span class="jk">"impact"</span>:            <span class="js">"4"</span>,
+  <span class="jk">"state"</span>:             <span class="js">"Open"</span>,
+  <span class="jk">"owner"</span>:             <span class="js">"jane.smith@client.com"</span>,
+  <span class="jk">"category"</span>:          <span class="js">"IT &amp; Security"</span>,
+  <span class="jk">"u_process_id"</span>:      <span class="js">"FRP-002"</span>,
+  <span class="jk">"sys_updated_on"</span>:    <span class="js">"2024-10-14T08:23:11Z"</span>
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">ServiceNow GRC (source of truth)</div>
+            <div class="comp-timing">Polled every 15 min by ADF trigger · OAuth 2.0 client credentials · 200 OK in ~340ms</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">GRC System Admin</div>Maintains the ServiceNow instance. Created the custom field <code>u_process_id</code> to link risks to business processes. Granted the integration service account read access to <code>sn_risk_risk</code>.</div>
+            </div>
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (GRC Connector)</div>Registered OAuth client in ServiceNow. Designed the incremental pull query using <code>sys_updated_on</code> watermark to minimise API calls and respect ServiceNow rate limits (600 req/hr).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="1">
+      <div class="journey-level-tag l2"><span class="jlt-icon">✦</span><span class="jlt-label"></span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">Python GRCConnector — ServiceNowAdapter.fetch_risks()</div>
+          <pre><span class="jc"># connectors/servicenow_adapter.py</span>
+<span class="jk">class</span> ServiceNowAdapter(GRCConnector):
+    <span class="jk">def</span> fetch_risks(self, since: datetime) -&gt; list[RiskRecord]:
+        resp = self._session.get(
+            f"{self.base_url}/api/now/table/sn_risk_risk",
+            params={
+                "sysparm_query": f"sys_updated_on&gt;{since.isoformat()}",
+                "sysparm_fields": RISK_FIELDS,
+                "sysparm_limit": 500,
+            },
+        )
+        resp.raise_for_status()
+        raw = resp.json()["result"]
+
+        <span class="jk">return</span> [
+            RiskRecord(
+                source_id=r["number"],
+                title=r["short_description"],
+                likelihood=int(r["likelihood"]),
+                impact=int(r["impact"]),
+                state=r["state"],
+                owner_email=r["owner"],
+                category=r["category"],
+                process_id=r.get("u_process_id"),
+                source_updated_at=parse_dt(r["sys_updated_on"]),
+                raw=r,
+            )
+            <span class="jk">for</span> r <span class="jk">in</span> raw
+        ]
+<span class="jc"># RSK-2024-0142 → RiskRecord(source_id="RSK-2024-0142",
+#   likelihood=4, impact=4, process_id="FRP-002", …)</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">GRCConnector / ServiceNowAdapter (Python, Azure Function)</div>
+            <div class="comp-timing">Runs inside ADF-triggered Python Azure Function · Parses ~120 records in &lt;50ms · Retry: 3× exponential backoff</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (GRC Connector)</div>The <code>GRCConnector</code> abstract class defines <code>fetch_risks()</code>. <code>ServiceNowAdapter</code> implements it for ServiceNow. A second adapter for Archer is being planned. Pydantic <code>RiskRecord</code> validates types and rejects malformed records into a dead-letter log.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--gb);border-color:rgba(26,122,82,.2);">
+            <div class="comp-name" style="color:var(--g);">Why an Adapter pattern?</div>
+            <div class="comp-timing">Isolates GRC-tool specifics from pipeline logic. Swapping ServiceNow for Archer requires only a new Adapter — no pipeline changes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="2">
+      <div class="journey-level-tag l2"><span class="jlt-icon">✦</span><span class="jlt-label"></span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">ADF Pipeline — pl_grc_risks_incremental Run Log</div>
+          <pre><span class="jc">// Azure Data Factory — pipeline: pl_grc_risks_incremental</span>
+{
+  <span class="jk">"runId"</span>:       <span class="js">"adf-run-20241014-083100"</span>,
+  <span class="jk">"pipeline"</span>:   <span class="js">"pl_grc_risks_incremental"</span>,
+  <span class="jk">"trigger"</span>:    <span class="js">"Schedule — every 15 min"</span>,
+  <span class="jk">"status"</span>:     <span class="js">"Succeeded"</span>,
+  <span class="jk">"activities"</span>: [
+    { <span class="jk">"name"</span>: <span class="js">"act_get_watermark"</span>,    <span class="jk">"duration_ms"</span>: 120  },
+    { <span class="jk">"name"</span>: <span class="js">"act_fetch_servicenow"</span>, <span class="jk">"duration_ms"</span>: 890,
+      <span class="jk">"output"</span>: { <span class="jk">"recordsRead"</span>: 7 } },
+    { <span class="jk">"name"</span>: <span class="js">"act_run_connector"</span>,   <span class="jk">"duration_ms"</span>: 340,
+      <span class="jk">"output"</span>: { <span class="jk">"recordsParsed"</span>: 7, <span class="jk">"rejected"</span>: 0 } },
+    { <span class="jk">"name"</span>: <span class="js">"act_stage_upsert"</span>,    <span class="jk">"duration_ms"</span>: 210,
+      <span class="jk">"output"</span>: { <span class="jk">"rowsUpserted"</span>: 7 } },
+    { <span class="jk">"name"</span>: <span class="js">"act_update_watermark"</span>, <span class="jk">"duration_ms"</span>: 80  }
+  ],
+  <span class="jk">"totalDuration_ms"</span>: 1640
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">Azure Data Factory — pl_grc_risks_incremental</div>
+            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in Azure SQL control table · Cost: ~€0.001/run</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (ADF)</div>Pipeline uses a watermark pattern — reads the last successful run timestamp from a control table, fetches only records updated since then, and updates the watermark on success. Failed runs do not advance the watermark, so no records are skipped.</div>
+            </div>
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">IT / Azure Lead</div>Provisioned the ADF instance in the client's Azure subscription (West Europe). Approved the managed identity permissions for Key Vault secret access.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="3">
+      <div class="journey-level-tag l2"><span class="jlt-icon">✦</span><span class="jlt-label"></span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">PostgreSQL — staging.risks_raw UPSERT</div>
+          <pre><span class="jc">-- ADF calls act_stage_upsert which runs:</span>
+<span class="jk">INSERT INTO</span> staging.risks_raw (
+  source_id,     source_system,  raw_payload,
+  fetched_at,    pipeline_run_id
+)
+<span class="jk">VALUES</span> (
+  <span class="js">'RSK-2024-0142'</span>,
+  <span class="js">'servicenow'</span>,
+  <span class="js">'{"number":"RSK-2024-0142","short_description":"Inadequate access controls on financial reporting system","likelihood":"4","impact":"4","state":"Open","owner":"jane.smith@client.com","category":"IT & Security","u_process_id":"FRP-002","sys_updated_on":"2024-10-14T08:23:11Z"}'</span>::jsonb,
+  NOW(),
+  <span class="js">'adf-run-20241014-083100'</span>
+)
+<span class="jk">ON CONFLICT</span> (source_id, source_system)
+<span class="jk">DO UPDATE SET</span>
+  raw_payload     = EXCLUDED.raw_payload,
+  fetched_at      = EXCLUDED.fetched_at,
+  pipeline_run_id = EXCLUDED.pipeline_run_id;
+<span class="jc">-- 7 rows upserted in 210ms · no duplicates</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">PostgreSQL 16 — staging.risks_raw</div>
+            <div class="comp-timing">JSONB raw payload preserved for replay · ON CONFLICT UPSERT is idempotent · &lt;10ms per row</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (schema design)</div>Staging schema stores the raw JSONB payload alongside the pipeline run ID. This makes reprocessing after connector bugs trivial — re-run dbt against the existing staging rows. The staging table is the immutable source of truth for each extraction run.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--rb);border-color:rgba(180,50,42,.2);">
+            <div class="comp-name" style="color:var(--r);">Data Quality Warning</div>
+            <div class="comp-timing">If <code>u_process_id</code> is NULL (legacy ServiceNow records), the record still lands in staging but dbt will set <code>process_id = NULL</code> and the risk will appear in the heatmap with no process linkage.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="4">
+      <div class="journey-level-tag l2"><span class="jlt-icon">✦</span><span class="jlt-label"></span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">dbt model — models/core/risks.sql</div>
+          <pre><span class="jc">-- models/core/risks.sql</span>
+{{ config(materialized='incremental',
+          unique_key='source_id',
+          on_schema_change='append_new_columns') }}
+
+<span class="jk">WITH</span> src <span class="jk">AS</span> (
+  <span class="jk">SELECT</span>
+    source_id,
+    raw_payload -&gt;&gt; <span class="js">'short_description'</span>  <span class="jk">AS</span> title,
+    (raw_payload -&gt;&gt; <span class="js">'likelihood'</span>)::int  <span class="jk">AS</span> likelihood,
+    (raw_payload -&gt;&gt; <span class="js">'impact'</span>)::int      <span class="jk">AS</span> impact,
+    raw_payload -&gt;&gt; <span class="js">'state'</span>             <span class="jk">AS</span> status,
+    raw_payload -&gt;&gt; <span class="js">'owner'</span>             <span class="jk">AS</span> owner_email,
+    raw_payload -&gt;&gt; <span class="js">'category'</span>          <span class="jk">AS</span> category,
+    raw_payload -&gt;&gt; <span class="js">'u_process_id'</span>      <span class="jk">AS</span> process_id,
+    fetched_at
+  <span class="jk">FROM</span> staging.risks_raw
+  <span class="jk">WHERE</span> source_system = <span class="js">'servicenow'</span>
+    {% <span class="jk">if</span> is_incremental() %}
+    <span class="jk">AND</span> fetched_at &gt; (<span class="jk">SELECT MAX</span>(dbt_updated_at) <span class="jk">FROM</span> {{ this }})
+    {% endif %}
+)
+<span class="jk">SELECT</span> *, NOW() <span class="jk">AS</span> dbt_updated_at
+<span class="jk">FROM</span>   src</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">dbt Core — models/core/risks.sql (incremental)</div>
+            <div class="comp-timing">Runs after ADF completes via ADF-dbt activity · ~2.1s for full table · incremental: ~0.4s · dbt tests: not_null, unique, accepted_values</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (dbt)</div>The incremental model only processes rows newer than the last dbt run, keeping transform times sub-second. dbt tests (<code>not_null</code> on <code>source_id</code>, <code>unique</code> on <code>source_id</code>, <code>accepted_values</code> on <code>status</code>) block promotion if data quality fails.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="5">
+      <div class="journey-level-tag l2"><span class="jlt-icon">✦</span><span class="jlt-label"></span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">PostgreSQL — core.risks row for RSK-2024-0142</div>
+          <pre><span class="jc">-- core.risks row after dbt materialisation:</span>
+{
+  source_id:      <span class="js">"RSK-2024-0142"</span>,
+  title:          <span class="js">"Inadequate access controls on financial reporting system"</span>,
+  likelihood:     4,
+  impact:         4,
+  <span class="jc">-- GENERATED column: likelihood * impact</span>
+  inherent_score: 16,
+  <span class="jc">-- GENERATED column: CASE WHEN score &gt;= 15 THEN 'Critical' …</span>
+  rating:         <span class="js">"High"</span>,
+  status:         <span class="js">"Open"</span>,
+  owner_email:    <span class="js">"jane.smith@client.com"</span>,
+  category:       <span class="js">"IT &amp; Security"</span>,
+  process_id:     <span class="js">"FRP-002"</span>,
+  dbt_updated_at: <span class="js">"2024-10-14T08:34:00Z"</span>
+}
+
+<span class="jc">-- Index used by heatmap query:</span>
+CREATE INDEX idx_risks_heatmap
+  ON core.risks (likelihood, impact, status)
+  WHERE status = <span class="js">'Open'</span>;</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">PostgreSQL 16 — core.risks (analytical model)</div>
+            <div class="comp-timing">GENERATED columns computed at write time · Partial index on (likelihood, impact) WHERE status='Open' · heatmap query: ~8ms</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (schema) + SA (index design)</div>GENERATED columns for <code>inherent_score</code> and <code>rating</code> ensure computed values are always consistent with <code>likelihood</code> and <code>impact</code> — no application logic duplication. The partial index on Open risks makes heatmap aggregation fast even at 10k+ rows.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="6">
+      <div class="journey-level-tag l2"><span class="jlt-icon">✦</span><span class="jlt-label"></span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">FastAPI — GET /api/heatmap?mode=inherent&amp;scope=all</div>
+          <pre><span class="jc"># routers/heatmap.py</span>
+<span class="jk">@router</span>.get(<span class="js">"/heatmap"</span>)
+<span class="jk">async def</span> get_heatmap(mode: str = <span class="js">"inherent"</span>,
+                      scope: str = <span class="js">"all"</span>,
+                      db: AsyncSession = Depends(get_db),
+                      cache: Redis = Depends(get_redis)):
+    cache_key = f<span class="js">"heatmap:{mode}:{scope}"</span>
+    cached = <span class="jk">await</span> cache.get(cache_key)
+    <span class="jk">if</span> cached:
+        <span class="jk">return</span> JSONResponse(json.loads(cached))
+
+    rows = <span class="jk">await</span> db.execute(
+        <span class="js">"""SELECT likelihood, impact,
+                  COUNT(*)            AS count,
+                  MAX(rating)         AS max_rating,
+                  ARRAY_AGG(source_id) AS risk_ids
+           FROM core.risks
+           WHERE status = 'Open'
+           GROUP BY likelihood, impact"""</span>
+    )
+    matrix = build_matrix(rows)
+    <span class="jk">await</span> cache.setex(cache_key, 300, json.dumps(matrix))
+    <span class="jk">return</span> matrix
+<span class="jc"># RSK-2024-0142 lands in cell {"likelihood":4,"impact":4}</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">FastAPI + Redis — /api/heatmap</div>
+            <div class="comp-timing">Cache TTL: 5 min · Cache HIT: ~2ms · Cache MISS (DB query): ~12ms · APIM rate limit: 60 req/min/user · JWT claim checked: roles contains "dashboard_read"</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Backend Dev (API)</div>Redis cache-aside pattern. On cache miss, SQL aggregates all Open risks grouped by likelihood/impact. <code>ARRAY_AGG(source_id)</code> gives the React component the list of risk IDs in each cell for on-click drill-down without a second request.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
     <div class="journey-step" data-step="7">
+      <div class="journey-level-tag l2"><span class="jlt-icon">★</span><span class="jlt-label">NEW at Level 2 — Real-time Server-Sent Events push to browser</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">SSE Push — risk_updated event to all browsers (NEW at L2)</div>
@@ -2220,6 +2558,7 @@ data: {
 
     <!-- STEP 0: GRC Source -->
     <div class="journey-step" data-step="0">
+      <div class="journey-level-tag l2"><span class="jlt-icon">◈</span><span class="jlt-label">Pipeline established at L2 — configuration unchanged at L3</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">ServiceNow REST API — GET /api/now/table/sn_risk_risk</div>
@@ -2266,6 +2605,7 @@ GET https://client.service-now.com/api/now/table/sn_risk_risk
 
     <!-- STEP 1: Connector -->
     <div class="journey-step" data-step="1">
+      <div class="journey-level-tag l2"><span class="jlt-icon">◈</span><span class="jlt-label">Pipeline established at L2 — configuration unchanged at L3</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">Python GRCConnector — ServiceNowAdapter.fetch_risks()</div>
@@ -2322,6 +2662,7 @@ GET https://client.service-now.com/api/now/table/sn_risk_risk
 
     <!-- STEP 2: Data Factory -->
     <div class="journey-step" data-step="2">
+      <div class="journey-level-tag l2"><span class="jlt-icon">◈</span><span class="jlt-label">Pipeline established at L2 — configuration unchanged at L3</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">ADF Pipeline — pl_grc_risks_incremental Run Log</div>
@@ -2365,6 +2706,7 @@ GET https://client.service-now.com/api/now/table/sn_risk_risk
 
     <!-- STEP 3: Staging -->
     <div class="journey-step" data-step="3">
+      <div class="journey-level-tag l2"><span class="jlt-icon">◈</span><span class="jlt-label">Pipeline established at L2 — configuration unchanged at L3</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">PostgreSQL — staging.risks_raw UPSERT</div>
@@ -2408,6 +2750,7 @@ GET https://client.service-now.com/api/now/table/sn_risk_risk
 
     <!-- STEP 4: Transform -->
     <div class="journey-step" data-step="4">
+      <div class="journey-level-tag l2"><span class="jlt-icon">◈</span><span class="jlt-label">Pipeline established at L2 — configuration unchanged at L3</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">dbt model — models/core/risks.sql</div>
@@ -2453,6 +2796,7 @@ GET https://client.service-now.com/api/now/table/sn_risk_risk
 
     <!-- STEP 5: Database -->
     <div class="journey-step" data-step="5">
+      <div class="journey-level-tag l2"><span class="jlt-icon">◈</span><span class="jlt-label">Pipeline established at L2 — configuration unchanged at L3</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">PostgreSQL — core.risks row for RSK-2024-0142</div>
@@ -2495,6 +2839,7 @@ CREATE INDEX idx_risks_heatmap
 
     <!-- STEP 6: API Layer -->
     <div class="journey-step" data-step="6">
+      <div class="journey-level-tag l2"><span class="jlt-icon">◈</span><span class="jlt-label">Pipeline established at L2 — configuration unchanged at L3</span><span class="jlt-avail">L2 · L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">FastAPI — GET /api/heatmap?mode=inherent&amp;scope=all</div>
@@ -2540,6 +2885,7 @@ CREATE INDEX idx_risks_heatmap
 
     <!-- STEP 7: Browser -->
     <div class="journey-step" data-step="7">
+      <div class="journey-level-tag l3"><span class="jlt-icon">★</span><span class="jlt-label">AI-enhanced at Level 3 — agent chat available in risk detail panel</span><span class="jlt-avail">L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">React — useHeatmapData hook (TanStack Query)</div>
@@ -2586,6 +2932,7 @@ CREATE INDEX idx_risks_heatmap
 
     <!-- STEP 8: Heatmap -->
     <div class="journey-step" data-step="8">
+      <div class="journey-level-tag l3"><span class="jlt-icon">★</span><span class="jlt-label">AI-enhanced at Level 3 — agent chat available in risk detail panel</span><span class="jlt-avail">L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">React component — &lt;HeatmapCell&gt; at likelihood=4, impact=4</div>
@@ -2636,6 +2983,7 @@ CREATE INDEX idx_risks_heatmap
 
     <!-- STEP 9: User Click -->
     <div class="journey-step" data-step="9">
+      <div class="journey-level-tag l3"><span class="jlt-icon">★</span><span class="jlt-label">AI-enhanced at Level 3 — agent chat available in risk detail panel</span><span class="jlt-avail">L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">React — useProcessDetail drill-down for RSK-2024-0142</div>
@@ -2712,18 +3060,464 @@ CREATE INDEX idx_risks_heatmap
       <div class="journey-dot" title="Step 12: Human Approves — NEW at L4"><div class="journey-dot-circle" style="border-color:rgba(154,101,0,.6)">12</div><div class="journey-dot-label">Human OKs</div></div>
     </div>
     <!-- Steps 1-10: compact versions (same as L3) -->
-    <div class="journey-step" data-step="0"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">1</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">GRC API — ServiceNow REST (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Live incremental pull via OAuth2 every 15 minutes. Watermark-based: only records updated since last run. Full technical detail at Level 3.</div></div></div></div>
-    <div class="journey-step" data-step="1"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">2</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Python GRCConnector (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">ServiceNowAdapter implements abstract GRCConnector. Pydantic validation, exponential backoff, normalised RiskRecord output.</div></div></div></div>
-    <div class="journey-step" data-step="2"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">3</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Azure Data Factory (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">pl_grc_risks_incremental pipeline. 5 activities. Watermark advances only on success. Total run ~1.6s.</div></div></div></div>
-    <div class="journey-step" data-step="3"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">4</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL staging.risks_raw (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">JSONB raw payload + pipeline_run_id. Idempotent UPSERT. Immutable source for replay.</div></div></div></div>
-    <div class="journey-step" data-step="4"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">5</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">dbt Incremental Transform (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Incremental model, dbt tests, GENERATED columns for scores and ratings.</div></div></div></div>
-    <div class="journey-step" data-step="5"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">6</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL core.risks (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">GENERATED columns, partial index on Open risks, ~8ms heatmap query.</div></div></div></div>
-    <div class="journey-step" data-step="6"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">7</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">FastAPI + Redis (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Redis cache-aside, 5 min TTL, JWT validation, RBAC scoping, SSE stream active.</div></div></div></div>
-    <div class="journey-step" data-step="7"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">8</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">React Browser — useHeatmapData (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">TanStack Query, staleTime 60s, refetchOnWindowFocus, SSE-driven cache invalidation.</div></div></div></div>
-    <div class="journey-step" data-step="8"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">9</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">HeatmapCell Component (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">5×5 grid, colour by max_rating, WCAG 2.1 AA, risk IDs in cell for drill-down.</div></div></div></div>
-    <div class="journey-step" data-step="9"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">10</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">User Click — Risk Detail Panel (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Drill-down to risk list. 2LoD sees RSK-2024-0142 detail. AI agent chat available in panel.</div></div></div></div>
+    <div class="journey-step" data-step="0">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">ServiceNow REST API — GET /api/now/table/sn_risk_risk</div>
+          <pre><span class="jc"># ServiceNow Table API — incremental pull (modified since last run)</span>
+GET https://client.service-now.com/api/now/table/sn_risk_risk
+  ?sysparm_query=sys_updated_on&gt;2024-10-14T06:00:00Z
+  &amp;sysparm_fields=number,short_description,risk_score,
+    likelihood,impact,state,owner,category,
+    u_process_id,sys_updated_on
+  &amp;sysparm_limit=500
+
+<span class="jc">// RSK-2024-0142 record in response:</span>
+{
+  <span class="jk">"number"</span>:           <span class="js">"RSK-2024-0142"</span>,
+  <span class="jk">"short_description"</span>: <span class="js">"Inadequate access controls on financial reporting system"</span>,
+  <span class="jk">"risk_score"</span>:        <span class="js">"16"</span>,
+  <span class="jk">"likelihood"</span>:        <span class="js">"4"</span>,
+  <span class="jk">"impact"</span>:            <span class="js">"4"</span>,
+  <span class="jk">"state"</span>:             <span class="js">"Open"</span>,
+  <span class="jk">"owner"</span>:             <span class="js">"jane.smith@client.com"</span>,
+  <span class="jk">"category"</span>:          <span class="js">"IT &amp; Security"</span>,
+  <span class="jk">"u_process_id"</span>:      <span class="js">"FRP-002"</span>,
+  <span class="jk">"sys_updated_on"</span>:    <span class="js">"2024-10-14T08:23:11Z"</span>
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">ServiceNow GRC (source of truth)</div>
+            <div class="comp-timing">Polled every 15 min by ADF trigger · OAuth 2.0 client credentials · 200 OK in ~340ms</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">GRC System Admin</div>Maintains the ServiceNow instance. Created the custom field <code>u_process_id</code> to link risks to business processes. Granted the integration service account read access to <code>sn_risk_risk</code>.</div>
+            </div>
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (GRC Connector)</div>Registered OAuth client in ServiceNow. Designed the incremental pull query using <code>sys_updated_on</code> watermark to minimise API calls and respect ServiceNow rate limits (600 req/hr).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="1">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">Python GRCConnector — ServiceNowAdapter.fetch_risks()</div>
+          <pre><span class="jc"># connectors/servicenow_adapter.py</span>
+<span class="jk">class</span> ServiceNowAdapter(GRCConnector):
+    <span class="jk">def</span> fetch_risks(self, since: datetime) -&gt; list[RiskRecord]:
+        resp = self._session.get(
+            f"{self.base_url}/api/now/table/sn_risk_risk",
+            params={
+                "sysparm_query": f"sys_updated_on&gt;{since.isoformat()}",
+                "sysparm_fields": RISK_FIELDS,
+                "sysparm_limit": 500,
+            },
+        )
+        resp.raise_for_status()
+        raw = resp.json()["result"]
+
+        <span class="jk">return</span> [
+            RiskRecord(
+                source_id=r["number"],
+                title=r["short_description"],
+                likelihood=int(r["likelihood"]),
+                impact=int(r["impact"]),
+                state=r["state"],
+                owner_email=r["owner"],
+                category=r["category"],
+                process_id=r.get("u_process_id"),
+                source_updated_at=parse_dt(r["sys_updated_on"]),
+                raw=r,
+            )
+            <span class="jk">for</span> r <span class="jk">in</span> raw
+        ]
+<span class="jc"># RSK-2024-0142 → RiskRecord(source_id="RSK-2024-0142",
+#   likelihood=4, impact=4, process_id="FRP-002", …)</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">GRCConnector / ServiceNowAdapter (Python, Azure Function)</div>
+            <div class="comp-timing">Runs inside ADF-triggered Python Azure Function · Parses ~120 records in &lt;50ms · Retry: 3× exponential backoff</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (GRC Connector)</div>The <code>GRCConnector</code> abstract class defines <code>fetch_risks()</code>. <code>ServiceNowAdapter</code> implements it for ServiceNow. A second adapter for Archer is being planned. Pydantic <code>RiskRecord</code> validates types and rejects malformed records into a dead-letter log.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--gb);border-color:rgba(26,122,82,.2);">
+            <div class="comp-name" style="color:var(--g);">Why an Adapter pattern?</div>
+            <div class="comp-timing">Isolates GRC-tool specifics from pipeline logic. Swapping ServiceNow for Archer requires only a new Adapter — no pipeline changes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="2">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">ADF Pipeline — pl_grc_risks_incremental Run Log</div>
+          <pre><span class="jc">// Azure Data Factory — pipeline: pl_grc_risks_incremental</span>
+{
+  <span class="jk">"runId"</span>:       <span class="js">"adf-run-20241014-083100"</span>,
+  <span class="jk">"pipeline"</span>:   <span class="js">"pl_grc_risks_incremental"</span>,
+  <span class="jk">"trigger"</span>:    <span class="js">"Schedule — every 15 min"</span>,
+  <span class="jk">"status"</span>:     <span class="js">"Succeeded"</span>,
+  <span class="jk">"activities"</span>: [
+    { <span class="jk">"name"</span>: <span class="js">"act_get_watermark"</span>,    <span class="jk">"duration_ms"</span>: 120  },
+    { <span class="jk">"name"</span>: <span class="js">"act_fetch_servicenow"</span>, <span class="jk">"duration_ms"</span>: 890,
+      <span class="jk">"output"</span>: { <span class="jk">"recordsRead"</span>: 7 } },
+    { <span class="jk">"name"</span>: <span class="js">"act_run_connector"</span>,   <span class="jk">"duration_ms"</span>: 340,
+      <span class="jk">"output"</span>: { <span class="jk">"recordsParsed"</span>: 7, <span class="jk">"rejected"</span>: 0 } },
+    { <span class="jk">"name"</span>: <span class="js">"act_stage_upsert"</span>,    <span class="jk">"duration_ms"</span>: 210,
+      <span class="jk">"output"</span>: { <span class="jk">"rowsUpserted"</span>: 7 } },
+    { <span class="jk">"name"</span>: <span class="js">"act_update_watermark"</span>, <span class="jk">"duration_ms"</span>: 80  }
+  ],
+  <span class="jk">"totalDuration_ms"</span>: 1640
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">Azure Data Factory — pl_grc_risks_incremental</div>
+            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in Azure SQL control table · Cost: ~€0.001/run</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (ADF)</div>Pipeline uses a watermark pattern — reads the last successful run timestamp from a control table, fetches only records updated since then, and updates the watermark on success. Failed runs do not advance the watermark, so no records are skipped.</div>
+            </div>
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">IT / Azure Lead</div>Provisioned the ADF instance in the client's Azure subscription (West Europe). Approved the managed identity permissions for Key Vault secret access.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="3">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">PostgreSQL — staging.risks_raw UPSERT</div>
+          <pre><span class="jc">-- ADF calls act_stage_upsert which runs:</span>
+<span class="jk">INSERT INTO</span> staging.risks_raw (
+  source_id,     source_system,  raw_payload,
+  fetched_at,    pipeline_run_id
+)
+<span class="jk">VALUES</span> (
+  <span class="js">'RSK-2024-0142'</span>,
+  <span class="js">'servicenow'</span>,
+  <span class="js">'{"number":"RSK-2024-0142","short_description":"Inadequate access controls on financial reporting system","likelihood":"4","impact":"4","state":"Open","owner":"jane.smith@client.com","category":"IT & Security","u_process_id":"FRP-002","sys_updated_on":"2024-10-14T08:23:11Z"}'</span>::jsonb,
+  NOW(),
+  <span class="js">'adf-run-20241014-083100'</span>
+)
+<span class="jk">ON CONFLICT</span> (source_id, source_system)
+<span class="jk">DO UPDATE SET</span>
+  raw_payload     = EXCLUDED.raw_payload,
+  fetched_at      = EXCLUDED.fetched_at,
+  pipeline_run_id = EXCLUDED.pipeline_run_id;
+<span class="jc">-- 7 rows upserted in 210ms · no duplicates</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">PostgreSQL 16 — staging.risks_raw</div>
+            <div class="comp-timing">JSONB raw payload preserved for replay · ON CONFLICT UPSERT is idempotent · &lt;10ms per row</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (schema design)</div>Staging schema stores the raw JSONB payload alongside the pipeline run ID. This makes reprocessing after connector bugs trivial — re-run dbt against the existing staging rows. The staging table is the immutable source of truth for each extraction run.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--rb);border-color:rgba(180,50,42,.2);">
+            <div class="comp-name" style="color:var(--r);">Data Quality Warning</div>
+            <div class="comp-timing">If <code>u_process_id</code> is NULL (legacy ServiceNow records), the record still lands in staging but dbt will set <code>process_id = NULL</code> and the risk will appear in the heatmap with no process linkage.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="4">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">dbt model — models/core/risks.sql</div>
+          <pre><span class="jc">-- models/core/risks.sql</span>
+{{ config(materialized='incremental',
+          unique_key='source_id',
+          on_schema_change='append_new_columns') }}
+
+<span class="jk">WITH</span> src <span class="jk">AS</span> (
+  <span class="jk">SELECT</span>
+    source_id,
+    raw_payload -&gt;&gt; <span class="js">'short_description'</span>  <span class="jk">AS</span> title,
+    (raw_payload -&gt;&gt; <span class="js">'likelihood'</span>)::int  <span class="jk">AS</span> likelihood,
+    (raw_payload -&gt;&gt; <span class="js">'impact'</span>)::int      <span class="jk">AS</span> impact,
+    raw_payload -&gt;&gt; <span class="js">'state'</span>             <span class="jk">AS</span> status,
+    raw_payload -&gt;&gt; <span class="js">'owner'</span>             <span class="jk">AS</span> owner_email,
+    raw_payload -&gt;&gt; <span class="js">'category'</span>          <span class="jk">AS</span> category,
+    raw_payload -&gt;&gt; <span class="js">'u_process_id'</span>      <span class="jk">AS</span> process_id,
+    fetched_at
+  <span class="jk">FROM</span> staging.risks_raw
+  <span class="jk">WHERE</span> source_system = <span class="js">'servicenow'</span>
+    {% <span class="jk">if</span> is_incremental() %}
+    <span class="jk">AND</span> fetched_at &gt; (<span class="jk">SELECT MAX</span>(dbt_updated_at) <span class="jk">FROM</span> {{ this }})
+    {% endif %}
+)
+<span class="jk">SELECT</span> *, NOW() <span class="jk">AS</span> dbt_updated_at
+<span class="jk">FROM</span>   src</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">dbt Core — models/core/risks.sql (incremental)</div>
+            <div class="comp-timing">Runs after ADF completes via ADF-dbt activity · ~2.1s for full table · incremental: ~0.4s · dbt tests: not_null, unique, accepted_values</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (dbt)</div>The incremental model only processes rows newer than the last dbt run, keeping transform times sub-second. dbt tests (<code>not_null</code> on <code>source_id</code>, <code>unique</code> on <code>source_id</code>, <code>accepted_values</code> on <code>status</code>) block promotion if data quality fails.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="5">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">PostgreSQL — core.risks row for RSK-2024-0142</div>
+          <pre><span class="jc">-- core.risks row after dbt materialisation:</span>
+{
+  source_id:      <span class="js">"RSK-2024-0142"</span>,
+  title:          <span class="js">"Inadequate access controls on financial reporting system"</span>,
+  likelihood:     4,
+  impact:         4,
+  <span class="jc">-- GENERATED column: likelihood * impact</span>
+  inherent_score: 16,
+  <span class="jc">-- GENERATED column: CASE WHEN score &gt;= 15 THEN 'Critical' …</span>
+  rating:         <span class="js">"High"</span>,
+  status:         <span class="js">"Open"</span>,
+  owner_email:    <span class="js">"jane.smith@client.com"</span>,
+  category:       <span class="js">"IT &amp; Security"</span>,
+  process_id:     <span class="js">"FRP-002"</span>,
+  dbt_updated_at: <span class="js">"2024-10-14T08:34:00Z"</span>
+}
+
+<span class="jc">-- Index used by heatmap query:</span>
+CREATE INDEX idx_risks_heatmap
+  ON core.risks (likelihood, impact, status)
+  WHERE status = <span class="js">'Open'</span>;</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">PostgreSQL 16 — core.risks (analytical model)</div>
+            <div class="comp-timing">GENERATED columns computed at write time · Partial index on (likelihood, impact) WHERE status='Open' · heatmap query: ~8ms</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (schema) + SA (index design)</div>GENERATED columns for <code>inherent_score</code> and <code>rating</code> ensure computed values are always consistent with <code>likelihood</code> and <code>impact</code> — no application logic duplication. The partial index on Open risks makes heatmap aggregation fast even at 10k+ rows.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="6">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">FastAPI — GET /api/heatmap?mode=inherent&amp;scope=all</div>
+          <pre><span class="jc"># routers/heatmap.py</span>
+<span class="jk">@router</span>.get(<span class="js">"/heatmap"</span>)
+<span class="jk">async def</span> get_heatmap(mode: str = <span class="js">"inherent"</span>,
+                      scope: str = <span class="js">"all"</span>,
+                      db: AsyncSession = Depends(get_db),
+                      cache: Redis = Depends(get_redis)):
+    cache_key = f<span class="js">"heatmap:{mode}:{scope}"</span>
+    cached = <span class="jk">await</span> cache.get(cache_key)
+    <span class="jk">if</span> cached:
+        <span class="jk">return</span> JSONResponse(json.loads(cached))
+
+    rows = <span class="jk">await</span> db.execute(
+        <span class="js">"""SELECT likelihood, impact,
+                  COUNT(*)            AS count,
+                  MAX(rating)         AS max_rating,
+                  ARRAY_AGG(source_id) AS risk_ids
+           FROM core.risks
+           WHERE status = 'Open'
+           GROUP BY likelihood, impact"""</span>
+    )
+    matrix = build_matrix(rows)
+    <span class="jk">await</span> cache.setex(cache_key, 300, json.dumps(matrix))
+    <span class="jk">return</span> matrix
+<span class="jc"># RSK-2024-0142 lands in cell {"likelihood":4,"impact":4}</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">FastAPI + Redis — /api/heatmap</div>
+            <div class="comp-timing">Cache TTL: 5 min · Cache HIT: ~2ms · Cache MISS (DB query): ~12ms · APIM rate limit: 60 req/min/user · JWT claim checked: roles contains "dashboard_read"</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Backend Dev (API)</div>Redis cache-aside pattern. On cache miss, SQL aggregates all Open risks grouped by likelihood/impact. <code>ARRAY_AGG(source_id)</code> gives the React component the list of risk IDs in each cell for on-click drill-down without a second request.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="7">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">React — useHeatmapData hook (TanStack Query)</div>
+          <pre><span class="jc">// hooks/useHeatmapData.ts</span>
+<span class="jk">export function</span> useHeatmapData(mode: HeatmapMode) {
+  <span class="jk">return</span> useQuery({
+    queryKey: [<span class="js">'heatmap'</span>, mode],
+    queryFn:  () =&gt; apiFetch&lt;HeatmapResponse&gt;(
+      `/api/heatmap?mode=${mode}&amp;scope=all`
+    ),
+    staleTime: 60_000,     <span class="jc">// treat as fresh for 60 s</span>
+    gcTime:    300_000,    <span class="jc">// keep in cache for 5 min</span>
+    refetchOnWindowFocus: <span class="jk">true</span>,
+  });
+}
+
+<span class="jc">// API response for mode="inherent":</span>
+{
+  mode: <span class="js">"inherent"</span>,
+  matrix: {
+    <span class="js">"4_4"</span>: {
+      count: 3,
+      max_rating: <span class="js">"High"</span>,
+      risk_ids: [<span class="js">"RSK-2024-0142"</span>, <span class="js">"RSK-2024-0098"</span>, <span class="js">"RSK-2023-0201"</span>]
+    }
+    <span class="jc">// … other cells</span>
+  }
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">React 18 SPA — TanStack Query v5</div>
+            <div class="comp-timing">staleTime 60s means the hook does not re-fetch on every render · refetchOnWindowFocus triggers a background refresh when the user returns to the tab · &lt;2ms to render matrix from cached data</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Frontend Dev (React)</div>The <code>useHeatmapData</code> hook abstracts the TanStack Query setup. Components import the hook, not the fetch logic, so caching behaviour is centralised. The <code>mode</code> parameter switches between inherent and residual view without a page reload.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="8">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">React component — &lt;HeatmapCell&gt; at likelihood=4, impact=4</div>
+          <pre><span class="jc">// components/HeatmapCell.tsx</span>
+<span class="jk">interface</span> HeatmapCellProps {
+  likelihood: number;   <span class="jc">// 4</span>
+  impact:     number;   <span class="jc">// 4</span>
+  count:      number;   <span class="jc">// 3</span>
+  maxRating:  RiskRating; <span class="jc">// "High"</span>
+  riskIds:    string[]; <span class="jc">// ["RSK-2024-0142", …]</span>
+  onCellClick: (ids: string[]) =&gt; void;
+}
+
+<span class="jk">export function</span> HeatmapCell({ count, maxRating, riskIds, onCellClick }: HeatmapCellProps) {
+  <span class="jk">const</span> bg = RATING_COLORS[maxRating]; <span class="jc">// "#DC2626" for High</span>
+
+  <span class="jk">return</span> (
+    &lt;button
+      className={<span class="js">`heatmap-cell rating-${maxRating.toLowerCase()}`</span>}
+      style={{ background: bg }}
+      aria-label={<span class="js">`${count} risks — ${maxRating}`</span>}
+      onClick={() =&gt; onCellClick(riskIds)}
+    &gt;
+      &lt;span className=<span class="js">"cell-count"</span>&gt;{count}&lt;/span&gt;
+    &lt;/button&gt;
+  );
+}
+<span class="jc">// Cell at (4,4) renders: red button, "3" inside</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">HeatmapCell — React component</div>
+            <div class="comp-timing">Pure component; re-renders only when props change · WCAG 2.1 AA: aria-label, keyboard focusable · Cell at (4,4) shows count=3, colour driven by max_rating="High"</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Sees the 5×5 heatmap. The cell at Likelihood 4 / Impact 4 is red with the number "3". She notices three High risks in this cell and clicks to investigate.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--ab);border-color:rgba(154,101,0,.2);">
+            <div class="comp-name" style="color:var(--a);">Colour Mapping</div>
+            <div class="comp-timing">Critical (score 20–25): #7C1D1D · High (12–19): #DC2626 · Medium (6–11): #D97706 · Low (1–5): #15803D</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="9">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 4</span><span class="jlt-avail">Same as L3</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">React — useProcessDetail drill-down for RSK-2024-0142</div>
+          <pre><span class="jc">// onCellClick(["RSK-2024-0142", "RSK-2024-0098", "RSK-2023-0201"])</span>
+<span class="jc">// → dispatches openRiskPanel(riskIds) → side panel opens</span>
+
+<span class="jc">// hooks/useRiskList.ts — fetches list for the panel</span>
+<span class="jk">const</span> { data } = useQuery({
+  queryKey: [<span class="js">'risks'</span>, riskIds],
+  queryFn:  () =&gt; apiFetch(
+    `/api/risks?ids=${riskIds.join(<span class="js">","</span>)}`
+  ),
+});
+
+<span class="jc">// GET /api/risks?ids=RSK-2024-0142,RSK-2024-0098,RSK-2023-0201</span>
+<span class="jc">// FastAPI returns:</span>
+[{
+  source_id:   <span class="js">"RSK-2024-0142"</span>,
+  title:       <span class="js">"Inadequate access controls on financial reporting system"</span>,
+  likelihood:  4,  impact: 4,
+  rating:      <span class="js">"High"</span>,
+  status:      <span class="js">"Open"</span>,
+  owner_email: <span class="js">"jane.smith@client.com"</span>,
+  process_id:  <span class="js">"FRP-002"</span>,
+  category:    <span class="js">"IT &amp; Security"</span>
+}]
+<span class="jc">// User sees risk detail panel with title, rating, owner, process</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">Risk Detail Side Panel — end of journey</div>
+            <div class="comp-timing">From ServiceNow record update to visible detail panel: GRC Source 340ms → Connector 50ms → ADF 1.6s → dbt 400ms → API cache 2ms → React render 4ms. Total pipeline latency: ~15 min (ADF schedule); real-time view once cached.</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Clicks the red (4,4) heatmap cell. A slide-out panel lists RSK-2024-0142 "Inadequate access controls on financial reporting system" — Likelihood 4, Impact 4, High, Open, owned by jane.smith@client.com, process FRP-002. She can launch the LLM agent from the panel to ask for control suggestions.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--gb);border-color:rgba(26,122,82,.2);">
+            <div class="comp-name" style="color:var(--g);">Full Journey Summary — RSK-2024-0142</div>
+            <div class="comp-timing">ServiceNow REST API → GRCConnector/ServiceNowAdapter → ADF pl_grc_risks_incremental → staging.risks_raw → dbt models/core/risks.sql → core.risks (GENERATED columns) → FastAPI + Redis /api/heatmap → React useHeatmapData → HeatmapCell (4,4) → useRiskList drill-down panel</div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Step 11: NEW at L4 — AI Proposes Action -->
     <div class="journey-step" data-step="10">
+      <div class="journey-level-tag l4"><span class="jlt-icon">★</span><span class="jlt-label">NEW at Level 4 — Active Workflow Automation with human-in-the-loop</span><span class="jlt-avail">L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">AI Agent — Identifies overdue RCSA, generates reminder proposal</div>
@@ -2758,6 +3552,7 @@ CREATE INDEX idx_risks_heatmap
     </div>
     <!-- Step 12: NEW at L4 — Human Approves -->
     <div class="journey-step" data-step="11">
+      <div class="journey-level-tag l4"><span class="jlt-icon">★</span><span class="jlt-label">NEW at Level 4 — Active Workflow Automation with human-in-the-loop</span><span class="jlt-avail">L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">2LoD Approves → Durable Function executes → task marked reminded</div>
@@ -2818,24 +3613,538 @@ CREATE INDEX idx_risks_heatmap
       <div class="journey-dot" title="Step 10: User Click"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
       <div class="journey-dot" title="Step 11: AI Proposes"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Proposes</div></div>
       <div class="journey-dot" title="Step 12: Human OKs"><div class="journey-dot-circle">12</div><div class="journey-dot-label">Human OKs</div></div>
-      <div class="journey-dot" title="Step 13: Policy Update Detected — OPTIONAL"><div class="journey-dot-circle" style="border-color:rgba(154,101,0,.8)">13</div><div class="journey-dot-label">Policy Update</div></div>
-      <div class="journey-dot" title="Step 14: Write-back to GRC — OPTIONAL"><div class="journey-dot-circle" style="border-color:rgba(154,101,0,.8)">14</div><div class="journey-dot-label">Write-back</div></div>
+      <div class="journey-dot" title="Step 13: Policy Change Detection — Autonomous at L5"><div class="journey-dot-circle">13</div><div class="journey-dot-label">Policy Update</div></div>
+      <div class="journey-dot" title="Step 14: GRC Write-back — Core at L5"><div class="journey-dot-circle">14</div><div class="journey-dot-label">Write-back</div></div>
     </div>
     <!-- Steps 1-12 compact -->
-    <div class="journey-step" data-step="0"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">1</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">GRC API — ServiceNow REST (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Live incremental pull via OAuth2 every 15 minutes. See Level 3 for full technical detail.</div></div></div></div>
-    <div class="journey-step" data-step="1"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">2</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Python GRCConnector (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">ServiceNowAdapter, Pydantic validation, watermark pattern.</div></div></div></div>
-    <div class="journey-step" data-step="2"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">3</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Azure Data Factory (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">pl_grc_risks_incremental. 5 activities. ~1.6s total run.</div></div></div></div>
-    <div class="journey-step" data-step="3"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">4</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL staging (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">JSONB raw payload, idempotent UPSERT, immutable audit trail.</div></div></div></div>
-    <div class="journey-step" data-step="4"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">5</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">dbt Incremental (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Incremental model, dbt tests, GENERATED columns.</div></div></div></div>
-    <div class="journey-step" data-step="5"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">6</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">PostgreSQL core.risks (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">GENERATED columns, partial index, ~8ms heatmap query.</div></div></div></div>
-    <div class="journey-step" data-step="6"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">7</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">FastAPI + Redis (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Redis cache, JWT, RBAC, SSE stream.</div></div></div></div>
-    <div class="journey-step" data-step="7"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">8</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">React Browser (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">TanStack Query, SSE-driven cache invalidation.</div></div></div></div>
-    <div class="journey-step" data-step="8"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">9</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">HeatmapCell (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">5×5 heatmap, colour by rating, WCAG 2.1 AA compliant.</div></div></div></div>
-    <div class="journey-step" data-step="9"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">10</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">User Click — Risk Detail Panel (same as L3)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">Drill-down to risk list, AI agent chat, workflow actions.</div></div></div></div>
-    <div class="journey-step" data-step="10"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">11</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">AI Proposes Action (same as L4)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">RCSA monitor identifies overdue assessment, drafts reminder proposal, surfaces to 2LoD for approval. Human-in-the-loop required.</div></div></div></div>
-    <div class="journey-step" data-step="11"><div class="journey-body" style="grid-template-columns:1fr;"><div class="journey-step-compact"><div style="font-size:32px;margin-bottom:10px;color:rgba(255,255,255,.3)">12</div><div style="color:#fff;font-weight:700;font-size:15px;margin-bottom:8px">Human Approves (same as L4)</div><div style="color:rgba(255,255,255,.55);font-size:13px;line-height:1.7;max-width:420px">2LoD approves, Durable Function executes email + Teams notification, audit log updated.</div></div></div></div>
+    <div class="journey-step" data-step="0">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">ServiceNow REST API — GET /api/now/table/sn_risk_risk</div>
+          <pre><span class="jc"># ServiceNow Table API — incremental pull (modified since last run)</span>
+GET https://client.service-now.com/api/now/table/sn_risk_risk
+  ?sysparm_query=sys_updated_on&gt;2024-10-14T06:00:00Z
+  &amp;sysparm_fields=number,short_description,risk_score,
+    likelihood,impact,state,owner,category,
+    u_process_id,sys_updated_on
+  &amp;sysparm_limit=500
+
+<span class="jc">// RSK-2024-0142 record in response:</span>
+{
+  <span class="jk">"number"</span>:           <span class="js">"RSK-2024-0142"</span>,
+  <span class="jk">"short_description"</span>: <span class="js">"Inadequate access controls on financial reporting system"</span>,
+  <span class="jk">"risk_score"</span>:        <span class="js">"16"</span>,
+  <span class="jk">"likelihood"</span>:        <span class="js">"4"</span>,
+  <span class="jk">"impact"</span>:            <span class="js">"4"</span>,
+  <span class="jk">"state"</span>:             <span class="js">"Open"</span>,
+  <span class="jk">"owner"</span>:             <span class="js">"jane.smith@client.com"</span>,
+  <span class="jk">"category"</span>:          <span class="js">"IT &amp; Security"</span>,
+  <span class="jk">"u_process_id"</span>:      <span class="js">"FRP-002"</span>,
+  <span class="jk">"sys_updated_on"</span>:    <span class="js">"2024-10-14T08:23:11Z"</span>
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">ServiceNow GRC (source of truth)</div>
+            <div class="comp-timing">Polled every 15 min by ADF trigger · OAuth 2.0 client credentials · 200 OK in ~340ms</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">GRC System Admin</div>Maintains the ServiceNow instance. Created the custom field <code>u_process_id</code> to link risks to business processes. Granted the integration service account read access to <code>sn_risk_risk</code>.</div>
+            </div>
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (GRC Connector)</div>Registered OAuth client in ServiceNow. Designed the incremental pull query using <code>sys_updated_on</code> watermark to minimise API calls and respect ServiceNow rate limits (600 req/hr).</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="1">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">Python GRCConnector — ServiceNowAdapter.fetch_risks()</div>
+          <pre><span class="jc"># connectors/servicenow_adapter.py</span>
+<span class="jk">class</span> ServiceNowAdapter(GRCConnector):
+    <span class="jk">def</span> fetch_risks(self, since: datetime) -&gt; list[RiskRecord]:
+        resp = self._session.get(
+            f"{self.base_url}/api/now/table/sn_risk_risk",
+            params={
+                "sysparm_query": f"sys_updated_on&gt;{since.isoformat()}",
+                "sysparm_fields": RISK_FIELDS,
+                "sysparm_limit": 500,
+            },
+        )
+        resp.raise_for_status()
+        raw = resp.json()["result"]
+
+        <span class="jk">return</span> [
+            RiskRecord(
+                source_id=r["number"],
+                title=r["short_description"],
+                likelihood=int(r["likelihood"]),
+                impact=int(r["impact"]),
+                state=r["state"],
+                owner_email=r["owner"],
+                category=r["category"],
+                process_id=r.get("u_process_id"),
+                source_updated_at=parse_dt(r["sys_updated_on"]),
+                raw=r,
+            )
+            <span class="jk">for</span> r <span class="jk">in</span> raw
+        ]
+<span class="jc"># RSK-2024-0142 → RiskRecord(source_id="RSK-2024-0142",
+#   likelihood=4, impact=4, process_id="FRP-002", …)</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">GRCConnector / ServiceNowAdapter (Python, Azure Function)</div>
+            <div class="comp-timing">Runs inside ADF-triggered Python Azure Function · Parses ~120 records in &lt;50ms · Retry: 3× exponential backoff</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (GRC Connector)</div>The <code>GRCConnector</code> abstract class defines <code>fetch_risks()</code>. <code>ServiceNowAdapter</code> implements it for ServiceNow. A second adapter for Archer is being planned. Pydantic <code>RiskRecord</code> validates types and rejects malformed records into a dead-letter log.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--gb);border-color:rgba(26,122,82,.2);">
+            <div class="comp-name" style="color:var(--g);">Why an Adapter pattern?</div>
+            <div class="comp-timing">Isolates GRC-tool specifics from pipeline logic. Swapping ServiceNow for Archer requires only a new Adapter — no pipeline changes.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="2">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">ADF Pipeline — pl_grc_risks_incremental Run Log</div>
+          <pre><span class="jc">// Azure Data Factory — pipeline: pl_grc_risks_incremental</span>
+{
+  <span class="jk">"runId"</span>:       <span class="js">"adf-run-20241014-083100"</span>,
+  <span class="jk">"pipeline"</span>:   <span class="js">"pl_grc_risks_incremental"</span>,
+  <span class="jk">"trigger"</span>:    <span class="js">"Schedule — every 15 min"</span>,
+  <span class="jk">"status"</span>:     <span class="js">"Succeeded"</span>,
+  <span class="jk">"activities"</span>: [
+    { <span class="jk">"name"</span>: <span class="js">"act_get_watermark"</span>,    <span class="jk">"duration_ms"</span>: 120  },
+    { <span class="jk">"name"</span>: <span class="js">"act_fetch_servicenow"</span>, <span class="jk">"duration_ms"</span>: 890,
+      <span class="jk">"output"</span>: { <span class="jk">"recordsRead"</span>: 7 } },
+    { <span class="jk">"name"</span>: <span class="js">"act_run_connector"</span>,   <span class="jk">"duration_ms"</span>: 340,
+      <span class="jk">"output"</span>: { <span class="jk">"recordsParsed"</span>: 7, <span class="jk">"rejected"</span>: 0 } },
+    { <span class="jk">"name"</span>: <span class="js">"act_stage_upsert"</span>,    <span class="jk">"duration_ms"</span>: 210,
+      <span class="jk">"output"</span>: { <span class="jk">"rowsUpserted"</span>: 7 } },
+    { <span class="jk">"name"</span>: <span class="js">"act_update_watermark"</span>, <span class="jk">"duration_ms"</span>: 80  }
+  ],
+  <span class="jk">"totalDuration_ms"</span>: 1640
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">Azure Data Factory — pl_grc_risks_incremental</div>
+            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in Azure SQL control table · Cost: ~€0.001/run</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (ADF)</div>Pipeline uses a watermark pattern — reads the last successful run timestamp from a control table, fetches only records updated since then, and updates the watermark on success. Failed runs do not advance the watermark, so no records are skipped.</div>
+            </div>
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">IT / Azure Lead</div>Provisioned the ADF instance in the client's Azure subscription (West Europe). Approved the managed identity permissions for Key Vault secret access.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="3">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">PostgreSQL — staging.risks_raw UPSERT</div>
+          <pre><span class="jc">-- ADF calls act_stage_upsert which runs:</span>
+<span class="jk">INSERT INTO</span> staging.risks_raw (
+  source_id,     source_system,  raw_payload,
+  fetched_at,    pipeline_run_id
+)
+<span class="jk">VALUES</span> (
+  <span class="js">'RSK-2024-0142'</span>,
+  <span class="js">'servicenow'</span>,
+  <span class="js">'{"number":"RSK-2024-0142","short_description":"Inadequate access controls on financial reporting system","likelihood":"4","impact":"4","state":"Open","owner":"jane.smith@client.com","category":"IT & Security","u_process_id":"FRP-002","sys_updated_on":"2024-10-14T08:23:11Z"}'</span>::jsonb,
+  NOW(),
+  <span class="js">'adf-run-20241014-083100'</span>
+)
+<span class="jk">ON CONFLICT</span> (source_id, source_system)
+<span class="jk">DO UPDATE SET</span>
+  raw_payload     = EXCLUDED.raw_payload,
+  fetched_at      = EXCLUDED.fetched_at,
+  pipeline_run_id = EXCLUDED.pipeline_run_id;
+<span class="jc">-- 7 rows upserted in 210ms · no duplicates</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">PostgreSQL 16 — staging.risks_raw</div>
+            <div class="comp-timing">JSONB raw payload preserved for replay · ON CONFLICT UPSERT is idempotent · &lt;10ms per row</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (schema design)</div>Staging schema stores the raw JSONB payload alongside the pipeline run ID. This makes reprocessing after connector bugs trivial — re-run dbt against the existing staging rows. The staging table is the immutable source of truth for each extraction run.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--rb);border-color:rgba(180,50,42,.2);">
+            <div class="comp-name" style="color:var(--r);">Data Quality Warning</div>
+            <div class="comp-timing">If <code>u_process_id</code> is NULL (legacy ServiceNow records), the record still lands in staging but dbt will set <code>process_id = NULL</code> and the risk will appear in the heatmap with no process linkage.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="4">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">dbt model — models/core/risks.sql</div>
+          <pre><span class="jc">-- models/core/risks.sql</span>
+{{ config(materialized='incremental',
+          unique_key='source_id',
+          on_schema_change='append_new_columns') }}
+
+<span class="jk">WITH</span> src <span class="jk">AS</span> (
+  <span class="jk">SELECT</span>
+    source_id,
+    raw_payload -&gt;&gt; <span class="js">'short_description'</span>  <span class="jk">AS</span> title,
+    (raw_payload -&gt;&gt; <span class="js">'likelihood'</span>)::int  <span class="jk">AS</span> likelihood,
+    (raw_payload -&gt;&gt; <span class="js">'impact'</span>)::int      <span class="jk">AS</span> impact,
+    raw_payload -&gt;&gt; <span class="js">'state'</span>             <span class="jk">AS</span> status,
+    raw_payload -&gt;&gt; <span class="js">'owner'</span>             <span class="jk">AS</span> owner_email,
+    raw_payload -&gt;&gt; <span class="js">'category'</span>          <span class="jk">AS</span> category,
+    raw_payload -&gt;&gt; <span class="js">'u_process_id'</span>      <span class="jk">AS</span> process_id,
+    fetched_at
+  <span class="jk">FROM</span> staging.risks_raw
+  <span class="jk">WHERE</span> source_system = <span class="js">'servicenow'</span>
+    {% <span class="jk">if</span> is_incremental() %}
+    <span class="jk">AND</span> fetched_at &gt; (<span class="jk">SELECT MAX</span>(dbt_updated_at) <span class="jk">FROM</span> {{ this }})
+    {% endif %}
+)
+<span class="jk">SELECT</span> *, NOW() <span class="jk">AS</span> dbt_updated_at
+<span class="jk">FROM</span>   src</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">dbt Core — models/core/risks.sql (incremental)</div>
+            <div class="comp-timing">Runs after ADF completes via ADF-dbt activity · ~2.1s for full table · incremental: ~0.4s · dbt tests: not_null, unique, accepted_values</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (dbt)</div>The incremental model only processes rows newer than the last dbt run, keeping transform times sub-second. dbt tests (<code>not_null</code> on <code>source_id</code>, <code>unique</code> on <code>source_id</code>, <code>accepted_values</code> on <code>status</code>) block promotion if data quality fails.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="5">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">PostgreSQL — core.risks row for RSK-2024-0142</div>
+          <pre><span class="jc">-- core.risks row after dbt materialisation:</span>
+{
+  source_id:      <span class="js">"RSK-2024-0142"</span>,
+  title:          <span class="js">"Inadequate access controls on financial reporting system"</span>,
+  likelihood:     4,
+  impact:         4,
+  <span class="jc">-- GENERATED column: likelihood * impact</span>
+  inherent_score: 16,
+  <span class="jc">-- GENERATED column: CASE WHEN score &gt;= 15 THEN 'Critical' …</span>
+  rating:         <span class="js">"High"</span>,
+  status:         <span class="js">"Open"</span>,
+  owner_email:    <span class="js">"jane.smith@client.com"</span>,
+  category:       <span class="js">"IT &amp; Security"</span>,
+  process_id:     <span class="js">"FRP-002"</span>,
+  dbt_updated_at: <span class="js">"2024-10-14T08:34:00Z"</span>
+}
+
+<span class="jc">-- Index used by heatmap query:</span>
+CREATE INDEX idx_risks_heatmap
+  ON core.risks (likelihood, impact, status)
+  WHERE status = <span class="js">'Open'</span>;</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">PostgreSQL 16 — core.risks (analytical model)</div>
+            <div class="comp-timing">GENERATED columns computed at write time · Partial index on (likelihood, impact) WHERE status='Open' · heatmap query: ~8ms</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Data Eng (schema) + SA (index design)</div>GENERATED columns for <code>inherent_score</code> and <code>rating</code> ensure computed values are always consistent with <code>likelihood</code> and <code>impact</code> — no application logic duplication. The partial index on Open risks makes heatmap aggregation fast even at 10k+ rows.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="6">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">FastAPI — GET /api/heatmap?mode=inherent&amp;scope=all</div>
+          <pre><span class="jc"># routers/heatmap.py</span>
+<span class="jk">@router</span>.get(<span class="js">"/heatmap"</span>)
+<span class="jk">async def</span> get_heatmap(mode: str = <span class="js">"inherent"</span>,
+                      scope: str = <span class="js">"all"</span>,
+                      db: AsyncSession = Depends(get_db),
+                      cache: Redis = Depends(get_redis)):
+    cache_key = f<span class="js">"heatmap:{mode}:{scope}"</span>
+    cached = <span class="jk">await</span> cache.get(cache_key)
+    <span class="jk">if</span> cached:
+        <span class="jk">return</span> JSONResponse(json.loads(cached))
+
+    rows = <span class="jk">await</span> db.execute(
+        <span class="js">"""SELECT likelihood, impact,
+                  COUNT(*)            AS count,
+                  MAX(rating)         AS max_rating,
+                  ARRAY_AGG(source_id) AS risk_ids
+           FROM core.risks
+           WHERE status = 'Open'
+           GROUP BY likelihood, impact"""</span>
+    )
+    matrix = build_matrix(rows)
+    <span class="jk">await</span> cache.setex(cache_key, 300, json.dumps(matrix))
+    <span class="jk">return</span> matrix
+<span class="jc"># RSK-2024-0142 lands in cell {"likelihood":4,"impact":4}</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">FastAPI + Redis — /api/heatmap</div>
+            <div class="comp-timing">Cache TTL: 5 min · Cache HIT: ~2ms · Cache MISS (DB query): ~12ms · APIM rate limit: 60 req/min/user · JWT claim checked: roles contains "dashboard_read"</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Backend Dev (API)</div>Redis cache-aside pattern. On cache miss, SQL aggregates all Open risks grouped by likelihood/impact. <code>ARRAY_AGG(source_id)</code> gives the React component the list of risk IDs in each cell for on-click drill-down without a second request.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="7">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">React — useHeatmapData hook (TanStack Query)</div>
+          <pre><span class="jc">// hooks/useHeatmapData.ts</span>
+<span class="jk">export function</span> useHeatmapData(mode: HeatmapMode) {
+  <span class="jk">return</span> useQuery({
+    queryKey: [<span class="js">'heatmap'</span>, mode],
+    queryFn:  () =&gt; apiFetch&lt;HeatmapResponse&gt;(
+      `/api/heatmap?mode=${mode}&amp;scope=all`
+    ),
+    staleTime: 60_000,     <span class="jc">// treat as fresh for 60 s</span>
+    gcTime:    300_000,    <span class="jc">// keep in cache for 5 min</span>
+    refetchOnWindowFocus: <span class="jk">true</span>,
+  });
+}
+
+<span class="jc">// API response for mode="inherent":</span>
+{
+  mode: <span class="js">"inherent"</span>,
+  matrix: {
+    <span class="js">"4_4"</span>: {
+      count: 3,
+      max_rating: <span class="js">"High"</span>,
+      risk_ids: [<span class="js">"RSK-2024-0142"</span>, <span class="js">"RSK-2024-0098"</span>, <span class="js">"RSK-2023-0201"</span>]
+    }
+    <span class="jc">// … other cells</span>
+  }
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">React 18 SPA — TanStack Query v5</div>
+            <div class="comp-timing">staleTime 60s means the hook does not re-fetch on every render · refetchOnWindowFocus triggers a background refresh when the user returns to the tab · &lt;2ms to render matrix from cached data</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">Frontend Dev (React)</div>The <code>useHeatmapData</code> hook abstracts the TanStack Query setup. Components import the hook, not the fetch logic, so caching behaviour is centralised. The <code>mode</code> parameter switches between inherent and residual view without a page reload.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="8">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">React component — &lt;HeatmapCell&gt; at likelihood=4, impact=4</div>
+          <pre><span class="jc">// components/HeatmapCell.tsx</span>
+<span class="jk">interface</span> HeatmapCellProps {
+  likelihood: number;   <span class="jc">// 4</span>
+  impact:     number;   <span class="jc">// 4</span>
+  count:      number;   <span class="jc">// 3</span>
+  maxRating:  RiskRating; <span class="jc">// "High"</span>
+  riskIds:    string[]; <span class="jc">// ["RSK-2024-0142", …]</span>
+  onCellClick: (ids: string[]) =&gt; void;
+}
+
+<span class="jk">export function</span> HeatmapCell({ count, maxRating, riskIds, onCellClick }: HeatmapCellProps) {
+  <span class="jk">const</span> bg = RATING_COLORS[maxRating]; <span class="jc">// "#DC2626" for High</span>
+
+  <span class="jk">return</span> (
+    &lt;button
+      className={<span class="js">`heatmap-cell rating-${maxRating.toLowerCase()}`</span>}
+      style={{ background: bg }}
+      aria-label={<span class="js">`${count} risks — ${maxRating}`</span>}
+      onClick={() =&gt; onCellClick(riskIds)}
+    &gt;
+      &lt;span className=<span class="js">"cell-count"</span>&gt;{count}&lt;/span&gt;
+    &lt;/button&gt;
+  );
+}
+<span class="jc">// Cell at (4,4) renders: red button, "3" inside</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">HeatmapCell — React component</div>
+            <div class="comp-timing">Pure component; re-renders only when props change · WCAG 2.1 AA: aria-label, keyboard focusable · Cell at (4,4) shows count=3, colour driven by max_rating="High"</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Sees the 5×5 heatmap. The cell at Likelihood 4 / Impact 4 is red with the number "3". She notices three High risks in this cell and clicks to investigate.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--ab);border-color:rgba(154,101,0,.2);">
+            <div class="comp-name" style="color:var(--a);">Colour Mapping</div>
+            <div class="comp-timing">Critical (score 20–25): #7C1D1D · High (12–19): #DC2626 · Medium (6–11): #D97706 · Low (1–5): #15803D</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="9">
+      <div class="journey-level-tag inherited"><span class="jlt-icon">◈</span><span class="jlt-label">Core pipeline · Architecture unchanged at Level 5</span><span class="jlt-avail">Same as L3 · L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">React — useProcessDetail drill-down for RSK-2024-0142</div>
+          <pre><span class="jc">// onCellClick(["RSK-2024-0142", "RSK-2024-0098", "RSK-2023-0201"])</span>
+<span class="jc">// → dispatches openRiskPanel(riskIds) → side panel opens</span>
+
+<span class="jc">// hooks/useRiskList.ts — fetches list for the panel</span>
+<span class="jk">const</span> { data } = useQuery({
+  queryKey: [<span class="js">'risks'</span>, riskIds],
+  queryFn:  () =&gt; apiFetch(
+    `/api/risks?ids=${riskIds.join(<span class="js">","</span>)}`
+  ),
+});
+
+<span class="jc">// GET /api/risks?ids=RSK-2024-0142,RSK-2024-0098,RSK-2023-0201</span>
+<span class="jc">// FastAPI returns:</span>
+[{
+  source_id:   <span class="js">"RSK-2024-0142"</span>,
+  title:       <span class="js">"Inadequate access controls on financial reporting system"</span>,
+  likelihood:  4,  impact: 4,
+  rating:      <span class="js">"High"</span>,
+  status:      <span class="js">"Open"</span>,
+  owner_email: <span class="js">"jane.smith@client.com"</span>,
+  process_id:  <span class="js">"FRP-002"</span>,
+  category:    <span class="js">"IT &amp; Security"</span>
+}]
+<span class="jc">// User sees risk detail panel with title, rating, owner, process</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component">
+            <div class="comp-name">Risk Detail Side Panel — end of journey</div>
+            <div class="comp-timing">From ServiceNow record update to visible detail panel: GRC Source 340ms → Connector 50ms → ADF 1.6s → dbt 400ms → API cache 2ms → React render 4ms. Total pipeline latency: ~15 min (ADF schedule); real-time view once cached.</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Clicks the red (4,4) heatmap cell. A slide-out panel lists RSK-2024-0142 "Inadequate access controls on financial reporting system" — Likelihood 4, Impact 4, High, Open, owned by jane.smith@client.com, process FRP-002. She can launch the LLM agent from the panel to ask for control suggestions.</div>
+            </div>
+          </div>
+          <div class="journey-component" style="background:var(--gb);border-color:rgba(26,122,82,.2);">
+            <div class="comp-name" style="color:var(--g);">Full Journey Summary — RSK-2024-0142</div>
+            <div class="comp-timing">ServiceNow REST API → GRCConnector/ServiceNowAdapter → ADF pl_grc_risks_incremental → staging.risks_raw → dbt models/core/risks.sql → core.risks (GENERATED columns) → FastAPI + Redis /api/heatmap → React useHeatmapData → HeatmapCell (4,4) → useRiskList drill-down panel</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="10">
+      <div class="journey-level-tag l4"><span class="jlt-icon">◈</span><span class="jlt-label">Workflow layer · Unchanged from Level 4</span><span class="jlt-avail">Same as L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">AI Agent — Identifies overdue RCSA, generates reminder proposal</div>
+          <pre><span class="jc"># RCSA Due-Date Monitor (daily 07:00 UTC) detects:
+# Finance Q3 RCSA — due 2024-10-31 — status: Not Started
+# Days remaining: 17 → triggers D-14 reminder logic
+
+# Agent generates a proposal for 2LoD dashboard:</span>
+{
+  <span class="jk">"proposal_id"</span>: <span class="js">"prop-20241014-0047"</span>,
+  <span class="jk">"type"</span>: <span class="js">"send_reminder"</span>,
+  <span class="jk">"assessment_id"</span>: <span class="js">"RCSA-2024-Q3-FIN"</span>,
+  <span class="jk">"process"</span>: <span class="js">"Finance — Reporting &amp; Controls"</span>,
+  <span class="jk">"assigned_to"</span>: <span class="js">"jan.de.vries@client.com"</span>,
+  <span class="jk">"due_date"</span>: <span class="js">"2024-10-31"</span>,
+  <span class="jk">"days_remaining"</span>: 17,
+  <span class="jk">"draft_message"</span>: <span class="js">"Reminder: Your Finance Q3 RCSA is due in 17 days..."</span>,
+  <span class="jk">"status"</span>: <span class="js">"AWAITING_APPROVAL"</span>
+}
+
+<span class="jc"># Proposal appears as a yellow banner in 2LoD dashboard:
+# "AI recommends: Send reminder to Jan de Vries [Approve] [Edit] [Dismiss]"</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component" style="background:#FEF3DC;border-color:rgba(154,101,0,.2);"><div class="comp-name" style="color:#9A6500;">AI Proposes — Human decides</div><div class="comp-timing">At L4, AI can identify issues and draft actions — but CANNOT execute without explicit human approval. Every AI-proposed action requires a click from 2LoD.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">AI/ML Engineer + Backend Dev 2</div>RCSA monitor generates the proposal. POST /api/notifications/remind creates the pending action. Durable Function is in "waiting for external event" state.</div></div>
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Sees the AI proposal in the dashboard. Reviews the draft message. Decides to approve, edit, or dismiss. Has full control.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="journey-step" data-step="11">
+      <div class="journey-level-tag l4"><span class="jlt-icon">◈</span><span class="jlt-label">Workflow layer · Unchanged from Level 4</span><span class="jlt-avail">Same as L4</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">2LoD Approves → Durable Function executes → task marked reminded</div>
+          <pre><span class="jc"># 2LoD clicks "Approve" on the reminder proposal
+# → POST /api/notifications/remind</span>
+{
+  <span class="jk">"proposal_id"</span>: <span class="js">"prop-20241014-0047"</span>,
+  <span class="jk">"approved_by"</span>: <span class="js">"sarah.jones@client.com"</span>,
+  <span class="jk">"approved_at"</span>: <span class="js">"2024-10-14T09:12:33Z"</span>
+}
+
+<span class="jc"># Durable Function receives ExternalEvent "approved"
+# → sends email to jan.de.vries@client.com
+# → sends Teams card to Finance channel
+# → updates workflow_tasks: status = "Reminded"
+# → updates agent_audit_log with approval chain
+
+# Result:</span>
+{
+  <span class="jk">"email_sent"</span>: <span class="js">true</span>,
+  <span class="jk">"teams_card_sent"</span>: <span class="js">true</span>,
+  <span class="jk">"task_status"</span>: <span class="js">"Reminded"</span>,
+  <span class="jk">"audit_entry"</span>: <span class="js">"AI-proposed, human-approved by sarah.jones"</span>
+}</pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component" style="background:var(--gb);border-color:rgba(26,122,82,.2);"><div class="comp-name" style="color:var(--g);">Human-in-the-Loop — Every time</div><div class="comp-timing">The Durable Function does not execute the reminder automatically. It waits for the human's external event signal. This is the critical safety mechanism at L4.</div></div>
+          <div class="journey-actors">
+            <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD) — Sarah Jones</div>Clicked "Approve." Received confirmation toast: "Reminder sent to Jan de Vries for Finance Q3 RCSA." Audit log entry created with her approval.</div></div>
+            <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">Backend Dev 2 (Durable Functions)</div>Orchestrator pattern: create_timer → wait_for_external_event("approved") → call_activity("send_reminder"). The wait can be hours or days.</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
     <!-- Step 13: NEW at L5 — Policy Update Detected -->
     <div class="journey-step" data-step="12">
+      <div class="journey-level-tag l5"><span class="jlt-icon">★</span><span class="jlt-label">NEW at Level 5 — Autonomous policy-change detection closes the data loop</span><span class="jlt-avail">L5 only</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">NEW DORA RTS uploaded → doc re-indexed → AI detects impact on 3 existing risks</div>
@@ -2864,7 +4173,7 @@ Time to searchable: <span class="js">~4 minutes</span>
 }</pre>
         </div>
         <div class="journey-context">
-          <div class="journey-component" style="background:#FEF3DC;border-color:rgba(154,101,0,.2);"><div class="comp-name" style="color:#9A6500;"><span class="optional-badge" style="font-size:10px;padding:1px 6px;">OPTIONAL FEATURE</span> Policy Change Detection</div><div class="comp-timing">Requires "Enable AI write-back" setting in admin panel. Adds nightly GPT-4o analysis comparing new document versions against existing risk descriptions. ~€0.15/analysis run.</div></div>
+          <div class="journey-component" style="background:#FEF3DC;border-color:rgba(154,101,0,.2);"><div class="comp-name" style="color:#6D28D9;">Core at L5 — Policy Change Detection</div><div class="comp-timing">Nightly GPT-4o analysis compares newly indexed policy documents against existing risk descriptions. Affected risks are identified automatically. ~€0.15/analysis run — included in L5 scope.</div></div>
           <div class="journey-actors">
             <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">AI/ML Engineer</div>Nightly Azure Function runs comparison prompt: "Given new policy doc [chunks], which existing risks need description updates?" Structured JSON output. Stored in pending_ai_updates table.</div></div>
             <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Next morning, sees notification: "3 risk descriptions may need updating following new DORA RTS. AI has proposed changes — review and approve."</div></div>
@@ -2874,6 +4183,7 @@ Time to searchable: <span class="js">~4 minutes</span>
     </div>
     <!-- Step 14: NEW at L5 — Write-back to GRC -->
     <div class="journey-step" data-step="13">
+      <div class="journey-level-tag l5"><span class="jlt-icon">★</span><span class="jlt-label">NEW at Level 5 — Write-back to GRC closes the autonomous data circle</span><span class="jlt-avail">L5 only</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">2LoD approves → PUT /api/grc/write-back → ServiceNow updated → circle complete</div>
@@ -2899,7 +4209,7 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
 # → Full loop closed. ← THE CIRCLE IS COMPLETE</span></pre>
         </div>
         <div class="journey-context">
-          <div class="journey-component" style="background:#FEF3DC;border-color:rgba(154,101,0,.3);"><div class="comp-name" style="color:#9A6500;"><span class="optional-badge" style="font-size:10px;padding:1px 6px;">OPTIONAL FEATURE</span> GRC Write-back</div><div class="comp-timing">Requires GRC platform Write API access (negotiated separately), additional governance process, and quarterly IA review of write-back audit log.</div></div>
+          <div class="journey-component" style="background:#FEF3DC;border-color:rgba(154,101,0,.3);"><div class="comp-name" style="color:#6D28D9;">Core at L5 — GRC Write-back Agent</div><div class="comp-timing">GRC platform Write API access negotiated in Phase 0. Write-back governed by approved policy; quarterly IA review of audit log is built into the L5 delivery scope.</div></div>
           <div class="journey-actors">
             <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Reviewed the AI-proposed change. Confirmed it is accurate. Clicked "Approve and write back." ServiceNow is now the source of truth — and the ICS Cockpit helped keep it accurate.</div></div>
             <div class="journey-actor accenture"><span class="actor-badge">Accenture</span><div class="actor-body"><div class="actor-role">Backend Dev 2 (write-back function)</div>Rollback capability: previous value stored for 24h. One-click rollback available. agent_audit_log records full reasoning trace: source document chunk, proposed change, approver, timestamp.</div></div>
@@ -2918,8 +4228,8 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
   </div>
 
   <!-- L5 Write-back stack table -->
-  <div id="l5WriteBack" style="display:none;margin-top:24px;padding:20px;border:2px solid #9A6500;border-radius:var(--radiusL);background:#FFFBF0;">
-    <div style="font-size:12px;font-weight:700;color:#9A6500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">OPTIONAL — AI Write-Back Stack (Level 5 only)</div>
+  <div id="l5WriteBack" style="display:none;margin-top:24px;padding:20px;border:2px solid #6D28D9;border-radius:var(--radiusL);background:rgba(109,40,217,.04);">
+    <div style="font-size:12px;font-weight:700;color:#6D28D9;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">Integrated AI Write-Back Stack — Core at Level 5</div>
     <div class="table-wrap" style="margin-bottom:0;">
       <table>
         <thead><tr><th>Component</th><th>Acquired/Built</th><th>Additional Cost</th><th>Risk Level</th></tr></thead>
@@ -4037,11 +5347,11 @@ const ROLES = {
     practiceColor: '#1E3A6E',
     fte: '1.0',
     phase: 'Phase 2–3',
-    summary: 'Builds TPRM event ingestion, Durable Function orchestrators, and the write-back integration (L5 optional). Secondary owner of data pipelines.',
+    summary: 'Builds TPRM event ingestion, Durable Function orchestrators, and the write-back integration (core at L5). Secondary owner of data pipelines.',
     handbook: [
       { label: 'Event schema', value: 'All TPRM events must conform to TPRMEvent Pydantic model before storage. Invalid events written to dead_letter_queue.' },
       { label: 'Durable Functions', value: 'Orchestrator → Activity → Wait-for-external-event pattern. No direct DB writes from orchestrators.' },
-      { label: 'Write-back (L5)', value: 'Requires separate approval from GRC Expert and client Risk Management SME before implementation begins. Rollback stored for 24h.' },
+      { label: 'Write-back (L5)', value: 'Governed by approved write-back policy; implementation begins in Phase 4. Rollback stored for 24h.' },
     ],
     deliverables: ['TPRM Integration spec', 'Durable Functions design doc', 'TPRM event schema definition', 'Service Bus integration spec', 'Dead-letter queue design', 'Write-back rollback spec', 'Write-back Technical Design (L5)'],
     skills: {
@@ -4118,7 +5428,7 @@ const ROLES = {
       { label: 'Pen test', value: 'Coordinated with external vendor in Week 22–23. Scope: APIM, Container Apps, Key Vault. Critical findings must be remediated before go-live.' },
       { label: 'Data residency', value: 'All services deployed in West Europe or North Europe Azure regions. No data leaves EU. Confirmed in Architecture Decision Record.' },
     ],
-    deliverables: ['Threat Model document', 'Security Review Checklist', 'Pen Test scope & findings', 'DPIA data flow diagram', 'IaC security checklist', 'Azure Policy definitions', 'Data residency evidence', 'ISO 27001 control mapping', 'AI model risk assessment'],
+    deliverables: ['Threat Model document', 'AI Output RBAC Specification', 'Security Review Checklist', 'Pen Test scope & findings', 'DPIA data flow diagram', 'IaC security checklist', 'Azure Policy definitions', 'Data residency evidence', 'ISO 27001 control mapping', 'AI model risk assessment'],
     skills: {
       mustHave: ['Threat modelling (STRIDE / MITRE ATT&CK)', 'DPIA / GDPR compliance', 'Azure Security Center / Defender for Cloud', 'Penetration test coordination', 'ISO 27001 / SOC 2', 'Terraform IaC security review'],
       niceToHave: ['AI model risk assessment (NIST AI RMF)', 'DORA ICT risk requirements', 'Cloud Security Alliance (CSA) STAR', 'Zero-trust architecture design'],
@@ -4677,18 +5987,153 @@ CROSS-CUTTING SERVICES (no subnet, Azure-managed):<br>
 <div>☑ Production Container App deployed from main branch (tag: v1.0.0)<br>☑ DNS CNAME updated to production APIM endpoint<br>☑ Smoke test: login, heatmap load, AI agent query (30-second test)<br>☑ All non-prod environments suspended<br>☑ Incident response contact list distributed to IT team<br>☑ Hypercare monitoring period: 2 weeks daily check-in</div>
 </div>`,
   },
-  'RBAC policy definition': {
-    title: 'RBAC Policy Definition — ICS Cockpit',
-    content: `<table style="width:100%;border-collapse:collapse;font-size:13px;">
-<thead><tr style="background:var(--s2);"><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Role</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Permissions</th><th style="padding:8px 12px;text-align:left;border-bottom:1px solid var(--border);">Assigned to</th></tr></thead>
+  'AI Output RBAC Specification': {
+    title: 'AI Output RBAC Specification — Scoped Intelligence by Design',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px;">
+  <div style="background:rgba(109,40,217,.06);border:1px solid rgba(109,40,217,.2);border-radius:8px;padding:16px;">
+    <div style="font-size:10px;font-weight:800;color:#6D28D9;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">The Problem</div>
+    <p style="margin:0;font-size:12px;color:var(--ts);">A standard AI agent with access to a full PostgreSQL database and an AI Search index can — if not explicitly scoped — return risk data, control assessments, or policy documents belonging to a different business area or a higher-clearance user. Prompt injection, role confusion, or a poorly scoped SQL tool query can all cause cross-area data leakage.</p>
+  </div>
+  <div style="background:rgba(26,122,82,.06);border:1px solid rgba(26,122,82,.2);border-radius:8px;padding:16px;">
+    <div style="font-size:10px;font-weight:800;color:#1A7A52;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;">The Solution</div>
+    <p style="margin:0;font-size:12px;color:var(--ts);">Every AI output — SQL query result, RAG document chunk, and workflow action — is scoped by the authenticated user's role and area_id at the point of execution. The agent cannot "see" data outside the user's permission boundary, regardless of what it is asked.</p>
+  </div>
+</div>
+
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:10px;">Four Layers of AI Output RBAC</div>
+
+<div style="display:flex;flex-direction:column;gap:10px;margin-bottom:20px;">
+  <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--s1);border-radius:8px;border-left:3px solid #2A5298;">
+    <div style="font-size:20px;flex-shrink:0;">①</div>
+    <div>
+      <div style="font-weight:700;font-size:13px;margin-bottom:3px;">System Prompt Injection — Identity Boundary</div>
+      <div style="font-size:12px;color:var(--ts);">At session start, the agent system prompt is injected with: <code>user_id</code>, <code>user_role</code> (ReadOnly/Analyst/Reviewer/Admin), <code>area_id</code>, and <code>area_name</code>. The system prompt includes a hard rule: "You may only return data where area_id = {area_id} OR where the record is explicitly tagged as cross-area visible." This boundary is set server-side and cannot be overridden by the user's prompt.</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--s1);border-radius:8px;border-left:3px solid #1A7A52;">
+    <div style="font-size:20px;flex-shrink:0;">②</div>
+    <div>
+      <div style="font-weight:700;font-size:13px;margin-bottom:3px;">SQL Tool — Mandatory WHERE Clause</div>
+      <div style="font-size:12px;color:var(--ts);">The <code>SQLQueryTool</code> wraps every LLM-generated SQL query in a row-level security filter before execution: <code>WHERE area_id = :area_id AND user_id = :user_id</code>. The tool validates the generated SQL, then appends the scope filter via SQLAlchemy parameterised query — the LLM's output cannot remove or bypass this filter. Attempts to use raw UNION, subselects across area boundaries, or DROP/DELETE are blocked by a SQL validator.</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--s1);border-radius:8px;border-left:3px solid #6D28D9;">
+    <div style="font-size:20px;flex-shrink:0;">③</div>
+    <div>
+      <div style="font-weight:700;font-size:13px;margin-bottom:3px;">AI Search — Document-Level Permission Filter</div>
+      <div style="font-size:12px;color:var(--ts);">The AI Search index stores a <code>doc_classification</code> field on each document chunk: <code>Public</code>, <code>Internal</code>, <code>Confidential</code>, or <code>Restricted</code>. The <code>DocumentRAGTool</code> appends a <code>$filter=doc_classification in [{allowed_classifications}]</code> to every Azure AI Search query. A ReadOnly user cannot retrieve Confidential policy documents even if they ask the agent directly. Document metadata in search results is stripped of fields above the user's clearance level before being returned to the LLM context window.</div>
+    </div>
+  </div>
+  <div style="display:flex;gap:12px;align-items:flex-start;padding:12px 14px;background:var(--s1);border-radius:8px;border-left:3px solid #B4322A;">
+    <div style="font-size:20px;flex-shrink:0;">④</div>
+    <div>
+      <div style="font-weight:700;font-size:13px;margin-bottom:3px;">Workflow Actions — Role-Gate Before Execution</div>
+      <div style="font-size:12px;color:var(--ts);">The <code>WorkflowTool</code> checks <code>user_role</code> before allowing any action. ReadOnly and Analyst users receive: "I can explain this workflow action, but I am not authorised to initiate it on your behalf. A Reviewer or Admin must approve." This check is in the tool's server-side code — not in the system prompt — so it cannot be bypassed by prompt manipulation.</div>
+    </div>
+  </div>
+</div>
+
+<div style="font-weight:700;color:var(--brandMid);margin-bottom:8px;">RBAC × AI Output Matrix</div>
+<div style="overflow-x:auto;">
+<table style="width:100%;border-collapse:collapse;font-size:11px;">
+<thead>
+  <tr style="background:var(--s2);">
+    <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">AI Output Type</th>
+    <th style="padding:8px 10px;text-align:center;border-bottom:2px solid var(--border);">ReadOnly</th>
+    <th style="padding:8px 10px;text-align:center;border-bottom:2px solid var(--border);">Analyst</th>
+    <th style="padding:8px 10px;text-align:center;border-bottom:2px solid var(--border);">Reviewer</th>
+    <th style="padding:8px 10px;text-align:center;border-bottom:2px solid var(--border);">Admin</th>
+    <th style="padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);">Scope limit</th>
+  </tr>
+</thead>
 <tbody>
-<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;color:#B4322A;">ReadOnly</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">GET /api/heatmap, GET /api/risks, GET /api/reports</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Auditors, Board viewers</td></tr>
-<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;color:#9A6500;">Analyst</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">ReadOnly + POST /api/agent/chat, GET /api/tprm</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">2LoD Risk Analysts</td></tr>
-<tr><td style="padding:8px 12px;border-bottom:1px solid var(--border);font-weight:600;color:#2A5298;">Reviewer</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Analyst + POST /api/workflow/approve, PATCH /api/risks/{id}/status</td><td style="padding:8px 12px;border-bottom:1px solid var(--border);">Risk Management SME, 1LoD Lead</td></tr>
-<tr><td style="padding:8px 12px;font-weight:600;color:var(--g);">Admin</td><td style="padding:8px 12px;">All routes + DELETE, PUT, POST /api/admin/*</td><td style="padding:8px 12px;">IT Admin, Accenture PM (project)</td></tr>
+  <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Heatmap data (SQL)</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">✓</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">✓</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">✓</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">✓</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--ts);">Own area_id only (ReadOnly/Analyst/Reviewer); Admin = all</td></tr>
+  <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">AI chat responses (RAG)</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">✗</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">✓</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">✓</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">✓</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--ts);">Area-scoped SQL + classification-filtered documents</td></tr>
+  <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">Policy documents (RAG)</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">✗</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Internal</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Confidential</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">All</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--ts);">doc_classification filter in AI Search query</td></tr>
+  <tr><td style="padding:6px 10px;border-bottom:1px solid var(--border);font-weight:600;">AI-proposed actions</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">✗</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">✗</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">✓</td><td style="text-align:center;padding:6px;border-bottom:1px solid var(--border);color:#1A7A52;font-weight:700;">✓</td><td style="padding:6px 10px;border-bottom:1px solid var(--border);color:var(--ts);">WorkflowTool role-gate; Analyst can VIEW but not approve</td></tr>
+  <tr><td style="padding:6px 10px;font-weight:600;">GRC write-back (L5)</td><td style="text-align:center;padding:6px;color:#B4322A;font-weight:700;">✗</td><td style="text-align:center;padding:6px;color:#B4322A;font-weight:700;">✗</td><td style="text-align:center;padding:6px;color:#1A7A52;font-weight:700;">✓</td><td style="text-align:center;padding:6px;color:#1A7A52;font-weight:700;">✓</td><td style="padding:6px 10px;color:var(--ts);">Reviewer must approve; write-back scoped to own area; audit log immutable</td></tr>
 </tbody>
 </table>
-<div style="margin-top:10px;font-size:12px;color:var(--ts);">Roles enforced via role_required() FastAPI dependency. Claims sourced from Azure AD group membership. Area-level scoping (area_id) restricts 2LoD analysts to their business area only.</div>`,
+</div>
+<div style="margin-top:12px;padding:10px 14px;background:rgba(42,82,152,.06);border-radius:6px;font-size:11px;color:var(--ts);">
+  <strong style="color:var(--brandMid);">Audit guarantee:</strong> Every AI interaction is logged to <code>agent_audit_log</code> with: user_id, area_id, tool_called, query_sent, response_summary, timestamp. Logs are immutable and retained for 12 months per DORA Art.19. The Security Engineer owns this control and reviews the audit log monthly.
+</div>
+</div>`,
+  },
+  'RBAC policy definition': {
+    title: 'RBAC Policy Definition — ICS Cockpit',
+    content: `<div style="font-size:13px;color:var(--tp);line-height:1.6;">
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px;">
+  <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+    <div style="background:#B4322A;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+      <div style="width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:16px;">👁</div>
+      <div><div style="font-weight:800;font-size:13px;color:#fff;">ReadOnly</div><div style="font-size:11px;color:rgba(255,255,255,.75);">Auditors · Board viewers</div></div>
+    </div>
+    <div style="padding:12px 14px;background:var(--surface);">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--tm);text-transform:uppercase;margin-bottom:6px;">Permissions</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> View heatmap (own area)</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> View risk list &amp; reports</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tm);"><span style="color:#B4322A;font-weight:700;">✗</span> AI agent chat</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tm);"><span style="color:#B4322A;font-weight:700;">✗</span> Workflow actions</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tm);"><span style="color:#B4322A;font-weight:700;">✗</span> TPRM signals</div>
+      </div>
+    </div>
+  </div>
+  <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+    <div style="background:#9A6500;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+      <div style="width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:16px;">🔍</div>
+      <div><div style="font-weight:800;font-size:13px;color:#fff;">Analyst</div><div style="font-size:11px;color:rgba(255,255,255,.75);">2LoD Risk Analysts</div></div>
+    </div>
+    <div style="padding:12px 14px;background:var(--surface);">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--tm);text-transform:uppercase;margin-bottom:6px;">Permissions</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> All ReadOnly permissions</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> AI agent chat (area-scoped)</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> TPRM signal review</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tm);"><span style="color:#B4322A;font-weight:700;">✗</span> Approve workflow actions</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tm);"><span style="color:#B4322A;font-weight:700;">✗</span> Risk status updates</div>
+      </div>
+    </div>
+  </div>
+  <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+    <div style="background:#2A5298;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+      <div style="width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:16px;">✅</div>
+      <div><div style="font-weight:800;font-size:13px;color:#fff;">Reviewer</div><div style="font-size:11px;color:rgba(255,255,255,.75);">Risk SME · 1LoD Lead</div></div>
+    </div>
+    <div style="padding:12px 14px;background:var(--surface);">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--tm);text-transform:uppercase;margin-bottom:6px;">Permissions</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> All Analyst permissions</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> Approve workflow actions</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> PATCH risk status</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> GRC write-back approval (L5)</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;color:var(--tm);"><span style="color:#B4322A;font-weight:700;">✗</span> Admin routes / user management</div>
+      </div>
+    </div>
+  </div>
+  <div style="border:1px solid var(--border);border-radius:10px;overflow:hidden;">
+    <div style="background:#1A7A52;padding:10px 14px;display:flex;align-items:center;gap:8px;">
+      <div style="width:32px;height:32px;border-radius:6px;background:rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:16px;">⚙</div>
+      <div><div style="font-weight:800;font-size:13px;color:#fff;">Admin</div><div style="font-size:11px;color:rgba(255,255,255,.75);">IT Admin · Accenture PM</div></div>
+    </div>
+    <div style="padding:12px 14px;background:var(--surface);">
+      <div style="font-size:10px;font-weight:700;letter-spacing:.05em;color:var(--tm);text-transform:uppercase;margin-bottom:6px;">Permissions</div>
+      <div style="display:flex;flex-direction:column;gap:4px;">
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> All Reviewer permissions</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> DELETE / PUT / all routes</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> User management (POST /api/admin/*)</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> Cross-area data access</div>
+        <div style="display:flex;align-items:center;gap:6px;font-size:12px;"><span style="color:#1A7A52;font-weight:700;">✓</span> Audit log review</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div style="padding:10px 14px;background:rgba(42,82,152,.06);border-radius:6px;font-size:11px;color:var(--ts);">
+  <strong style="color:var(--brandMid);">Implementation:</strong> Roles enforced via <code>role_required()</code> FastAPI dependency. Claims sourced from Azure AD group membership. Area-level scoping (<code>area_id</code>) restricts analysts to their business area. AI outputs inherit the same RBAC boundary — see <em>AI Output RBAC Specification</em> deliverable.
+</div>
+</div>`,
   },
   'Workflow state diagram': {
     title: 'RCSA Workflow State Diagram — Durable Functions',
@@ -4707,15 +6152,82 @@ CROSS-CUTTING SERVICES (no subnet, Azure-managed):<br>
   },
   'Threat Model document': {
     title: 'Threat Model — ICS Cockpit (STRIDE)',
-    content: `<table style="width:100%;border-collapse:collapse;font-size:12px;">
-<thead><tr style="background:var(--s2);"><th style="padding:7px;border-bottom:1px solid var(--border);">Component</th><th style="padding:7px;border-bottom:1px solid var(--border);">Threat (STRIDE)</th><th style="padding:7px;border-bottom:1px solid var(--border);">Mitigation</th><th style="padding:7px;border-bottom:1px solid var(--border);">Severity</th></tr></thead>
-<tbody>
-<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Azure APIM (public endpoint)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Spoofing — unauthenticated access to /api routes</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">JWT validation on every request; Azure AD B2C; subscription key on APIM</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">High</td></tr>
-<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">PostgreSQL (private endpoint)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Elevation of Privilege — SQL injection via API parameters</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Parameterised queries (SQLAlchemy); no raw SQL; dbt transformations only</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#B4322A;font-weight:700;">High</td></tr>
-<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Azure OpenAI (GPT-4o)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Information Disclosure — prompt injection leaking other users' risk data</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Area-scoped context injection; user_id filter on all SQL tool queries; output audit log</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Medium</td></tr>
-<tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Container Apps (FastAPI)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Denial of Service — unbounded agent calls exhausting quota</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Rate limiting: 60 req/user/hour via Redis; APIM throttling policy; circuit breaker on OpenAI calls</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);color:#9A6500;font-weight:700;">Medium</td></tr>
-<tr><td style="padding:6px 8px;">Key Vault</td><td style="padding:6px 8px;">Tampering — secret exfiltration via compromised identity</td><td style="padding:6px 8px;">Managed Identity only (no client secrets); Key Vault access policy: least-privilege per service; audit logs enabled</td><td style="padding:6px 8px;color:#1A7A52;font-weight:700;">Low</td></tr>
-</tbody></table>
+    content: `<div style="font-size:12px;color:var(--tp);">
+<div style="display:flex;gap:6px;margin-bottom:14px;flex-wrap:wrap;">
+  <span style="padding:3px 8px;border-radius:4px;background:#EEF3FB;color:#2A5298;font-weight:700;font-size:10px;">S — Spoofing</span>
+  <span style="padding:3px 8px;border-radius:4px;background:#FEF3DC;color:#9A6500;font-weight:700;font-size:10px;">T — Tampering</span>
+  <span style="padding:3px 8px;border-radius:4px;background:#F3EDF7;color:#6D28D9;font-weight:700;font-size:10px;">R — Repudiation</span>
+  <span style="padding:3px 8px;border-radius:4px;background:#FCEAE9;color:#B4322A;font-weight:700;font-size:10px;">I — Info Disclosure</span>
+  <span style="padding:3px 8px;border-radius:4px;background:#E4F2EB;color:#1A7A52;font-weight:700;font-size:10px;">D — Denial of Service</span>
+  <span style="padding:3px 8px;border-radius:4px;background:var(--s2);color:var(--tm);font-weight:700;font-size:10px;">E — Elevation of Privilege</span>
+</div>
+<div style="display:flex;flex-direction:column;gap:8px;">
+  <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+    <div style="display:flex;align-items:stretch;">
+      <div style="width:4px;background:#2A5298;flex-shrink:0;"></div>
+      <div style="padding:10px 14px;flex:1;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+          <div style="font-weight:700;">Azure APIM — Spoofing</div>
+          <span style="padding:2px 8px;border-radius:4px;background:#FCEAE9;color:#B4322A;font-weight:700;font-size:10px;">HIGH</span>
+        </div>
+        <div style="font-size:11px;color:var(--ts);margin-bottom:4px;"><strong>Threat:</strong> Unauthenticated access to /api routes</div>
+        <div style="font-size:11px;color:var(--ts);padding:6px 10px;background:var(--s1);border-radius:4px;">✓ JWT validation on every request · Azure AD B2C · Subscription key on APIM</div>
+      </div>
+    </div>
+  </div>
+  <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+    <div style="display:flex;align-items:stretch;">
+      <div style="width:4px;background:#B4322A;flex-shrink:0;"></div>
+      <div style="padding:10px 14px;flex:1;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+          <div style="font-weight:700;">PostgreSQL — Elevation of Privilege</div>
+          <span style="padding:2px 8px;border-radius:4px;background:#FCEAE9;color:#B4322A;font-weight:700;font-size:10px;">HIGH</span>
+        </div>
+        <div style="font-size:11px;color:var(--ts);margin-bottom:4px;"><strong>Threat:</strong> SQL injection via API parameters</div>
+        <div style="font-size:11px;color:var(--ts);padding:6px 10px;background:var(--s1);border-radius:4px;">✓ Parameterised queries (SQLAlchemy) · No raw SQL · dbt transformations only</div>
+      </div>
+    </div>
+  </div>
+  <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+    <div style="display:flex;align-items:stretch;">
+      <div style="width:4px;background:#6D28D9;flex-shrink:0;"></div>
+      <div style="padding:10px 14px;flex:1;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+          <div style="font-weight:700;">Azure OpenAI GPT-4o — Information Disclosure</div>
+          <span style="padding:2px 8px;border-radius:4px;background:#FEF3DC;color:#9A6500;font-weight:700;font-size:10px;">MEDIUM</span>
+        </div>
+        <div style="font-size:11px;color:var(--ts);margin-bottom:4px;"><strong>Threat:</strong> Prompt injection leaking other users' risk data</div>
+        <div style="font-size:11px;color:var(--ts);padding:6px 10px;background:var(--s1);border-radius:4px;">✓ Area-scoped context injection · user_id filter on all SQL tool queries · Output audit log · See AI Output RBAC Specification</div>
+      </div>
+    </div>
+  </div>
+  <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+    <div style="display:flex;align-items:stretch;">
+      <div style="width:4px;background:#9A6500;flex-shrink:0;"></div>
+      <div style="padding:10px 14px;flex:1;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+          <div style="font-weight:700;">Container Apps (FastAPI) — Denial of Service</div>
+          <span style="padding:2px 8px;border-radius:4px;background:#FEF3DC;color:#9A6500;font-weight:700;font-size:10px;">MEDIUM</span>
+        </div>
+        <div style="font-size:11px;color:var(--ts);margin-bottom:4px;"><strong>Threat:</strong> Unbounded agent calls exhausting OpenAI quota</div>
+        <div style="font-size:11px;color:var(--ts);padding:6px 10px;background:var(--s1);border-radius:4px;">✓ Rate limiting: 60 req/user/hour via Redis · APIM throttling policy · Circuit breaker on OpenAI calls</div>
+      </div>
+    </div>
+  </div>
+  <div style="border:1px solid var(--border);border-radius:8px;overflow:hidden;">
+    <div style="display:flex;align-items:stretch;">
+      <div style="width:4px;background:#1A7A52;flex-shrink:0;"></div>
+      <div style="padding:10px 14px;flex:1;">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px;">
+          <div style="font-weight:700;">Key Vault — Tampering</div>
+          <span style="padding:2px 8px;border-radius:4px;background:#E4F2EB;color:#1A7A52;font-weight:700;font-size:10px;">LOW</span>
+        </div>
+        <div style="font-size:11px;color:var(--ts);margin-bottom:4px;"><strong>Threat:</strong> Secret exfiltration via compromised identity</div>
+        <div style="font-size:11px;color:var(--ts);padding:6px 10px;background:var(--s1);border-radius:4px;">✓ Managed Identity only (no client secrets) · Least-privilege Key Vault access policy per service · Audit logs enabled</div>
+      </div>
+    </div>
+  </div>
+</div>
 <div style="margin-top:10px;font-size:11px;color:var(--ts);">Full threat model maintained in /docs/security/threat-model.md. Updated on each architecture change and before each production deployment.</div>`,
   },
   'ADF Pipeline documentation': {
@@ -5232,7 +6744,7 @@ const LEVEL_DESCS = {
   2: { title: 'L2 — Connected Live Feed', text: 'GRC system is connected via API with incremental polling every 15 minutes. Changes are pushed to the dashboard in near-real-time via Server-Sent Events. TPRM system webhooks deliver vendor change signals automatically. Dashboard is always current — no manual exports needed.' },
   3: { title: 'L3 — AI-Assisted (Base Case — Reference Dashboard)', text: 'The full AI agent is active: natural language risk queries, document RAG search, and structured analysis. RCSA reminders are sent automatically. AI drafts risk descriptions for TPRM signals. All AI outputs are clearly labelled and the user remains in full control. This is the reference dashboard level.' },
   4: { title: 'L4 — Active Proposals', text: 'The AI proactively monitors for overdue RCSAs and other conditions, generates proposed actions (reminders, escalations), and surfaces them in the 2LoD dashboard for one-click approval. The AI never executes automatically — every action requires explicit human approval via a Durable Function external event.' },
-  5: { title: 'L5 — Autonomous with Write-back (Optional)', text: 'Extends L4 with optional policy change detection and GRC write-back. When a new regulatory document is uploaded, the AI identifies affected risk descriptions and proposes updates. 2LoD approves and the ICS Cockpit writes directly to the GRC source system via its REST API, closing the full data loop.' },
+  5: { title: 'L5 — Autonomous with GRC Write-back', text: 'Extends L4 with integrated policy change detection and GRC write-back (core deliverable). When a new regulatory document is uploaded, the AI identifies affected risk descriptions and proposes updates. 2LoD approves and the ICS Cockpit writes directly to the GRC source system via its REST API, closing the full data loop.' },
 };
 
 const MATBAR_SHORTS = {
@@ -5248,7 +6760,7 @@ const LEVEL_ARCH_CTX = {
   2: { ok: true,  text: 'L2 (Connected) — Data ingestion layer + Container Apps (FastAPI + SSE) + Service Bus for TPRM webhooks. Azure OpenAI and AI Search are NOT yet deployed.' },
   3: { ok: true,  text: 'L3 (Base Case) — Full stack active: ADF · dbt · PostgreSQL · Container Apps · Azure OpenAI · AI Search · Redis · APIM · Key Vault. All architecture components deployed.' },
   4: { ok: true,  text: 'L4 (Active) — Full L3 stack + Azure Durable Functions orchestrating AI-proposed actions with human-in-the-loop external event approval pattern.' },
-  5: { ok: true,  text: 'L5 (Autonomous, optional) — Full L4 stack + optional outbound GRC write-back connector. Requires separate approval, rollback storage, and audit trail per DORA requirements.' },
+  5: { ok: true,  text: 'L5 (Autonomous) — Full L4 stack + integrated outbound GRC write-back connector. Requires separate approval, rollback storage, and audit trail per DORA requirements.' },
 };
 
 const LEVEL_INTEL_CTX = {
@@ -5325,8 +6837,8 @@ const LEVEL_DATA = {
     label: 'L5 — Autonomous',
     weeks: '36', fteWeeks: '~290', roles: '10', phases: '6', cost: '~€3.3M',
     ganttMinWeek: 1, ganttMaxWeek: 36,
-    ganttScope: 'W1–W36 · Ph0–Ph5 + autonomous write-back extension (W29–W36)',
-    overviewCtx: 'L5 (Autonomous) — 10 roles, 36-week delivery, ~€3.3M. Full autonomous operation: AI agents write back to GRC systems, self-heal data quality issues, and auto-generate regulatory submissions. Requires strong AI governance framework.',
+    ganttScope: 'W1–W36 · Ph0–Ph5 · Autonomous write-back integrated core scope (W29–W36)',
+    overviewCtx: 'L5 (Autonomous) — 10 roles, 36-week delivery, ~€3.3M. Full autonomous operation: AI agents write back to GRC systems (core deliverable, not optional), self-heal data quality, and auto-generate regulatory submissions. Requires strong AI governance framework.',
     overviewOk: true
   }
 };
