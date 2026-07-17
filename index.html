@@ -199,7 +199,11 @@ tbody tr:nth-child(even) td { background: var(--s1); }
 .gms-d { width: 12px; height: 12px; border-radius: 2px; transform: rotate(45deg); display: inline-block; box-shadow: 0 1px 4px rgba(0,0,0,.2); transition: transform .15s, box-shadow .15s; }
 .gms:hover .gms-d { transform: rotate(45deg) scale(1.4); box-shadow: 0 2px 8px rgba(0,0,0,.3); }
 /* Legend */
-.gantt-legend { display: flex; flex-wrap: wrap; gap: 16px; padding: 12px 16px; border-top: 1px solid var(--border); background: var(--s1); border-bottom-left-radius: var(--radiusL); border-bottom-right-radius: var(--radiusL); }
+.gantt-legend { display: grid; grid-template-columns: 1fr 1fr; border-top: 1px solid var(--border); background: var(--s1); border-bottom-left-radius: var(--radiusL); border-bottom-right-radius: var(--radiusL); }
+.gantt-legend-group { padding: 12px 20px; }
+.gantt-legend-group:first-child { border-right: 1px solid var(--border); }
+.gantt-legend-group-title { font-size: 9px; font-weight: 800; letter-spacing: .07em; text-transform: uppercase; color: var(--tm); margin-bottom: 8px; }
+.gantt-legend-items { display: flex; flex-wrap: wrap; gap: 8px 18px; }
 .gantt-legend-item { display: flex; align-items: center; gap: 7px; font-size: 11.5px; color: var(--ts); font-weight: 500; }
 .gantt-legend-swatch { width: 20px; height: 12px; border-radius: 3px; display: inline-block; box-shadow: 0 1px 3px rgba(0,0,0,.12); }
 
@@ -1779,142 +1783,141 @@ details.collapsible > div.details-body { padding: 16px; }
         <div class="gl sub" style="grid-column:1;grid-row:19;" data-gantt-min-level="2">→ Trend Detection</div>
         <div class="gc" style="grid-column:20/23;grid-row:19;" data-gantt-min-level="2"><div class="gbar sub" style="background:#d4a340;"></div></div>
 
-        <!-- PHASE 4 (row 19) W17-W24 → 18/26 — requires L4 -->
+        <!-- PHASE 4 (row 20) W17–W32 — bar extends to W32 at L4 -->
         <div class="gl ph ph4" style="grid-column:1;grid-row:20;" data-gantt-min-level="4">Ph4 — Workflow &amp; Actions</div>
         <div class="gc" style="grid-column:18/26;grid-row:20;" data-gantt-min-level="4"><div class="gbar ph" style="background:#B4322A;" data-label="Ph4 — Workflow &amp; Actions"></div></div>
-        <!-- Workflow Engine (row 20) W19-W25 → 20/27 — L4+ -->
+        <div class="gc" style="grid-column:26/34;grid-row:20;" data-gantt-min-level="4"><div class="gbar ph" style="background:#B4322A;border-radius:0 4px 4px 0;"></div></div>
+        <!-- Ph4 sub-tasks (rows 21–24) -->
         <div class="gl sub" style="grid-column:1;grid-row:21;" data-gantt-min-level="4">→ Workflow Engine</div>
         <div class="gc" style="grid-column:20/27;grid-row:21;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
-        <!-- Workflow UI (row 21) W21-W25 → 22/27 — L4+ -->
         <div class="gl sub" style="grid-column:1;grid-row:22;" data-gantt-min-level="4">→ Workflow UI</div>
         <div class="gc" style="grid-column:22/27;grid-row:22;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
+        <div class="gl sub" style="grid-column:1;grid-row:23;" data-gantt-min-level="4">→ RCSA Durable Fns</div>
+        <div class="gc" style="grid-column:30/32;grid-row:23;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
+        <div class="gl sub" style="grid-column:1;grid-row:24;" data-gantt-min-level="4">→ AI Action Routing</div>
+        <div class="gc" style="grid-column:32/34;grid-row:24;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
 
-        <!-- PHASE 5 (row 22) W21-W28 → 22/30 — requires L3 -->
-        <div class="gl ph ph5" style="grid-column:1;grid-row:23;" data-gantt-min-level="3">Ph5 — Hardening &amp; Rollout</div>
-        <div class="gc" style="grid-column:22/30;grid-row:23;" data-gantt-min-level="3"><div class="gbar ph" style="background:#3A4657;" data-label="Ph5 — Hardening &amp; Rollout"></div></div>
-        <!-- Pen Test (row 23) W21-W24 → 22/26 — L3+ -->
-        <div class="gl sub" style="grid-column:1;grid-row:24;" data-gantt-min-level="3">→ Pen Test</div>
-        <div class="gc" style="grid-column:22/26;grid-row:24;" data-gantt-min-level="3"><div class="gbar sub" style="background:#7a8a99;"></div></div>
-        <!-- Production hardening (row 24) W24-W27 → 25/29 — L2+ -->
-        <div class="gl sub" style="grid-column:1;grid-row:25;" data-gantt-min-level="2">→ Production hardening</div>
-        <div class="gc" style="grid-column:25/29;grid-row:25;" data-gantt-min-level="2"><div class="gbar sub" style="background:#7a8a99;"></div></div>
+        <!-- PHASE 5 (row 25) W21–W36 — bar extends to W36 at L5 -->
+        <div class="gl ph ph5" style="grid-column:1;grid-row:25;" data-gantt-min-level="3">Ph5 — Hardening &amp; Rollout</div>
+        <div class="gc" style="grid-column:22/30;grid-row:25;" data-gantt-min-level="3"><div class="gbar ph" style="background:#3A4657;" data-label="Ph5 — Hardening &amp; Rollout"></div></div>
+        <div class="gc" style="grid-column:30/38;grid-row:25;" data-gantt-min-level="5"><div class="gbar ph" style="background:#3A4657;border-radius:0 4px 4px 0;"></div></div>
+        <!-- Ph5 sub-tasks (rows 26–29) -->
+        <div class="gl sub" style="grid-column:1;grid-row:26;" data-gantt-min-level="3">→ Pen Test</div>
+        <div class="gc" style="grid-column:22/26;grid-row:26;" data-gantt-min-level="3"><div class="gbar sub" style="background:#7a8a99;"></div></div>
+        <div class="gl sub" style="grid-column:1;grid-row:27;" data-gantt-min-level="2">→ Production hardening</div>
+        <div class="gc" style="grid-column:25/29;grid-row:27;" data-gantt-min-level="2"><div class="gbar sub" style="background:#7a8a99;"></div></div>
+        <div class="gl sub" style="grid-column:1;grid-row:28;" data-gantt-min-level="5">→ Write-back Agents</div>
+        <div class="gc" style="grid-column:30/34;grid-row:28;" data-gantt-min-level="5"><div class="gbar sub" style="background:#a97ee8;"></div></div>
+        <div class="gl sub" style="grid-column:1;grid-row:29;" data-gantt-min-level="5">→ Autonomous Ops</div>
+        <div class="gc" style="grid-column:34/38;grid-row:29;" data-gantt-min-level="5"><div class="gbar sub" style="background:#a97ee8;"></div></div>
 
-        <!-- L4 EXTENSION: Workflow Automation (W25-W32) — row 25 -->
-        <div class="gl ph ph4" style="grid-column:1;grid-row:26;" data-gantt-min-level="4">L4 Ext — Workflow Auto</div>
-        <div class="gc" style="grid-column:30/34;grid-row:26;" data-gantt-min-level="4"><div class="gbar ph" style="background:#B4322A;opacity:.75;" data-label="L4 Ext"></div></div>
-        <!-- L4 Extension sub-tasks -->
-        <div class="gl sub" style="grid-column:1;grid-row:27;" data-gantt-min-level="4">→ RCSA Durable Fns</div>
-        <div class="gc" style="grid-column:30/32;grid-row:27;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
-        <div class="gl sub" style="grid-column:1;grid-row:28;" data-gantt-min-level="4">→ AI Action Routing</div>
-        <div class="gc" style="grid-column:32/34;grid-row:28;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
-        <!-- L5 EXTENSION: Autonomous Operation (W29-W36) — row 28 -->
-        <div class="gl ph ph5" style="grid-column:1;grid-row:29;" data-gantt-min-level="5">L5 — Autonomous Core</div>
-        <div class="gc" style="grid-column:30/38;grid-row:29;" data-gantt-min-level="5"><div class="gbar ph" style="background:#6D28D9;" data-label="L5 — Autonomous Write-back"></div></div>
-        <!-- L5 Extension sub-tasks -->
-        <div class="gl sub" style="grid-column:1;grid-row:30;" data-gantt-min-level="5">→ Write-back Agents</div>
-        <div class="gc" style="grid-column:30/34;grid-row:30;" data-gantt-min-level="5"><div class="gbar sub" style="background:#a97ee8;"></div></div>
-        <div class="gl sub" style="grid-column:1;grid-row:31;" data-gantt-min-level="5">→ Autonomous Ops</div>
-        <div class="gc" style="grid-column:34/38;grid-row:31;" data-gantt-min-level="5"><div class="gbar sub" style="background:#a97ee8;"></div></div>
-
-        <!-- GOVERNANCE CADENCE GROUP LABEL (row 31) -->
-        <div class="gl-gov-grp" style="grid-column:1;grid-row:32;">GOVERNANCE CADENCE</div>
-        <div class="gc-gov-grp" style="grid-column:2/38;grid-row:32;"></div>
+        <!-- GOVERNANCE CADENCE GROUP LABEL (row 30) -->
+        <div class="gl-gov-grp" style="grid-column:1;grid-row:30;">GOVERNANCE CADENCE</div>
+        <div class="gc-gov-grp" style="grid-column:2/38;grid-row:30;"></div>
 
         <!-- STEERING COMMITTEE (row 32) — bi-weekly W2,W4,...W36 -->
-        <div class="gl-gov" style="grid-column:1;grid-row:33;color:#2A5298;">SteerCo</div>
-        <div class="gc-gov" style="grid-column:3;grid-row:33;" title="W2 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:5;grid-row:33;" title="W4 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:7;grid-row:33;" title="W6 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:9;grid-row:33;" title="W8 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:11;grid-row:33;" title="W10 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:13;grid-row:33;" title="W12 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:15;grid-row:33;" title="W14 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:17;grid-row:33;" title="W16 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:19;grid-row:33;" title="W18 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:21;grid-row:33;" title="W20 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:23;grid-row:33;" title="W22 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:25;grid-row:33;" title="W24 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:27;grid-row:33;" title="W26 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:29;grid-row:33;" title="W28 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:31;grid-row:33;" title="W30 Steering Committee (L4+)"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:33;grid-row:33;" title="W32 Steering Committee (L4+)"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:35;grid-row:33;" title="W34 Steering Committee (L5+)"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:37;grid-row:33;" title="W36 Steering Committee (L5+)"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gl-gov" style="grid-column:1;grid-row:31;color:#2A5298;">SteerCo</div>
+        <div class="gc-gov" style="grid-column:3;grid-row:31;" title="W2 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:5;grid-row:31;" title="W4 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:7;grid-row:31;" title="W6 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:9;grid-row:31;" title="W8 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:11;grid-row:31;" title="W10 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:13;grid-row:31;" title="W12 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:15;grid-row:31;" title="W14 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:17;grid-row:31;" title="W16 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:19;grid-row:31;" title="W18 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:21;grid-row:31;" title="W20 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:23;grid-row:31;" title="W22 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:25;grid-row:31;" title="W24 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:27;grid-row:31;" title="W26 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:29;grid-row:31;" title="W28 Steering Committee"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:31;grid-row:31;" title="W30 Steering Committee (L4+)"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:33;grid-row:31;" title="W32 Steering Committee (L4+)"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:35;grid-row:31;" title="W34 Steering Committee (L5+)"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:37;grid-row:31;" title="W36 Steering Committee (L5+)"><span style="color:#2A5298;font-size:10px;font-weight:800;">◆</span></div>
 
-        <!-- TECH REVIEW (row 33) — weekly all weeks = cols 2-37 -->
-        <div class="gl-gov" style="grid-column:1;grid-row:34;color:#6D28D9;">Tech Review</div>
-        <div class="gc-gov" style="grid-column:2;grid-row:34;" title="W1"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:3;grid-row:34;" title="W2"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:4;grid-row:34;" title="W3"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:5;grid-row:34;" title="W4"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:6;grid-row:34;" title="W5"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:7;grid-row:34;" title="W6"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:8;grid-row:34;" title="W7"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:9;grid-row:34;" title="W8"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:10;grid-row:34;" title="W9"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:11;grid-row:34;" title="W10"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:12;grid-row:34;" title="W11"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:13;grid-row:34;" title="W12"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:14;grid-row:34;" title="W13"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:15;grid-row:34;" title="W14"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:16;grid-row:34;" title="W15"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:17;grid-row:34;" title="W16"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:18;grid-row:34;" title="W17"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:19;grid-row:34;" title="W18"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:20;grid-row:34;" title="W19"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:21;grid-row:34;" title="W20"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:22;grid-row:34;" title="W21"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:23;grid-row:34;" title="W22"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:24;grid-row:34;" title="W23"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:25;grid-row:34;" title="W24"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:26;grid-row:34;" title="W25"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:27;grid-row:34;" title="W26"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:28;grid-row:34;" title="W27"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" style="grid-column:29;grid-row:34;" title="W28"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:30;grid-row:34;" title="W29"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:31;grid-row:34;" title="W30"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:32;grid-row:34;" title="W31"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:33;grid-row:34;" title="W32"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:34;grid-row:34;" title="W33"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:35;grid-row:34;" title="W34"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:36;grid-row:34;" title="W35"><span style="color:#6D28D9;font-size:8px;">●</span></div>
-        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:37;grid-row:34;" title="W36"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <!-- TECH REVIEW (row 32) — weekly all weeks = cols 2-37 -->
+        <div class="gl-gov" style="grid-column:1;grid-row:32;color:#6D28D9;">Tech Review</div>
+        <div class="gc-gov" style="grid-column:2;grid-row:32;" title="W1"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:3;grid-row:32;" title="W2"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:4;grid-row:32;" title="W3"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:5;grid-row:32;" title="W4"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:6;grid-row:32;" title="W5"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:7;grid-row:32;" title="W6"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:8;grid-row:32;" title="W7"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:9;grid-row:32;" title="W8"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:10;grid-row:32;" title="W9"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:11;grid-row:32;" title="W10"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:12;grid-row:32;" title="W11"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:13;grid-row:32;" title="W12"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:14;grid-row:32;" title="W13"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:15;grid-row:32;" title="W14"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:16;grid-row:32;" title="W15"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:17;grid-row:32;" title="W16"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:18;grid-row:32;" title="W17"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:19;grid-row:32;" title="W18"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:20;grid-row:32;" title="W19"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:21;grid-row:32;" title="W20"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:22;grid-row:32;" title="W21"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:23;grid-row:32;" title="W22"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:24;grid-row:32;" title="W23"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:25;grid-row:32;" title="W24"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:26;grid-row:32;" title="W25"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:27;grid-row:32;" title="W26"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:28;grid-row:32;" title="W27"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" style="grid-column:29;grid-row:32;" title="W28"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:30;grid-row:32;" title="W29"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:31;grid-row:32;" title="W30"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:32;grid-row:32;" title="W31"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:33;grid-row:32;" title="W32"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:34;grid-row:32;" title="W33"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:35;grid-row:32;" title="W34"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:36;grid-row:32;" title="W35"><span style="color:#6D28D9;font-size:8px;">●</span></div>
+        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:37;grid-row:32;" title="W36"><span style="color:#6D28D9;font-size:8px;">●</span></div>
 
-        <!-- SPRINT REVIEW (row 34) — bi-weekly W3,W5,...W35 -->
-        <div class="gl-gov" style="grid-column:1;grid-row:35;color:#1A7A52;">Sprint Review</div>
-        <div class="gc-gov" style="grid-column:4;grid-row:35;" title="W3 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:6;grid-row:35;" title="W5 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:8;grid-row:35;" title="W7 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:10;grid-row:35;" title="W9 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:12;grid-row:35;" title="W11 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:14;grid-row:35;" title="W13 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:16;grid-row:35;" title="W15 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:18;grid-row:35;" title="W17 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:20;grid-row:35;" title="W19 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:22;grid-row:35;" title="W21 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:24;grid-row:35;" title="W23 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:26;grid-row:35;" title="W25 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" style="grid-column:28;grid-row:35;" title="W27 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:30;grid-row:35;" title="W29 Sprint Review (L4+)"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:32;grid-row:35;" title="W31 Sprint Review (L4+)"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:34;grid-row:35;" title="W33 Sprint Review (L5+)"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
-        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:36;grid-row:35;" title="W35 Sprint Review (L5+)"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <!-- SPRINT REVIEW (row 33) — bi-weekly W3,W5,...W35 -->
+        <div class="gl-gov" style="grid-column:1;grid-row:33;color:#1A7A52;">Sprint Review</div>
+        <div class="gc-gov" style="grid-column:4;grid-row:33;" title="W3 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:6;grid-row:33;" title="W5 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:8;grid-row:33;" title="W7 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:10;grid-row:33;" title="W9 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:12;grid-row:33;" title="W11 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:14;grid-row:33;" title="W13 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:16;grid-row:33;" title="W15 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:18;grid-row:33;" title="W17 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:20;grid-row:33;" title="W19 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:22;grid-row:33;" title="W21 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:24;grid-row:33;" title="W23 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:26;grid-row:33;" title="W25 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" style="grid-column:28;grid-row:33;" title="W27 Sprint Review"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:30;grid-row:33;" title="W29 Sprint Review (L4+)"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" data-gantt-min-level="4" style="grid-column:32;grid-row:33;" title="W31 Sprint Review (L4+)"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:34;grid-row:33;" title="W33 Sprint Review (L5+)"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
+        <div class="gc-gov" data-gantt-min-level="5" style="grid-column:36;grid-row:33;" title="W35 Sprint Review (L5+)"><span style="color:#1A7A52;font-size:10px;font-weight:800;">◆</span></div>
       </div>
     </div>
     <div class="gantt-legend">
-      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#2A5298;"></span>Phase 0</div>
-      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#1A7A52;"></span>Phase 1</div>
-      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#6D28D9;"></span>Phase 2</div>
-      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#9A6500;"></span>Phase 3</div>
-      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#B4322A;"></span>Phase 4</div>
-      <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#3A4657;"></span>Phase 5</div>
-      <div class="gantt-legend-item" id="gantt-legend-l4ext" style="display:none;"><span class="gantt-legend-swatch" style="background:#B4322A;opacity:.75;"></span>L4 Workflow Ext</div>
-      <div class="gantt-legend-item" id="gantt-legend-l5ext" style="display:none;"><span class="gantt-legend-swatch" style="background:#6D28D9;"></span>L5 Autonomous Write-back</div>
-      <div class="gantt-legend-item"><span style="color:#2A5298;font-size:14px;line-height:1;">◆</span> Milestone</div>
-      <div class="gantt-legend-item"><span style="color:#B8860B;font-size:14px;line-height:1;">★</span> Go-Live W28 (L3) / W32 (L4) / W36 (L5)</div>
-      <div class="gantt-legend-item"><span style="color:#2A5298;font-size:12px;">◆</span> Steering Committee (bi-weekly)</div>
-      <div class="gantt-legend-item"><span style="color:#6D28D9;font-size:9px;">●</span> Tech Review (weekly)</div>
-      <div class="gantt-legend-item"><span style="color:#1A7A52;font-size:12px;">◆</span> Sprint Review (bi-weekly)</div>
+      <div class="gantt-legend-group">
+        <div class="gantt-legend-group-title">Phases</div>
+        <div class="gantt-legend-items">
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#2A5298;"></span>Phase 0 — Discovery</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#1A7A52;"></span>Phase 1 — Data Layer</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#6D28D9;"></span>Phase 2 — Dashboard</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#9A6500;"></span>Phase 3 — AI Layer</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#B4322A;"></span>Phase 4 — Workflow</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#3A4657;"></span>Phase 5 — Rollout</div>
+        </div>
+      </div>
+      <div class="gantt-legend-group">
+        <div class="gantt-legend-group-title">Events &amp; Milestones</div>
+        <div class="gantt-legend-items">
+          <div class="gantt-legend-item"><span style="color:#2A5298;font-size:13px;line-height:1;">◆</span> Milestone</div>
+          <div class="gantt-legend-item"><span style="color:#B8860B;font-size:14px;line-height:1;">★</span> Go-Live — W28 (L3) · W32 (L4) · W36 (L5)</div>
+          <div class="gantt-legend-item"><span style="color:#2A5298;font-size:11px;">◆</span> SteerCo (bi-weekly)</div>
+          <div class="gantt-legend-item"><span style="color:#6D28D9;font-size:9px;">●</span> Tech Review (weekly)</div>
+          <div class="gantt-legend-item"><span style="color:#1A7A52;font-size:11px;">◆</span> Sprint Review (bi-weekly)</div>
+        </div>
+      </div>
     </div>
   </div>
 
