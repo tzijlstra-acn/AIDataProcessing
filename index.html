@@ -12,7 +12,7 @@
 :root {
   --canvas: #F6F3FB; --surface: #FFFFFF; --s1: #F6F3FB; --s2: #EEE8F7;
   --border: #E3DAF0; --borderS: #C9BEDF;
-  --brand: #3D0066; --brandMid: #8A15E0; --brandLight: #EEE8F7;
+  --brand: #3D0066; --brandMid: #8A15E0; --brandLight: #EEE8F7; --violet-black: #160029;
   --accent: #A100FF; --tp: #1A1330; --ts: #3D2B5A; --tm: #726A85;
   --g: #1A7A52; --gb: #E4F2EB; --a: #9A6500; --ab: #FEF3DC;
   --r: #B4322A; --rb: #FCEAE9;
@@ -88,7 +88,7 @@ h1,h2,h3,h4 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing:
 .hero p { color: rgba(255,255,255,.75); font-size: 15px; }
 
 /* STAT TILES */
-.stat-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; margin-bottom: 28px; }
+.stat-row { display: grid; grid-template-columns: repeat(5, 1fr); gap: 14px; margin-bottom: 28px; }
 .stat-tile { background: var(--surface); border-radius: var(--radiusL); border: 1px solid var(--border); padding: 18px 20px; }
 .stat-val { font-size: 26px; font-weight: 800; color: var(--brand); line-height: 1.1; }
 .stat-label { font-size: 12px; color: var(--tm); margin-top: 4px; font-weight: 500; }
@@ -737,24 +737,96 @@ section { padding-top: 16px; margin-bottom: 40px; }
 .gl-gov-grp { font-size: 9px; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--tm); padding: 6px 14px; display: flex; align-items: center; border-top: 2px solid var(--border); border-bottom: 1px solid var(--border); background: var(--canvas); }
 .gc-gov-grp { background: var(--canvas); border-top: 2px solid var(--border); border-bottom: 1px solid var(--border); }
 
-/* GLOBAL MATURITY BAR */
+/* ── MATURITY BAR ─────────────────────────────────────── */
 .maturity-bar {
-  background: var(--surface); border: 2px solid var(--brandMid);
-  border-radius: var(--radiusL); margin: 0 0 32px; padding: 16px 24px;
-  display: flex; align-items: center; gap: 12px;
-  box-shadow: 0 2px 12px rgba(161,0,255,.08);
   position: sticky; top: 54px; z-index: 90;
-  border-bottom: 1px solid var(--border);
+  background: var(--violet-black, #160029);
+  border-bottom: 1px solid rgba(161,0,255,.25);
+  padding: 0 40px; margin: 0 -40px 28px;
+  box-shadow: 0 4px 24px rgba(22,0,41,.18);
 }
-.maturity-bar-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--tm); flex-shrink: 0; }
-.matbar-chips { display: flex; gap: 6px; flex: 1; }
-.matbar-chip { padding: 5px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; cursor: pointer; border: 2px solid var(--border); color: var(--tp); background: transparent; transition: all .15s; white-space: nowrap; }
-.matbar-chip:hover { border-color: var(--brandMid); color: var(--brandMid); }
-.matbar-chip.active { background: var(--brand); border-color: var(--brand); color: #fff; }
-.matbar-chip.active .matbar-chip-base { display: inline; }
-.matbar-chip-base { display: none; font-size: 10px; font-weight: 400; opacity: .85; margin-left: 4px; }
-.matbar-desc { font-size: 12px; color: var(--tm); margin-left: 8px; flex: 1; max-width: 420px; border-left: 2px solid var(--border); padding-left: 12px; }
-@media (max-width: 900px) { .matbar-desc { display: none; } }
+.matbar-top {
+  display: flex; align-items: center; gap: 20px;
+  padding: 11px 0 10px;
+  border-bottom: 1px solid rgba(255,255,255,.06);
+}
+.maturity-bar-label {
+  display: flex; align-items: center; gap: 7px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 10px; font-weight: 700;
+  letter-spacing: .14em; text-transform: uppercase;
+  color: #9A93AC; flex-shrink: 0;
+}
+.maturity-bar-label i { font-size: 14px; color: #A100FF; }
+.matbar-chips {
+  display: flex; gap: 4px; flex: 1;
+}
+.matbar-chip {
+  display: flex; align-items: center; gap: 6px;
+  padding: 7px 16px; border-radius: 8px;
+  font-family: 'Inter', sans-serif;
+  font-size: 13px; font-weight: 500;
+  cursor: pointer; border: 1px solid transparent;
+  color: #9A93AC; background: transparent;
+  transition: background .15s, color .15s, border-color .15s;
+  white-space: nowrap; position: relative;
+}
+.matbar-chip:hover {
+  background: rgba(161,0,255,.12);
+  color: #E9D5FF; border-color: rgba(161,0,255,.3);
+}
+.matbar-chip.active {
+  background: linear-gradient(135deg, rgba(161,0,255,.28), rgba(161,0,255,.14));
+  color: #fff; border-color: rgba(161,0,255,.55);
+  box-shadow: 0 0 0 1px rgba(161,0,255,.2) inset;
+}
+.matbar-chip-num {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px; font-weight: 700; letter-spacing: .04em;
+  color: inherit; opacity: .7;
+}
+.matbar-chip.active .matbar-chip-num { color: #FF50C8; opacity: 1; }
+.matbar-chip-name { font-weight: 600; font-size: 13px; }
+.matbar-chip-base {
+  font-size: 10px; font-weight: 500; opacity: .65;
+  background: rgba(255,80,200,.18); color: #FF50C8;
+  padding: 1px 6px; border-radius: 10px; margin-left: 2px;
+}
+.matbar-actions { flex-shrink: 0; }
+.matbar-sow-btn {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(161,0,255,.18); color: #E9D5FF;
+  border: 1px solid rgba(161,0,255,.35); border-radius: 8px;
+  padding: 7px 16px; font-size: 12.5px; font-weight: 600;
+  cursor: pointer; font-family: inherit;
+  transition: background .15s, border-color .15s;
+}
+.matbar-sow-btn:hover {
+  background: rgba(161,0,255,.32); border-color: rgba(161,0,255,.6);
+}
+.matbar-bottom {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: 16px; padding: 7px 0 8px;
+}
+.matbar-desc {
+  font-size: 12.5px; color: #cfc6de; line-height: 1.45; flex: 1;
+}
+.matbar-desc strong { color: #FF50C8; font-weight: 600; }
+.matbar-hint {
+  flex-shrink: 0; font-size: 11px; color: #837a99;
+  font-family: 'JetBrains Mono', monospace;
+  max-width: 320px; text-align: right;
+}
+@media (max-width: 900px) {
+  .matbar-hint { display: none; }
+  .matbar-bottom { padding: 6px 0 7px; }
+}
+@media (max-width: 768px) {
+  .maturity-bar { padding: 0 16px; margin: 0 -16px 20px; }
+  .matbar-top { gap: 10px; flex-wrap: wrap; }
+  .matbar-chip-name, .matbar-chip-base { display: none; }
+  .matbar-chip { padding: 7px 12px; }
+}
 
 /* LEVEL CONTEXT BANNER (in-section) */
 .level-ctx-banner { display:flex; align-items:center; gap:10px; padding:10px 14px; border-radius:var(--radius); margin-bottom:16px; font-size:13px; line-height:1.5; }
@@ -837,10 +909,6 @@ tr.level-locked > td:last-child { text-decoration:none; }
 
 /* Stat tile purple gradient */
 .stat-tile { background: linear-gradient(135deg, #F5EEFF 0%, #EDE0FF 100%); box-shadow: 0 1px 3px rgba(22,0,41,.06),0 4px 14px rgba(22,0,41,.05); }
-
-/* Maturity bar gradient top strip */
-.maturity-bar { border-top: 3px solid transparent; background-clip: padding-box; position: relative; }
-.maturity-bar::before { content: ''; position: absolute; top: -3px; left: -2px; right: -2px; height: 3px; background: linear-gradient(90deg, #160029, #A100FF); border-radius: var(--radiusL) var(--radiusL) 0 0; }
 
 /* ===== CHANGE 4: COLLAPSIBLE DETAILS/SUMMARY ===== */
 details.collapsible { border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 16px; overflow: hidden; }
@@ -1002,23 +1070,44 @@ button.glance-link, button.deliverables-toggle {
 
 <!-- GLOBAL MATURITY LEVEL BAR -->
 <div class="maturity-bar" id="globalMaturityBar">
-  <span class="maturity-bar-label"><i class="ti ti-circuit-switchboard" style="margin-right:5px;vertical-align:-2px;"></i>AI Maturity Level</span>
-  <div class="matbar-chips">
-    <button class="matbar-chip" data-level="1" onclick="setMaturityLevel(1)">L1 · Static</button>
-    <button class="matbar-chip" data-level="2" onclick="setMaturityLevel(2)">L2 · Connected</button>
-    <button class="matbar-chip active" data-level="3" onclick="setMaturityLevel(3)">L3 · AI-Assisted <span class="matbar-chip-base">(base case)</span></button>
-    <button class="matbar-chip" data-level="4" onclick="setMaturityLevel(4)">L4 · Active</button>
-    <button class="matbar-chip" data-level="5" onclick="setMaturityLevel(5)">L5 · Autonomous</button>
+  <div class="matbar-top">
+    <div class="maturity-bar-label">
+      <i class="ti ti-circuit-switchboard"></i>
+      AI Maturity Level
+    </div>
+    <div class="matbar-chips" role="group" aria-label="Select AI maturity level">
+      <button class="matbar-chip" data-level="1" aria-pressed="false" onclick="setMaturityLevel(1)">
+        <span class="matbar-chip-num">L1</span>
+        <span class="matbar-chip-name">Static</span>
+      </button>
+      <button class="matbar-chip" data-level="2" aria-pressed="false" onclick="setMaturityLevel(2)">
+        <span class="matbar-chip-num">L2</span>
+        <span class="matbar-chip-name">Connected</span>
+      </button>
+      <button class="matbar-chip active" data-level="3" aria-pressed="true" onclick="setMaturityLevel(3)">
+        <span class="matbar-chip-num">L3</span>
+        <span class="matbar-chip-name">AI-Assisted</span>
+        <span class="matbar-chip-base">base case</span>
+      </button>
+      <button class="matbar-chip" data-level="4" aria-pressed="false" onclick="setMaturityLevel(4)">
+        <span class="matbar-chip-num">L4</span>
+        <span class="matbar-chip-name">Active</span>
+      </button>
+      <button class="matbar-chip" data-level="5" aria-pressed="false" onclick="setMaturityLevel(5)">
+        <span class="matbar-chip-num">L5</span>
+        <span class="matbar-chip-name">Autonomous</span>
+      </button>
+    </div>
+    <div class="matbar-actions">
+      <button class="matbar-sow-btn cta-btn" onclick="generateSoW(currentLevel)">
+        <i class="ti ti-file-download"></i> Download SoW
+      </button>
+    </div>
   </div>
-  <div id="matbarHelper" style="font-size:11.5px;color:var(--tm);margin-top:6px;padding:0 4px;">
-    Selecting a level reconfigures the entire guide — scope, team, timeline, cost and data journey update everywhere.
+  <div class="matbar-bottom">
+    <div class="matbar-desc" id="matbarDesc">AI agent + RAG over GRC documents. Real-time heatmap, natural-language query, TPRM signal drafts. <strong>Reference dashboard level.</strong></div>
+    <div class="matbar-hint">Changing level reconfigures scope, team, timeline, cost and data journey across the entire guide.</div>
   </div>
-  <div style="margin-top:10px;text-align:center;">
-    <button id="sow-download-btn" class="cta-btn" onclick="generateSoW(currentLevel)" style="background:var(--brand);color:#fff;border:none;border-radius:6px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
-      <i class="ti ti-file-download"></i> Download SoW Template
-    </button>
-  </div>
-  <div class="matbar-desc" id="matbarDesc">AI agent + RAG over GRC documents. Real-time heatmap, natural-language query, TPRM signal drafts. <strong>Reference dashboard level.</strong></div>
 </div>
 
 <!-- ===== SECTION 1: OVERVIEW ===== -->
