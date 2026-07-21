@@ -1018,7 +1018,7 @@ details.collapsible > div.details-body { padding: 16px; }
     <div class="stat-tile"><div class="stat-val" id="stat-fte">~200</div><div class="stat-label">FTE-weeks</div><div class="stat-sub">Accenture effort</div></div>
     <div class="stat-tile"><div class="stat-val" id="stat-roles">10</div><div class="stat-label">Roles</div><div class="stat-sub">Accenture team members</div></div>
     <div class="stat-tile"><div class="stat-val" id="stat-phases">6</div><div class="stat-label">Phases</div><div class="stat-sub">Delivery phases</div></div>
-    <div class="stat-tile"><div class="stat-val" id="stat-cost">~€2.4M</div><div class="stat-label">Investment</div><div class="stat-sub">Implementation budget</div></div>
+    <div class="stat-tile"><div class="stat-val" id="stat-cost">~€2.1M</div><div class="stat-label">Investment</div><div class="stat-sub">Implementation budget</div></div>
   </div>
 
   <p style="font-size:13.5px;color:var(--ts);line-height:1.7;margin-bottom:24px;padding:0 2px;">This blueprint covers team structure, delivery roadmap, data requirements, AI architecture, and feature specification for a complete ICS Cockpit deployment. Every item described here is a delivery commitment — agreed, provisioned, or built before the corresponding phase exit gate.</p>
@@ -1028,7 +1028,7 @@ details.collapsible > div.details-body { padding: 16px; }
     <div class="subsec-title"><i class="ti ti-users-group"></i>Delivery Team at a Glance</div>
     <div class="level-ctx-banner lcb-ok" id="level-ctx-overview" style="margin-bottom:14px;">
       <span class="lcb-icon">✓</span>
-      <span id="level-ctx-overview-text">L3 (Base Case) — Full 10-role team, 28-week delivery, ~€2.4M investment. AI agent + RAG, real-time heatmap, TPRM signals, natural-language queries.</span>
+      <span id="level-ctx-overview-text">L3 (Base Case) — Full 10-role team, 28-week delivery, ~€2.1M investment. AI agent + RAG, real-time heatmap, TPRM signals, natural-language queries.</span>
     </div>
     <div class="glance-grid">
       <div class="glance-card" data-min-level="1">
@@ -1691,7 +1691,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 19–20:</strong> Azure Durable Functions — RCSA Assessment lifecycle (D-14 reminder, D-3 escalation)</li>
           <li><strong>Weeks 21–22:</strong> PUT /api/risks/{'{id}'}; risk update form; 2LoD review and comment workflow</li>
           <li><strong>Weeks 23–24:</strong> Full RBAC enforcement; role-based UI rendering; end-to-end workflow test</li>
-          <li class="ai-gov"><strong>AI Governance:</strong> AI incident-response procedure; DORA Art.30 register update; Risk Committee briefing</li>
+          <li class="ai-gov"><strong>AI Governance:</strong> AI incident-response procedure; DORA Art.28(3) register update; Risk Committee briefing</li>
         </ul>
         <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
           <span>Deliverables by Role</span>
@@ -2237,24 +2237,24 @@ az storage blob upload \
       <div class="journey-level-tag l1"><span class="jlt-icon">◆</span><span class="jlt-label">L1 Foundation — Static CSV Pipeline</span><span class="jlt-avail">L1 only</span></div>
       <div class="journey-body">
         <div class="journey-data">
-          <div class="data-label">FastAPI — Static serving (no cache, no SSE)</div>
-          <pre><span class="jc"># GET /api/heatmap — served from PostgreSQL directly
-# No Redis cache, no real-time push
-# User must refresh page to see updated data</span>
+          <div class="data-label">Static Web Hosting — Azure Blob $web</div>
+          <pre><span class="jc"># Enable static website hosting on the storage account
+# Dashboard is a pre-built static HTML file — no API</span>
+az storage blob service-properties update \
+  --account-name icsstorage \
+  --static-website --index-document index.html
 
-{
-  mode: <span class="js">"inherent"</span>,
-  matrix: { <span class="js">"4_4"</span>: { count: 3, max_rating: <span class="js">"High"</span> } }
-}
+<span class="jc"># Fetch the pre-built dashboard directly from $web</span>
+curl https://icsstorage.z6.web.core.windows.net/index.html
 
-<span class="jc"># LIMITATION: No SSE stream. Dashboard shows data
+<span class="jc"># LIMITATION: No live API. Dashboard shows data
 # as of last CSV upload. Users see stale heatmap.
 # No AI agent. No TPRM signals. No trend arrows.
 # Value: A consistent, browsable view of GRC data
 # that was previously only available in spreadsheets.</span></pre>
         </div>
         <div class="journey-context">
-          <div class="journey-component"><div class="comp-name">L1 Dashboard — Read-only, page-refresh only</div><div class="comp-timing">No live connection. No AI. No workflows. But: significant value vs. spreadsheets — searchable, filterable, visualised.</div></div>
+          <div class="journey-component"><div class="comp-name">Azure Blob Storage static website — no Container Apps required at L1. Dashboard HTML/JS is pre-built by ADF and uploaded to the $web container.</div><div class="comp-timing">No live connection. No AI. No workflows. But: significant value vs. spreadsheets — searchable, filterable, visualised.</div></div>
           <div class="journey-actors">
             <div class="journey-actor client"><span class="actor-badge">Client</span><div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Sees the heatmap with data from last CSV upload. Manually refreshes the page. Understands the data is not live.</div></div>
           </div>
@@ -2416,7 +2416,7 @@ GET https://client.service-now.com/api/now/table/sn_risk_risk
         <div class="journey-context">
           <div class="journey-component">
             <div class="comp-name">Azure Data Factory — pl_grc_risks_incremental</div>
-            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in Azure SQL control table · Cost: ~€0.001/run</div>
+            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in PostgreSQL control table (staging.adf_watermarks) · Cost: ~€0.001/run</div>
           </div>
           <div class="journey-actors">
             <div class="journey-actor accenture">
@@ -2577,7 +2577,17 @@ CREATE INDEX idx_risks_heatmap
     rows = <span class="jk">await</span> db.execute(
         <span class="js">"""SELECT likelihood, impact,
                   COUNT(*)            AS count,
-                  MAX(rating)         AS max_rating,
+                  -- MAX(rating) on text sorts alphabetically (Medium outranks High) --
+                  -- rank severity explicitly: Critical &gt; High &gt; Medium &gt; Low
+                  (ARRAY['Low','Medium','High','Critical'])[
+                    MAX(CASE rating
+                          WHEN 'Critical' THEN 4
+                          WHEN 'High'     THEN 3
+                          WHEN 'Medium'   THEN 2
+                          WHEN 'Low'      THEN 1
+                          ELSE 0
+                        END)
+                  ]                    AS max_rating,
                   ARRAY_AGG(source_id) AS risk_ids
            FROM core.risks
            WHERE status = 'Open'
@@ -2801,7 +2811,7 @@ GET https://client.service-now.com/api/now/table/sn_risk_risk
         <div class="journey-context">
           <div class="journey-component">
             <div class="comp-name">Azure Data Factory — pl_grc_risks_incremental</div>
-            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in Azure SQL control table · Cost: ~€0.001/run</div>
+            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in PostgreSQL control table (staging.adf_watermarks) · Cost: ~€0.001/run</div>
           </div>
           <div class="journey-actors">
             <div class="journey-actor accenture">
@@ -2970,7 +2980,17 @@ CREATE INDEX idx_risks_heatmap
     rows = <span class="jk">await</span> db.execute(
         <span class="js">"""SELECT likelihood, impact,
                   COUNT(*)            AS count,
-                  MAX(rating)         AS max_rating,
+                  -- MAX(rating) on text sorts alphabetically (Medium outranks High) --
+                  -- rank severity explicitly: Critical &gt; High &gt; Medium &gt; Low
+                  (ARRAY['Low','Medium','High','Critical'])[
+                    MAX(CASE rating
+                          WHEN 'Critical' THEN 4
+                          WHEN 'High'     THEN 3
+                          WHEN 'Medium'   THEN 2
+                          WHEN 'Low'      THEN 1
+                          ELSE 0
+                        END)
+                  ]                    AS max_rating,
                   ARRAY_AGG(source_id) AS risk_ids
            FROM core.risks
            WHERE status = 'Open'
@@ -3305,7 +3325,7 @@ GET https://client.service-now.com/api/now/table/sn_risk_risk
         <div class="journey-context">
           <div class="journey-component">
             <div class="comp-name">Azure Data Factory — pl_grc_risks_incremental</div>
-            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in Azure SQL control table · Cost: ~€0.001/run</div>
+            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in PostgreSQL control table (staging.adf_watermarks) · Cost: ~€0.001/run</div>
           </div>
           <div class="journey-actors">
             <div class="journey-actor accenture">
@@ -3466,7 +3486,17 @@ CREATE INDEX idx_risks_heatmap
     rows = <span class="jk">await</span> db.execute(
         <span class="js">"""SELECT likelihood, impact,
                   COUNT(*)            AS count,
-                  MAX(rating)         AS max_rating,
+                  -- MAX(rating) on text sorts alphabetically (Medium outranks High) --
+                  -- rank severity explicitly: Critical &gt; High &gt; Medium &gt; Low
+                  (ARRAY['Low','Medium','High','Critical'])[
+                    MAX(CASE rating
+                          WHEN 'Critical' THEN 4
+                          WHEN 'High'     THEN 3
+                          WHEN 'Medium'   THEN 2
+                          WHEN 'Low'      THEN 1
+                          ELSE 0
+                        END)
+                  ]                    AS max_rating,
                   ARRAY_AGG(source_id) AS risk_ids
            FROM core.risks
            WHERE status = 'Open'
@@ -3867,7 +3897,7 @@ GET https://client.service-now.com/api/now/table/sn_risk_risk
         <div class="journey-context">
           <div class="journey-component">
             <div class="comp-name">Azure Data Factory — pl_grc_risks_incremental</div>
-            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in Azure SQL control table · Cost: ~€0.001/run</div>
+            <div class="comp-timing">Trigger: every 15 min · Total run: 1.64s · Watermark stored in PostgreSQL control table (staging.adf_watermarks) · Cost: ~€0.001/run</div>
           </div>
           <div class="journey-actors">
             <div class="journey-actor accenture">
@@ -4028,7 +4058,17 @@ CREATE INDEX idx_risks_heatmap
     rows = <span class="jk">await</span> db.execute(
         <span class="js">"""SELECT likelihood, impact,
                   COUNT(*)            AS count,
-                  MAX(rating)         AS max_rating,
+                  -- MAX(rating) on text sorts alphabetically (Medium outranks High) --
+                  -- rank severity explicitly: Critical &gt; High &gt; Medium &gt; Low
+                  (ARRAY['Low','Medium','High','Critical'])[
+                    MAX(CASE rating
+                          WHEN 'Critical' THEN 4
+                          WHEN 'High'     THEN 3
+                          WHEN 'Medium'   THEN 2
+                          WHEN 'Low'      THEN 1
+                          ELSE 0
+                        END)
+                  ]                    AS max_rating,
                   ARRAY_AGG(source_id) AS risk_ids
            FROM core.risks
            WHERE status = 'Open'
@@ -4277,8 +4317,8 @@ CREATE INDEX idx_risks_heatmap
 
 <span class="jc"># Document ingestion pipeline:</span>
 PDF parsed (PyMuPDF): 47 pages, 12,300 words
-Chunked: 89 chunks (400 tok each, 60 tok overlap)
-Embedded: text-embedding-3-large (89 × 3072 dims)
+Chunked: ~48 chunks (400 tok each, 60 tok overlap)
+Embedded: text-embedding-3-large (48 × 3072 dims)
 Indexed: AI Search upsert (keyed: doc_id + chunk_idx)
 Time to searchable: <span class="js">~4 minutes</span>
 
@@ -4289,7 +4329,7 @@ Time to searchable: <span class="js">~4 minutes</span>
   <span class="jk">"policy_change_detected"</span>: <span class="js">true</span>,
   <span class="jk">"affected_risks"</span>: [
     { <span class="jk">"risk_id"</span>: <span class="js">"RSK-2024-0142"</span>,
-      <span class="jk">"reason"</span>: <span class="js">"DORA RTS Art.12 ICT incident reporting now requires 4h initial notification (was 24h)"</span>,
+      <span class="jk">"reason"</span>: <span class="js">"DORA Art.17–19 major ICT incident reporting now requires 4h initial notification (was 24h)"</span>,
       <span class="jk">"proposed_update"</span>: <span class="js">"Update risk description to reflect 4h reporting obligation"</span> }
   ],
   <span class="jk">"requires_human_approval"</span>: <span class="js">true</span>
@@ -4317,13 +4357,13 @@ Time to searchable: <span class="js">~4 minutes</span>
   <span class="jk">"risk_id"</span>: <span class="js">"RSK-2024-0142"</span>,
   <span class="jk">"field"</span>: <span class="js">"risk_description"</span>,
   <span class="jk">"old_value"</span>: <span class="js">"...24h reporting..."</span>,
-  <span class="jk">"new_value"</span>: <span class="js">"...4h initial notification under DORA RTS Art.12..."</span>,
+  <span class="jk">"new_value"</span>: <span class="js">"...4h initial notification under DORA Art.17–19..."</span>,
   <span class="jk">"approved_by"</span>: <span class="js">"sarah.jones@client.com"</span>
 }
 
 <span class="jc"># Azure Function calls ServiceNow Table API:</span>
 PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
-{ "risk_description": "...4h initial notification under DORA RTS Art.12..." }
+{ "risk_description": "...4h initial notification under DORA Art.17–19..." }
 <span class="jc">→ 200 OK
 
 # Next ADF incremental pull (15 min later):
@@ -4494,7 +4534,7 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
         <div class="ai-comp-title"><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;font-size:16px;"></i> LLM Agent Chat Panel <span class="arch-level-badge">Requires L3</span></div>
         <div class="ai-meta-row">
           <span class="ai-meta-item"><strong>Model:</strong> <i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i>Azure OpenAI GPT-4o (2024-11-20)</span>
-          <span class="ai-meta-item"><strong>Framework:</strong> LangChain 0.2+</span>
+          <span class="ai-meta-item"><strong>Framework:</strong> LangChain 0.3.x / LangGraph</span>
           <span class="ai-meta-item"><strong>Streaming:</strong> SSE to frontend</span>
           <span class="ai-meta-item"><strong>Context:</strong> Up to 15,000 tokens/request</span>
         </div>
@@ -4506,7 +4546,7 @@ You are an ICS Risk Advisor embedded in the Internal Control System (ICS) Cockpi
 ## Your role
 You assist 2LoD risk analysts and process owners with:
 - Risk assessment queries (heatmap, RCSA status, control effectiveness)
-- DORA Article 30 ICT third-party risk register questions
+- DORA Article 28(3) ICT third-party risk register questions
 - Trend analysis and anomaly flagging
 - Drafting regulatory submissions and board pack narratives
 - Explaining risk data in natural language
@@ -4760,7 +4800,7 @@ Risk data freshness: {last_pipeline_run} | Agent version: {agent_version}</div>
             <tr data-arch-min-level="3"><td>Vector Search</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure AI Search <span class="arch-level-badge">Requires L3</span></td><td>Standard S1</td><td>Hybrid BM25 + vector (RRF)</td></tr>
             <tr data-arch-min-level="3"><td>LLM</td><td><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i>Azure OpenAI — GPT-4o <span class="arch-level-badge">Requires L3</span></td><td>2024-11-20</td><td>Within client tenant, EU region</td></tr>
             <tr data-arch-min-level="3"><td>Embeddings</td><td><i class="ti ti-brand-openai brand-icon" style="color:#10a37f;"></i>Azure OpenAI — text-embedding-3-large <span class="arch-level-badge">Requires L3</span></td><td>Standard</td><td>Document chunk embeddings (3072 dims)</td></tr>
-            <tr data-arch-min-level="3"><td>RAG Framework</td><td><i class="ti ti-link brand-icon" style="color:#1C7A3A;"></i>LangChain</td><td>0.2+</td><td>Agent orchestration and RAG pipeline</td></tr>
+            <tr data-arch-min-level="3"><td>RAG Framework</td><td><i class="ti ti-link brand-icon" style="color:#1C7A3A;"></i>LangChain / LangGraph</td><td>0.3.x</td><td>Agent orchestration (create_react_agent) and RAG pipeline</td></tr>
             <tr><td>Notifications</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Communication Services</td><td>Standard</td><td>Email + Teams Webhook</td></tr>
             <tr><td>Identity</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Active Directory</td><td>—</td><td>SSO, RBAC, app registration</td></tr>
             <tr><td>Secret Management</td><td><i class="ti ti-brand-azure brand-icon" style="color:#0078D4;"></i>Azure Key Vault</td><td>Standard</td><td>All credentials and connection strings</td></tr>
@@ -4881,17 +4921,17 @@ Risk data freshness: {last_pipeline_run} | Agent version: {agent_version}</div>
         <table>
           <thead><tr><th>Interaction Type</th><th>Volume/Month</th><th>Tokens/Call</th><th>Monthly Tokens</th><th>Monthly Cost</th></tr></thead>
           <tbody>
-            <tr><td>Agent chat queries (standard)</td><td>4,000</td><td>4,800 in / 580 out</td><td>19.2M in / 2.3M out</td><td>$50.90</td></tr>
+            <tr><td>Agent chat queries (standard)</td><td>4,000</td><td>4,800 in / 580 out</td><td>19.2M in / 2.3M out</td><td>$71.20</td></tr>
             <tr><td>Document RAG queries (30% of chat)</td><td>1,200</td><td>6,200 in / 700 out</td><td>7.4M in / 0.8M out</td><td>$26.60</td></tr>
             <tr><td>TPRM signal processing</td><td>80</td><td>1,520 in / 428 out (GPT-4o-mini)</td><td>0.12M in / 0.03M out</td><td>$0.04</td></tr>
             <tr><td>Query-time embeddings (agent RAG)</td><td>1,200</td><td>12 tokens</td><td>14,400</td><td>$0.002</td></tr>
-            <tr style="font-weight:700;border-top:2px solid var(--borderS);background:#E4F2EB;"><td><strong>Total AI cost/month (50-user org)</strong></td><td colspan="3">—</td><td><strong>~$78</strong></td></tr>
+            <tr style="font-weight:700;border-top:2px solid var(--borderS);background:#E4F2EB;"><td><strong>Total AI cost/month (50-user org)</strong></td><td colspan="3">—</td><td><strong>~$98</strong></td></tr>
           </tbody>
         </table>
       </div>
       <div class="card" style="background:var(--gb);border-left:3px solid var(--g);margin-top:0;">
         <h4 style="color:var(--g);">Cost Perspective</h4>
-        <p style="font-size:13.5px;color:var(--ts);">A single Bloomberg Terminal costs $27,000/year (~$2,250/month). This AI layer costs <strong>~$78/month</strong> for 50 users = <strong>$18.72/user/year</strong>. ROI is driven not by AI layer cost savings, but by GRC time savings — see Cost &amp; ROI section.</p>
+        <p style="font-size:13.5px;color:var(--ts);">A single Bloomberg Terminal costs $27,000/year (~$2,250/month). This AI layer costs <strong>~$98/month</strong> for 50 users = <strong>$2.35/user/month ($28.22/user/year)</strong>. ROI is driven not by AI layer cost savings, but by GRC time savings — see Cost &amp; ROI section.</p>
       </div>
         </div>
       </details>
@@ -5152,7 +5192,7 @@ useEffect(() =&gt; {
           <tbody>
             <tr><td>GRC Dashboard UI</td><td><span class="chip chip-critical" style="background:#EEF3FB;color:#2A5298;">Build</span></td><td>React + FastAPI</td><td>ServiceNow portal / Archer UI</td><td>Client's GRC tool UI lacks heatmap + AI chat + TPRM signal panel. Custom React = full control.</td></tr>
             <tr><td>Risk/Control DB</td><td><span class="chip chip-critical" style="background:#EEF3FB;color:#2A5298;">Build</span></td><td>PostgreSQL + dbt</td><td>GRC tool native DB</td><td>GRC tool DB schema is proprietary. Our PostgreSQL layer is source-agnostic and optimised for read queries.</td></tr>
-            <tr><td>LLM Orchestration</td><td><span class="chip chip-medium" style="background:#F3E8FF;color:#6D28D9;">Buy+Wrap</span></td><td>—</td><td>LangChain 0.2+</td><td>LangChain handles tool routing, streaming, memory. Building this is ~3 weeks of undifferentiated work.</td></tr>
+            <tr><td>LLM Orchestration</td><td><span class="chip chip-medium" style="background:#F3E8FF;color:#6D28D9;">Buy+Wrap</span></td><td>—</td><td>LangChain 0.3.x / LangGraph</td><td>LangChain handles tool routing, streaming, memory. Building this is ~3 weeks of undifferentiated work.</td></tr>
             <tr><td>LLM Inference</td><td><span class="chip chip-medium" style="background:#F3E8FF;color:#6D28D9;">Buy+Wrap</span></td><td>—</td><td>Azure OpenAI GPT-4o</td><td>Training or fine-tuning a model is out of scope. Azure OpenAI = GDPR compliant within tenant.</td></tr>
             <tr><td>Vector Search</td><td><span class="chip chip-medium" style="background:#F3E8FF;color:#6D28D9;">Buy+Wrap</span></td><td>—</td><td>Azure AI Search</td><td>Hybrid BM25 + vector with RRF. Building equivalent from scratch (Pinecone/Weaviate self-hosted) adds ops burden.</td></tr>
             <tr><td>ETL Pipeline</td><td><span class="chip chip-medium" style="background:#F3E8FF;color:#6D28D9;">Buy+Wrap</span></td><td>—</td><td>Azure Data Factory + dbt Core</td><td>ADF for scheduling/connectivity. dbt Core (open source) for SQL transformations. Minimal build.</td></tr>
@@ -5176,7 +5216,7 @@ useEffect(() =&gt; {
   </div>
   <div class="level-ctx-banner lcb-warn" id="cost-roi-banner" style="margin-bottom:18px;">
     <span class="lcb-icon" id="cost-roi-banner-icon">⚠</span>
-    <span>Cost &amp; ROI figures shown for <strong id="cost-roi-level-label">L3 — AI-Assisted (Base Case)</strong> — <span id="cost-level-note">€2.4M implementation, 28 weeks, 10 roles.</span></span>
+    <span>Cost &amp; ROI figures shown for <strong id="cost-roi-level-label">L3 — AI-Assisted (Base Case)</strong> — <span id="cost-level-note">€2.1M implementation, 28 weeks, 10 roles.</span></span>
   </div>
 
   <!-- ROI Card -->
@@ -5234,12 +5274,12 @@ useEffect(() =&gt; {
           <tr><td>Phase 1 — Data Foundation</td><td>W5–12</td><td>PM, SA, GRC, DE1, DE2, AI (part)</td><td>~240</td><td>€2,150</td><td>€516,000</td></tr>
           <tr><td>Phase 2 — Core Dashboard</td><td>W9–16</td><td>PM, BE1, BE2, SA (part)</td><td>~200</td><td>€1,950</td><td>€390,000</td></tr>
           <tr><td>Phase 3 — AI Layer</td><td>W13–20</td><td>PM, AI/ML Eng, BE1, SA (part), GRC (part)</td><td>~200</td><td>€2,100</td><td>€420,000</td></tr>
-          <tr><td>Phase 4 — Workflow &amp; Actions</td><td>W17–24</td><td>PM, BE2, AI/ML, CM Lead</td><td>~160</td><td>€2,000</td><td>€320,000</td></tr>
-          <tr><td>Phase 5 — Hardening &amp; Rollout</td><td>W21–28</td><td>PM, Security, CM Lead (full), SA, BE (part)</td><td>~120</td><td>€2,300</td><td>€276,000</td></tr>
-          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--s1);"><td><strong>Accenture fees</strong></td><td><strong>28 weeks</strong></td><td>10 roles</td><td><strong>~1,000</strong></td><td><strong>€2,150 avg</strong></td><td><strong>€2,146,000</strong></td></tr>
-          <tr><td>Travel &amp; Expenses (T&amp;E)</td><td colspan="4">~10% of fees (on-site client visits, workshops, UAT sessions)</td><td>€215,000</td></tr>
+          <tr><td>Phase 4 — Workflow &amp; Actions</td><td>W17–24</td><td>PM, BE2, AI/ML, CM Lead</td><td>~100</td><td>€2,000</td><td>€200,000</td></tr>
+          <tr><td>Phase 5 — Hardening &amp; Rollout</td><td>W21–28</td><td>PM, Security, CM Lead (full), SA, BE (part)</td><td>~63</td><td>€2,300</td><td>€146,000</td></tr>
+          <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--s1);"><td><strong>Accenture fees</strong></td><td><strong>28 weeks</strong></td><td>10 roles</td><td><strong>~883</strong></td><td><strong>€2,150 avg</strong></td><td><strong>€1,896,000</strong></td></tr>
+          <tr><td>Travel &amp; Expenses (T&amp;E)</td><td colspan="4">~10% of professional fees (€189,600) — on-site client visits, workshops, UAT sessions</td><td>€189,600</td></tr>
           <tr><td>External penetration test</td><td colspan="4">Accredited security firm — full web app + API scope</td><td>€30,000</td></tr>
-          <tr style="font-weight:700;background:var(--brandLight);"><td><strong>Total Implementation Investment</strong></td><td colspan="4">—</td><td><strong>~€2,391,000</strong></td></tr>
+          <tr style="font-weight:700;background:var(--brandLight);"><td><strong>Total Implementation Investment</strong></td><td colspan="4">—</td><td><strong>~€2,115,600</strong></td></tr>
         </tbody>
       </table>
     </div>
@@ -5265,8 +5305,8 @@ useEffect(() =&gt; {
           <tr><td>Less: Annual infrastructure cost</td><td colspan="2">Production + dev/test environment</td><td>-€16,116</td></tr>
           <tr><td>Less: Annual maintenance (Accenture)</td><td colspan="2">~10 days/year × €2,500/day (Manager rate)</td><td>-€25,000</td></tr>
           <tr style="font-weight:700;background:#E4F2EB;"><td><strong>Net Annual Saving</strong></td><td colspan="2">—</td><td><strong>€347,884</strong></td></tr>
-          <tr style="font-weight:700;background:#EEF3FB;"><td><strong>Payback period (quantified savings)</strong></td><td colspan="2">€2,391,000 ÷ €347,884/year</td><td><strong>~6.9 years</strong></td></tr>
-          <tr style="background:#FFF8E1;"><td><strong>Payback — large institution</strong></td><td colspan="2">10 analysts → ~€600K/year net; same investment</td><td><strong>~4.0 years</strong></td></tr>
+          <tr style="font-weight:700;background:#EEF3FB;"><td><strong>Payback period (quantified savings)</strong></td><td colspan="2">€2,115,600 ÷ €347,884/year</td><td><strong>~6.1 years</strong></td></tr>
+          <tr style="background:#FFF8E1;"><td><strong>Payback — large institution</strong></td><td colspan="2">10 analysts → ~€600K/year net; same investment</td><td><strong>~3.5 years</strong></td></tr>
         </tbody>
       </table>
     </div>
@@ -6201,7 +6241,7 @@ CROSS-CUTTING SERVICES (no subnet, Azure-managed):<br>
 </table>
 </div>
 <div style="margin-top:12px;padding:10px 14px;background:rgba(42,82,152,.06);border-radius:6px;font-size:11px;color:var(--ts);">
-  <strong style="color:var(--brandMid);">Audit guarantee:</strong> Every AI interaction is logged to <code>agent_audit_log</code> with: user_id, area_id, tool_called, query_sent, response_summary, timestamp. Logs are immutable and retained for 12 months per DORA Art.19. The Security Engineer owns this control and reviews the audit log monthly.
+  <strong style="color:var(--brandMid);">Audit guarantee:</strong> Every AI interaction is logged to <code>agent_audit_log</code> with: user_id, area_id, tool_called, query_sent, response_summary, timestamp. Logs are immutable and retained for 7 years in tiered storage (90 days hot Azure Blob, remainder cold tier) per DORA Art.25 & industry best practice. The Security Engineer owns this control and reviews the audit log monthly.
 </div>
 </div>`,
   },
@@ -6384,7 +6424,7 @@ CROSS-CUTTING SERVICES (no subnet, Azure-managed):<br>
 <tr><td style="padding:6px;border-bottom:1px solid var(--border);">pl_grc_risks_incremental</td><td style="padding:6px;border-bottom:1px solid var(--border);">GRC REST API /risks</td><td style="padding:6px;border-bottom:1px solid var(--border);">staging.risks</td><td style="padding:6px;border-bottom:1px solid var(--border);">Watermark (updated_at)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Every 4h</td></tr>
 <tr><td style="padding:6px;border-bottom:1px solid var(--border);">pl_grc_controls_incremental</td><td style="padding:6px;border-bottom:1px solid var(--border);">GRC REST API /controls</td><td style="padding:6px;border-bottom:1px solid var(--border);">staging.controls</td><td style="padding:6px;border-bottom:1px solid var(--border);">Watermark (updated_at)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Every 4h</td></tr>
 <tr><td style="padding:6px;border-bottom:1px solid var(--border);">pl_tprm_vendors_full</td><td style="padding:6px;border-bottom:1px solid var(--border);">TPRM API /vendors</td><td style="padding:6px;border-bottom:1px solid var(--border);">staging.vendors</td><td style="padding:6px;border-bottom:1px solid var(--border);">Full load (weekly)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Sunday 02:00</td></tr>
-<tr><td style="padding:6px;">pl_docs_ingestion_blob</td><td style="padding:6px;">Azure Blob /grc-docs/</td><td style="padding:6px;">Azure AI Search</td><td style="padding:6px;">Event-driven (blob trigger)</td><td style="padding:6px;">On new file</td></tr>
+<tr><td style="padding:6px;">pl_docs_ingestion_blob</td><td style="padding:6px;">Azure Blob /ics-documents/</td><td style="padding:6px;">Azure AI Search</td><td style="padding:6px;">Event-driven (blob trigger)</td><td style="padding:6px;">On new file</td></tr>
 </tbody></table>
 <div style="margin-top:10px;font-size:12px;color:var(--ts);">All pipelines use pipeline_watermarks table. Watermark advances only on success. Failed runs write to pipeline_error_log. DQ tests run in CI — pipeline fails on test failure.</div>
 </div>`,
@@ -6622,9 +6662,9 @@ Rules:<br>
 <table style="width:100%;border-collapse:collapse;font-size:12px;margin-bottom:10px;">
 <thead><tr style="background:var(--s2);"><th style="padding:6px;border-bottom:1px solid var(--border);">Stage</th><th style="padding:6px;border-bottom:1px solid var(--border);">Component</th><th style="padding:6px;border-bottom:1px solid var(--border);">Config</th></tr></thead>
 <tbody>
-<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Ingestion</td><td style="padding:6px;border-bottom:1px solid var(--border);">ADF blob trigger</td><td style="padding:6px;border-bottom:1px solid var(--border);">Fires on new file in /grc-docs/</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Ingestion</td><td style="padding:6px;border-bottom:1px solid var(--border);">ADF blob trigger</td><td style="padding:6px;border-bottom:1px solid var(--border);">Fires on new file in /ics-documents/</td></tr>
 <tr><td style="padding:6px;border-bottom:1px solid var(--border);">Parsing</td><td style="padding:6px;border-bottom:1px solid var(--border);">PyMuPDF (PDF) / python-docx (Word)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Extract text + metadata (title, date, author)</td></tr>
-<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Chunking</td><td style="padding:6px;border-bottom:1px solid var(--border);">LangChain RecursiveCharacterTextSplitter</td><td style="padding:6px;border-bottom:1px solid var(--border);">chunk_size=512, overlap=64</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">Chunking</td><td style="padding:6px;border-bottom:1px solid var(--border);">LangChain RecursiveCharacterTextSplitter</td><td style="padding:6px;border-bottom:1px solid var(--border);">chunk_size=400, overlap=60</td></tr>
 <tr><td style="padding:6px;border-bottom:1px solid var(--border);">Embedding</td><td style="padding:6px;border-bottom:1px solid var(--border);">Azure OpenAI text-embedding-3-large</td><td style="padding:6px;border-bottom:1px solid var(--border);">3072 dimensions; batched 100 chunks/call</td></tr>
 <tr><td style="padding:6px;">Indexing</td><td style="padding:6px;">Azure AI Search (Standard S1)</td><td style="padding:6px;">Hybrid index: BM25 + cosine vector; top-k=8</td></tr>
 </tbody></table>
@@ -6665,7 +6705,7 @@ Rules:<br>
 <div>reasoning_trace TEXT        -- LLM reasoning (if AI-triggered)</div>
 <div>created_at     TIMESTAMPTZ  NOT NULL DEFAULT now()</div>
 <br>
-<div style="font-family:var(--font);font-size:11px;color:var(--ts);">Immutable after write — no UPDATE or DELETE. Row-level security prevents users from reading other areas' audit logs. Retained 7 years per DORA Article 30 record-keeping requirements.</div>
+<div style="font-family:var(--font);font-size:11px;color:var(--ts);">Immutable after write — no UPDATE or DELETE. Row-level security prevents users from reading other areas' audit logs. Retained 7 years in tiered storage (90 days hot Azure Blob, remainder cold tier) per DORA Art.25 operational resilience & Art.28(3) ICT third-party register requirements.</div>
 </div>`,
   },
   'AI system classification (EU AI Act)': {
@@ -6715,7 +6755,7 @@ Rules:<br>
 <thead><tr style="background:var(--s2);"><th style="padding:6px;border-bottom:1px solid var(--border);">Data Type</th><th style="padding:6px;border-bottom:1px solid var(--border);">Permitted Use</th><th style="padding:6px;border-bottom:1px solid var(--border);">Retention</th><th style="padding:6px;border-bottom:1px solid var(--border);">Restriction</th></tr></thead>
 <tbody>
 <tr><td style="padding:6px;border-bottom:1px solid var(--border);">Risk records (GRC data)</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI inference input only — no model fine-tuning</td><td style="padding:6px;border-bottom:1px solid var(--border);">7 years (DORA)</td><td style="padding:6px;border-bottom:1px solid var(--border);">No transfer outside EEA</td></tr>
-<tr><td style="padding:6px;border-bottom:1px solid var(--border);">LLM prompts (full context)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Logged to agent_audit_log — not sent to Microsoft for training (Azure OpenAI opt-out enforced)</td><td style="padding:6px;border-bottom:1px solid var(--border);">90 days in hot; 7 years in cold storage</td><td style="padding:6px;border-bottom:1px solid var(--border);">Classified as Confidential</td></tr>
+<tr><td style="padding:6px;border-bottom:1px solid var(--border);">LLM prompts (full context)</td><td style="padding:6px;border-bottom:1px solid var(--border);">Logged to agent_audit_log — not sent to Microsoft for training (Azure OpenAI opt-out enforced)</td><td style="padding:6px;border-bottom:1px solid var(--border);">90 days hot Azure Blob; remainder cold tier — 7 years total per DORA Art.25</td><td style="padding:6px;border-bottom:1px solid var(--border);">Classified as Confidential</td></tr>
 <tr><td style="padding:6px;border-bottom:1px solid var(--border);">AI-generated outputs</td><td style="padding:6px;border-bottom:1px solid var(--border);">Must be reviewed by 2LoD analyst before acting on</td><td style="padding:6px;border-bottom:1px solid var(--border);">Stored in agent_audit_log indefinitely</td><td style="padding:6px;border-bottom:1px solid var(--border);">AI-generated label required in UI</td></tr>
 <tr><td style="padding:6px;">RAGAS evaluation set</td><td style="padding:6px;">Model quality testing only</td><td style="padding:6px;">Indefinite (model governance)</td><td style="padding:6px;">Anonymised — no live risk IDs</td></tr>
 </tbody></table>
@@ -6782,7 +6822,7 @@ Rules:<br>
 <tr><td style="padding:6px;border-bottom:1px solid var(--border);">Data location &amp; sovereignty</td><td style="padding:6px;border-bottom:1px solid var(--border);">West Europe (Amsterdam) deployment. EU data residency guaranteed. No cross-border data transfer.</td><td style="padding:6px;border-bottom:1px solid var(--border);">Azure region policy</td></tr>
 <tr><td style="padding:6px;">Exit strategy</td><td style="padding:6px;">Graceful degradation (dashboard functions without AI). Alternative: self-hosted Llama 3 70B on Azure GPU VM. Switchover estimated 4–6 weeks. Documented in DR runbook.</td><td style="padding:6px;">AI Governance scope document</td></tr>
 </tbody></table>
-<div style="font-size:11px;color:var(--ts);">DORA Art.30 register entry: ICT-TP-001. Reviewed annually and on material service change. Escalation to CRO if concentration risk classification changes.</div>
+<div style="font-size:11px;color:var(--ts);">DORA Art.28(3) register entry: ICT-TP-001. Reviewed annually and on material service change. Escalation to CRO if concentration risk classification changes.</div>
 </div>`,
   },
   'AI incident response procedure': {
@@ -6885,7 +6925,7 @@ function openDeliverableSample(name) {
    ===================================================================== */
 const LEVEL_DESCS = {
   1: { title: 'L1 — Static Export', text: 'GRC data is extracted manually as CSV files, uploaded to Azure Blob Storage, transformed by ADF and dbt, and loaded into PostgreSQL. The dashboard is read-only and refreshed on a fixed schedule (e.g. weekly). No real-time data, no AI, no automation.' },
-  2: { title: 'L2 — Connected Live Feed', text: 'GRC system is connected via API with incremental polling every 15 minutes. Changes are pushed to the dashboard in near-real-time via Server-Sent Events. TPRM system webhooks deliver vendor change signals automatically. Dashboard is always current — no manual exports needed.' },
+  2: { title: 'L2 — Connected Live Feed', text: 'GRC system is connected via API with incremental polling every 15 minutes. Changes are pushed to the dashboard in near-real-time via Server-Sent Events (end-to-end latency bounded by the 15-minute ADF polling interval; browser updates instantly once data lands). TPRM system webhooks deliver vendor change signals automatically. Dashboard is always current — no manual exports needed.' },
   3: { title: 'L3 — AI-Assisted (Base Case — Reference Dashboard)', text: 'The full AI agent is active: natural language risk queries, document RAG search, and structured analysis. RCSA reminders are sent automatically. AI drafts risk descriptions for TPRM signals. All AI outputs are clearly labelled and the user remains in full control. This is the reference dashboard level.' },
   4: { title: 'L4 — Active Proposals', text: 'The AI proactively monitors for overdue RCSAs and other conditions, generates proposed actions (reminders, escalations), and surfaces them in the 2LoD dashboard for one-click approval. The AI never executes automatically — every action requires explicit human approval via a Durable Function external event.' },
   5: { title: 'L5 — Autonomous with GRC Write-back', text: 'Extends L4 with integrated policy change detection and GRC write-back (core deliverable). When a new regulatory document is uploaded, the AI identifies affected risk descriptions and proposes updates. 2LoD approves and the ICS Cockpit writes directly to the GRC source system via its REST API, closing the full data loop.' },
@@ -6893,7 +6933,7 @@ const LEVEL_DESCS = {
 
 const MATBAR_SHORTS = {
   1: 'Manual CSV exports, weekly refresh, no AI. Static dashboard.',
-  2: 'Live API polling, near-real-time via SSE, TPRM webhooks. No AI yet.',
+  2: 'Live API polling, near-real-time via SSE (latency bounded by the 15-minute ADF poll; browser updates instantly once data lands), TPRM webhooks. No AI yet.',
   3: 'AI agent + RAG over GRC documents. Real-time heatmap, natural-language query, TPRM signal drafts. <strong>Reference dashboard level.</strong>',
   4: 'AI proactively monitors and proposes actions; every action requires explicit 2LoD approval before executing.',
   5: 'Full autonomous loop: AI detects policy changes, proposes GRC write-back, and closes the data circle with 2LoD sign-off.',
@@ -6901,8 +6941,8 @@ const MATBAR_SHORTS = {
 
 const LEVEL_ARCH_CTX = {
   1: { ok: false, text: 'L1 (Static) — Only data ingestion is deployed: ADF pipelines, dbt models, PostgreSQL. Container Apps, Azure OpenAI, AI Search, Service Bus, Redis, Durable Functions are NOT deployed at this level.' },
-  2: { ok: true,  text: 'L2 (Connected) — Data ingestion layer + Container Apps (FastAPI + SSE) + Service Bus for TPRM webhooks. Azure OpenAI and AI Search are NOT yet deployed.' },
-  3: { ok: true,  text: 'L3 (Base Case) — Full stack active: ADF · dbt · PostgreSQL · Container Apps · Azure OpenAI · AI Search · Redis · APIM · Key Vault. All architecture components deployed.' },
+  2: { ok: true,  text: 'L2 (Connected) — Data ingestion layer + Container Apps (FastAPI + SSE) + Redis (session cache) + APIM (rate limit · auth gateway) + Service Bus for TPRM webhooks. Azure OpenAI and AI Search are NOT yet deployed.' },
+  3: { ok: true,  text: 'L3 (Base Case) — Full stack active: ADF · dbt · PostgreSQL · Container Apps · Azure OpenAI · AI Search · Service Bus · Redis · APIM · Key Vault. All architecture components deployed.' },
   4: { ok: true,  text: 'L4 (Active) — Full L3 stack + Azure Durable Functions orchestrating AI-proposed actions with human-in-the-loop external event approval pattern.' },
   5: { ok: true,  text: 'L5 (Autonomous) — Full L4 stack + integrated outbound GRC write-back connector. Requires separate approval, rollback storage, and audit trail per DORA requirements.' },
 };
@@ -6947,26 +6987,26 @@ function updateArchComponents(level) {
 const LEVEL_DATA = {
   1: {
     label: 'L1 — Static',
-    weeks: '12', fteWeeks: '~42', roles: '4', phases: '3', cost: '~€440K',
+    weeks: '12', fteWeeks: '~42', roles: '4', phases: '3', cost: '~€580K',
     ganttMinWeek: 1, ganttMaxWeek: 12,
     ganttScope: 'W1–W12 · Ph0 Discovery + Ph1 Data Foundation + static dashboard only (no live API)',
-    overviewCtx: 'L1 (Static) — Minimal engagement: 4 roles, 12-week delivery, ~€440K. Covers foundation, data ingestion, and a basic static dashboard. No AI or automation. Suitable for a PoC or readiness assessment.',
+    overviewCtx: 'L1 (Static) — Minimal engagement: 4 roles, 12-week delivery, ~€580K. Covers foundation, data ingestion, and a basic static dashboard. No AI or automation. Suitable for a PoC or readiness assessment.',
     overviewOk: false
   },
   2: {
     label: 'L2 — Connected',
-    weeks: '20', fteWeeks: '~100', roles: '7', phases: '4', cost: '~€1.1M',
+    weeks: '20', fteWeeks: '~100', roles: '8', phases: '4', cost: '~€1.1M',
     ganttMinWeek: 1, ganttMaxWeek: 20,
     ganttScope: 'W1–W20 · Ph0–Ph2 + Ph3 partial (no LLM agent)',
-    overviewCtx: 'L2 (Connected) — 7 roles, 20-week delivery, ~€1.1M. Adds GRC connectors, API layer, and a live connected dashboard. Rules-based alerting but no generative AI. Good for clients prioritising data connectivity before AI.',
+    overviewCtx: 'L2 (Connected) — 8 roles, 20-week delivery, ~€1.1M. Adds GRC connectors, API layer, and a live connected dashboard. Rules-based alerting but no generative AI. Good for clients prioritising data connectivity before AI.',
     overviewOk: false
   },
   3: {
     label: 'L3 — AI-Assisted (Base Case)',
-    weeks: '28', fteWeeks: '~200', roles: '10', phases: '6', cost: '~€2.4M',
+    weeks: '28', fteWeeks: '~200', roles: '10', phases: '6', cost: '~€2.1M',
     ganttMinWeek: 1, ganttMaxWeek: 28,
     ganttScope: 'W1–W28 · Full scope: Ph0–Ph5 all active',
-    overviewCtx: 'L3 (Base Case) — Full 10-role team, 28-week delivery, ~€2.4M. Includes LLM-powered RAG agent, TPRM Signal Engine, AI-driven risk summaries, and the DORA ICT third-party register (Art. 28/30). This is the recommended engagement scope.',
+    overviewCtx: 'L3 (Base Case) — Full 10-role team, 28-week delivery, ~€2.1M. Includes LLM-powered RAG agent, TPRM Signal Engine, AI-driven risk summaries, and the DORA ICT third-party register (Art. 28(3)). This is the recommended engagement scope.',
     overviewOk: true
   },
   4: {
@@ -6992,34 +7032,34 @@ const LEVEL_DATA = {
    ===================================================================== */
 const ROI_LEVEL_DATA = {
   1: {
-    investment: '~€440K', infraAnnual: '€6.8K', netSaving: '~€68K', payback: '~6.5 yr',
-    analystSaving: '10%', grossSaving: '€74,000', netAnnual: '€67,200',
-    paybackCalc: '€440,000 ÷ €67,200/year',
-    note: 'L1 delivers a static read-only dashboard. Savings are limited to reporting efficiency (fewer manual exports). Compliance value is the primary driver — positions institution for future AI maturity.',
+    investment: '~€580K', infraAnnual: '€6.8K', netSaving: '~€59K', payback: '~9.8 yr',
+    analystSaving: '10%', grossSaving: '€74,000', netAnnual: '€59,200',
+    paybackCalc: '€580,000 ÷ €59,200/year',
+    note: 'L1 delivers a static read-only dashboard. Savings are limited to reporting efficiency (fewer manual exports), net of €8,000/yr Accenture maintenance. Compliance value is the primary driver — positions institution for future AI maturity.',
   },
   2: {
-    investment: '~€1.1M', infraAnnual: '€10.2K', netSaving: '~€168K', payback: '~6.5 yr',
-    analystSaving: '20%', grossSaving: '€180,000', netAnnual: '€169,800',
-    paybackCalc: '€1,100,000 ÷ €169,800/year',
-    note: 'L2 adds live GRC connectors and a real-time dashboard. Analyst efficiency improves through pre-populated views but without AI assistance. TPRM signal processing is rules-based.',
+    investment: '~€1.1M', infraAnnual: '€10.2K', netSaving: '~€156K', payback: '~7.1 yr',
+    analystSaving: '20%', grossSaving: '€180,000', netAnnual: '€155,800',
+    paybackCalc: '€1,100,000 ÷ €155,800/year',
+    note: 'L2 adds live GRC connectors and a real-time dashboard. Analyst efficiency improves through pre-populated views but without AI assistance, net of €14,000/yr Accenture maintenance. TPRM signal processing is rules-based.',
   },
   3: {
-    investment: '~€2.4M', infraAnnual: '€16.1K', netSaving: '~€348K', payback: '~6.9 yr',
+    investment: '~€2.1M', infraAnnual: '€16.1K', netSaving: '~€348K', payback: '~6.1 yr',
     analystSaving: '35%', grossSaving: '€389,000', netAnnual: '€347,884',
-    paybackCalc: '€2,391,000 ÷ €347,884/year',
-    note: 'L3 (Base Case) — Quantified savings based on 4 2LoD risk analysts + 8 process owners. Primary investment driver is DORA Article 30 compliance and material-finding avoidance.',
+    paybackCalc: '€2,115,600 ÷ €347,884/year',
+    note: 'L3 (Base Case) — Quantified savings based on 4 2LoD risk analysts + 8 process owners, net of €25,000/yr Accenture maintenance. Primary investment driver is DORA Art.28(3) compliance and material-finding avoidance.',
   },
   4: {
-    investment: '~€2.8M', infraAnnual: '€18.4K', netSaving: '~€442K', payback: '~6.3 yr',
-    analystSaving: '45%', grossSaving: '€480,000', netAnnual: '€461,600',
-    paybackCalc: '€2,800,000 ÷ €461,600/year',
-    note: 'L4 adds workflow automation (Durable Functions) and AI-driven RCSA routing. Process owner time savings increase significantly due to automated evidence collection and smart task assignment.',
+    investment: '~€2.8M', infraAnnual: '€18.4K', netSaving: '~€434K', payback: '~6.5 yr',
+    analystSaving: '45%', grossSaving: '€480,000', netAnnual: '€433,600',
+    paybackCalc: '€2,800,000 ÷ €433,600/year',
+    note: 'L4 adds workflow automation (Durable Functions) and AI-driven RCSA routing, net of €28,000/yr Accenture maintenance. Process owner time savings increase significantly due to automated evidence collection and smart task assignment.',
   },
   5: {
-    investment: '~€3.3M', infraAnnual: '€21.6K', netSaving: '~€567K', payback: '~5.8 yr',
-    analystSaving: '55%', grossSaving: '€600,000', netAnnual: '€578,400',
-    paybackCalc: '€3,300,000 ÷ €578,400/year',
-    note: 'L5 delivers full autonomous operation. AI agents write back to GRC systems and auto-generate submissions. At 10+ analysts, payback compresses to ~3.2 years — best ROI case at enterprise scale.',
+    investment: '~€3.3M', infraAnnual: '€21.6K', netSaving: '~€546K', payback: '~6.0 yr',
+    analystSaving: '55%', grossSaving: '€600,000', netAnnual: '€546,400',
+    paybackCalc: '€3,300,000 ÷ €546,400/year',
+    note: 'L5 delivers full autonomous operation, net of €32,000/yr Accenture maintenance. AI agents write back to GRC systems and auto-generate submissions. At 10+ analysts, payback compresses to ~3.2 years — best ROI case at enterprise scale.',
   },
 };
 
@@ -7603,6 +7643,8 @@ function generateSoW(level) {
         N('dbt', 'dbt L2', 'incremental models', 'input', 1),
         N('pg', 'PostgreSQL', 'risk_records · live', 'core', 2),
         N('fastapi', 'FastAPI', 'Container Apps · SSE', 'core', 2, { badge: 'NEW' }),
+        N('redis', 'Redis Cache', 'session cache · TTL', 'core', 2, { badge: 'NEW' }),
+        N('apim', 'API Management', 'rate limit · auth gateway', 'core', 2, { badge: 'NEW' }),
         N('aisearch', 'AI Search', 'vector index', 'core', 2, { active: false }),
         N('gpt', 'GPT-4o', 'LLM agent', 'core', 2, { active: false }),
         N('dashboard', 'Live Dashboard', 'SSE · real-time', 'output', 3, { highlight: true }),
@@ -7618,6 +7660,8 @@ function generateSoW(level) {
         E('adf', 'dbt', 'watermark Δ'),
         E('dbt', 'pg', 'upsert'),
         E('pg', 'fastapi', 'query'),
+        E('fastapi', 'redis', 'session cache'),
+        E('apim', 'fastapi', 'rate limit / auth'),
         E('fastapi', 'dashboard', 'SSE stream', { color: 'pink' }),
         E('fastapi', 'push', 'event emit', { color: 'pink' })
       ]
@@ -7640,8 +7684,8 @@ function generateSoW(level) {
         N('gpt', 'GPT-4o', 'complex queries · 128k ctx', 'core', 2, { badge: 'NEW', highlight: true }),
         N('gpt_mini', 'GPT-4o mini', 'TPRM drafts · fast', 'core', 2, { badge: 'NEW' }),
         N('embeddings', 'Embeddings', 'text-embedding-3-large', 'core', 2, { badge: 'NEW' }),
-        N('redis', 'Redis', 'session cache · TTL', 'core', 2, { badge: 'NEW' }),
-        N('apim', 'APIM', 'rate limit · auth gateway', 'core', 2, { badge: 'NEW' }),
+        N('redis', 'Redis', 'session cache · TTL', 'core', 2, { badge: null }),
+        N('apim', 'APIM', 'rate limit · auth gateway', 'core', 2, { badge: null }),
         N('keyvault', 'Key Vault', 'secrets · managed identity', 'core', 2, { badge: 'NEW' }),
         N('heatmap', 'Risk Heatmap', 'AI-scored · live', 'output', 3),
         N('aichat', 'AI Chat', 'NL query · GPT-4o', 'output', 3, { badge: 'NEW', highlight: true }),
