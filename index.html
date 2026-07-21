@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ICS Dashboard — Implementation Guide</title>
+<title>ICS Cockpit — Implementation Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
@@ -20,7 +20,14 @@
   --radius: 8px; --radiusL: 12px;
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; font-size: 15px; }
+html { font-size: 15px; }
+@media (prefers-reduced-motion: no-preference) {
+  html { scroll-behavior: smooth; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+  html { scroll-behavior: auto; }
+}
 body { font-family: var(--font); background: var(--canvas); color: var(--tp); line-height: 1.6; }
 h1,h2,h3,h4 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing: -.02em; }
 
@@ -185,10 +192,10 @@ tbody tr:nth-child(even) td { background: var(--s1); }
 .gl.ph.ph0 { border-left-color: #8A15E0; color: #8A15E0; }
 .gl.ph.ph1 { border-left-color: #1A7A52; color: #1A7A52; }
 .gl.ph.ph2 { border-left-color: #6D28D9; color: #6D28D9; }
-.gl.ph.ph3 { border-left-color: #9A6500; color: #9A6500; }
-.gl.ph.ph4 { border-left-color: #B4322A; color: #B4322A; }
+.gl.ph.ph3 { border-left-color: #7C3AED; color: #7C3AED; }
+.gl.ph.ph4 { border-left-color: #0891B2; color: #0891B2; }
 .gl.ph.ph5 { border-left-color: #3A4657; color: #3A4657; }
-.gl.ph[data-gantt-min-level="4"] { border-left-color: #B4322A; color: #B4322A; }
+.gl.ph[data-gantt-min-level="4"] { border-left-color: #0891B2; color: #0891B2; }
 .gl.ph[data-gantt-min-level="5"] { border-left-color: #6D28D9; color: #6D28D9; }
 .gl.sub { font-size: 11px; color: var(--tm); padding-left: 20px; border-bottom: 1px solid rgba(0,0,0,.03); }
 .gl.ms-lbl { font-size: 10px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--tm); background: linear-gradient(90deg, var(--canvas) 0%, var(--s1) 100%); border-bottom: 1px solid var(--borderS); }
@@ -736,6 +743,8 @@ section { padding-top: 16px; margin-bottom: 40px; }
   border-radius: var(--radiusL); margin: 0 0 32px; padding: 16px 24px;
   display: flex; align-items: center; gap: 12px;
   box-shadow: 0 2px 12px rgba(161,0,255,.08);
+  position: sticky; top: 54px; z-index: 90;
+  border-bottom: 1px solid var(--border);
 }
 .maturity-bar-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .07em; color: var(--tm); flex-shrink: 0; }
 .matbar-chips { display: flex; gap: 6px; flex: 1; }
@@ -881,6 +890,9 @@ details.collapsible > div.details-body { padding: 16px; }
 .glance-skill { font-size: 10.5px; background: var(--s2); color: var(--ts); padding: 2px 7px; border-radius: 20px; font-weight: 500; }
 .glance-link { font-size: 11.5px; color: var(--brandMid); font-weight: 600; cursor: pointer; margin-top: auto; text-align: right; }
 .glance-link:hover { text-decoration: underline; }
+button.glance-link, button.deliverables-toggle {
+  background: none; border: none; cursor: pointer; font: inherit; text-align: left; width: 100%;
+}
 .practice-divider { padding: 6px 0 3px; font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--brandMid); border-top: 1px solid var(--border); margin-top: 4px; }
 .deliverable-item { cursor: default; }
 .deliverable-item.clickable { cursor: pointer; color: var(--brandMid); text-decoration: underline; text-decoration-color: rgba(138,21,224,.3); transition: background .15s ease, color .15s ease, border-color .15s ease; }
@@ -952,7 +964,7 @@ details.collapsible > div.details-body { padding: 16px; }
   <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
-  <span class="topbar-logo"><svg width="22" height="22" viewBox="0 0 100 100" fill="none" style="margin-right:8px;vertical-align:-4px;"><path d="M10 15 L60 50 L10 85" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>ICS Dashboard — Implementation Guide</span>
+  <span class="topbar-logo"><svg width="22" height="22" viewBox="0 0 100 100" fill="none" style="margin-right:8px;vertical-align:-4px;"><path d="M10 15 L60 50 L10 85" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>ICS Cockpit — Implementation Guide</span>
   <div class="topbar-sep"></div>
   <span class="topbar-sub">Accenture Finance &amp; Risk &nbsp;·&nbsp; July 2026</span>
 </div>
@@ -976,6 +988,7 @@ details.collapsible > div.details-body { padding: 16px; }
   <a href="#features" class="nav-item" data-section="features"><i class="ti ti-pointer"></i>Feature Map</a>
   <span class="nav-group-label">Business Case</span>
   <a href="#cost" class="nav-item" data-section="cost"><i class="ti ti-calculator"></i>Cost &amp; ROI</a>
+  <a href="#next-steps" class="nav-item" data-section="next-steps"><i class="ti ti-arrow-right-circle"></i>Next Steps</a>
   <div style="padding:10px 12px;border-top:1px solid var(--border);margin-top:8px;">
     <button class="cta-btn" onclick="openClientQuestionsModal()" style="width:100%;display:flex;align-items:center;gap:8px;padding:9px 12px;background:linear-gradient(135deg,#A100FF 0%,#6900A8 100%);color:#fff;border:none;border-radius:var(--radius);font-size:13px;font-weight:600;cursor:pointer;text-align:left;">
       <i class="ti ti-help-octagon" style="font-size:16px;flex-shrink:0;"></i>
@@ -997,6 +1010,9 @@ details.collapsible > div.details-body { padding: 16px; }
     <button class="matbar-chip" data-level="4" onclick="setMaturityLevel(4)">L4 · Active</button>
     <button class="matbar-chip" data-level="5" onclick="setMaturityLevel(5)">L5 · Autonomous</button>
   </div>
+  <div id="matbarHelper" style="font-size:11.5px;color:var(--tm);margin-top:6px;padding:0 4px;">
+    Selecting a level reconfigures the entire guide — scope, team, timeline, cost and data journey update everywhere.
+  </div>
   <div style="margin-top:10px;text-align:center;">
     <button id="sow-download-btn" class="cta-btn" onclick="generateSoW(currentLevel)" style="background:var(--brand);color:#fff;border:none;border-radius:6px;padding:8px 20px;font-size:13px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;">
       <i class="ti ti-file-download"></i> Download SoW Template
@@ -1010,6 +1026,7 @@ details.collapsible > div.details-body { padding: 16px; }
   <div class="hero">
     <div style="font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:10px;">Implementation Blueprint</div>
     <h1>AI-Powered ICS Cockpit</h1>
+    <p style="font-size:12.5px;font-weight:600;letter-spacing:.04em;color:rgba(255,255,255,.6);margin-bottom:4px;">ICS — Internal Control System</p>
     <p>Enterprise Implementation Blueprint — Financial Services</p>
   </div>
 
@@ -1017,7 +1034,7 @@ details.collapsible > div.details-body { padding: 16px; }
     <div class="stat-tile"><div class="stat-val" id="stat-weeks">28</div><div class="stat-label">Weeks</div><div class="stat-sub" id="stat-weeks-sub">Total delivery duration</div></div>
     <div class="stat-tile"><div class="stat-val" id="stat-fte">~200</div><div class="stat-label">FTE-weeks</div><div class="stat-sub">Accenture effort</div></div>
     <div class="stat-tile"><div class="stat-val" id="stat-roles">10</div><div class="stat-label">Roles</div><div class="stat-sub">Accenture team members</div></div>
-    <div class="stat-tile"><div class="stat-val" id="stat-phases">6</div><div class="stat-label">Phases</div><div class="stat-sub">Delivery phases</div></div>
+    <div class="stat-tile"><div class="stat-val" id="stat-phases">5</div><div class="stat-label">Phases</div><div class="stat-sub">Delivery phases</div></div>
     <div class="stat-tile"><div class="stat-val" id="stat-cost">~€2.1M</div><div class="stat-label">Investment</div><div class="stat-sub">Implementation budget</div></div>
   </div>
 
@@ -1035,61 +1052,61 @@ details.collapsible > div.details-body { padding: 16px; }
         <div class="glance-card-header"><span class="glance-role-name">Programme Manager</span><span class="glance-practice-badge glance-practice-consulting">Consulting</span></div>
         <div class="glance-objective">Drives end-to-end delivery, stakeholder alignment, and risk management.</div>
         <div class="glance-skills"><span class="glance-skill">Programme Management</span><span class="glance-skill">Stakeholder Engagement</span><span class="glance-skill">Agile Delivery</span></div>
-        <div class="glance-link" onclick="openRoleModal('pm')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('pm')">View full profile &rarr;</button>
       </div>
       <div class="glance-card" data-min-level="1">
         <div class="glance-card-header"><span class="glance-role-name">GRC Expert</span><span class="glance-practice-badge glance-practice-consulting">Consulting</span></div>
         <div class="glance-objective">Translates regulatory requirements into data models and AI validation rules.</div>
         <div class="glance-skills"><span class="glance-skill">DORA/EBA Regulation</span><span class="glance-skill">Risk Assessment</span><span class="glance-skill">ICS/RCSA Methodology</span></div>
-        <div class="glance-link" onclick="openRoleModal('grc')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('grc')">View full profile &rarr;</button>
       </div>
       <div class="glance-card" data-min-level="2">
         <div class="glance-card-header"><span class="glance-role-name">Change Manager</span><span class="glance-practice-badge glance-practice-consulting">Consulting</span></div>
         <div class="glance-objective">Ensures user adoption, training delivery, and communication planning.</div>
         <div class="glance-skills"><span class="glance-skill">Change Management</span><span class="glance-skill">Training Design</span><span class="glance-skill">Stakeholder Communication</span></div>
-        <div class="glance-link" onclick="openRoleModal('cm')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('cm')">View full profile &rarr;</button>
       </div>
       <div class="glance-card" data-min-level="1">
         <div class="glance-card-header"><span class="glance-role-name">Solution Architect</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Owns Azure architecture decisions and technical governance.</div>
         <div class="glance-skills"><span class="glance-skill">Azure Architecture</span><span class="glance-skill">Security Design</span><span class="glance-skill">API Design</span></div>
-        <div class="glance-link" onclick="openRoleModal('sa')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('sa')">View full profile &rarr;</button>
       </div>
       <div class="glance-card" data-min-level="1">
         <div class="glance-card-header"><span class="glance-role-name">Data Engineer 1</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Builds GRC data pipelines (ADF, dbt, PostgreSQL ingestion).</div>
         <div class="glance-skills"><span class="glance-skill">Azure Data Factory</span><span class="glance-skill">dbt</span><span class="glance-skill">PostgreSQL</span><span class="glance-skill">Python</span></div>
-        <div class="glance-link" onclick="openRoleModal('de1')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('de1')">View full profile &rarr;</button>
       </div>
       <div class="glance-card" data-min-level="2">
         <div class="glance-card-header"><span class="glance-role-name">Data Engineer 2</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Builds GRC data pipelines and data quality framework.</div>
         <div class="glance-skills"><span class="glance-skill">Azure Data Factory</span><span class="glance-skill">dbt</span><span class="glance-skill">Data Quality</span><span class="glance-skill">SQL</span></div>
-        <div class="glance-link" onclick="openRoleModal('de2')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('de2')">View full profile &rarr;</button>
       </div>
       <div class="glance-card" data-min-level="3">
         <div class="glance-card-header"><span class="glance-role-name">AI/ML Engineer</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Implements LangChain RAG agent, Azure OpenAI integration, embeddings pipeline.</div>
         <div class="glance-skills"><span class="glance-skill">LangChain</span><span class="glance-skill">Azure OpenAI</span><span class="glance-skill">RAG Architecture</span><span class="glance-skill">Python</span></div>
-        <div class="glance-link" onclick="openRoleModal('ai')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('ai')">View full profile &rarr;</button>
       </div>
       <div class="glance-card" data-min-level="2">
         <div class="glance-card-header"><span class="glance-role-name">Backend Developer 1</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Builds FastAPI backend, SSE streaming, RBAC layer.</div>
         <div class="glance-skills"><span class="glance-skill">FastAPI</span><span class="glance-skill">Python</span><span class="glance-skill">PostgreSQL</span><span class="glance-skill">Azure Container Apps</span></div>
-        <div class="glance-link" onclick="openRoleModal('be1')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('be1')">View full profile &rarr;</button>
       </div>
       <div class="glance-card" data-min-level="3">
         <div class="glance-card-header"><span class="glance-role-name">Backend Developer 2</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Builds Durable Functions orchestration, Service Bus consumers.</div>
         <div class="glance-skills"><span class="glance-skill">Azure Durable Functions</span><span class="glance-skill">Python</span><span class="glance-skill">Service Bus</span><span class="glance-skill">API Design</span></div>
-        <div class="glance-link" onclick="openRoleModal('be2')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('be2')">View full profile &rarr;</button>
       </div>
       <div class="glance-card" data-min-level="2">
         <div class="glance-card-header"><span class="glance-role-name">Security Engineer</span><span class="glance-practice-badge glance-practice-technology">Technology</span></div>
         <div class="glance-objective">Designs and validates security controls, IaC review, pen-test coordination.</div>
         <div class="glance-skills"><span class="glance-skill">Azure Security</span><span class="glance-skill">RBAC/IAM</span><span class="glance-skill">Penetration Testing</span></div>
-        <div class="glance-link" onclick="openRoleModal('sec')">View full profile &rarr;</div>
+        <button type="button" class="glance-link" onclick="openRoleModal('sec')">View full profile &rarr;</button>
       </div>
     </div>
   </div>
@@ -1114,12 +1131,12 @@ details.collapsible > div.details-body { padding: 16px; }
       <table>
         <thead><tr><th>Code</th><th>Business Area</th><th>Typical Processes</th></tr></thead>
         <tbody>
-          <tr><td><span class="chip" style="background:#EEF3FB;color:#1E3A6E;">P-01</span></td><td>Operations &amp; Sourcing</td><td>Procurement, supplier onboarding, contract management, operational spend controls</td></tr>
-          <tr><td><span class="chip" style="background:#EEF3FB;color:#1E3A6E;">P-02</span></td><td>Payments</td><td>Payment processing, reconciliation, fraud controls, payment authorisation</td></tr>
-          <tr><td><span class="chip" style="background:#EEF3FB;color:#1E3A6E;">P-03</span></td><td>Data &amp; Privacy</td><td>Data governance, GDPR compliance, data classification, privacy impact assessments</td></tr>
-          <tr><td><span class="chip" style="background:#EEF3FB;color:#1E3A6E;">P-04</span></td><td>Finance</td><td>Financial reporting, month-end close, ledger controls, SOX compliance</td></tr>
-          <tr><td><span class="chip" style="background:#EEF3FB;color:#1E3A6E;">P-05</span></td><td>IT &amp; Security</td><td>Cyber security, access management, incident response, DORA ICT resilience</td></tr>
-          <tr><td><span class="chip" style="background:#EEF3FB;color:#1E3A6E;">P-06</span></td><td>Treasury</td><td>Liquidity management, counterparty risk, cash flow controls, market risk reporting</td></tr>
+          <tr><td><span class="chip" style="background:var(--brandLight);color:var(--brandMid);">P-01</span></td><td>Operations &amp; Sourcing</td><td>Procurement, supplier onboarding, contract management, operational spend controls</td></tr>
+          <tr><td><span class="chip" style="background:var(--brandLight);color:var(--brandMid);">P-02</span></td><td>Payments</td><td>Payment processing, reconciliation, fraud controls, payment authorisation</td></tr>
+          <tr><td><span class="chip" style="background:var(--brandLight);color:var(--brandMid);">P-03</span></td><td>Data &amp; Privacy</td><td>Data governance, GDPR compliance, data classification, privacy impact assessments</td></tr>
+          <tr><td><span class="chip" style="background:var(--brandLight);color:var(--brandMid);">P-04</span></td><td>Finance</td><td>Financial reporting, month-end close, ledger controls, SOX compliance</td></tr>
+          <tr><td><span class="chip" style="background:var(--brandLight);color:var(--brandMid);">P-05</span></td><td>IT &amp; Security</td><td>Cyber security, access management, incident response, DORA ICT resilience</td></tr>
+          <tr><td><span class="chip" style="background:var(--brandLight);color:var(--brandMid);">P-06</span></td><td>Treasury</td><td>Liquidity management, counterparty risk, cash flow controls, market risk reporting</td></tr>
         </tbody>
       </table>
     </div>
@@ -1229,7 +1246,7 @@ details.collapsible > div.details-body { padding: 16px; }
         <!-- Consulting Practice Group -->
         <div style="padding:6px 0 3px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6900A8;">Consulting Practice</div>
 
-        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #A100FF;" title="Click to view role details" onclick="openRoleModal('pm')">
+        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #A100FF;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('pm')">
           <div class="role-card-header">
             <div><div class="role-name">Programme Manager</div><div class="role-seniority">Senior Manager (L7)</div><div class="role-practice">Finance &amp; Risk / Delivery Management</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 FTE all phases</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
@@ -1238,7 +1255,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #A100FF;" title="Click to view role details" onclick="openRoleModal('grc')">
+        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #A100FF;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('grc')">
           <div class="role-card-header">
             <div><div class="role-name">ICS / GRC Domain Expert</div><div class="role-seniority">Manager or Senior Manager (L6&ndash;7)</div><div class="role-practice">Finance &amp; Risk / Operational Risk</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph0&ndash;3 &middot; 0.5 Ph4&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
@@ -1247,7 +1264,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #A100FF;" title="Click to view role details" onclick="openRoleModal('cm')">
+        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #A100FF;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('cm')">
           <div class="role-card-header">
             <div><div class="role-name">Change Management Lead</div><div class="role-seniority">Senior Consultant or Manager (L5&ndash;6)</div><div class="role-practice">Talent &amp; Organisation</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph0&ndash;2 &middot; 1.0 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
@@ -1259,7 +1276,7 @@ details.collapsible > div.details-body { padding: 16px; }
         <!-- Technology Practice Group -->
         <div style="padding:8px 0 4px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#1E3A6E;border-top:1px solid var(--border);margin-top:4px;">Technology Practice</div>
 
-        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('sa')">
+        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #1E3A6E;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('sa')">
           <div class="role-card-header">
             <div><div class="role-name">Solution Architect</div><div class="role-seniority">Senior Manager / Architect (L7)</div><div class="role-practice">Technology Architecture / Azure</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph0&ndash;2 &middot; 0.5 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -1268,7 +1285,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('de1')">
+        <div class="role-card" data-min-level="1" style="cursor:pointer;border-top:2px solid #1E3A6E;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('de1')">
           <div class="role-card-header">
             <div><div class="role-name">Data Engineer 1 &mdash; GRC/ETL</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Data &amp; AI</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph1&ndash;2 &middot; 1.0 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -1277,7 +1294,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('de2')">
+        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #1E3A6E;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('de2')">
           <div class="role-card-header">
             <div><div class="role-name">Data Engineer 2 &mdash; DB/Docs</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Data &amp; AI</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph1&ndash;2 &middot; 1.0 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -1286,7 +1303,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" data-min-level="3" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('ai')">
+        <div class="role-card" data-min-level="3" style="cursor:pointer;border-top:2px solid #1E3A6E;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('ai')">
           <div class="role-card-header">
             <div><div class="role-name">AI/ML Engineer</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Data &amp; AI</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph3&ndash;4 &middot; 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -1295,7 +1312,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('be1')">
+        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #1E3A6E;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('be1')">
           <div class="role-card-header">
             <div><div class="role-name">Backend Developer 1 &mdash; Core API</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Technology</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph2&ndash;4 &middot; 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -1304,7 +1321,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" data-min-level="3" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('be2')">
+        <div class="role-card" data-min-level="3" style="cursor:pointer;border-top:2px solid #1E3A6E;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('be2')">
           <div class="role-card-header">
             <div><div class="role-name">Backend Developer 2 &mdash; Workflow</div><div class="role-seniority">Consultant or Senior Consultant (L4&ndash;5)</div><div class="role-practice">Technology</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">1.0 Ph2&ndash;4 &middot; 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -1313,7 +1330,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
-        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #1E3A6E;" title="Click to view role details" onclick="openRoleModal('sec')">
+        <div class="role-card" data-min-level="2" style="cursor:pointer;border-top:2px solid #1E3A6E;" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('sec')">
           <div class="role-card-header">
             <div><div class="role-name">Security Architect</div><div class="role-seniority">Manager or Senior Manager (L6&ndash;7)</div><div class="role-practice">Accenture Security</div></div>
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph0 &middot; 0.5 Ph1&ndash;4 &middot; 1.0 Ph5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#1E3A6E;color:#fff">Technology</span></div>
@@ -1327,10 +1344,10 @@ details.collapsible > div.details-body { padding: 16px; }
 
     <!-- Client panel -->
     <div>
-      <div class="team-panel-head client-head"><i class="ti ti-building-community"></i>Client SMEs Required (6 Roles)</div>
+      <div class="team-panel-head client-head"><i class="ti ti-building-community"></i>Client SMEs Required (<span id="client-role-count">6</span> Roles)</div>
       <div class="role-grid" style="grid-template-columns:1fr;">
 
-        <div class="role-card client-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('sponsor')">
+        <div class="role-card client-card" style="cursor:pointer" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('sponsor')">
           <div class="role-card-header">
             <div><div class="role-name">Project Sponsor</div><div class="role-seniority">CFO / CRO / COO</div><div class="role-practice">Executive Leadership</div></div>
             <span class="fte-badge">Bi-weekly + escalation</span>
@@ -1341,7 +1358,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--g);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card client-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('grcAdmin')">
+        <div class="role-card client-card" style="cursor:pointer" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('grcAdmin')">
           <div class="role-card-header">
             <div><div class="role-name">GRC System Admin</div><div class="role-seniority">IT / GRC Platform team</div><div class="role-practice">Information Technology</div></div>
             <span class="fte-badge">2–3 days/wk Ph0–1</span>
@@ -1352,7 +1369,7 @@ details.collapsible > div.details-body { padding: 16px; }
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--g);font-weight:600">View role →</span></div>
         </div>
 
-        <div class="role-card client-card" style="cursor:pointer" title="Click to view role details" onclick="openRoleModal('riskSme')">
+        <div class="role-card client-card" style="cursor:pointer" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('riskSme')">
           <div class="role-card-header">
             <div><div class="role-name">Risk Management SME — 2LoD</div><div class="role-seniority">Head of Operational Risk</div><div class="role-practice">Risk Management</div></div>
             <span class="fte-badge">3 days/wk Ph0–1</span>
@@ -1498,11 +1515,11 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Week 4:</strong> Terraform apply (provision all Azure resources non-prod); CI/CD pipeline; Project Charter finalised</li>
           <li class="ai-gov"><strong>AI Governance:</strong> EU AI Act classification (precautionary High-Risk, pending legal review); DORA Art.28/30 ICT third-party assessment initiated for Azure OpenAI</li>
         </ul>
-        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+        <button type="button" class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
           <span>Deliverables by Role</span>
           <span class="del-count">8 across 4 roles — click to expand</span>
           <span class="del-toggle-arrow">▶</span>
-        </div>
+        </button>
         <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;">PM</span><span class="role-del-name">Project Manager</span></div>
           <div class="deliverables-list">
@@ -1546,11 +1563,11 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 11–12:</strong> Static dashboard build (hardcoded, matching real client data structure); client design validation</li>
           <li class="ai-gov"><strong>AI Governance:</strong> Draft AI data governance policy; AI model-inventory register entry</li>
         </ul>
-        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+        <button type="button" class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
           <span>Deliverables by Role</span>
           <span class="del-count">9 across 4 roles — click to expand</span>
           <span class="del-toggle-arrow">▶</span>
-        </div>
+        </button>
         <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">DE1</span><span class="role-del-name">Data Engineer 1</span></div>
           <div class="deliverables-list">
@@ -1595,11 +1612,11 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 15–16:</strong> Cross-area risk view; performance testing (&lt;500ms under 50 concurrent users); WCAG 2.1 AA review</li>
           <li class="ai-gov"><strong>AI Governance:</strong> Draft AI Model Card; Art.12 logging requirements; human-oversight rules for AI outputs</li>
         </ul>
-        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+        <button type="button" class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
           <span>Deliverables by Role</span>
           <span class="del-count">7 across 4 roles — click to expand</span>
           <span class="del-toggle-arrow">▶</span>
-        </div>
+        </button>
         <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">BE1</span><span class="role-del-name">Backend Developer 1</span></div>
           <div class="deliverables-list">
@@ -1627,8 +1644,8 @@ details.collapsible > div.details-body { padding: 16px; }
     </div>
 
     <div class="phase-card">
-      <div class="phase-card-header" style="border-left:4px solid #9A6500;">
-        <span class="phase-badge" style="background:#9A6500;">Phase 3</span>
+      <div class="phase-card-header" style="border-left:4px solid #7C3AED;">
+        <span class="phase-badge" style="background:#7C3AED;">Phase 3</span>
         <span class="phase-title">AI Layer</span>
         <span class="phase-weeks">Weeks 13–20</span>
       </div>
@@ -1642,11 +1659,11 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 19–20:</strong> Trend detection (weekly Azure Function, scipy linear regression); RCSA due-date monitor (daily 07:00 UTC)</li>
           <li class="ai-gov"><strong>AI Governance:</strong> Finalise AI Risk Register; EU AI Act tech docs (Art.11); RAGAS model validation; DORA Art.30 + ISO 42001 gap assessment</li>
         </ul>
-        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+        <button type="button" class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
           <span>Deliverables by Role</span>
           <span class="del-count">11 across 4 roles — click to expand</span>
           <span class="del-toggle-arrow">▶</span>
-        </div>
+        </button>
         <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">AI</span><span class="role-del-name">AI/ML Engineer</span></div>
           <div class="deliverables-list">
@@ -1678,10 +1695,10 @@ details.collapsible > div.details-body { padding: 16px; }
     </div>
 
     <div class="phase-card" id="phase-card-4" style="">
-      <div class="phase-card-header" style="border-left:4px solid #B4322A;">
-        <span class="phase-badge" style="background:#B4322A;">Phase 4</span>
+      <div class="phase-card-header" style="border-left:4px solid #0891B2;">
+        <span class="phase-badge" style="background:#0891B2;">Phase 4</span>
         <span class="phase-title">Workflow &amp; Actions</span>
-        <span class="phase-weeks" id="phase-weeks-4">Weeks 17–24 <span style="font-size:10px;background:#B4322A22;color:#B4322A;border-radius:4px;padding:1px 5px;font-weight:700;">L4+</span></span>
+        <span class="phase-weeks" id="phase-weeks-4">Weeks 17–24 <span style="font-size:10px;background:#0891B222;color:#0891B2;border-radius:4px;padding:1px 5px;font-weight:700;">L4+</span></span>
       </div>
       <div class="phase-body">
         <p class="phase-objective">Add notification infrastructure, 1LoD task engine, RCSA lifecycle orchestration, risk update workflow, and full RBAC enforcement.</p>
@@ -1693,11 +1710,11 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 23–24:</strong> Full RBAC enforcement; role-based UI rendering; end-to-end workflow test</li>
           <li class="ai-gov"><strong>AI Governance:</strong> AI incident-response procedure; DORA Art.28(3) register update; Risk Committee briefing</li>
         </ul>
-        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+        <button type="button" class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
           <span>Deliverables by Role</span>
           <span class="del-count">7 across 4 roles — click to expand</span>
           <span class="del-toggle-arrow">▶</span>
-        </div>
+        </button>
         <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">BE2</span><span class="role-del-name">Backend Developer 2</span></div>
           <div class="deliverables-list">
@@ -1740,11 +1757,11 @@ details.collapsible > div.details-body { padding: 16px; }
           <li><strong>Weeks 25–28:</strong> User training (recorded videos); admin runbook; production provisioning; go-live + 2-week hypercare</li>
           <li class="ai-gov"><strong>AI Governance:</strong> EU AI Act conformity assessment + register filing; EBA model validation; governance sign-off</li>
         </ul>
-        <div class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
+        <button type="button" class="phase-section-title deliverables-toggle" onclick="var g=this.nextElementSibling;var open=g.style.display==='none';g.style.display=open?'block':'none';this.querySelector('.del-toggle-arrow').style.transform=open?'rotate(90deg)':'rotate(0deg)';">
           <span>Deliverables by Role</span>
           <span class="del-count">13 across 4 roles — click to expand</span>
           <span class="del-toggle-arrow">▶</span>
-        </div>
+        </button>
         <div class="role-del-group" style="display:none;">
           <div class="role-del-header"><span class="role-del-badge" style="background:#1E3A6E;">SEC</span><span class="role-del-name">Security Engineer</span></div>
           <div class="deliverables-list">
@@ -1782,7 +1799,7 @@ details.collapsible > div.details-body { padding: 16px; }
     <div class="subsec-title"><i class="ti ti-timeline"></i>Visual Gantt — <span id="gantt-title-weeks">W01 to W28</span></div>
     <div class="level-ctx-banner lcb-ok" id="gantt-scope-banner" style="margin-bottom:10px;">
       <span class="lcb-icon">✓</span>
-      <span id="gantt-scope-text">L3 (Base Case) — Full scope: W1–W28 · All 6 phases active (Ph0–Ph5). Phases not applicable at the selected level are grayed out.</span>
+      <span id="gantt-scope-text">L3 — AI-Assisted (Base Case) — L3 scope: Ph0–Ph3 + Ph5 active (28 weeks). Phase 4 Workflow &amp; Actions requires L4.</span>
     </div>
     <div class="gantt-outer">
       <div class="gantt-grid">
@@ -1797,12 +1814,12 @@ details.collapsible > div.details-body { padding: 16px; }
         <div class="gms" data-gantt-min-level="2" style="grid-column:11;grid-row:2;" title="W10: All GRC pipelines stable — L2+"><div class="gms-d" style="background:#1A7A52;"></div></div>
         <div class="gms" style="grid-column:13;grid-row:2;" title="W12: Static dashboard design sign-off"><div class="gms-d" style="background:#1A7A52;"></div></div>
         <div class="gms" data-gantt-min-level="2" style="grid-column:17;grid-row:2;" title="W16: Dashboard v1.0 live — real data (L2+)"><div class="gms-d" style="background:#6D28D9;"></div></div>
-        <div class="gms" data-gantt-min-level="3" style="grid-column:19;grid-row:2;" title="W18: DPIA signed by DPO (L3+)"><div class="gms-d" style="background:#9A6500;"></div></div>
-        <div class="gms" data-gantt-min-level="3" style="grid-column:21;grid-row:2;" title="W20: AI agent: 80% test set pass (L3+)"><div class="gms-d" style="background:#9A6500;"></div></div>
-        <div class="gms" data-gantt-min-level="4" style="grid-column:25;grid-row:2;" title="W24: Full workflow + RBAC validated (L4+)"><div class="gms-d" style="background:#B4322A;"></div></div>
+        <div class="gms" data-gantt-min-level="3" style="grid-column:19;grid-row:2;" title="W18: DPIA signed by DPO (L3+)"><div class="gms-d" style="background:#7C3AED;"></div></div>
+        <div class="gms" data-gantt-min-level="3" style="grid-column:21;grid-row:2;" title="W20: AI agent: 80% test set pass (L3+)"><div class="gms-d" style="background:#7C3AED;"></div></div>
+        <div class="gms" data-gantt-min-level="4" style="grid-column:25;grid-row:2;" title="W24: Full workflow + RBAC validated (L4+)"><div class="gms-d" style="background:#0891B2;"></div></div>
         <div class="gms" data-gantt-min-level="3" style="grid-column:27;grid-row:2;" title="W26: UAT sign-off obtained (L3+)"><div class="gms-d" style="background:#3A4657;"></div></div>
         <div class="gms" data-gantt-min-level="3" style="grid-column:29;grid-row:2;" title="W28: GO-LIVE (L3+)"><span style="font-size:20px;color:#B8860B;font-weight:800;line-height:1;">★</span></div>
-        <div class="gms" data-gantt-min-level="4" style="grid-column:33;grid-row:2;" title="W32: L4 Go-Live — Workflow Automation complete (L4+)"><div class="gms-d" style="background:#B4322A;"></div></div>
+        <div class="gms" data-gantt-min-level="4" style="grid-column:33;grid-row:2;" title="W32: L4 Go-Live — Workflow Automation complete (L4+)"><div class="gms-d" style="background:#0891B2;"></div></div>
         <div class="gms" data-gantt-min-level="5" style="grid-column:37;grid-row:2;" title="W36: L5 Go-Live — Fully Autonomous Operation (L5 only)"><span style="font-size:20px;color:#6D28D9;font-weight:800;line-height:1;">★</span></div>
 
         <!-- PHASE 0 (row 3) W1-W4 → grid-column 2/6 -->
@@ -1846,7 +1863,7 @@ details.collapsible > div.details-body { padding: 16px; }
 
         <!-- PHASE 3 (row 14) W13-W20 → 14/22 — requires L3 -->
         <div class="gl ph ph3" style="grid-column:1;grid-row:15;" data-gantt-min-level="3">Ph3 — AI Layer</div>
-        <div class="gc" style="grid-column:14/22;grid-row:15;" data-gantt-min-level="3"><div class="gbar ph" style="background:#9A6500;" data-label="Ph3 — AI Layer"></div></div>
+        <div class="gc" style="grid-column:14/22;grid-row:15;" data-gantt-min-level="3"><div class="gbar ph" style="background:#7C3AED;" data-label="Ph3 — AI Layer"></div></div>
         <!-- LLM Agent (row 15) W13-W17 → 14/19 — L3+ -->
         <div class="gl sub" style="grid-column:1;grid-row:16;" data-gantt-min-level="3">→ LLM Agent</div>
         <div class="gc" style="grid-column:14/19;grid-row:16;" data-gantt-min-level="3"><div class="gbar sub" style="background:#d4a340;"></div></div>
@@ -1862,8 +1879,8 @@ details.collapsible > div.details-body { padding: 16px; }
 
         <!-- PHASE 4 (row 20) W17–W32 — bar extends to W32 at L4 -->
         <div class="gl ph ph4" style="grid-column:1;grid-row:20;" data-gantt-min-level="4">Ph4 — Workflow &amp; Actions</div>
-        <div class="gc" style="grid-column:18/26;grid-row:20;" data-gantt-min-level="4"><div class="gbar ph" style="background:#B4322A;" data-label="Ph4 — Workflow &amp; Actions"></div></div>
-        <div class="gc" style="grid-column:26/34;grid-row:20;" data-gantt-min-level="4"><div class="gbar ph" style="background:#B4322A;border-radius:0 4px 4px 0;"></div></div>
+        <div class="gc" style="grid-column:18/26;grid-row:20;" data-gantt-min-level="4"><div class="gbar ph" style="background:#0891B2;" data-label="Ph4 — Workflow &amp; Actions"></div></div>
+        <div class="gc" style="grid-column:26/34;grid-row:20;" data-gantt-min-level="4"><div class="gbar ph" style="background:#0891B2;border-radius:0 4px 4px 0;"></div></div>
         <!-- Ph4 sub-tasks (rows 21–24) -->
         <div class="gl sub" style="grid-column:1;grid-row:21;" data-gantt-min-level="4">→ Workflow Engine</div>
         <div class="gc" style="grid-column:20/27;grid-row:21;" data-gantt-min-level="4"><div class="gbar sub" style="background:#e07878;"></div></div>
@@ -1978,11 +1995,11 @@ details.collapsible > div.details-body { padding: 16px; }
         <div class="gantt-legend-group-title">Phases</div>
         <div class="gantt-legend-items">
           <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#2A5298;"></span>Phase 0 — Discovery</div>
-          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#1A7A52;"></span>Phase 1 — Data Layer</div>
-          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#6D28D9;"></span>Phase 2 — Dashboard</div>
-          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#9A6500;"></span>Phase 3 — AI Layer</div>
-          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#B4322A;"></span>Phase 4 — Workflow</div>
-          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#3A4657;"></span>Phase 5 — Rollout</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#1A7A52;"></span>Phase 1 — Data Foundation</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#6D28D9;"></span>Phase 2 — Core Dashboard</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#7C3AED;"></span>Phase 3 — AI Layer</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#0891B2;"></span>Phase 4 — Workflow</div>
+          <div class="gantt-legend-item"><span class="gantt-legend-swatch" style="background:#3A4657;"></span>Phase 5 — Hardening &amp; Rollout</div>
         </div>
       </div>
       <div class="gantt-legend-group">
@@ -2059,7 +2076,7 @@ details.collapsible > div.details-body { padding: 16px; }
   </div>
 
   <!-- ZONE LEGEND INTRO -->
-  <p style="font-size:12.5px;color:var(--ts);line-height:1.6;margin-bottom:6px;">Each step below is colour-coded by zone. The <strong style="color:var(--brand);">Platform Core</strong> (steps 3–6) is built once and reused for any new use case on the same tenant — only the connectors and output layer need reconfiguring.</p>
+  <p style="font-size:12.5px;color:var(--ts);line-height:1.6;margin-bottom:6px;">Each step below is colour-coded by zone. The <strong style="color:var(--brand);">Platform Core</strong> (middle steps) is built once and reused for any new use case on the same tenant — only the connectors and output layer need reconfiguring.</p>
 
   <!-- LEVEL DESCRIPTION CARD -->
   <div id="levelDesc" style="margin-bottom:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radiusL);border-left:4px solid var(--brandMid);">
@@ -2073,7 +2090,7 @@ details.collapsible > div.details-body { padding: 16px; }
       <span id="fvLevelBadge">L3 · AI-Assisted</span>
       <span id="fvLevelDesc">Full AI stack active — GPT-4o agent, RAG, real-time data</span>
     </div>
-    <canvas id="flowVizCanvas"></canvas>
+    <canvas id="flowVizCanvas" role="img" aria-label="Animated pipeline diagram showing data flowing from source systems (ServiceNow, CMDB, vendor register, policy documents) through ingestion and the platform core (PostgreSQL, dbt, Azure AI, GPT-4o) to NFR output layers (risk heatmap, TPRM agent, RCSA engine, BCM monitor, CRO cockpit). Content adapts to the selected AI maturity level."></canvas>
     <div id="flowVizFooter">
       <div class="jz-legend">
         <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
@@ -4948,9 +4965,9 @@ Risk data freshness: {last_pipeline_run} | Agent version: {agent_version}</div>
   </div>
 
   <div class="subsec">
-    <div class="subsec-title"><i class="ti ti-checklist"></i>Structured Data (30 Items)</div>
+    <div class="subsec-title"><i class="ti ti-checklist"></i>Data &amp; Access Requirements (32 items)</div>
     <div class="card" style="background:var(--ab);border-left:3px solid var(--a);margin-bottom:18px;">
-      <p style="font-size:12.5px;color:var(--ts);">Tick each item off when data has been received and validated. All data stays within the Azure tenant — no external transfers. Estimated total ingestion size: <strong>~5 GB structured + ~15 GB documents</strong>.</p>
+      <p style="font-size:12.5px;color:var(--ts);">Each item is confirmed once the data has been received and validated during discovery. All data stays within the Azure tenant — no external transfers. Estimated total ingestion size: <strong>~5 GB structured + ~15 GB documents</strong>.</p>
     </div>
     <div class="req-grid">
       <!-- Card 1: GRC System Data -->
@@ -5214,6 +5231,34 @@ useEffect(() =&gt; {
     <h2>Cost &amp; ROI</h2>
     <p>Project investment, infrastructure costs, and business case for the ICS Cockpit implementation.</p>
   </div>
+  <div style="display:flex;align-items:center;gap:10px;margin-bottom:20px;padding:10px 16px;background:rgba(154,101,0,.08);border:1px solid rgba(154,101,0,.25);border-radius:8px;font-size:12.5px;color:var(--ts);">
+    <span style="font-weight:700;color:var(--a);">⚠ Illustrative model</span> — All figures are indicative and depend on client-specific assumptions. Day rates, FTE counts, and savings estimates should be validated during discovery. Key assumptions are listed in the Assumptions panel below.
+  </div>
+  <details style="margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radiusL);">
+    <summary style="padding:12px 18px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--tp);display:flex;align-items:center;gap:8px;">
+      <span style="color:var(--brandMid);">▸</span> Rate card &amp; assumptions underlying all cost and ROI figures
+    </summary>
+    <div style="padding:0 18px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px;">
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:8px;">Day Rates (blended, indicative)</div>
+        <table style="width:100%;font-size:12.5px;border-collapse:collapse;">
+          <tr><td style="padding:4px 0;color:var(--ts);">Programme Manager / SA</td><td style="text-align:right;font-weight:600;">€3,000/day</td></tr>
+          <tr><td style="padding:4px 0;color:var(--ts);">GRC Expert / Manager</td><td style="text-align:right;font-weight:600;">€2,500/day</td></tr>
+          <tr><td style="padding:4px 0;color:var(--ts);">Tech (onshore blended)</td><td style="text-align:right;font-weight:600;">€1,400/day</td></tr>
+          <tr><td style="padding:4px 0;color:var(--ts);">Blended consulting avg</td><td style="text-align:right;font-weight:600;">€2,200/day</td></tr>
+        </table>
+      </div>
+      <div>
+        <div style="font-size:11px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;color:var(--tm);margin-bottom:8px;">Savings Assumptions</div>
+        <table style="width:100%;font-size:12.5px;border-collapse:collapse;">
+          <tr><td style="padding:4px 0;color:var(--ts);">GRC analysts redirected</td><td style="text-align:right;font-weight:600;">4 FTE @ €120K loaded</td></tr>
+          <tr><td style="padding:4px 0;color:var(--ts);">Risk event cost avoided</td><td style="text-align:right;font-weight:600;">€150K/yr est.</td></tr>
+          <tr><td style="padding:4px 0;color:var(--ts);">Compliance penalty avoided</td><td style="text-align:right;font-weight:600;">€80K/yr est.</td></tr>
+          <tr><td style="padding:4px 0;color:var(--ts);">Automation rate assumed</td><td style="text-align:right;font-weight:600;">60% of manual effort</td></tr>
+        </table>
+      </div>
+    </div>
+  </details>
   <div class="level-ctx-banner lcb-warn" id="cost-roi-banner" style="margin-bottom:18px;">
     <span class="lcb-icon" id="cost-roi-banner-icon">⚠</span>
     <span>Cost &amp; ROI figures shown for <strong id="cost-roi-level-label">L3 — AI-Assisted (Base Case)</strong> — <span id="cost-level-note">€2.1M implementation, 28 weeks, 10 roles.</span></span>
@@ -5228,7 +5273,7 @@ useEffect(() =&gt; {
         <div class="roi-label">Net Annual Saving (quantified)</div>
       </div>
       <div class="roi-metric">
-        <div class="roi-value" id="roi-payback">~7 yr</div>
+        <div class="roi-value" id="roi-payback">~6.1 yr</div>
         <div class="roi-label">Payback (quantified only)</div>
       </div>
       <div class="roi-metric">
@@ -5304,8 +5349,8 @@ useEffect(() =&gt; {
           <tr style="font-weight:700;border-top:2px solid var(--borderS);"><td><strong>Gross Annual Saving</strong></td><td colspan="2">—</td><td><strong>€389,000</strong></td></tr>
           <tr><td>Less: Annual infrastructure cost</td><td colspan="2">Production + dev/test environment</td><td>-€16,116</td></tr>
           <tr><td>Less: Annual maintenance (Accenture)</td><td colspan="2">~10 days/year × €2,500/day (Manager rate)</td><td>-€25,000</td></tr>
-          <tr style="font-weight:700;background:#E4F2EB;"><td><strong>Net Annual Saving</strong></td><td colspan="2">—</td><td><strong>€347,884</strong></td></tr>
-          <tr style="font-weight:700;background:#EEF3FB;"><td><strong>Payback period (quantified savings)</strong></td><td colspan="2">€2,115,600 ÷ €347,884/year</td><td><strong>~6.1 years</strong></td></tr>
+          <tr style="font-weight:700;background:#E4F2EB;"><td><strong>Net Annual Saving</strong></td><td colspan="2">—</td><td><strong>~€348K</strong></td></tr>
+          <tr style="font-weight:700;background:#EEF3FB;"><td><strong>Payback period (quantified savings)</strong></td><td colspan="2">~€2.1M ÷ ~€348K/year</td><td><strong>~6.1 years</strong></td></tr>
           <tr style="background:#FFF8E1;"><td><strong>Payback — large institution</strong></td><td colspan="2">10 analysts → ~€600K/year net; same investment</td><td><strong>~3.5 years</strong></td></tr>
         </tbody>
       </table>
@@ -5317,6 +5362,65 @@ useEffect(() =&gt; {
         <li><strong>Supervisory credibility:</strong> Real-time control dashboards are increasingly expected by ECB/DNB in OSI inspections. Institutions with spreadsheet-based ICS consistently receive higher finding rates.</li>
         <li><strong>Economies of scope:</strong> The platform core (data pipeline + AI layer) is built once and reused for subsequent use cases — HR Compliance, Contract Risk, Vendor Due Diligence. Each additional deployment costs roughly 30–40% of the original investment.</li>
       </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SECTION 10: NEXT STEPS & THE ASK ===== -->
+<section id="next-steps">
+  <div class="section-header">
+    <div class="section-tag">Close</div>
+    <h2>Recommended Engagement &amp; Next Steps</h2>
+    <p>A pragmatic path from first conversation to working dashboard — structured to deliver value at every phase gate.</p>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:28px;">
+    <div class="stat-tile" style="border-top:3px solid var(--brandMid);">
+      <div style="font-size:11px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Recommended entry point</div>
+      <div style="font-size:22px;font-weight:700;color:var(--tp);">L3 Base Case</div>
+      <div style="font-size:13px;color:var(--ts);margin-top:4px;">Full AI stack · 28 weeks · ~€2.1M</div>
+    </div>
+    <div class="stat-tile" style="border-top:3px solid var(--g);">
+      <div style="font-size:11px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Immediate next step</div>
+      <div style="font-size:22px;font-weight:700;color:var(--tp);">Discovery Workshop</div>
+      <div style="font-size:13px;color:var(--ts);margin-top:4px;">2 days · data readiness · stakeholder mapping</div>
+    </div>
+    <div class="stat-tile" style="border-top:3px solid var(--accent);">
+      <div style="font-size:11px;color:var(--tm);font-weight:600;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px;">Time to first value</div>
+      <div style="font-size:22px;font-weight:700;color:var(--tp);">8 Weeks</div>
+      <div style="font-size:13px;color:var(--ts);margin-top:4px;">Phase 0+1 · data pipeline live</div>
+    </div>
+  </div>
+
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px;">
+    <div class="stat-tile">
+      <div style="font-size:13px;font-weight:700;color:var(--tp);margin-bottom:12px;">Engagement approach</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+        <li style="font-size:13px;color:var(--ts);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--g);font-weight:700;flex-shrink:0;">1.</span>2-day data readiness &amp; scoping workshop (client + Accenture)</li>
+        <li style="font-size:13px;color:var(--ts);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--g);font-weight:700;flex-shrink:0;">2.</span>L1 pilot in 6 weeks — prove the data pipeline with real GRC data</li>
+        <li style="font-size:13px;color:var(--ts);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--g);font-weight:700;flex-shrink:0;">3.</span>Accelerate to L3 on the same platform — no rip-and-replace</li>
+        <li style="font-size:13px;color:var(--ts);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--g);font-weight:700;flex-shrink:0;">4.</span>L4/L5 as a natural extension — governed, incremental, low-risk</li>
+      </ul>
+    </div>
+    <div class="stat-tile">
+      <div style="font-size:13px;font-weight:700;color:var(--tp);margin-bottom:12px;">What we need from you</div>
+      <ul style="list-style:none;display:flex;flex-direction:column;gap:8px;">
+        <li style="font-size:13px;color:var(--ts);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--brandMid);font-weight:700;flex-shrink:0;">▸</span>Access to GRC system (ServiceNow or equivalent) for data readiness review</li>
+        <li style="font-size:13px;color:var(--ts);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--brandMid);font-weight:700;flex-shrink:0;">▸</span>2nd line / GRC lead + IT architecture sponsor</li>
+        <li style="font-size:13px;color:var(--ts);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--brandMid);font-weight:700;flex-shrink:0;">▸</span>Azure tenant with appropriate permissions (or greenfield sandbox)</li>
+        <li style="font-size:13px;color:var(--ts);display:flex;align-items:flex-start;gap:8px;"><span style="color:var(--brandMid);font-weight:700;flex-shrink:0;">▸</span>Appetite to start with a concrete scope (one use case, one data source)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div style="background:var(--brand);border-radius:var(--radiusL);padding:28px 32px;color:#fff;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;">
+    <div>
+      <div style="font-size:19px;font-weight:700;margin-bottom:6px;">Ready to start the conversation?</div>
+      <div style="font-size:14px;color:rgba(255,255,255,.75);max-width:60ch;">A discovery workshop takes 2 days and produces a scoped delivery plan, data readiness report, and a confirmed maturity target — everything needed to move to contract.</div>
+    </div>
+    <div style="display:flex;gap:12px;flex-shrink:0;">
+      <button onclick="openClientQuestionsModal()" style="background:#fff;color:var(--brand);font-weight:700;font-size:14px;padding:12px 22px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;">Book Discovery Workshop</button>
+      <button onclick="generateSoW(currentLevel)" style="background:rgba(255,255,255,.15);color:#fff;font-weight:700;font-size:14px;padding:12px 22px;border-radius:8px;border:1px solid rgba(255,255,255,.3);cursor:pointer;font-family:inherit;">Download SoW</button>
     </div>
   </div>
 </section>
@@ -5350,7 +5454,12 @@ useEffect(() =&gt; {
     for (const s of sections) {
       if (s.offsetTop <= trigger) current = s;
     }
-    navItems.forEach(n => n.classList.toggle('active', n.dataset.section === current.id));
+    navItems.forEach(n => {
+      const isActive = n.dataset.section === current.id;
+      n.classList.toggle('active', isActive);
+      if (isActive) n.setAttribute('aria-current', 'page');
+      else n.removeAttribute('aria-current');
+    });
   }
 
   let ticking = false;
@@ -5374,7 +5483,7 @@ useEffect(() =&gt; {
 // HAMBURGER TOGGLE (mobile)
 // ====================================================
 (function() {
-  const btn = document.getElementById('hamburger');
+  const btn = document.getElementById('hamburgerBtn');
   const sidebar = document.getElementById('sidebar');
   if (btn && sidebar) {
     btn.addEventListener('click', () => sidebar.classList.toggle('open'));
@@ -5389,13 +5498,26 @@ useEffect(() =&gt; {
     const buttons = group.querySelectorAll('.tab-btn[data-tab]');
     const contents = group.querySelectorAll('.tab-content');
 
+    // ARIA wiring: tablist / tab / tabpanel
+    const tabRow = group.querySelector('.tab-row');
+    if (tabRow) tabRow.setAttribute('role', 'tablist');
+    buttons.forEach(btn => {
+      btn.setAttribute('role', 'tab');
+      btn.setAttribute('aria-selected', btn.classList.contains('active') ? 'true' : 'false');
+      btn.setAttribute('aria-controls', btn.dataset.tab);
+    });
+    contents.forEach(content => {
+      content.setAttribute('role', 'tabpanel');
+    });
+
     buttons.forEach(btn => {
       btn.addEventListener('click', function() {
         const targetId = this.dataset.tab;
 
         // Update button states
-        buttons.forEach(b => b.classList.remove('active'));
+        buttons.forEach(b => { b.classList.remove('active'); b.setAttribute('aria-selected', 'false'); });
         this.classList.add('active');
+        this.setAttribute('aria-selected', 'true');
 
         // Update content visibility
         contents.forEach(content => {
@@ -6157,10 +6279,10 @@ CROSS-CUTTING SERVICES (no subnet, Azure-managed):<br>
 <tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);font-weight:600;">Criticality rating</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Critical (supports core banking)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">TPRM Signal Engine</td></tr>
 <tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);font-weight:600;">Data classification</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Confidential — customer PII, financial records</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">DPIA</td></tr>
 <tr><td style="padding:6px 8px;border-bottom:1px solid var(--border);font-weight:600;">Substitutability</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">Difficult (18-month migration estimated)</td><td style="padding:6px 8px;border-bottom:1px solid var(--border);">IT assessment</td></tr>
-<tr><td style="padding:6px 8px;font-weight:600;">Last review date</td><td style="padding:6px 8px;">2024-10-14 (auto-generated from dashboard)</td><td style="padding:6px 8px;">ICS Dashboard export</td></tr>
+<tr><td style="padding:6px 8px;font-weight:600;">Last review date</td><td style="padding:6px 8px;">2024-10-14 (auto-generated from dashboard)</td><td style="padding:6px 8px;">ICS Cockpit export</td></tr>
 </tbody>
 </table>
-<div style="margin-top:10px;font-size:11px;color:var(--ts);">This template is auto-populated from the TPRM signal data in the ICS Dashboard. Manual fields highlighted in yellow require GRC expert review before submission to the competent authority.</div>`,
+<div style="margin-top:10px;font-size:11px;color:var(--ts);">This template is auto-populated from the TPRM signal data in the ICS Cockpit. Manual fields highlighted in yellow require GRC expert review before submission to the competent authority.</div>`,
   },
   'Go-Live Checklist': {
     title: 'Go-Live Checklist — ICS Cockpit Production Cutover',
@@ -7003,9 +7125,9 @@ const LEVEL_DATA = {
   },
   3: {
     label: 'L3 — AI-Assisted (Base Case)',
-    weeks: '28', fteWeeks: '~200', roles: '10', phases: '6', cost: '~€2.1M',
+    weeks: '28', fteWeeks: '~200', roles: '10', phases: '5', cost: '~€2.1M',
     ganttMinWeek: 1, ganttMaxWeek: 28,
-    ganttScope: 'W1–W28 · Full scope: Ph0–Ph5 all active',
+    ganttScope: 'L3 scope: Ph0–Ph3 + Ph5 active (28 weeks). Phase 4 Workflow & Actions requires L4.',
     overviewCtx: 'L3 (Base Case) — Full 10-role team, 28-week delivery, ~€2.1M. Includes LLM-powered RAG agent, TPRM Signal Engine, AI-driven risk summaries, and the DORA ICT third-party register (Art. 28(3)). This is the recommended engagement scope.',
     overviewOk: true
   },
@@ -7207,12 +7329,22 @@ function setMaturityLevel(level) {
   var ganttScopeEl = document.getElementById('gantt-scope-text');
   if (ganttScopeEl) ganttScopeEl.textContent = ld.label + ' — ' + ld.ganttScope;
 
-  // ── Gantt week header dimming (weeks beyond level's max week) ─────────
+  // ── Collapse Gantt weeks beyond the level's max week ─────────────────
   var maxW = ld.ganttMaxWeek;
-  document.querySelectorAll('.gh[data-gantt-week]').forEach(function(cell) {
-    var w = parseInt(cell.dataset.ganttWeek);
-    cell.classList.toggle('gantt-week-inactive', w > maxW);
-  });
+  var ganttGrid = document.querySelector('.gantt-grid');
+  if (ganttGrid) {
+    // Only render tracks up to the active level's last week (col 1 = activity label)
+    ganttGrid.style.gridTemplateColumns = '160px repeat(' + maxW + ', minmax(28px,1fr))';
+    var lastCol = maxW + 1;        // last grid column that holds a week
+    var lastLine = maxW + 2;       // last valid grid line
+    Array.prototype.forEach.call(ganttGrid.children, function (el) {
+      var start = parseInt(el.style.gridColumnStart, 10) || 1;
+      var endRaw = el.style.gridColumnEnd;
+      var end = (endRaw && endRaw !== 'auto') ? parseInt(endRaw, 10) : (start + 1);
+      // Hide anything that starts beyond the last week or spans past the last line
+      el.style.display = (start > lastCol || end > lastLine) ? 'none' : '';
+    });
+  }
 
   // ── Gantt bar dimming (rows tagged with data-gantt-min-level) ────────
   document.querySelectorAll('[data-gantt-min-level]').forEach(function(el) {
@@ -7228,12 +7360,38 @@ function setMaturityLevel(level) {
 
   // ── Level-aware data-flow visualization ──────────────────────────────
   if (typeof updateFlowViz === 'function') updateFlowViz(level);
+
+  // ── Maturity chip aria-pressed state ─────────────────────────────────
+  document.querySelectorAll('.matbar-chip').forEach(function (chip) {
+    chip.setAttribute('aria-pressed', parseInt(chip.dataset.level) === level ? 'true' : 'false');
+  });
+
+  // ── Dynamic Client SME role count ────────────────────────────────────
+  var clientRoleCounts = { 1: 4, 2: 5, 3: 6, 4: 6, 5: 6 };
+  var crc = document.getElementById('client-role-count');
+  if (crc) crc.textContent = clientRoleCounts[level] || 6;
+
+  // ── Change toast ─────────────────────────────────────────────────────
+  var toast = document.getElementById('fvToast');
+  var names = { 1: 'L1 · Static', 2: 'L2 · Connected', 3: 'L3 · AI-Assisted', 4: 'L4 · Active', 5: 'L5 · Autonomous' };
+  if (toast) {
+    toast.textContent = 'Guide updated to ' + (names[level] || 'L' + level);
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function () {
+      toast.style.opacity = '0';
+      toast.style.transform = 'translateX(-50%) translateY(20px)';
+    }, 2200);
+  }
 }
 
 /* =====================================================================
    JOURNEY PLAYER — replaces old IIFE, supports multiple players
    ===================================================================== */
 function initJourneyPlayer(player) {
+  if (player.dataset.initialized) return;
+  player.dataset.initialized = '1';
   const steps = player.querySelectorAll('.journey-step');
   const dots = player.querySelectorAll('.journey-dot');
   const fill = player.querySelector('.journey-progress-fill');
@@ -7265,6 +7423,11 @@ function initJourneyPlayer(player) {
   }
 
   function startPlay() {
+    // Respect reduced-motion: don't auto-advance, just step forward once
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      if (current < steps.length - 1) showStep(current + 1);
+      return;
+    }
     playing = true;
     if (playBtn) { playBtn.textContent = '⏸ Pause'; playBtn.classList.add('playing'); }
     timer = setInterval(function() {
@@ -7292,11 +7455,11 @@ setMaturityLevel(3);
    ================================================================ */
 var SOW_CONTENT = {
   services: {
-    1: 'Accenture will support [CLIENT NAME] in the delivery of a Static ICS Dashboard (Maturity Level 1), establishing the foundational Azure data infrastructure and a read-only risk visualisation capability. This engagement covers discovery workshops, infrastructure provisioning, GRC source data ingestion pipelines via Azure Data Factory, and a static risk heatmap and register dashboard (no live API).\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4): Requirements gathering, ADR, network design, Terraform IaC, Azure provisioning\n  Phase 1 — Data Foundation (W5–W12): GRC data ingestion via ADF, PostgreSQL v16 schema, data quality baseline\n  Phase 2 (stub) — Static Dashboard: Read-only React risk heatmap and register seeded from PostgreSQL',
-    2: 'Accenture will support [CLIENT NAME] in the delivery of a Connected ICS Dashboard (Maturity Level 2), adding live GRC API connectors, a FastAPI backend on Azure Container Apps, rules-based alerting, and trend detection on top of the L1 data foundation.\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4)\n  Phase 1 — Data Foundation (W5–W12)\n  Phase 2 — Core Connected Dashboard (W9–W16): FastAPI, APIM, Redis caching, live GRC connectors, Service Bus eventing\n  Phase 3 (partial) — Connected Intelligence (W13–W20): Trend detection (scipy), RCSA due-date monitor, push notifications',
-    3: 'Accenture will support [CLIENT NAME] in the delivery of a full AI-Assisted ICS Dashboard (Maturity Level 3 — Base Case), comprising a production-grade LangChain RAG agent, TPRM Signal Engine, natural language query interface, DORA ICT third-party register (Art. 28/30), and full production go-live on Azure.\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4)\n  Phase 1 — Data Foundation (W5–W12)\n  Phase 2 — Core Connected Dashboard (W9–W16)\n  Phase 3 — AI Layer (W13–W20): LangChain RAG agent, Azure OpenAI (GPT-4o), TPRM Signal Engine, AI Search document index\n  Phase 4 — Workflow & Actions (W17–W24): NL query UI, AI-assisted reporting, workflow automation stub\n  Phase 5 — Hardening & Go-Live (W21–W28): Penetration test, UAT, DPIA, production cutover, AI governance framework',
-    4: 'Accenture will support [CLIENT NAME] in the delivery of an Active ICS Dashboard (Maturity Level 4), extending the L3 base case with 1LoD workflow automation via Azure Durable Functions, AI-proposed action routing with human-in-the-loop approval, and a 4-week workflow extension phase (W25–W32).\n\nScope: All L3 phases (W1–W28) plus:\n  Workflow Automation Extension (W25–W32): Azure Durable Functions RCSA lifecycle engine, AI-proposed task routing, escalation management, human-in-the-loop approval panel',
-    5: 'Accenture will support [CLIENT NAME] in the delivery of a fully Autonomous ICS Dashboard (Maturity Level 5), extending L4 with autonomous write-back agents, self-healing data quality, and AI-drafted regulatory submission automation.\n\nScope: All L4 phases (W1–W32) plus:\n  Autonomous Extension (W29–W36): Write-back agents with rollback and audit trail, self-healing data quality module, DORA Article 30 auto-draft using GPT-4o, DPO review workflow'
+    1: 'Accenture will support [CLIENT NAME] in the delivery of a Static ICS Cockpit (Maturity Level 1), establishing the foundational Azure data infrastructure and a read-only risk visualisation capability. This engagement covers discovery workshops, infrastructure provisioning, GRC source data ingestion pipelines via Azure Data Factory, and a static risk heatmap and register dashboard (no live API).\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4): Requirements gathering, ADR, network design, Terraform IaC, Azure provisioning\n  Phase 1 — Data Foundation (W5–W12): GRC data ingestion via ADF, PostgreSQL v16 schema, data quality baseline\n  Phase 2 (stub) — Static Dashboard: Read-only React risk heatmap and register seeded from PostgreSQL',
+    2: 'Accenture will support [CLIENT NAME] in the delivery of a Connected ICS Cockpit (Maturity Level 2), adding live GRC API connectors, a FastAPI backend on Azure Container Apps, rules-based alerting, and trend detection on top of the L1 data foundation.\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4)\n  Phase 1 — Data Foundation (W5–W12)\n  Phase 2 — Core Connected Dashboard (W9–W16): FastAPI, APIM, Redis caching, live GRC connectors, Service Bus eventing\n  Phase 3 (partial) — Connected Intelligence (W13–W20): Trend detection (scipy), RCSA due-date monitor, push notifications',
+    3: 'Accenture will support [CLIENT NAME] in the delivery of a full AI-Assisted ICS Cockpit (Maturity Level 3 — Base Case), comprising a production-grade LangChain RAG agent, TPRM Signal Engine, natural language query interface, DORA ICT third-party register (Art. 28/30), and full production go-live on Azure.\n\nScope:\n  Phase 0 — Discovery & Architecture (W1–W4)\n  Phase 1 — Data Foundation (W5–W12)\n  Phase 2 — Core Connected Dashboard (W9–W16)\n  Phase 3 — AI Layer (W13–W20): LangChain RAG agent, Azure OpenAI (GPT-4o), TPRM Signal Engine, AI Search document index\n  Phase 4 — Workflow & Actions (W17–W24): NL query UI, AI-assisted reporting, workflow automation stub\n  Phase 5 — Hardening & Go-Live (W21–W28): Penetration test, UAT, DPIA, production cutover, AI governance framework',
+    4: 'Accenture will support [CLIENT NAME] in the delivery of an Active ICS Cockpit (Maturity Level 4), extending the L3 base case with 1LoD workflow automation via Azure Durable Functions, AI-proposed action routing with human-in-the-loop approval, and a 4-week workflow extension phase (W25–W32).\n\nScope: All L3 phases (W1–W28) plus:\n  Workflow Automation Extension (W25–W32): Azure Durable Functions RCSA lifecycle engine, AI-proposed task routing, escalation management, human-in-the-loop approval panel',
+    5: 'Accenture will support [CLIENT NAME] in the delivery of a fully Autonomous ICS Cockpit (Maturity Level 5), extending L4 with autonomous write-back agents, self-healing data quality, and AI-drafted regulatory submission automation.\n\nScope: All L4 phases (W1–W32) plus:\n  Autonomous Extension (W29–W36): Write-back agents with rollback and audit trail, self-healing data quality module, DORA Article 30 auto-draft using GPT-4o, DPO review workflow'
   },
   outOfScope: {
     1: ['Live API layer and GRC connectors (L2+)', 'LLM / AI components (L3+)', 'Workflow automation (L4+)', 'Autonomous write-back agents (L5)', 'External penetration testing (L3+)', 'DORA Article 30 report automation', 'Operational execution post go-live', 'Regulatory filing or direct supervisory engagement'],
@@ -7461,7 +7624,7 @@ function generateSoW(level) {
   // Cover
   html += '<div class="section">';
   html += '<div class="cover-title">STATEMENT OF WORK</div>';
-  html += '<div class="cover-sub">AI-Powered ICS Dashboard Implementation</div>';
+  html += '<div class="cover-sub">AI-Powered ICS Cockpit Implementation</div>';
   html += '<div class="cover-level">'+esc(ld.label)+'</div>';
   html += '<table class="meta-table">'+metaRow('Client','[CLIENT NAME]','MMS / Ref ID','[MMS-XXXXXXXX]')+metaRow('Accenture Entity','Accenture [NL/UK/CH] B.V.','Version','v1.0 — Draft for Review')+metaRow('Date','[DATE]','Classification','Confidential')+metaRow('Maturity Level',ld.label,'Estimated Investment',ld.cost+' (excl. VAT)')+'</table>';
   html += '<p class="disclaimer">IMPORTANT: This document is a template. Placeholders (e.g. [CLIENT NAME], [DATE], [AMOUNT]) must be completed before execution. Rates are indicative — actual rates are governed by the applicable Master Services Agreement (MSA) or Framework Agreement.</p>';
@@ -7875,6 +8038,29 @@ function generateSoW(level) {
   let lastTime = 0;
   let running = false;
 
+  // ── Pause RAF when canvas is off-screen or page is hidden ──────────────
+  let fvVisible = false;
+  let fvRafId = null;
+
+  function fvStart() {
+    if (!fvRafId) fvRafId = requestAnimationFrame(frame);
+  }
+  function fvStop() {
+    if (fvRafId) { cancelAnimationFrame(fvRafId); fvRafId = null; }
+  }
+
+  if (!reduced && 'IntersectionObserver' in window) {
+    const fvObserver = new IntersectionObserver(function (entries) {
+      fvVisible = entries[0].isIntersecting;
+      fvVisible ? fvStart() : fvStop();
+    }, { threshold: 0.05 });
+    fvObserver.observe(canvas);
+
+    document.addEventListener('visibilitychange', function () {
+      document.hidden ? fvStop() : (fvVisible && fvStart());
+    });
+  }
+
   /* ---------- helpers ---------- */
   function roundRect(x, y, w, h, r) {
     r = Math.min(r, w / 2, h / 2);
@@ -7985,7 +8171,7 @@ function generateSoW(level) {
     });
 
     if (reduced) renderStatic();
-    else if (!running) { running = true; requestAnimationFrame(frame); }
+    else if (!running) { running = true; fvStart(); }
   }
   window.updateFlowViz = updateFlowViz;
 
@@ -8170,7 +8356,7 @@ function generateSoW(level) {
     });
     renderScene(now);
     // particles never stop, so keep the loop alive while visible
-    requestAnimationFrame(frame);
+    fvRafId = requestAnimationFrame(frame);
   }
 
   /* ---------- HiDPI backing store ---------- */
@@ -8191,6 +8377,8 @@ function generateSoW(level) {
   updateFlowViz((typeof currentLevel !== 'undefined' && currentLevel) ? currentLevel : 3);
 })();
 </script>
+
+<div id="fvToast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brand);color:#fff;font-size:13px;font-weight:600;padding:10px 22px;border-radius:24px;box-shadow:0 8px 32px rgba(61,0,102,.35);opacity:0;transition:opacity .25s,transform .25s;z-index:200;pointer-events:none;font-family:'Space Grotesk',sans-serif;"></div>
 
 </body>
 </html>
