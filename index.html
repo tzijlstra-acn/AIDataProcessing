@@ -918,6 +918,28 @@ details.collapsible > div.details-body { padding: 16px; }
 .journey-level-tag.l4 { background: rgba(180,50,42,.07); border-color: rgba(180,50,42,.18); color: #B4322A; }
 .journey-level-tag.l5 { background: rgba(109,40,217,.07); border-color: rgba(109,40,217,.18); color: #6D28D9; }
 .journey-level-tag.inherited { background: var(--s2); border-color: var(--border); color: var(--tm); }
+
+/* DATA FLOW VISUALIZATION */
+.flow-viz { border-radius: 16px; overflow: hidden; margin: 20px 0; box-shadow: 0 20px 60px rgba(61,0,102,.22); }
+.flow-viz svg { display: block; width: 100%; height: auto; }
+.flow-viz .fv-src { transform-box: fill-box; transform-origin: center; animation: fvPulse 3.2s ease-in-out infinite; }
+@keyframes fvPulse {
+  0%,100% { transform: scale(1);    filter: drop-shadow(0 0 1px rgba(161,0,255,.30)); }
+  50%     { transform: scale(1.03); filter: drop-shadow(0 0 6px rgba(161,0,255,.70)); }
+}
+.flow-viz .fv-core-box { transform-box: fill-box; transform-origin: center; animation: fvCore 4s ease-in-out infinite; }
+@keyframes fvCore {
+  0%,100% { stroke: #A100FF; filter: drop-shadow(0 0 4px rgba(161,0,255,.50)); }
+  50%     { stroke: #FF50C8; filter: drop-shadow(0 0 10px rgba(255,80,200,.60)); }
+}
+.flow-viz .fv-out { transform-box: fill-box; transform-origin: center; animation: fvActivate 5s ease-in-out infinite; }
+@keyframes fvActivate { 0%,100% { opacity: .40; } 50% { opacity: 1; } }
+.flow-viz .fv-pkt { animation: fvPktFade 3.6s linear infinite; }
+@keyframes fvPktFade { 0%,6% { opacity: 0; } 16%,84% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) {
+  .flow-viz .fv-src, .flow-viz .fv-core-box, .flow-viz .fv-out, .flow-viz .fv-pkt { animation: none; }
+  .flow-viz .fv-out { opacity: 1; }
+}
 </style>
 <!-- docx library removed — SoW uses native HTML-to-Word blob generation -->
 </head>
@@ -2041,6 +2063,142 @@ details.collapsible > div.details-body { padding: 16px; }
   <div id="levelDesc" style="margin-bottom:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radiusL);border-left:4px solid var(--brandMid);">
     <div id="levelDescTitle" style="font-weight:700;color:var(--tp);margin-bottom:4px;font-size:14px;"></div>
     <div id="levelDescText" style="font-size:13px;color:var(--ts);line-height:1.7;"></div>
+  </div>
+
+  <!-- ANIMATED DATA-FLOW VISUALIZATION (end-to-end journey at a glance) -->
+  <div class="flow-viz" style="background:linear-gradient(135deg,#160029 0%,#3D0066 60%,#1A1330 100%);">
+    <svg viewBox="0 0 900 340" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" role="img" aria-label="Animated end-to-end data flow: sources feed ingestion, into the reusable platform core, out to the NFR dashboard layer.">
+      <defs>
+        <filter id="fvPglow" x="-80%" y="-80%" width="260%" height="260%">
+          <feGaussianBlur stdDeviation="2.2" result="b"/>
+          <feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge>
+        </filter>
+        <linearGradient id="fvCoreFill" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="rgba(161,0,255,0.20)"/>
+          <stop offset="1" stop-color="rgba(255,80,200,0.10)"/>
+        </linearGradient>
+      </defs>
+
+      <!-- ================= COLUMN HEADERS ================= -->
+      <g font-family="'Space Grotesk',Inter,sans-serif" font-size="10.5" font-weight="700" letter-spacing="1.2" text-anchor="middle">
+        <text x="91"  y="26" fill="#C4B5FD">DATA SOURCES</text>
+        <text x="280" y="26" fill="#C4B5FD">INGESTION</text>
+        <text x="480" y="26" fill="#E9D5FF">PLATFORM CORE</text>
+        <text x="802" y="26" fill="#FBCFE8">NFR OUTPUTS</text>
+      </g>
+
+      <!-- ================= CONNECTION PATHS ================= -->
+      <g fill="none" stroke="rgba(161,0,255,0.30)" stroke-width="1.5">
+        <path id="P-sn" d="M166 71  C190 71  186 126 210 126"/>
+        <path id="P-vr" d="M166 127 C190 127 190 126 210 126"/>
+        <path id="P-cm" d="M166 183 C190 183 190 196 210 196"/>
+        <path id="P-po" d="M166 239 C190 239 190 196 210 196"/>
+        <path id="P-bc" d="M350 126 C374 126 366 145 390 145"/>
+        <path id="P-ac" d="M350 196 C374 196 366 177 390 177"/>
+        <path id="P-o1" d="M570 161 C642 161 650 60  720 60"/>
+        <path id="P-o2" d="M570 161 C642 161 650 108 720 108"/>
+        <path id="P-o3" d="M570 161 C648 161 656 156 720 156"/>
+        <path id="P-o4" d="M570 161 C642 161 650 204 720 204"/>
+        <path id="P-o5" d="M570 161 C642 161 650 252 720 252"/>
+      </g>
+
+      <!-- ================= FLOWING PARTICLES ================= -->
+      <g fill="#A100FF" filter="url(#fvPglow)">
+        <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#P-sn"/></animateMotion></circle>
+        <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="0.9s"><mpath xlink:href="#P-sn"/></animateMotion></circle>
+        <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="0.4s"><mpath xlink:href="#P-vr"/></animateMotion></circle>
+        <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="1.3s"><mpath xlink:href="#P-vr"/></animateMotion></circle>
+        <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="0.2s"><mpath xlink:href="#P-cm"/></animateMotion></circle>
+        <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="1.1s"><mpath xlink:href="#P-cm"/></animateMotion></circle>
+        <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="0.6s"><mpath xlink:href="#P-po"/></animateMotion></circle>
+        <circle r="3"><animateMotion dur="1.9s" repeatCount="indefinite" begin="1.5s"><mpath xlink:href="#P-po"/></animateMotion></circle>
+        <circle r="3.2"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.1s"><mpath xlink:href="#P-bc"/></animateMotion></circle>
+        <circle r="3.2"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.8s"><mpath xlink:href="#P-bc"/></animateMotion></circle>
+        <circle r="3.2"><animateMotion dur="1.6s" repeatCount="indefinite" begin="0.5s"><mpath xlink:href="#P-ac"/></animateMotion></circle>
+        <circle r="3.2"><animateMotion dur="1.6s" repeatCount="indefinite" begin="1.2s"><mpath xlink:href="#P-ac"/></animateMotion></circle>
+        <circle r="3" fill="#FF50C8"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#P-o1"/></animateMotion></circle>
+        <circle r="3" fill="#FF50C8"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.9s"><mpath xlink:href="#P-o2"/></animateMotion></circle>
+        <circle r="3" fill="#FF50C8"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.4s"><mpath xlink:href="#P-o3"/></animateMotion></circle>
+        <circle r="3" fill="#FF50C8"><animateMotion dur="2.4s" repeatCount="indefinite" begin="0.5s"><mpath xlink:href="#P-o4"/></animateMotion></circle>
+        <circle r="3" fill="#FF50C8"><animateMotion dur="2.4s" repeatCount="indefinite" begin="1.9s"><mpath xlink:href="#P-o5"/></animateMotion></circle>
+      </g>
+
+      <!-- ================= DATA PACKET LABELS ================= -->
+      <g font-family="'JetBrains Mono',monospace" font-size="8" font-weight="700" text-anchor="middle">
+        <g class="fv-pkt"><animateMotion dur="3.6s" repeatCount="indefinite" begin="0s"><mpath xlink:href="#P-sn"/></animateMotion>
+          <rect x="-17" y="-8" width="34" height="15" rx="7.5" fill="rgba(161,0,255,0.92)"/><text y="3" fill="#fff">CSV</text></g>
+        <g class="fv-pkt"><animateMotion dur="3.6s" repeatCount="indefinite" begin="1.8s"><mpath xlink:href="#P-cm"/></animateMotion>
+          <rect x="-15" y="-8" width="30" height="15" rx="7.5" fill="rgba(161,0,255,0.92)"/><text y="3" fill="#fff">API</text></g>
+        <g class="fv-pkt"><animateMotion dur="3.6s" repeatCount="indefinite" begin="0.7s"><mpath xlink:href="#P-bc"/></animateMotion>
+          <rect x="-16" y="-8" width="32" height="15" rx="7.5" fill="rgba(161,0,255,0.92)"/><text y="3" fill="#fff">SQL</text></g>
+        <g class="fv-pkt"><animateMotion dur="3.6s" repeatCount="indefinite" begin="1.2s"><mpath xlink:href="#P-o2"/></animateMotion>
+          <rect x="-31" y="-8" width="62" height="15" rx="7.5" fill="rgba(255,80,200,0.92)"/><text y="3" fill="#fff">Embeddings</text></g>
+        <g class="fv-pkt"><animateMotion dur="3.6s" repeatCount="indefinite" begin="2.4s"><mpath xlink:href="#P-o1"/></animateMotion>
+          <rect x="-28" y="-8" width="56" height="15" rx="7.5" fill="rgba(255,80,200,0.92)"/><text y="3" fill="#fff">Risk Score</text></g>
+      </g>
+
+      <!-- ================= LAYER 1: DATA SOURCES ================= -->
+      <g font-family="'Space Grotesk',Inter,sans-serif" text-anchor="middle">
+        <rect class="fv-src" style="animation-delay:0s"   x="16" y="48"  width="150" height="46" rx="10" fill="rgba(255,255,255,0.07)" stroke="rgba(161,0,255,0.35)"/>
+        <text x="91" y="70"  fill="#fff" font-size="12" font-weight="600">ServiceNow</text>
+        <text x="91" y="84"  fill="#9A93AC" font-family="'JetBrains Mono',monospace" font-size="9">GRC platform</text>
+
+        <rect class="fv-src" style="animation-delay:0.8s" x="16" y="104" width="150" height="46" rx="10" fill="rgba(255,255,255,0.07)" stroke="rgba(161,0,255,0.35)"/>
+        <text x="91" y="126" fill="#fff" font-size="12" font-weight="600">Vendor Register</text>
+        <text x="91" y="140" fill="#9A93AC" font-family="'JetBrains Mono',monospace" font-size="9">CSV / XLSX</text>
+
+        <rect class="fv-src" style="animation-delay:1.6s" x="16" y="160" width="150" height="46" rx="10" fill="rgba(255,255,255,0.07)" stroke="rgba(161,0,255,0.35)"/>
+        <text x="91" y="182" fill="#fff" font-size="12" font-weight="600">CMDB / RoPA</text>
+        <text x="91" y="196" fill="#9A93AC" font-family="'JetBrains Mono',monospace" font-size="9">asset &amp; data map</text>
+
+        <rect class="fv-src" style="animation-delay:2.4s" x="16" y="216" width="150" height="46" rx="10" fill="rgba(255,255,255,0.07)" stroke="rgba(161,0,255,0.35)"/>
+        <text x="91" y="238" fill="#fff" font-size="12" font-weight="600">Policy Docs</text>
+        <text x="91" y="252" fill="#9A93AC" font-family="'JetBrains Mono',monospace" font-size="9">PDF / DOCX</text>
+      </g>
+
+      <!-- ================= LAYER 2: INGESTION ================= -->
+      <g font-family="'Space Grotesk',Inter,sans-serif" text-anchor="middle">
+        <rect x="210" y="100" width="140" height="52" rx="10" fill="rgba(255,255,255,0.07)" stroke="rgba(161,0,255,0.35)"/>
+        <text x="280" y="122" fill="#fff" font-size="12" font-weight="600">Azure Blob Storage</text>
+        <text x="280" y="137" fill="#9A93AC" font-family="'JetBrains Mono',monospace" font-size="9">landing zone</text>
+
+        <rect x="210" y="170" width="140" height="52" rx="10" fill="rgba(255,255,255,0.07)" stroke="rgba(161,0,255,0.35)"/>
+        <text x="280" y="192" fill="#fff" font-size="12" font-weight="600">ADF Pipeline</text>
+        <text x="280" y="207" fill="#9A93AC" font-family="'JetBrains Mono',monospace" font-size="9">copy &middot; orchestrate</text>
+      </g>
+
+      <!-- ================= LAYER 3: PLATFORM CORE ================= -->
+      <g font-family="'Space Grotesk',Inter,sans-serif" text-anchor="middle">
+        <rect class="fv-core-box" x="390" y="56" width="180" height="210" rx="14" fill="url(#fvCoreFill)" stroke="#A100FF" stroke-width="1.5"/>
+        <text x="480" y="82" fill="#E9D5FF" font-size="11" font-weight="700" letter-spacing="0.4">PLATFORM CORE</text>
+        <g>
+          <rect x="406" y="96"  width="148" height="36" rx="8" fill="rgba(161,0,255,0.15)" stroke="rgba(161,0,255,0.45)"/>
+          <text x="480" y="119" fill="#fff" font-size="11" font-weight="600">PostgreSQL v16</text>
+          <rect x="406" y="138" width="148" height="36" rx="8" fill="rgba(161,0,255,0.15)" stroke="rgba(161,0,255,0.45)"/>
+          <text x="480" y="161" fill="#fff" font-size="11" font-weight="600">dbt Models</text>
+          <rect x="406" y="180" width="148" height="36" rx="8" fill="rgba(161,0,255,0.15)" stroke="rgba(161,0,255,0.45)"/>
+          <text x="480" y="203" fill="#fff" font-size="11" font-weight="600">Azure AI Search</text>
+          <rect x="406" y="222" width="148" height="36" rx="8" fill="rgba(161,0,255,0.15)" stroke="rgba(161,0,255,0.45)"/>
+          <text x="480" y="245" fill="#fff" font-size="11" font-weight="600">GPT-4o / Embeddings</text>
+        </g>
+      </g>
+
+      <!-- ================= LAYER 4: NFR OUTPUTS ================= -->
+      <g font-family="'Space Grotesk',Inter,sans-serif" text-anchor="middle" fill="#fff" font-size="11.5" font-weight="600">
+        <g class="fv-out" style="animation-delay:0s"><rect x="720" y="40"  width="164" height="40" rx="10" fill="rgba(255,80,200,0.09)" stroke="#FF50C8"/><text x="802" y="65"  fill="#fff">Risk Heatmap</text></g>
+        <g class="fv-out" style="animation-delay:1s"><rect x="720" y="88"  width="164" height="40" rx="10" fill="rgba(255,80,200,0.09)" stroke="#FF50C8"/><text x="802" y="113" fill="#fff">TPRM Agent</text></g>
+        <g class="fv-out" style="animation-delay:2s"><rect x="720" y="136" width="164" height="40" rx="10" fill="rgba(255,80,200,0.09)" stroke="#FF50C8"/><text x="802" y="161" fill="#fff">RCSA Engine</text></g>
+        <g class="fv-out" style="animation-delay:3s"><rect x="720" y="184" width="164" height="40" rx="10" fill="rgba(255,80,200,0.09)" stroke="#FF50C8"/><text x="802" y="209" fill="#fff">BCM Monitor</text></g>
+        <g class="fv-out" style="animation-delay:4s"><rect x="720" y="232" width="164" height="40" rx="10" fill="rgba(255,80,200,0.09)" stroke="#FF50C8"/><text x="802" y="257" fill="#fff">CRO Cockpit</text></g>
+      </g>
+    </svg>
+  </div>
+
+  <!-- CAPTION -->
+  <div class="jz-legend" style="border-radius:0 0 16px 16px;margin:-20px 0 20px;">
+    <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
+    <div class="jz-item jz-core"><span class="jz-pip"></span>Platform Core — reusable across use cases</div>
+    <div class="jz-item jz-output"><span class="jz-pip"></span>NFR Output Layer</div>
   </div>
 
   <!-- LIVE DOCUMENT CALLOUT (L2+) -->
