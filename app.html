@@ -7709,8 +7709,8 @@ function generateSoW(level) {
   var invRows = (sd.invoiceSchedule[level] || sd.invoiceSchedule[3]).map(invRow).join('');
   var servText = esc(sd.services[level] || sd.services[3]).replace(/\n/g,'<br>').replace(/  /g,'&nbsp;&nbsp;');
 
-  var html = '<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8">
-<script>if(!sessionStorage.getItem('nfr_auth')){location.replace('index.html');}</script><style>'+css+'</style></head><body>';
+  var html = '<!DOCTYPE html><html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word" xmlns="http://www.w3.org/TR/REC-html40"><head><meta charset="UTF-8">'
+    + '<script>if(!sessionStorage.getItem(\'nfr_auth\')){location.replace(\'index.html\');}<\/script><style>'+css+'</style></head><body>';
 
   // Cover
   html += '<div class="section">';
