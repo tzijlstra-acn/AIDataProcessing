@@ -42,6 +42,9 @@ h1,h2,h3,h4 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing:
 .topbar-sep { width: 1px; height: 20px; background: rgba(255,255,255,.25); margin: 0 4px; }
 .topbar-sub { color: rgba(255,255,255,.65); font-size: 13px; white-space: nowrap; }
 .topbar-spacer { flex: 1; }
+.topbar-hub-btn { display:flex;align-items:center;gap:6px;padding:6px 14px;border-radius:20px;border:1px solid rgba(255,255,255,.28);background:rgba(255,255,255,.1);color:#fff;font-family:'Inter',system-ui,sans-serif;font-size:12px;font-weight:600;cursor:pointer;transition:.15s;white-space:nowrap;text-decoration:none;position:relative;z-index:1; }
+.topbar-hub-btn:hover { background:rgba(255,255,255,.2);border-color:rgba(255,255,255,.5); }
+.topbar-hub-btn svg { width:13px;height:13px;stroke:#fff;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round; }
 .hamburger { display: none; background: none; border: none; cursor: pointer; padding: 6px; }
 .hamburger span { display: block; width: 22px; height: 2px; background: #fff; margin: 4px 0; border-radius: 2px; transition: .2s; }
 
@@ -1045,6 +1048,11 @@ button.glance-link, button.deliverables-toggle {
   <span class="topbar-logo"><svg width="22" height="22" viewBox="0 0 100 100" fill="none" style="margin-right:8px;vertical-align:-4px;"><path d="M10 15 L60 50 L10 85" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>ICS Cockpit — Implementation Guide</span>
   <div class="topbar-sep"></div>
   <span class="topbar-sub">Accenture Finance &amp; Risk &nbsp;·&nbsp; July 2026</span>
+  <div class="topbar-spacer"></div>
+  <a class="topbar-hub-btn" href="https://tzijlstra-acn.github.io/NFRAIAssets/" target="_blank" rel="noopener" aria-label="AI Assets Hub (opens in new tab)">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+    AI Assets Hub
+  </a>
 </div>
 
 <!-- LAYOUT -->
