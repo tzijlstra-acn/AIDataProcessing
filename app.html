@@ -5441,6 +5441,7 @@ useEffect(() =&gt; {
         <div class="roi-label">2LoD Analyst Time Saving</div>
       </div>
     </div>
+    <div id="roi-note" style="font-size:12.5px;color:var(--ts);margin-top:14px;padding:12px 16px;background:var(--s1);border-radius:6px;border-left:3px solid var(--accent);line-height:1.6;min-height:0"></div>
   </div>
 
   <!-- Cost Tables -->
@@ -5480,7 +5481,8 @@ useEffect(() =&gt; {
           <tr style="font-weight:700;border-top:2px solid var(--borderS);background:var(--s1);"><td><strong>Accenture fees</strong></td><td><strong>28 weeks</strong></td><td>10 roles</td><td><strong>~883</strong></td><td><strong>€2,150 avg</strong></td><td><strong>€1,896,000</strong></td></tr>
           <tr><td>Travel &amp; Expenses (T&amp;E)</td><td colspan="4">~10% of professional fees (€189,600) — on-site client visits, workshops, UAT sessions</td><td>€189,600</td></tr>
           <tr><td>External penetration test</td><td colspan="4">Accredited security firm — full web app + API scope</td><td>€30,000</td></tr>
-          <tr style="font-weight:700;background:var(--brandLight);"><td><strong>Total Implementation Investment</strong></td><td colspan="4">—</td><td><strong>~€2,115,600</strong></td></tr>
+          <tr id="aigov-table-row" style="display:none;font-weight:600;background:rgba(161,0,255,.06)"><td colspan="5" style="color:var(--brandMid);font-size:12.5px">AI Governance Module add-on &nbsp;<span id="aigov-table-note" style="font-weight:400;color:var(--ts);font-size:12px"></span></td><td id="aigov-table-cost" style="color:var(--brandMid);font-weight:700"></td></tr>
+          <tr style="font-weight:700;background:var(--brandLight);"><td><strong>Total Implementation Investment</strong></td><td colspan="4">—</td><td><strong id="impl-total-cost">~€2,115,600</strong></td></tr>
         </tbody>
       </table>
     </div>
@@ -7392,23 +7394,114 @@ const AI_GOV_COST_DELTA = {
   5: { cost: '~€3.7M',  note: 'AI Governance add-on (+€400K): full AI Gov team for autonomous operations governance. Adds write-back approval framework, annual supervisory AI risk report, and ISO 42001 readiness certification support.' },
 };
 
+const AI_GOV_ROI_DELTA  = { 1:{payback:'>12 yr'}, 2:{payback:'~8.8 yr'}, 3:{payback:'~7.2 yr'}, 4:{payback:'~7.4 yr'}, 5:{payback:'~6.8 yr'} };
+const AI_GOV_FTE_DELTA  = { 1:'~48', 2:'~124', 3:'~256', 4:'~304', 5:'~362' };
+const AI_GOV_IMPL_TOTAL = { 1:'~€765K', 2:'~€1.4M', 3:'~€2.5M', 4:'~€3.2M', 5:'~€3.7M' };
+const AI_GOV_TABLE_DELTA = { 1:'+~€185K', 2:'+~€275K', 3:'+~€390K', 4:'+~€390K', 5:'+~€400K' };
+const AI_GOV_TABLE_NOTE  = {
+  1:'(AI Risk Lead 0.5 FTE · NIST AI RMF gap assessment · EU AI Act classification)',
+  2:'(AI Risk Lead + Model Risk Specialist · NIST AI RMF alignment · EU AI Act conformity scoping)',
+  3:'(AI Risk Lead + Model Risk Specialist · NIST AI RMF · EU AI Act conformity assessment · SR 11-7/EBA validation)',
+  4:'(AI Risk Lead + Model Risk Specialist · L4 workflow governance · model monitoring automation)',
+  5:'(AI Risk Lead + Model Risk Specialist · autonomous operations governance · write-back approval framework)'
+};
+const AI_GOV_OVERVIEW = {
+  1:'L1 + AI Gov — 6 roles, 12 weeks, ~€765K. Adds AI Risk Lead for NIST AI RMF gap assessment and EU AI Act initial classification. Compliance-driven module.',
+  2:'L2 + AI Gov — 10 roles, 20 weeks, ~€1.4M. Adds AI Risk Lead + Model Risk Specialist. Delivers NIST AI RMF alignment, EU AI Act conformity scoping, and AI model inventory.',
+  3:'L3 + AI Gov — 12 roles, 28 weeks, ~€2.5M. Full AI governance workstream: NIST AI RMF implementation, EU AI Act conformity assessment, AI Risk Register v2.0, SR 11-7/EBA model validation, 25-asset AI model inventory.',
+  4:'L4 + AI Gov — 12 roles, 32 weeks, ~€3.2M. Extends AI Gov team for L4 workflow governance. Adds model monitoring automation, AI-driven risk escalation audit trail, DORA Art.30 AI provisions assessment.',
+  5:'L5 + AI Gov — 12 roles, 36 weeks, ~€3.7M. Full AI Gov team for autonomous operations governance. Write-back approval framework, annual supervisory AI risk report, ISO 42001 readiness support.'
+};
 function updateCostDisplay() {
   var level = currentLevel;
+  var ld = LEVEL_DATA[level] || {};
+  var rd = ROI_LEVEL_DATA[level] || {};
+  var baseRoles = parseInt(ld.roles) || 0;
+  var isOn = aiGovEnabled && AI_GOV_COST_DELTA[level];
+
+  // ── stat tiles (cost, roles, fte-weeks) ─────────────────────────────────
   var costEl  = document.getElementById('stat-cost');
-  var noteEl  = document.getElementById('roi-note');
   var rolesEl = document.getElementById('stat-roles');
-  var trcEl   = document.getElementById('team-role-count');
-  var baseRoles = parseInt((LEVEL_DATA[level] || {}).roles) || 0;
-  if (aiGovEnabled && AI_GOV_COST_DELTA[level]) {
-    if (costEl)  costEl.textContent  = AI_GOV_COST_DELTA[level].cost;
-    if (noteEl)  noteEl.textContent  = AI_GOV_COST_DELTA[level].note;
-    if (rolesEl) rolesEl.textContent = String(baseRoles + 2);
-    if (trcEl)   trcEl.textContent   = (baseRoles + 2) + ' Accenture Roles';
+  var fteEl   = document.getElementById('stat-fte');
+  if (costEl)  costEl.textContent  = isOn ? AI_GOV_COST_DELTA[level].cost : ld.cost || '';
+  if (rolesEl) rolesEl.textContent = isOn ? String(baseRoles + 2) : ld.roles || '';
+  if (fteEl)   fteEl.textContent   = isOn ? (AI_GOV_FTE_DELTA[level] || ld.fteWeeks || '') : ld.fteWeeks || '';
+
+  // ── team heading role count — C2 fix: write only the number; HTML already has ' Roles)' suffix
+  var trcEl = document.getElementById('team-role-count');
+  if (trcEl) trcEl.textContent = String(isOn ? baseRoles + 2 : baseRoles);
+
+  // ── cost-level-note banner — M2 fix ─────────────────────────────────────
+  var clnEl = document.getElementById('cost-level-note');
+  if (clnEl) clnEl.textContent = isOn
+    ? AI_GOV_COST_DELTA[level].cost + ' implementation, ' + (ld.weeks || '') + ' weeks, ' + (baseRoles + 2) + ' roles (incl. AI Governance module).'
+    : (ld.cost || '') + ' implementation, ' + (ld.weeks || '') + ' weeks, ' + (ld.roles || '') + ' roles.';
+
+  // ── roi-note — C1 fix: element now exists ───────────────────────────────
+  var noteEl = document.getElementById('roi-note');
+  if (noteEl) noteEl.textContent = isOn ? AI_GOV_COST_DELTA[level].note : rd.note || '';
+
+  // ── roi-payback — M3 fix ────────────────────────────────────────────────
+  var pbEl = document.getElementById('roi-payback');
+  if (pbEl) pbEl.textContent = isOn && AI_GOV_ROI_DELTA[level] ? AI_GOV_ROI_DELTA[level].payback : rd.payback || '';
+
+  // ── implementation table: add-on row + total cell — M1 fix ──────────────
+  var addOnRow  = document.getElementById('aigov-table-row');
+  var addOnNote = document.getElementById('aigov-table-note');
+  var addOnAmt  = document.getElementById('aigov-table-cost');
+  var totalCost = document.getElementById('impl-total-cost');
+  if (isOn) {
+    if (addOnRow)  addOnRow.style.display  = '';
+    if (addOnNote) addOnNote.textContent   = AI_GOV_TABLE_NOTE[level]  || '';
+    if (addOnAmt)  addOnAmt.textContent    = AI_GOV_TABLE_DELTA[level] || '';
+    if (totalCost) totalCost.textContent   = AI_GOV_IMPL_TOTAL[level]  || '';
   } else {
-    if (costEl)  costEl.textContent  = (LEVEL_DATA[level] || {}).cost || '';
-    if (noteEl)  noteEl.textContent  = (ROI_LEVEL_DATA[level] || {}).note || '';
-    if (rolesEl) rolesEl.textContent = (LEVEL_DATA[level] || {}).roles || '';
-    if (trcEl)   trcEl.textContent   = baseRoles + ' Accenture Roles';
+    if (addOnRow)  addOnRow.style.display  = 'none';
+    if (totalCost) totalCost.textContent   = '~€2,115,600';
+  }
+
+  // ── overview context text — M7 fix ──────────────────────────────────────
+  var ovTxt = document.getElementById('level-ctx-overview-text');
+  if (ovTxt) ovTxt.innerHTML = isOn && AI_GOV_OVERVIEW[level] ? AI_GOV_OVERVIEW[level] : ld.overviewCtx || '';
+
+  // ── level-team panels: AI Gov chips + FTE note — M6 fix ─────────────────
+  var panelChips = {
+    1:['AI Risk Lead 50%'],
+    2:['AI Risk Lead 75%','Model Risk Specialist 50%'],
+    3:['AI Risk Lead 75%','Model Risk Specialist 75%'],
+    4:['AI Risk Lead 75%','Model Risk Specialist 75%'],
+    5:['AI Risk Lead 75%','Model Risk Specialist 75%']
+  };
+  var panelFullNotes = {
+    1:'+ AI Risk Lead (0.5 FTE, Ph0–2) · ~48 FTE-weeks total · AI Governance module',
+    2:'+ AI Risk Lead + Model Risk Specialist · ~124 FTE-weeks total · AI Governance module',
+    3:'+ AI Risk Lead + Model Risk Specialist · ~256 FTE-weeks total · AI Governance module',
+    4:'+ AI Risk Lead + Model Risk Specialist · ~304 FTE-weeks total · AI Governance module',
+    5:'+ AI Risk Lead + Model Risk Specialist · ~362 FTE-weeks total · AI Governance module'
+  };
+  for (var lvl = 1; lvl <= 5; lvl++) {
+    var panel = document.querySelector('[data-level-team="' + lvl + '"]');
+    if (!panel) continue;
+    var panelRow = panel.querySelector('.level-team-row');
+    if (panelRow) panelRow.querySelectorAll('.aigov-chip').forEach(function(c){ c.remove(); });
+    var existNote = panel.querySelector('.aigov-team-note');
+    if (existNote) existNote.remove();
+    if (isOn && panelChips[lvl]) {
+      if (panelRow) {
+        panelChips[lvl].forEach(function(chipText) {
+          var chip = document.createElement('span');
+          chip.className = 'level-team-chip consulting aigov-chip';
+          chip.style.cssText = 'border:1px solid rgba(161,0,255,.5);background:rgba(161,0,255,.12);color:#C77BFF';
+          chip.textContent = chipText;
+          panelRow.appendChild(chip);
+        });
+      }
+      var noteDiv = document.createElement('div');
+      noteDiv.className = 'level-team-total aigov-team-note';
+      noteDiv.style.cssText = 'border-top:1px dashed rgba(161,0,255,.3);padding-top:6px;margin-top:4px;color:var(--brandMid);font-weight:600;font-size:12.5px';
+      noteDiv.textContent = panelFullNotes[lvl] || '';
+      panel.appendChild(noteDiv);
+    }
   }
 }
 
