@@ -33,10 +33,11 @@ body { font-family: var(--font); background: var(--canvas); color: var(--tp); li
 h1,h2,h3,h4 { font-family: 'Space Grotesk', 'Inter', sans-serif; letter-spacing: -.02em; }
 
 /* TOPBAR */
+html { scroll-padding-top: 130px; }
 .topbar {
   position: sticky; top: 0; z-index: 100; height: 54px;
   background: linear-gradient(90deg, #160029 0%, #A100FF 100%); display: flex; align-items: center;
-  padding: 0 24px; gap: 12px; border-bottom: 1px solid rgba(255,255,255,.12); overflow:hidden; position:relative;
+  padding: 0 24px; gap: 12px; border-bottom: 1px solid rgba(255,255,255,.12); overflow:hidden;
 }
 .topbar-logo { color: #fff; font-size: 15px; font-weight: 700; letter-spacing: -.2px; white-space: nowrap; }
 .topbar-sep { width: 1px; height: 20px; background: rgba(255,255,255,.25); margin: 0 4px; }
@@ -180,6 +181,8 @@ body.aigov-on .phase-body ul li.ai-gov { opacity: 1; font-style: normal; border-
 /* AI Gov role cards — hidden by default, shown when module is on */
 .ai-gov-role { display: none !important; }
 body.aigov-on .ai-gov-role { display: block !important; }
+.aigov-req { display: none; }
+body.aigov-on .aigov-req { display: block; }
 /* Module bar */
 .module-bar { display: flex; align-items: center; gap: 10px; padding: 8px 24px; background: var(--surface-1); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
 .module-bar-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); font-family: var(--mono); white-space: nowrap; }
@@ -1375,7 +1378,7 @@ button.glance-link, button.deliverables-toggle {
 
     <!-- Accenture panel -->
     <div>
-      <div class="team-panel-head accenture-head"><i class="ti ti-building"></i>Accenture Delivery Team (<span id="team-role-count">10</span> Roles)</div>
+      <div class="team-panel-head accenture-head"><i class="ti ti-building"></i><span>Accenture Delivery Team (<span id="team-role-count">10</span> Roles)</span></div>
       <div class="role-grid" style="grid-template-columns:1fr;">
 
         <!-- Consulting Practice Group -->
@@ -4564,21 +4567,26 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
   </div>
 
   <!-- L5 Write-back stack table -->
-  <div id="l5WriteBack" style="display:none;margin-top:24px;padding:20px;border:2px solid #6D28D9;border-radius:var(--radiusL);background:rgba(109,40,217,.04);">
-    <div style="font-size:12px;font-weight:700;color:#6D28D9;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;">Integrated AI Write-Back Stack — Core at Level 5</div>
-    <div class="table-wrap" style="margin-bottom:0;">
-      <table>
-        <thead><tr><th>Component</th><th>Acquired/Built</th><th>Additional Cost</th><th>Risk Level</th></tr></thead>
-        <tbody>
-          <tr><td><strong>GRC Write API access</strong></td><td>Acquired (client negotiates with vendor)</td><td>€0–€30K/year</td><td><span class="chip chip-medium">Medium</span></td></tr>
-          <tr><td>pending_ai_updates table</td><td>Built (DE2, 1 day)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
-          <tr><td>POST /api/agent/propose-update</td><td>Built (BE Dev 1, 2 days)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
-          <tr><td>Azure Function write-back</td><td>Built (BE Dev 2, 3 days)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
-          <tr><td>Rollback UI</td><td>Built (FE Dev, 2 days)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
-          <tr><td>Monthly write-back audit report</td><td>Process (GRC Expert writes template)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
-          <tr><td>Quarterly IA review</td><td>Process (client Internal Audit)</td><td>Client cost</td><td><span class="chip chip-low">Low</span></td></tr>
-        </tbody>
-      </table>
+  <div id="l5WriteBack" style="display:none;margin-top:24px;padding:16px 20px;border:2px solid #6D28D9;border-radius:var(--radiusL);background:rgba(109,40,217,.04);">
+    <div style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none" onclick="var b=this.nextElementSibling;var open=b.style.display!=='none';b.style.display=open?'none':'';this.querySelector('.wb-arr').style.transform=open?'':'rotate(90deg)'">
+      <div style="font-size:12px;font-weight:700;color:#6D28D9;text-transform:uppercase;letter-spacing:.06em">Integrated AI Write-Back Stack <span style="font-weight:400;text-transform:none;font-size:11px;opacity:.65">— Core at Level 5 &nbsp;&middot;&nbsp; click to expand</span></div>
+      <span class="wb-arr" style="color:#6D28D9;font-size:11px;transition:transform .2s">&#9654;</span>
+    </div>
+    <div style="display:none;margin-top:12px">
+      <div class="table-wrap" style="margin-bottom:0;">
+        <table>
+          <thead><tr><th>Component</th><th>Acquired/Built</th><th>Additional Cost</th><th>Risk Level</th></tr></thead>
+          <tbody>
+            <tr><td><strong>GRC Write API access</strong></td><td>Acquired (client negotiates with vendor)</td><td>€0&ndash;€30K/year</td><td><span class="chip chip-medium">Medium</span></td></tr>
+            <tr><td>pending_ai_updates table</td><td>Built (DE2, 1 day)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+            <tr><td>POST /api/agent/propose-update</td><td>Built (BE Dev 1, 2 days)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+            <tr><td>Azure Function write-back</td><td>Built (BE Dev 2, 3 days)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+            <tr><td>Rollback UI</td><td>Built (FE Dev, 2 days)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+            <tr><td>Monthly write-back audit report</td><td>Process (GRC Expert writes template)</td><td>Included</td><td><span class="chip chip-low">Low</span></td></tr>
+            <tr><td>Quarterly IA review</td><td>Process (client Internal Audit)</td><td>Client cost</td><td><span class="chip chip-low">Low</span></td></tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 
@@ -5229,6 +5237,36 @@ Risk data freshness: {last_pipeline_run} | Agent version: {agent_version}</div>
       </div>
     </div>
   </div>
+    <div class="aigov-req" style="margin-top:20px;padding:20px 24px;border:2px dashed rgba(161,0,255,.4);border-radius:var(--radiusL);background:rgba(161,0,255,.04)">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px">
+        <span style="font-size:10px;font-weight:800;background:#A100FF;color:#fff;padding:2px 9px;border-radius:10px;text-transform:uppercase;letter-spacing:.07em;flex-shrink:0">AI Governance</span>
+        <span style="font-size:13.5px;font-weight:700;color:#C77BFF">Additional Data Requirements</span>
+        <span style="font-size:11.5px;color:var(--ts);margin-left:auto">Active when AI Governance module is on</span>
+      </div>
+      <div style="font-size:12px;color:var(--ts);margin-bottom:14px;line-height:1.6">Five additional client data items are required for the AI Governance workstream. Items marked <span style="color:#C77BFF;font-weight:600">&#8599; overlap</span> with categories already listed above — no duplication needed, just ensure the existing items include AI-relevant content.</div>
+      <ul style="margin:0;padding:0;list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:10px 28px">
+        <li style="border-left:3px solid rgba(161,0,255,.45);padding:8px 10px 8px 14px;border-radius:0 6px 6px 0;background:rgba(161,0,255,.05)">
+          <div style="font-size:12.5px;font-weight:700;color:var(--tp);margin-bottom:3px">AI/ML System Inventory <span style="font-weight:400;font-size:11px;color:var(--ts)">(Excel/CSV)</span></div>
+          <div style="font-size:12px;color:var(--ts);line-height:1.5">All AI systems in production: name, vendor, purpose, risk tier, data inputs/outputs. Used for EU AI Act classification and NIST AI RMF MAP function.</div>
+        </li>
+        <li style="border-left:3px solid rgba(161,0,255,.45);padding:8px 10px 8px 14px;border-radius:0 6px 6px 0;background:rgba(161,0,255,.05)">
+          <div style="font-size:12.5px;font-weight:700;color:var(--tp);margin-bottom:3px">Existing AI Risk Documentation <span style="font-weight:400;font-size:11px;color:var(--ts)">(PDF)</span></div>
+          <div style="font-size:12px;color:var(--ts);line-height:1.5">Prior AI risk assessments and model validation reports (SR&nbsp;11-7/EBA format if available). Baseline for NIST AI RMF gap assessment in Phase&nbsp;0.</div>
+        </li>
+        <li style="border-left:3px solid rgba(161,0,255,.45);padding:8px 10px 8px 14px;border-radius:0 6px 6px 0;background:rgba(161,0,255,.05)">
+          <div style="font-size:12.5px;font-weight:700;color:var(--tp);margin-bottom:3px">EU AI Act Pre-Assessment / DPIA <span style="font-weight:400;font-size:11px;color:var(--ts)">(PDF)</span> <span style="font-size:11px;color:#C77BFF">&#8599; overlaps with Policy Documents</span></div>
+          <div style="font-size:12px;color:var(--ts);line-height:1.5">GDPR Art.22/35 DPIAs covering automated decision-making AI systems. Input for EU AI Act High-Risk classification (Art.9).</div>
+        </li>
+        <li style="border-left:3px solid rgba(161,0,255,.45);padding:8px 10px 8px 14px;border-radius:0 6px 6px 0;background:rgba(161,0,255,.05)">
+          <div style="font-size:12.5px;font-weight:700;color:var(--tp);margin-bottom:3px">AI Vendor Agreements &amp; SLAs <span style="font-weight:400;font-size:11px;color:var(--ts)">(PDF)</span> <span style="font-size:11px;color:#C77BFF">&#8599; overlaps with Technical Access</span></div>
+          <div style="font-size:12px;color:var(--ts);line-height:1.5">Data processing agreements for Azure OpenAI and all third-party AI/ML services. Required for DORA Art.28/30 third-party AI assessment.</div>
+        </li>
+        <li style="border-left:3px solid rgba(161,0,255,.45);padding:8px 10px 8px 14px;border-radius:0 6px 6px 0;background:rgba(161,0,255,.05);grid-column:1/-1">
+          <div style="font-size:12.5px;font-weight:700;color:var(--tp);margin-bottom:3px">Model Training Data Documentation <span style="font-weight:400;font-size:11px;color:var(--ts)">(PDF/Excel)</span></div>
+          <div style="font-size:12px;color:var(--ts);line-height:1.5">Data lineage, sources, labelling process, and known biases for any custom or fine-tuned models deployed in the ICS. Required for AI Model Card authoring and EBA GL&nbsp;2021/04 / SR&nbsp;11-7 model validation reports.</div>
+        </li>
+      </ul>
+    </div>
 </section>
 
 <!-- ===== SECTION 8: FEATURES ===== -->
