@@ -174,6 +174,22 @@ tbody tr:nth-child(even) td { background: var(--s1); }
 /* AI Governance activity — visually differentiated from regular activities */
 .phase-body ul li.ai-gov { margin-top: 8px; padding-top: 8px; border-top: 1px dashed var(--border); }
 .phase-body ul li.ai-gov strong { color: var(--accent); font-size: 10px; text-transform: uppercase; letter-spacing: .05em; }
+/* AI Governance module — items dimmed when module is off, visible when on */
+.phase-body ul li.ai-gov { opacity: .28; font-style: italic; border-top-color: transparent; }
+body.aigov-on .phase-body ul li.ai-gov { opacity: 1; font-style: normal; border-top-color: var(--border); }
+/* AI Gov role cards — hidden by default, shown when module is on */
+.ai-gov-role { display: none !important; }
+body.aigov-on .ai-gov-role { display: block !important; }
+/* Module bar */
+.module-bar { display: flex; align-items: center; gap: 10px; padding: 8px 24px; background: var(--surface-1); border-bottom: 1px solid var(--border); flex-wrap: wrap; }
+.module-bar-label { font-size: 10.5px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--text-muted); font-family: var(--mono); white-space: nowrap; }
+.module-chip { display: inline-flex; align-items: center; gap: 7px; padding: 5px 12px; border-radius: 20px; border: 1px solid rgba(161,0,255,.22); background: rgba(161,0,255,.04); font-size: 12px; color: var(--text-muted); cursor: pointer; transition: .15s; font-family: inherit; }
+.module-chip:hover { border-color: rgba(161,0,255,.38); background: rgba(161,0,255,.1); color: var(--tp); }
+.module-chip-active { border-color: #A100FF !important; background: rgba(161,0,255,.16) !important; color: #C77BFF !important; }
+.module-chip-tag { font-size: 10px; font-family: var(--mono); background: rgba(161,0,255,.1); padding: 2px 7px; border-radius: 10px; }
+.module-chip-active .module-chip-tag { background: rgba(161,0,255,.22); color: #C77BFF; }
+.module-chip-toggle { font-size: 10px; font-weight: 800; font-family: var(--mono); padding: 2px 8px; border-radius: 10px; background: rgba(255,255,255,.06); color: rgba(255,255,255,.35); min-width: 30px; text-align: center; transition: .15s; }
+.module-chip-active .module-chip-toggle { background: #A100FF; color: #fff; }
 /* Phase card — subtle interactive lift */
 .phase-card { transition: box-shadow .2s ease, border-color .2s ease; }
 .phase-card:hover { box-shadow: 0 4px 16px rgba(161,0,255,.08); border-color: rgba(161,0,255,.2); }
@@ -1128,6 +1144,17 @@ button.glance-link, button.deliverables-toggle {
   </div>
 </div>
 
+<!-- ===== OPTIONAL MODULES BAR ===== -->
+<div class="module-bar" id="moduleBar">
+  <span class="module-bar-label"><i class="ti ti-puzzle"></i> Optional Modules</span>
+  <button class="module-chip" id="mod-aigov" aria-pressed="false" onclick="toggleAIGov(this)" title="Toggle AI Governance workstream — adds AI Risk Lead and Model Risk Specialist, NIST AI RMF deliverables, and EU AI Act conformity programme. Adjusts project cost and team across the entire guide.">
+    <i class="ti ti-shield-check"></i>
+    <span>AI Governance</span>
+    <span class="module-chip-tag">+~€390K &middot; 2 roles &middot; NIST AI RMF</span>
+    <span class="module-chip-toggle" id="aigov-toggle-indicator">OFF</span>
+  </button>
+</div>
+
 <!-- ===== SECTION 1: OVERVIEW ===== -->
 <section id="overview">
   <div class="hero">
@@ -1378,6 +1405,27 @@ button.glance-link, button.deliverables-toggle {
             <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph0&ndash;2 &middot; 1.0 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
           </div>
           <div class="role-resp"><ul><li>Change management plan</li><li>Stakeholder analysis (1LoD/2LoD)</li><li>Role-based training materials</li><li>Adoption metrics tracking</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
+        </div>
+
+        <!-- AI Governance Module Roles — hidden by default, visible when module toggled on -->
+        <div style="padding:6px 0 3px;font-size:10.5px;font-weight:700;text-transform:uppercase;letter-spacing:.08em;color:#6900A8;margin-top:4px;border-top:1px dashed rgba(161,0,255,.3)" class="ai-gov-role">AI Governance Module</div>
+
+        <div class="role-card ai-gov-role" data-min-level="1" style="cursor:pointer;border-top:2px solid #C77BFF;background:rgba(161,0,255,.04)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('aiRiskLead')">
+          <div class="role-card-header">
+            <div><div class="role-name">AI Risk Lead</div><div class="role-seniority">Senior Manager (L7)</div><div class="role-practice">Finance &amp; Risk / AI Risk Management</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph0&ndash;2 &middot; 1.0 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
+          </div>
+          <div class="role-resp"><ul><li>AI risk framework design (NIST AI RMF)</li><li>EU AI Act conformity programme lead</li><li>AI model inventory governance</li><li>SR 11-7 / EBA model risk alignment</li></ul></div>
+          <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
+        </div>
+
+        <div class="role-card ai-gov-role" data-min-level="2" style="cursor:pointer;border-top:2px solid #C77BFF;background:rgba(161,0,255,.04)" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('modelRisk')">
+          <div class="role-card-header">
+            <div><div class="role-name">Model Risk Specialist</div><div class="role-seniority">Manager (L6)</div><div class="role-practice">Finance &amp; Risk / Model Risk</div></div>
+            <div style="display:flex;flex-direction:column;align-items:flex-end;gap:5px;flex-shrink:0"><span class="fte-badge">0.5 Ph1&ndash;2 &middot; 1.0 Ph3&ndash;5</span><span style="font-size:10px;font-weight:700;padding:2px 7px;border-radius:20px;background:#A100FF;color:#fff">Consulting</span></div>
+          </div>
+          <div class="role-resp"><ul><li>Independent model validation (SR 11-7 / EBA)</li><li>AI Model Cards for all 25 AI assets</li><li>Materiality tiering (High / Medium / Low)</li><li>Shadow AI detection &amp; vendor AI oversight</li></ul></div>
           <div style="margin-top:auto;padding-top:10px;text-align:right"><span style="font-size:12px;color:var(--brandMid);font-weight:600">View role &rarr;</span></div>
         </div>
 
@@ -5718,6 +5766,44 @@ const ROLES = {
       niceToHave: ['EBA/ECB regulatory experience', 'TPRM lifecycle management', 'NLP prompt evaluation techniques', 'ISO 31000 / COSO framework'],
     },
   },
+  aiRiskLead: {
+    title: 'AI Risk Lead',
+    practice: 'Consulting',
+    practiceColor: '#A100FF',
+    fte: '0.5 Ph0–2 / 1.0 Ph3–5',
+    phase: 'Phase 0–5 (full engagement)',
+    summary: 'Senior AI governance lead responsible for implementing the NIST AI Risk Management Framework across the ICS programme. Owns the EU AI Act conformity programme, AI model inventory governance, and board-level AI risk reporting. Works directly with the GRC Expert and coordinates with regulators and the internal model validation function.',
+    handbook: [
+      { label: 'NIST AI RMF', value: 'Implements all four functions: GOVERN (policies, RACI, oversight structure), MAP (AI inventory, risk classification), MEASURE (validation coverage, regulatory exposure scoring), MANAGE (escalation workflows, audit trail). Produces NIST RMF gap assessment in Phase 0.' },
+      { label: 'EU AI Act conformity', value: 'Leads Art.9–15 technical documentation, conformity assessment filing, and high-risk AI system registration. Targets Phase 5 (W27) delivery deadline per the programme Gantt.' },
+      { label: 'AI risk register', value: 'Maintains and governs the AI Risk Register (v1.0 in Phase 3, v2.0 in Phase 5). Escalates findings to Risk Committee. Defines quarterly review cadence and ownership.' },
+      { label: 'SR 11-7 / EBA alignment', value: 'Maps model risk management requirements to the ICS implementation. Signs off the model validation approach. Coordinates with Model Risk Specialist on materiality tiering across all 25 AI assets.' },
+    ],
+    deliverables: ['NIST AI RMF Gap Assessment', 'AI Governance Framework', 'AI Risk Register v1.0 & v2.0', 'Board AI Risk Dashboard', 'EU AI Act conformity assessment', 'AI model inventory (25 assets)', 'Human Oversight Protocol', 'Steering Committee AI Risk packs'],
+    skills: {
+      mustHave: ['NIST AI Risk Management Framework', 'EU AI Act Articles 9–17 (technical documentation)', 'SR 11-7 / EBA GL 2021/04 model risk governance', 'AI risk taxonomy design', 'Board-level AI risk reporting', 'Regulatory engagement experience'],
+      niceToHave: ['ISO 42001 AI Management System', 'DORA Art.28–30 AI provisions', 'GDPR Art.22 (automated decision-making)', 'AI audit and assurance frameworks', 'ECB / BaFin supervisory engagement'],
+    },
+  },
+  modelRisk: {
+    title: 'Model Risk Specialist',
+    practice: 'Consulting',
+    practiceColor: '#A100FF',
+    fte: '0.5 Ph1–2 / 1.0 Ph3–5',
+    phase: 'Phase 1–5 (advisory + validation)',
+    summary: 'Model risk expert responsible for independent model validation, AI model card authoring, and materiality tiering across all 25 AI assets in the ICS programme. Coordinates shadow AI detection with the CASB/SIEM team and conducts vendor AI oversight assessments per DORA Art.28/30.',
+    handbook: [
+      { label: 'Model validation', value: 'Independent SR 11-7 / EBA validation for all AI models. Report covers: model purpose, data lineage, performance metrics, bias assessment, limitations, and overall rating (Acceptable / Acceptable with conditions / Not acceptable).' },
+      { label: 'AI Model Cards', value: 'Produced per model: model owner, version, training data, validation date, risk tier, human oversight requirements, Art.12 logging status. Filed in the AI Risk Register and available in the ICS Cockpit.' },
+      { label: 'Materiality tiering', value: 'Classifies all 25 AI assets as High / Medium / Low risk using SR 11-7 criteria (materiality, complexity, use in decisions). High-risk: full annual validation. Medium: periodic review. Low: annual attestation.' },
+      { label: 'Shadow AI detection', value: 'Works with the Security Architect on CASB/SIEM integration to detect unapproved AI tool usage. Escalates findings to the AI Risk Lead for risk register update and potential EU AI Act classification review.' },
+    ],
+    deliverables: ['AI Model Cards (all 25 assets)', 'Model Risk Assessment Report', 'Materiality Tiering Matrix', 'EBA / SR 11-7 model validation reports', 'Vendor AI Oversight Assessment', 'Shadow AI Detection Report', 'DORA ICT AI Third-Party Register'],
+    skills: {
+      mustHave: ['SR 11-7 model validation methodology', 'EBA GL 2021/04 model risk', 'Statistical model testing (backtesting, sensitivity analysis)', 'Python / R for model diagnostics', 'AI/ML model audit techniques', 'DORA Art.28–30 third-party ICT risk'],
+      niceToHave: ['LLM evaluation frameworks (RAGAS, G-Eval)', 'Explainable AI (XAI) techniques', 'EU AI Act technical documentation (Art.9–11)', 'Credit / market / operational risk model background', 'Regulatory model review experience (ECB, OCC, Fed)'],
+    },
+  },
   sa: {
     title: 'Solution Architect',
     practice: 'Technology',
@@ -7293,6 +7379,61 @@ const ROI_LEVEL_DATA = {
   },
 };
 
+/* =====================================================================
+   AI GOVERNANCE MODULE
+   ===================================================================== */
+var aiGovEnabled = false;
+
+const AI_GOV_COST_DELTA = {
+  1: { cost: '~€765K',  note: 'AI Governance add-on (+€185K): AI Risk Lead (0.5 FTE, Ph0–2) + NIST AI RMF gap assessment + EU AI Act initial classification. Model Risk Specialist not in scope at L1.' },
+  2: { cost: '~€1.4M',  note: 'AI Governance add-on (+€275K): AI Risk Lead (0.75 FTE) + Model Risk Specialist (0.5 FTE) + full NIST AI RMF alignment + EU AI Act conformity scoping.' },
+  3: { cost: '~€2.5M',  note: 'AI Governance add-on (+€390K): AI Risk Lead + Model Risk Specialist (full engagement). Delivers NIST AI RMF implementation, EU AI Act conformity assessment (Art.9–17), AI Risk Register v2.0, SR 11-7/EBA model validation, and 25-asset AI model inventory.' },
+  4: { cost: '~€3.2M',  note: 'AI Governance add-on (+€390K): extended AI Gov team for L4 workflow governance. Adds model monitoring automation, AI-driven risk escalation audit trail, and DORA Art.30 AI provisions assessment for vendor AI.' },
+  5: { cost: '~€3.7M',  note: 'AI Governance add-on (+€400K): full AI Gov team for autonomous operations governance. Adds write-back approval framework, annual supervisory AI risk report, and ISO 42001 readiness certification support.' },
+};
+
+function updateCostDisplay() {
+  var level = currentLevel;
+  var costEl  = document.getElementById('stat-cost');
+  var noteEl  = document.getElementById('roi-note');
+  var rolesEl = document.getElementById('stat-roles');
+  var trcEl   = document.getElementById('team-role-count');
+  var baseRoles = parseInt((LEVEL_DATA[level] || {}).roles) || 0;
+  if (aiGovEnabled && AI_GOV_COST_DELTA[level]) {
+    if (costEl)  costEl.textContent  = AI_GOV_COST_DELTA[level].cost;
+    if (noteEl)  noteEl.textContent  = AI_GOV_COST_DELTA[level].note;
+    if (rolesEl) rolesEl.textContent = String(baseRoles + 2);
+    if (trcEl)   trcEl.textContent   = (baseRoles + 2) + ' Accenture Roles';
+  } else {
+    if (costEl)  costEl.textContent  = (LEVEL_DATA[level] || {}).cost || '';
+    if (noteEl)  noteEl.textContent  = (ROI_LEVEL_DATA[level] || {}).note || '';
+    if (rolesEl) rolesEl.textContent = (LEVEL_DATA[level] || {}).roles || '';
+    if (trcEl)   trcEl.textContent   = baseRoles + ' Accenture Roles';
+  }
+}
+
+function toggleAIGov(btn) {
+  aiGovEnabled = !aiGovEnabled;
+  document.body.classList.toggle('aigov-on', aiGovEnabled);
+  var indicator = document.getElementById('aigov-toggle-indicator');
+  if (indicator) indicator.textContent = aiGovEnabled ? 'ON' : 'OFF';
+  if (btn) {
+    btn.setAttribute('aria-pressed', aiGovEnabled ? 'true' : 'false');
+    btn.classList.toggle('module-chip-active', aiGovEnabled);
+  }
+  updateCostDisplay();
+  var toast = document.getElementById('fvToast');
+  if (toast) {
+    toast.textContent = aiGovEnabled
+      ? 'AI Governance module ON — 2 roles added, cost updated, phase deliverables expanded'
+      : 'AI Governance module OFF — showing base ICS scope';
+    toast.style.opacity = '1';
+    toast.style.transform = 'translateX(-50%) translateY(0)';
+    clearTimeout(toast._t);
+    toast._t = setTimeout(function(){ toast.style.opacity='0'; toast.style.transform='translateX(-50%) translateY(20px)'; }, 2500);
+  }
+}
+
 var currentLevel = 3;
 function setMaturityLevel(level) {
   currentLevel = level;
@@ -7492,6 +7633,8 @@ function setMaturityLevel(level) {
       toast.style.transform = 'translateX(-50%) translateY(20px)';
     }, 2200);
   }
+  // Re-apply AI Governance module overrides after every level change
+  updateCostDisplay();
 }
 
 /* =====================================================================
