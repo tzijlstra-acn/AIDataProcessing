@@ -7412,6 +7412,21 @@ const AI_GOV_OVERVIEW = {
   4:'L4 + AI Gov — 12 roles, 32 weeks, ~€3.2M. Extends AI Gov team for L4 workflow governance. Adds model monitoring automation, AI-driven risk escalation audit trail, DORA Art.30 AI provisions assessment.',
   5:'L5 + AI Gov — 12 roles, 36 weeks, ~€3.7M. Full AI Gov team for autonomous operations governance. Write-back approval framework, annual supervisory AI risk report, ISO 42001 readiness support.'
 };
+const AI_GOV_PHASE_ACTS = {
+  1:{0:'EU AI Act classification (precautionary High-Risk); DORA Art.28/30 ICT third-party assessment initiated for Azure OpenAI',1:'Draft AI data governance policy; AI model-inventory register entry (seed)',2:'Draft AI Model Card template; Art.12 logging requirements defined; human-oversight rules documented',3:'Initial AI Risk Register v1.0; EU AI Act Art.11 documentation brief; DORA Art.30 ICT third-party register entry',4:'AI incident-response procedure (lightweight); Risk Committee AI governance briefing',5:'EU AI Act conformity assessment (High-Risk classification); governance sign-off'},
+  2:{0:'NIST AI RMF applicability scoping; EU AI Act classification; DORA Art.28/30 initiated; AI model inventory seed list',1:'AI data governance policy; AI model-inventory register (seed); materiality tiering scoping (High/Medium/Low)',2:'Draft AI Model Card (template); Art.12 logging requirements; human-oversight rules; RAGAS evaluation scaffold scoping',3:'AI Risk Register v1.0; EU AI Act Art.11 tech docs; NIST AI RMF MEASURE function scoping; model validation approach agreed',4:'AI incident-response procedure; DORA Art.28(3) register update; Risk Committee briefing; SR 11-7/EBA model validation scoping',5:'EU AI Act conformity assessment (Art.9–15); EBA model validation (scoping); AI Risk Register v2.0 draft; governance sign-off'},
+  3:{0:'NIST AI RMF gap assessment (Govern/Map); EU AI Act classification + Art.9 tech doc planning; AI model inventory kick-off (25 assets); DORA Art.28/30 initiated',1:'Draft AI data governance policy; AI model-inventory register (25 assets seed); data lineage documentation for AI inputs; materiality tiering draft',2:'Draft AI Model Card per asset; Art.12 logging implementation; human-oversight rules; RAGAS evaluation scaffold',3:'Finalise AI Risk Register v1.0; EU AI Act tech docs (Art.11); RAGAS model validation; DORA Art.30 + ISO 42001 gap assessment',4:'AI incident-response procedure; DORA Art.28(3) register update; Risk Committee briefing; SR 11-7/EBA model validation initiation',5:'EU AI Act conformity assessment + register filing; EBA model validation; AI Risk Register v2.0; Board AI Risk Dashboard handover; governance sign-off'},
+  4:{0:'NIST AI RMF gap assessment; EU AI Act classification; AI governance charter &amp; RACI for L4 workflows; shadow AI baseline scan',1:'AI data governance policy; AI model-inventory register (25 assets); data lineage documentation; L4 workflow data quality requirements for AI inputs',2:'AI Model Cards (all 25 assets); Art.12 logging + monitoring hooks; human-oversight rules; L4 AI workflow oversight dashboard requirements',3:'AI Risk Register v1.0 + monitoring automation design; EU AI Act tech docs (Art.9–17); RAGAS + model monitoring framework; AI-driven escalation audit trail design',4:'AI incident-response procedure; DORA Art.28(3) register; L4 AI workflow governance sign-off; model monitoring automated alerts activated; Risk Committee briefing',5:'EU AI Act conformity assessment; EBA model validation + monitoring reports; AI Risk Register v2.0 + automation; ISO 42001 gap remediation; governance sign-off'},
+  5:{0:'NIST AI RMF gap assessment; EU AI Act classification; autonomous operations governance scoping; AI governance charter; shadow AI baseline scan; ISO 42001 gap assessment initiated',1:'AI data governance policy; AI model-inventory register (25 assets); data lineage documentation; autonomous agent data governance framework; write-back data audit requirements',2:'AI Model Cards (all 25 assets); Art.12 + real-time logging; human-oversight automation gates; write-back approval gate requirements',3:'AI Risk Register v1.0 + autonomous update rules; EU AI Act tech docs (Art.9–17); RAGAS + continuous model monitoring; write-back approval framework design',4:'AI incident-response procedure; DORA Art.28(3) register; autonomous agent governance review; write-back approval workflow compliance; Risk Committee briefing',5:'EU AI Act conformity assessment + certification preparation; EBA model validation; AI Risk Register v2.0 + autonomous rules; ISO 42001 readiness report; annual supervisory AI risk report; governance sign-off'}
+};
+const AI_GOV_PHASE_DELS = {
+  0:{1:['NIST AI RMF Applicability Assessment','EU AI Act Classification Register'],2:['NIST AI RMF Applicability Assessment','EU AI Act Classification Register','AI Inventory Seed List'],3:['NIST AI RMF Gap Assessment','EU AI Act Classification Register','AI Governance Framework v0.1','AI Inventory Seed (25 assets)'],4:['NIST AI RMF Gap Assessment','EU AI Act Classification Register','AI Governance Charter & RACI','Shadow AI Baseline Report','AI Inventory Seed (25 assets)'],5:['NIST AI RMF Gap Assessment','EU AI Act Classification Register','AI Governance Charter','ISO 42001 Gap Assessment (draft)','Shadow AI Baseline','AI Inventory Seed (25 assets)']},
+  1:{1:['AI Data Governance Policy (draft)','AI Model Inventory Entry (seed)'],2:['AI Data Governance Policy','AI Model Inventory (seed)','Materiality Tiering Scope'],3:['AI Data Governance Policy','AI Model Inventory (25 assets)','Data Lineage Map for AI inputs','Materiality Tiering Matrix (draft)'],4:['AI Data Governance Policy','AI Model Inventory (25 assets)','Data Lineage Map','L4 Data Quality Requirements','Materiality Tiering Matrix'],5:['AI Data Governance Policy','AI Model Inventory (25 assets)','Data Lineage Map','Autonomous Agent Data Governance Framework','Write-Back Data Audit Requirements']},
+  2:{1:['AI Model Card Template','Art.12 Logging Requirements','Human Oversight Rules'],2:['AI Model Card Template','Art.12 Logging Requirements','Human Oversight Rules','RAGAS Eval Scaffold (scoping)'],3:['AI Model Cards (per asset, draft)','Art.12 Logging Implementation','Human Oversight Protocol v0.1','RAGAS Evaluation Scaffold'],4:['AI Model Cards (all 25 assets)','Art.12 Logging + Monitoring Hooks','Human Oversight Protocol','L4 AI Oversight Dashboard Requirements'],5:['AI Model Cards (all 25 assets)','Art.12 + Real-Time Logging','Human Oversight Automation Gates','Write-Back Approval Gate Requirements']},
+  3:{1:['AI Risk Register v1.0','EU AI Act Art.11 Documentation Brief'],2:['AI Risk Register v1.0','EU AI Act Art.11 Tech Docs','NIST RMF MEASURE Scoping','Model Validation Approach'],3:['AI Risk Register v1.0','EU AI Act Tech Docs (Art.11)','RAGAS Validation Report','ISO 42001 + DORA Gap Assessment'],4:['AI Risk Register v1.0 + Monitoring Automation','EU AI Act Tech Docs (Art.9–17)','RAGAS + Model Monitoring Framework','AI Escalation Audit Trail'],5:['AI Risk Register v1.0 + Autonomous Rules','EU AI Act Tech Docs (Art.9–17)','RAGAS + Continuous Monitoring','Write-Back Approval Framework Design']},
+  4:{1:['AI Incident-Response Procedure','Risk Committee AI Briefing'],2:['AI Incident-Response Procedure','DORA Art.28(3) Register Update','Risk Committee AI Briefing'],3:['AI Incident-Response Procedure','DORA Art.28(3) Register','Risk Committee AI Briefing','SR 11-7/EBA Validation Initiation'],4:['AI Incident-Response Procedure','DORA Art.28(3) Register','L4 AI Workflow Governance Sign-Off','Model Monitoring Automated Alerts','Risk Committee Briefing'],5:['AI Incident-Response Procedure','DORA Art.28(3) Register','Autonomous Agent Governance Review','Write-Back Compliance Check','Risk Committee Briefing']},
+  5:{1:['EU AI Act Conformity Assessment','AI Risk Register v2.0 (basic)','Governance Sign-Off'],2:['EU AI Act Conformity Assessment (Art.9–15)','EBA Validation Scoping','AI Risk Register v2.0 (draft)','Governance Sign-Off'],3:['EU AI Act Conformity Assessment + Register Filing','EBA Model Validation Reports','AI Risk Register v2.0','Board AI Risk Dashboard','Governance Sign-Off'],4:['EU AI Act Conformity Assessment','EBA Validation + Monitoring Reports','AI Risk Register v2.0 + Automation','ISO 42001 Gap Remediation','Governance Sign-Off'],5:['EU AI Act Conformity Assessment + Cert. Prep.','EBA Model Validation','AI Risk Register v2.0 + Autonomous Rules','ISO 42001 Readiness Report','Annual Supervisory AI Risk Report','Governance Sign-Off']}
+};
 function updateCostDisplay() {
   var level = currentLevel;
   var ld = LEVEL_DATA[level] || {};
@@ -7503,6 +7518,40 @@ function updateCostDisplay() {
       panel.appendChild(noteDiv);
     }
   }
+
+  // ── Phase Key Activities + Deliverable groups per level ──────────────────
+  var phaseCards = document.querySelectorAll('.phase-card');
+  phaseCards.forEach(function(card, idx) {
+    var liGov = card.querySelector('ul li.ai-gov');
+    if (liGov) {
+      if (!liGov.dataset.origText) liGov.dataset.origText = liGov.innerHTML;
+      liGov.innerHTML = isOn && AI_GOV_PHASE_ACTS[level] && AI_GOV_PHASE_ACTS[level][idx] !== undefined
+        ? '<strong>AI Governance:</strong> ' + AI_GOV_PHASE_ACTS[level][idx]
+        : liGov.dataset.origText;
+    }
+    var roleDelGroup = card.querySelector('.role-del-group');
+    if (!roleDelGroup) return;
+    var existDel = roleDelGroup.querySelector('.aigov-del-group');
+    if (existDel) existDel.remove();
+    var btn = card.querySelector('button.deliverables-toggle');
+    var countEl = btn ? btn.querySelector('.del-count') : null;
+    if (countEl && !countEl.dataset.origCount) countEl.dataset.origCount = countEl.textContent;
+    if (isOn && AI_GOV_PHASE_DELS[idx] && AI_GOV_PHASE_DELS[idx][level]) {
+      var dels = AI_GOV_PHASE_DELS[idx][level];
+      var delGroup = document.createElement('div');
+      delGroup.className = 'aigov-del-group';
+      delGroup.innerHTML = '<div class="role-del-header"><span class="role-del-badge" style="background:#A100FF;color:#fff">AI Gov</span><span class="role-del-name" style="color:#C77BFF">AI Governance Module</span></div><div class="deliverables-list">' +
+        dels.map(function(d){ return '<span class="deliverable-item" style="border-color:rgba(161,0,255,.35)">' + d + '</span>'; }).join('') + '</div>';
+      roleDelGroup.appendChild(delGroup);
+      if (countEl && countEl.dataset.origCount) {
+        var orig = countEl.dataset.origCount;
+        var m = orig.match(/^(\d+) across (\d+)/);
+        if (m) countEl.textContent = (parseInt(m[1]) + dels.length) + ' across ' + (parseInt(m[2]) + 1) + ' roles — click to expand';
+      }
+    } else if (countEl && countEl.dataset.origCount) {
+      countEl.textContent = countEl.dataset.origCount;
+    }
+  });
 }
 
 function toggleAIGov(btn) {
