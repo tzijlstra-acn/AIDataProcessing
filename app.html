@@ -1112,6 +1112,12 @@ body.pitch-mode .main > section { display: none !important; }
 .pitch-title { font-size: 30px; font-weight: 800; color: var(--tp); line-height: 1.2; margin: 0 0 12px; font-family: 'Space Grotesk', sans-serif; }
 .pitch-valueprop { font-size: 15.5px; color: var(--ts); line-height: 1.6; max-width: 720px; margin: 0 auto; }
 .pitch-problem { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--brandMid); border-radius: 6px; padding: 18px 22px; margin-bottom: 28px; font-size: 15px; line-height: 1.65; color: var(--tp); }
+.pitch-ref-row { display: flex; justify-content: center; gap: 12px; margin: 16px 0 4px; flex-wrap: wrap; }
+.pitch-ref-btn { display: inline-flex; align-items: center; gap: 7px; padding: 9px 20px; border-radius: 22px; font-size: 13px; font-weight: 700; font-family: inherit; text-decoration: none; transition: background .15s, border-color .15s, box-shadow .15s; cursor: pointer; border: 1.5px solid rgba(161,0,255,.4); color: var(--brandMid); background: var(--brandLight); }
+.pitch-ref-btn:hover { background: rgba(161,0,255,.12); border-color: rgba(161,0,255,.7); box-shadow: 0 3px 14px rgba(161,0,255,.14); }
+.pitch-ref-btn.primary { background: linear-gradient(135deg,#A100FF,#6900A8); color: #fff; border-color: transparent; }
+.pitch-ref-btn.primary:hover { filter: brightness(1.1); box-shadow: 0 4px 18px rgba(161,0,255,.35); }
+.pitch-ref-btn i { font-size: 15px; }
 .pitch-section-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tm); font-family: var(--mono); margin-bottom: 14px; }
 .pitch-outcomes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
 .pitch-outcome-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 8px; transition: box-shadow .2s, border-color .2s; }
@@ -1257,9 +1263,17 @@ body.pitch-mode .main > section { display: none !important; }
 <!-- ===== PITCH MODE SECTION (default view) ===== -->
 <div id="pitch-section">
   <div class="pitch-header">
-    <div class="pitch-eyebrow">ICS Cockpit</div>
+    <div class="pitch-eyebrow">ICS Cockpit · Reference Base Case</div>
     <h1 class="pitch-title">From reactive risk reporting to a live, AI-assisted control cockpit</h1>
     <p class="pitch-valueprop">One place to see every ICS control in real time — with AI that drafts, monitors and, when you're ready, acts, always under human oversight.</p>
+    <div class="pitch-ref-row">
+      <a class="pitch-ref-btn primary" href="https://tzijlstra-acn.github.io/NFRDashboard/" target="_blank" rel="noopener">
+        <i class="ti ti-layout-dashboard"></i> View the live dashboard
+      </a>
+      <a class="pitch-ref-btn" href="https://tzijlstra-acn.github.io/NFRDashboard/?ai=1" target="_blank" rel="noopener">
+        <i class="ti ti-sparkles"></i> Open with AI Layer
+      </a>
+    </div>
   </div>
 
   <div class="pitch-section-label">The problem</div>
@@ -7410,7 +7424,7 @@ function openDeliverableSample(name) {
 const LEVEL_DESCS = {
   1: { title: 'L1 — Static Export', text: 'GRC data is extracted manually as CSV files, uploaded to Azure Blob Storage, transformed by ADF and dbt, and loaded into PostgreSQL. The dashboard is read-only and refreshed on a fixed schedule (e.g. weekly). No real-time data, no AI, no automation.' },
   2: { title: 'L2 — Connected Live Feed', text: 'GRC system is connected via API with incremental polling every 15 minutes. Changes are pushed to the dashboard in near-real-time via Server-Sent Events (end-to-end latency bounded by the 15-minute ADF polling interval; browser updates instantly once data lands). TPRM system webhooks deliver vendor change signals automatically. Dashboard is always current — no manual exports needed. <strong>This level delivers the complete, correct dashboard output — live risk heatmap, risk register and RCSA timeline — with no AI components. Azure OpenAI and AI Search are not deployed at L2.</strong>' },
-  3: { title: 'L3 — AI-Assisted (Base Case — Reference Dashboard)', text: 'The full AI agent is active: natural language risk queries, document RAG search, and structured analysis. RCSA reminders are sent automatically. AI drafts risk descriptions for TPRM signals. All AI outputs are clearly labelled and the user remains in full control. This is the reference dashboard level.' },
+  3: { title: 'L3 — AI-Assisted (Base Case — Reference Dashboard)', text: 'The full AI agent is active: natural language risk queries, document RAG search, and structured analysis. RCSA reminders are sent automatically. AI drafts risk descriptions for TPRM signals. All AI outputs are clearly labelled and the user remains in full control. This is the reference dashboard level. <a href="https://tzijlstra-acn.github.io/NFRDashboard/" target="_blank" rel="noopener" style="color:var(--brandMid);font-weight:600;">View the live reference dashboard →</a> &nbsp;·&nbsp; <a href="https://tzijlstra-acn.github.io/NFRDashboard/?ai=1" target="_blank" rel="noopener" style="color:var(--brandMid);font-weight:600;">Open with ✦ AI Layer</a>' },
   4: { title: 'L4 — Active Proposals', text: 'The AI proactively monitors for overdue RCSAs and other conditions, generates proposed actions (reminders, escalations), and surfaces them in the 2LoD dashboard for one-click approval. The AI never executes automatically — every action requires explicit human approval via a Durable Function external event.' },
   5: { title: 'L5 — Autonomous with GRC Write-back', text: 'Extends L4 with integrated policy change detection and GRC write-back (core deliverable). When a new regulatory document is uploaded, the AI identifies affected risk descriptions and proposes updates. 2LoD approves and the ICS Cockpit writes directly to the GRC source system via its REST API, closing the full data loop.' },
 };
