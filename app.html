@@ -1253,6 +1253,33 @@ summary:focus-visible,
       so it behaves like the other collapsibles in the guide. */
 details > summary .rc-caret { display: inline-block; transition: transform .2s ease; }
 details[open] > summary .rc-caret { transform: rotate(90deg); }
+
+/* ===== JOURNEY — AI AGENT LAYER ZONE (L3+) ===== */
+.journey-dot[data-zone="ai"] .journey-dot-circle { border-color: rgba(139,92,246,.75); background: rgba(88,28,220,.14); }
+.journey-dot[data-zone="ai"] .journey-dot-label,
+.journey-dot[data-zone="ai"] .journey-dot-label-s { color: #C4B5FD; }
+.jz-ai { color:#C4B5FD; } .jz-ai .jz-pip { border-color:rgba(139,92,246,.85); background:rgba(88,28,220,.28); }
+
+/* ===== JOURNEY — ZONE HEADER ROW (above the filmstrip) ===== */
+.journey-zones { display:flex; align-items:flex-end; gap:6px; padding:12px 20px 0; background:linear-gradient(135deg,#160029 0%,#3D0066 100%); }
+.jz-head { font-size:9.5px; font-weight:800; letter-spacing:.11em; text-transform:uppercase; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; padding-bottom:4px; border-bottom:2px solid currentColor; opacity:.88; }
+.jz-head.zh-input  { color:#9EE8C8; }
+.jz-head.zh-core   { color:#D4C8FF; }
+.jz-head.zh-output { color:#FCDBA0; }
+.jz-head.zh-ai     { color:#C4B5FD; }
+
+/* ===== JOURNEY — SIMPLIFIED MODE PLAIN-ENGLISH DOT LABELS ===== */
+.journey-dot-label-s { display:none; font-size:10px; font-weight:600; color:rgba(255,255,255,.35); letter-spacing:.04em; white-space:nowrap; text-align:center; }
+.journey-dot[data-zone="input"]  .journey-dot-label-s { color:#9EE8C8; }
+.journey-dot[data-zone="core"]   .journey-dot-label-s { color:#D4C8FF; }
+.journey-dot[data-zone="output"] .journey-dot-label-s { color:#FCDBA0; }
+.journey-dot.active .journey-dot-label-s { color:rgba(255,255,255,.95); font-weight:700; }
+body.journey-simplified .journey-dot .journey-dot-label   { display:none; }
+body.journey-simplified .journey-dot .journey-dot-label-s { display:block; }
+
+/* ===== JOURNEY — L5 write-back feedback-loop note ===== */
+.journey-loop-note { margin:0 24px 20px; padding:12px 16px; border-radius:var(--radius); background:linear-gradient(135deg, rgba(88,28,220,.10), rgba(26,122,82,.10)); border:1px solid rgba(139,92,246,.28); border-left:3px solid #8B5CF6; font-size:12.5px; line-height:1.6; color:var(--tp); }
+.journey-loop-note strong { color:#6D28D9; }
 </style>
 <!-- docx library removed — SoW uses native HTML-to-Word blob generation -->
 </head>
@@ -2515,13 +2542,18 @@ details[open] > summary .rc-caret { transform: rotate(90deg); }
   <!-- ===================== LEVEL 1 PLAYER ===================== -->
   <div data-level-content="1" style="display:none;">
   <div class="journey-player">
+    <div class="journey-zones" aria-hidden="true">
+      <span class="jz-head zh-input"  style="flex:2">Input</span>
+      <span class="jz-head zh-core"   style="flex:3">Platform Core</span>
+      <span class="jz-head zh-output" style="flex:1">Output</span>
+    </div>
     <div class="journey-filmstrip">
-      <div class="journey-dot active" data-zone="input"  title="Step 1: Manual CSV Export"><div class="journey-dot-circle">1</div><div class="journey-dot-label">CSV Export</div></div>
-      <div class="journey-dot"        data-zone="input"  title="Step 2: Blob Upload"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Blob Upload</div></div>
-      <div class="journey-dot zone-start" data-zone="core" title="Step 3: ADF Copy Activity"><div class="journey-dot-circle">3</div><div class="journey-dot-label">ADF Copy</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 4: dbt Transform"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 5: PostgreSQL Core Table"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot zone-start" data-zone="output" title="Step 6: Static Dashboard"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Dashboard</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: Manual CSV Export"><div class="journey-dot-circle">1</div><div class="journey-dot-label">CSV Export</div><div class="journey-dot-label-s">Source Export</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Blob Upload"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Blob Upload</div><div class="journey-dot-label-s">File Upload</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: ADF Copy Activity"><div class="journey-dot-circle">3</div><div class="journey-dot-label">ADF Copy</div><div class="journey-dot-label-s">Ingestion</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: dbt Transform"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Transform</div><div class="journey-dot-label-s">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: PostgreSQL Core Table"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Database</div><div class="journey-dot-label-s">Data Store</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 6: Static Dashboard"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Dashboard</div><div class="journey-dot-label-s">Dashboard</div></div>
     </div>
     <div class="jz-legend">
       <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
@@ -2698,15 +2730,20 @@ curl https://icsstorage.z6.web.core.windows.net/index.html
   <!-- ===================== LEVEL 2 PLAYER ===================== -->
   <div data-level-content="2" style="display:none;">
   <div class="journey-player">
+    <div class="journey-zones" aria-hidden="true">
+      <span class="jz-head zh-input"  style="flex:2">Input</span>
+      <span class="jz-head zh-core"   style="flex:4">Platform Core</span>
+      <span class="jz-head zh-output" style="flex:2">Output</span>
+    </div>
     <div class="journey-filmstrip">
-      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
-      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
-      <div class="journey-dot zone-start" data-zone="core" title="Step 3: ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 5: dbt Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot zone-start" data-zone="output" title="Step 7: FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 8: SSE Push — NEW at L2"><div class="journey-dot-circle">8</div><div class="journey-dot-label">SSE Push</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div><div class="journey-dot-label-s">Source System</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div><div class="journey-dot-label-s">Connector</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div><div class="journey-dot-label-s">Ingestion</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div><div class="journey-dot-label-s">Staging</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: dbt Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div><div class="journey-dot-label-s">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div><div class="journey-dot-label-s">Data Store</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 7: FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div><div class="journey-dot-label-s">API</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 8: SSE Push — NEW at L2"><div class="journey-dot-circle">8</div><div class="journey-dot-label">SSE Push</div><div class="journey-dot-label-s">Live Push</div></div>
     </div>
     <div class="jz-legend">
       <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
@@ -3085,22 +3122,30 @@ data: {
   <div data-level-content="3">
   <div class="journey-player">
     <!-- Filmstrip -->
+    <div class="journey-zones" aria-hidden="true">
+      <span class="jz-head zh-input"  style="flex:2">Input</span>
+      <span class="jz-head zh-core"   style="flex:4">Platform Core</span>
+      <span class="jz-head zh-output" style="flex:4">Output</span>
+      <span class="jz-head zh-ai"     style="flex:1">AI Layer</span>
+    </div>
     <div class="journey-filmstrip">
-      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC Source — ServiceNow REST API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC Source</div></div>
-      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector — Python GRCConnector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
-      <div class="journey-dot zone-start" data-zone="core" title="Step 3: Data Factory — ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging — PostgreSQL staging.risks_raw"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 5: Transform — dbt models/core/risks.sql"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 6: Database — core.risks table"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot zone-start" data-zone="output" title="Step 7: API Layer — FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 8: Browser — React useHeatmapData hook"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 9: Heatmap — HeatmapCell component"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 10: User Click — process detail view"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC Source — ServiceNow REST API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC Source</div><div class="journey-dot-label-s">Source System</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector — Python GRCConnector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div><div class="journey-dot-label-s">Connector</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: Data Factory — ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div><div class="journey-dot-label-s">Ingestion</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging — PostgreSQL staging.risks_raw"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div><div class="journey-dot-label-s">Staging</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: Transform — dbt models/core/risks.sql"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div><div class="journey-dot-label-s">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 6: Database — core.risks table"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div><div class="journey-dot-label-s">Data Store</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 7: API Layer — FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div><div class="journey-dot-label-s">API</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 8: Browser — React useHeatmapData hook"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div><div class="journey-dot-label-s">Browser</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 9: Heatmap — HeatmapCell component"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div><div class="journey-dot-label-s">Heatmap</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 10: User Click — risk detail panel + AI chat"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div><div class="journey-dot-label-s">Risk Details</div></div>
+      <div class="journey-dot zone-start" data-zone="ai" title="Step 11: AI Chat — read-only agent query (Azure OpenAI GPT-4o + RAG)"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Chat</div><div class="journey-dot-label-s">AI Chat</div></div>
     </div>
     <div class="jz-legend">
       <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
       <div class="jz-item jz-core"><span class="jz-pip"></span>Platform Core — Reusable</div>
       <div class="jz-item jz-output"><span class="jz-pip"></span>Configurable Output</div>
+      <div class="jz-item jz-ai"><span class="jz-pip"></span>AI Agent Layer</div>
     </div>
 
     <!-- STEP 0: GRC Source -->
@@ -3588,13 +3633,68 @@ CREATE INDEX idx_risks_heatmap
       </div>
     </div>
 
+    <!-- STEP 10: AI Chat (read-only agent) -->
+    <div class="journey-step" data-step="10">
+      <div class="journey-level-tag l3"><span class="jlt-icon">★</span><span class="jlt-label">NEW at Level 3 — read-only AI agent on the risk detail panel · additive side feature, NOT on the heatmap data path</span><span class="jlt-avail">L3 · L4 · L5</span></div>
+      <div class="journey-body">
+        <div class="journey-data">
+          <div class="data-label">Risk detail panel → POST /api/agent/query (read-only RAG)</div>
+          <pre><span class="jc">// User opens the risk detail panel for RSK-2024-0142 and types
+// into the agent chat: "What controls mitigate this risk?"</span>
+POST /api/agent/query
+{
+  <span class="jk">"risk_id"</span>: <span class="js">"RSK-2024-0142"</span>,
+  <span class="jk">"question"</span>: <span class="js">"What controls mitigate this risk?"</span>
+}
+
+<span class="jc"># routers/agent.py — retrieval-augmented, read-only</span>
+<span class="jk">@router</span>.post(<span class="js">"/agent/query"</span>)
+<span class="jk">async def</span> agent_query(req: AgentQuery):
+    ctx = <span class="jk">await</span> ai_search.hybrid_search(   <span class="jc"># Azure AI Search (RAG)</span>
+        query=req.question, filter=f<span class="js">"risk_id eq '{req.risk_id}'"</span>, top=5)
+    answer = <span class="jk">await</span> aoai.chat(               <span class="jc"># Azure OpenAI GPT-4o</span>
+        system=READ_ONLY_PROMPT, context=ctx, question=req.question)
+    <span class="jk">return</span> { <span class="jk">"answer"</span>: answer, <span class="jk">"citations"</span>: ctx.sources }
+
+<span class="jc">// Agent responds (plain English, with citations):</span>
+{
+  <span class="jk">"answer"</span>: <span class="js">"RSK-2024-0142 (Likelihood 4 / Impact 4, High) concerns
+    inadequate access controls on the financial reporting system.
+    Recommended controls: enforce quarterly access recertification,
+    apply least-privilege RBAC, and enable SoD conflict monitoring."</span>,
+  <span class="jk">"citations"</span>: [<span class="js">"ISO 27001 A.9.2"</span>, <span class="js">"Access Control Policy v3.2"</span>]
+}
+<span class="jc">// READ-ONLY at L3 — the agent suggests; it cannot change any record.</span></pre>
+        </div>
+        <div class="journey-context">
+          <div class="journey-component" style="background:rgba(88,28,220,.06);border-color:rgba(139,92,246,.28);border-left-color:#8B5CF6;">
+            <div class="comp-name" style="color:#6D28D9;">AI Agent — Azure OpenAI GPT-4o + AI Search (RAG)</div>
+            <div class="comp-timing">Launched from the risk detail panel sidebar · Hybrid retrieval over the indexed policy/control corpus grounds the answer · First token ~600ms, full answer ~2–4s · The heatmap and pipeline render identically to L2 — this panel is additive.</div>
+          </div>
+          <div class="journey-actors">
+            <div class="journey-actor client">
+              <span class="actor-badge">Client</span>
+              <div class="actor-body"><div class="actor-role">Risk Management SME (2LoD)</div>Opens RSK-2024-0142, asks the agent for mitigating controls in plain English, and reads a grounded summary with policy citations — saving a manual document search. She still decides and records any action herself.</div>
+            </div>
+            <div class="journey-actor accenture">
+              <span class="actor-badge">Accenture</span>
+              <div class="actor-body"><div class="actor-role">AI Engineer (agent + RAG)</div>Built the retrieval pipeline and the read-only system prompt. The agent has no write tools at L3 — it can only query and summarise. All responses carry citations back to source documents for auditability.</div>
+            </div>
+          </div>
+          <div class="journey-warning">
+            <strong>Read-only at Level 3</strong>The agent answers questions and proposes controls, but performs no write-back to the GRC system. Acting on a suggestion is entirely the risk owner's decision. Action proposals arrive at L4; approved write-back at L5.
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Controls -->
     <div class="journey-controls">
       <button class="journey-btn journey-prev-btn">&#8592; Prev</button>
       <button class="journey-btn primary journey-play-btn">&#9654; Play</button>
       <button class="journey-btn journey-next-btn">Next &#8594;</button>
       <div class="journey-progress-track"><div class="journey-progress-fill" style="width:0%;"></div></div>
-      <span class="journey-step-counter">Step 1 of 10</span>
+      <span class="journey-step-counter">Step 1 of 11</span>
     </div>
   </div>
   </div><!-- end level 3 content -->
@@ -3602,24 +3702,31 @@ CREATE INDEX idx_risks_heatmap
   <!-- ===================== LEVEL 4 PLAYER ===================== -->
   <div data-level-content="4" style="display:none;">
   <div class="journey-player">
+    <div class="journey-zones" aria-hidden="true">
+      <span class="jz-head zh-input"  style="flex:2">Input</span>
+      <span class="jz-head zh-core"   style="flex:4">Platform Core</span>
+      <span class="jz-head zh-output" style="flex:4">Output</span>
+      <span class="jz-head zh-ai"     style="flex:2">AI Layer</span>
+    </div>
     <div class="journey-filmstrip">
-      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
-      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
-      <div class="journey-dot zone-start" data-zone="core" title="Step 3: Data Factory"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 5: Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot zone-start" data-zone="output" title="Step 7: API Layer"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 8: Browser"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 9: Heatmap"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 10: User Click"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 11: AI Proposes Action — NEW at L4"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Proposes</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 12: Human Approves — NEW at L4"><div class="journey-dot-circle">12</div><div class="journey-dot-label">Human OKs</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC Source — ServiceNow REST API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC Source</div><div class="journey-dot-label-s">Source System</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector — Python GRCConnector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div><div class="journey-dot-label-s">Connector</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: Data Factory — ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div><div class="journey-dot-label-s">Ingestion</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging — PostgreSQL staging.risks_raw"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div><div class="journey-dot-label-s">Staging</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: Transform — dbt models/core/risks.sql"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div><div class="journey-dot-label-s">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 6: Database — core.risks table"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div><div class="journey-dot-label-s">Data Store</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 7: API Layer — FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div><div class="journey-dot-label-s">API</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 8: Browser — React useHeatmapData hook"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div><div class="journey-dot-label-s">Browser</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 9: Heatmap — HeatmapCell component"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div><div class="journey-dot-label-s">Heatmap</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 10: User Click — risk detail panel + AI chat"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div><div class="journey-dot-label-s">Risk Details</div></div>
+      <div class="journey-dot zone-start" data-zone="ai" title="Step 11: AI Proposes Action — NEW at L4"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Proposes</div><div class="journey-dot-label-s">AI Proposes</div></div>
+      <div class="journey-dot"        data-zone="ai"     title="Step 12: Human Approves — NEW at L4"><div class="journey-dot-circle">12</div><div class="journey-dot-label">Human OKs</div><div class="journey-dot-label-s">Human OKs</div></div>
     </div>
     <div class="jz-legend">
       <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
       <div class="jz-item jz-core"><span class="jz-pip"></span>Platform Core — Reusable</div>
       <div class="jz-item jz-output"><span class="jz-pip"></span>Configurable Output</div>
+      <div class="jz-item jz-ai"><span class="jz-pip"></span>AI Agent Layer</div>
     </div>
     <!-- Steps 1-10: compact versions (same as L3) -->
     <div class="journey-step" data-step="0">
@@ -4172,26 +4279,33 @@ CREATE INDEX idx_risks_heatmap
   <!-- ===================== LEVEL 5 PLAYER ===================== -->
   <div data-level-content="5" style="display:none;">
   <div class="journey-player">
+    <div class="journey-zones" aria-hidden="true">
+      <span class="jz-head zh-input"  style="flex:2">Input</span>
+      <span class="jz-head zh-core"   style="flex:4">Platform Core</span>
+      <span class="jz-head zh-output" style="flex:4">Output</span>
+      <span class="jz-head zh-ai"     style="flex:4">AI Layer</span>
+    </div>
     <div class="journey-filmstrip">
-      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC API</div></div>
-      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div></div>
-      <div class="journey-dot zone-start" data-zone="core" title="Step 3: Data Factory"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 5: Transform"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div></div>
-      <div class="journey-dot"        data-zone="core"   title="Step 6: Database"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div></div>
-      <div class="journey-dot zone-start" data-zone="output" title="Step 7: API Layer"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 8: Browser"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 9: Heatmap"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 10: User Click"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 11: AI Proposes"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Proposes</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 12: Human OKs"><div class="journey-dot-circle">12</div><div class="journey-dot-label">Human OKs</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 13: Policy Change Detection — Autonomous at L5"><div class="journey-dot-circle">13</div><div class="journey-dot-label">Policy Update</div></div>
-      <div class="journey-dot"        data-zone="output" title="Step 14: GRC Write-back — Core at L5"><div class="journey-dot-circle">14</div><div class="journey-dot-label">Write-back</div></div>
+      <div class="journey-dot active" data-zone="input"  title="Step 1: GRC Source — ServiceNow REST API"><div class="journey-dot-circle">1</div><div class="journey-dot-label">GRC Source</div><div class="journey-dot-label-s">Source System</div></div>
+      <div class="journey-dot"        data-zone="input"  title="Step 2: Connector — Python GRCConnector"><div class="journey-dot-circle">2</div><div class="journey-dot-label">Connector</div><div class="journey-dot-label-s">Connector</div></div>
+      <div class="journey-dot zone-start" data-zone="core" title="Step 3: Data Factory — ADF Pipeline"><div class="journey-dot-circle">3</div><div class="journey-dot-label">Data Factory</div><div class="journey-dot-label-s">Ingestion</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 4: Staging — PostgreSQL staging.risks_raw"><div class="journey-dot-circle">4</div><div class="journey-dot-label">Staging</div><div class="journey-dot-label-s">Staging</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 5: Transform — dbt models/core/risks.sql"><div class="journey-dot-circle">5</div><div class="journey-dot-label">Transform</div><div class="journey-dot-label-s">Transform</div></div>
+      <div class="journey-dot"        data-zone="core"   title="Step 6: Database — core.risks table"><div class="journey-dot-circle">6</div><div class="journey-dot-label">Database</div><div class="journey-dot-label-s">Data Store</div></div>
+      <div class="journey-dot zone-start" data-zone="output" title="Step 7: API Layer — FastAPI + Redis"><div class="journey-dot-circle">7</div><div class="journey-dot-label">API Layer</div><div class="journey-dot-label-s">API</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 8: Browser — React useHeatmapData hook"><div class="journey-dot-circle">8</div><div class="journey-dot-label">Browser</div><div class="journey-dot-label-s">Browser</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 9: Heatmap — HeatmapCell component"><div class="journey-dot-circle">9</div><div class="journey-dot-label">Heatmap</div><div class="journey-dot-label-s">Heatmap</div></div>
+      <div class="journey-dot"        data-zone="output" title="Step 10: User Click — risk detail panel + AI chat"><div class="journey-dot-circle">10</div><div class="journey-dot-label">User Click</div><div class="journey-dot-label-s">Risk Details</div></div>
+      <div class="journey-dot zone-start" data-zone="ai" title="Step 11: AI Proposes Action"><div class="journey-dot-circle">11</div><div class="journey-dot-label">AI Proposes</div><div class="journey-dot-label-s">AI Proposes</div></div>
+      <div class="journey-dot"        data-zone="ai"     title="Step 12: Human Approves"><div class="journey-dot-circle">12</div><div class="journey-dot-label">Human OKs</div><div class="journey-dot-label-s">Human OKs</div></div>
+      <div class="journey-dot"        data-zone="ai"     title="Step 13: Policy Change Detection — Autonomous at L5"><div class="journey-dot-circle">13</div><div class="journey-dot-label">Policy Update</div><div class="journey-dot-label-s">Policy Watch</div></div>
+      <div class="journey-dot"        data-zone="ai"     title="Step 14: GRC Write-back (human-approved) — Core at L5"><div class="journey-dot-circle">14</div><div class="journey-dot-label">Write-back</div><div class="journey-dot-label-s">GRC Update</div></div>
     </div>
     <div class="jz-legend">
       <div class="jz-item jz-input"><span class="jz-pip"></span>Input Connector</div>
       <div class="jz-item jz-core"><span class="jz-pip"></span>Platform Core — Reusable</div>
       <div class="jz-item jz-output"><span class="jz-pip"></span>Configurable Output</div>
+      <div class="jz-item jz-ai"><span class="jz-pip"></span>AI Agent Layer</div>
     </div>
     <!-- Steps 1-12 compact -->
     <div class="journey-step" data-step="0">
@@ -4803,6 +4917,9 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
           </div>
           <div class="journey-component" style="background:var(--gb);border-color:rgba(26,122,82,.2);"><div class="comp-name" style="color:var(--g);">Full Circle — Level 5 Complete</div><div class="comp-timing">GRC platform → ICS Cockpit → AI analysis → human approval → GRC platform updated. The system learns from new policies and helps keep the GRC source-of-truth accurate.</div></div>
         </div>
+      </div>
+      <div class="journey-loop-note">
+        <strong>↺ This write-back closes the loop.</strong> The recommendation lands back in ServiceNow as a draft control test or RCSA trigger, visible to the risk owner. A GRC issue flows out → the AI Platform processes it → an AI-drafted action returns to the GRC system — one full circle. Accenture retains human-in-the-loop at L5: every write-back requires approval before execution.
       </div>
     </div>
     <div class="journey-controls">
