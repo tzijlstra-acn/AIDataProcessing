@@ -1095,10 +1095,64 @@ tbody.api-key-only .api-adv { display: none; }
 
 /* Jargon chips — dotted underline hint that a tooltip is available */
 .jargon { border-bottom: 1px dotted currentColor; cursor: help; }
+
+/* =====================================================================
+   PITCH MODE — clean 10-minute walkthrough view
+   ===================================================================== */
+#pitch-section { display: none; }
+body.pitch-mode #pitch-section { display: block; }
+body.pitch-mode .sidebar,
+body.pitch-mode #sidebar,
+body.pitch-mode #moduleBar,
+body.pitch-mode .main > section { display: none !important; }
+
+#pitch-section { max-width: 900px; margin: 0 auto; padding: 8px 24px 90px; }
+.pitch-header { margin: 12px 0 30px; text-align: center; }
+.pitch-eyebrow { font-size: 11px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--brandMid); font-family: var(--mono); margin-bottom: 12px; }
+.pitch-title { font-size: 30px; font-weight: 800; color: var(--tp); line-height: 1.2; margin: 0 0 12px; font-family: 'Space Grotesk', sans-serif; }
+.pitch-valueprop { font-size: 15.5px; color: var(--ts); line-height: 1.6; max-width: 720px; margin: 0 auto; }
+.pitch-problem { background: var(--surface); border: 1px solid var(--border); border-left: 4px solid var(--brandMid); border-radius: 6px; padding: 18px 22px; margin-bottom: 28px; font-size: 15px; line-height: 1.65; color: var(--tp); }
+.pitch-section-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tm); font-family: var(--mono); margin-bottom: 14px; }
+.pitch-outcomes { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+.pitch-outcome-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px; display: flex; flex-direction: column; gap: 8px; transition: box-shadow .2s, border-color .2s; }
+.pitch-outcome-card:hover { box-shadow: 0 4px 20px rgba(161,0,255,.1); border-color: rgba(161,0,255,.25); }
+.pitch-outcome-icon { font-size: 28px; color: var(--brandMid); }
+.pitch-outcome-headline { font-size: 15px; font-weight: 700; color: var(--tp); line-height: 1.3; }
+.pitch-outcome-detail { font-size: 13.5px; color: var(--ts); line-height: 1.55; }
+.pitch-proposal { display: flex; gap: 16px; margin-bottom: 28px; }
+.pitch-prop-tile { flex: 1; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 18px 16px; text-align: center; }
+.pitch-prop-value { font-size: 20px; font-weight: 800; color: var(--brandMid); font-family: 'Space Grotesk', sans-serif; margin-bottom: 4px; }
+.pitch-prop-label { font-size: 11px; color: var(--tm); text-transform: uppercase; letter-spacing: .08em; font-weight: 600; }
+.pitch-maturity { display: flex; align-items: flex-start; justify-content: center; gap: 0; margin-bottom: 8px; }
+.pitch-mat-node { display: flex; flex-direction: column; align-items: center; cursor: pointer; flex: 1; max-width: 160px; }
+.pitch-mat-node:hover .pmat-circle { border-color: var(--brandMid); }
+.pmat-row { display: flex; align-items: center; width: 100%; }
+.pmat-line { flex: 1; height: 2px; background: var(--border); }
+.pmat-line.done { background: var(--brand); }
+.pmat-line.first { visibility: hidden; }
+.pmat-line.last { visibility: hidden; }
+.pmat-circle { width: 36px; height: 36px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; font-family: 'Space Grotesk', sans-serif; border: 2px solid var(--border); background: var(--canvas); color: var(--tm); flex-shrink: 0; transition: background .2s, border-color .2s, color .2s; }
+.pmat-circle.done { background: var(--brand); border-color: var(--brand); color: #fff; }
+.pmat-circle.active { background: linear-gradient(135deg,#A100FF,#6900A8); border-color: #A100FF; color: #fff; box-shadow: 0 0 0 4px rgba(161,0,255,.18); }
+.pmat-label { font-size: 11px; color: var(--tm); text-align: center; margin-top: 6px; line-height: 1.3; padding: 0 4px; font-weight: 500; }
+.pmat-label.active-label { color: var(--brandMid); font-weight: 700; }
+
+/* Mode toggle button (fixed, bottom-right) */
+#modeToggleBtn { position: fixed; bottom: 28px; right: 28px; padding: 10px 22px; border: none; border-radius: 24px; background: linear-gradient(135deg,#A100FF,#6900A8); color: #fff; font-weight: 700; font-size: 13px; box-shadow: 0 8px 28px rgba(105,0,168,.4); z-index: 999; cursor: pointer; font-family: inherit; }
+#modeToggleBtn:hover { filter: brightness(1.08); }
+
+@media (max-width: 700px) {
+  .pitch-title { font-size: 23px; }
+  .pitch-outcomes { grid-template-columns: 1fr; }
+  .pitch-proposal { flex-direction: column; }
+  .pitch-maturity { gap: 0; }
+  .pmat-label { font-size: 9.5px; }
+}
 </style>
 <!-- docx library removed — SoW uses native HTML-to-Word blob generation -->
 </head>
 <body>
+<script>/* no-flash mode init — default to pitch mode */(function(){var m=sessionStorage.getItem('ics_mode');document.body.classList.add(m==='detail'?'detail-mode':'pitch-mode');})();</script>
 
 <!-- TOPBAR -->
 <div class="topbar">
@@ -1198,6 +1252,27 @@ tbody.api-key-only .api-adv { display: none; }
     <span class="module-chip-tag">+~€390K &middot; 2 roles &middot; NIST AI RMF</span>
     <span class="module-chip-toggle" id="aigov-toggle-indicator">OFF</span>
   </button>
+</div>
+
+<!-- ===== PITCH MODE SECTION (default view) ===== -->
+<div id="pitch-section">
+  <div class="pitch-header">
+    <div class="pitch-eyebrow">ICS Cockpit</div>
+    <h1 class="pitch-title">From reactive risk reporting to a live, AI-assisted control cockpit</h1>
+    <p class="pitch-valueprop">One place to see every ICS control in real time — with AI that drafts, monitors and, when you're ready, acts, always under human oversight.</p>
+  </div>
+
+  <div class="pitch-section-label">The problem</div>
+  <div class="pitch-problem">ICS monitoring today is reactive, manual and siloed — risk owners export CSVs, 2LoD spends days reconciling data, and by the time a report reaches the committee it is already stale. This platform closes that gap.</div>
+
+  <div class="pitch-section-label">What you get at this level</div>
+  <div class="pitch-outcomes" id="pitch-outcomes"></div>
+
+  <div class="pitch-section-label">The proposal</div>
+  <div class="pitch-proposal" id="pitch-proposal"></div>
+
+  <div class="pitch-section-label">Maturity path</div>
+  <div class="pitch-maturity" id="pitch-maturity"></div>
 </div>
 
 <!-- ===== SECTION 1: OVERVIEW ===== -->
@@ -7868,6 +7943,9 @@ function setMaturityLevel(level) {
   }
   // Re-apply AI Governance module overrides after every level change
   updateCostDisplay();
+
+  // ── Pitch mode sync ──────────────────────────────────────────────────
+  if (typeof renderPitchSection === 'function') renderPitchSection(level);
 }
 
 /* =====================================================================
@@ -8978,6 +9056,135 @@ function generateSoW(level) {
   }
   function run() { document.querySelectorAll(SEL).forEach(initEl); }
   run();
+})();
+</script>
+
+<!-- ===== PITCH MODE — toggle button + renderers ===== -->
+<button id="modeToggleBtn" type="button">Full breakdown &rarr;</button>
+<script>
+/* =====================================================================
+   PITCH MODE — outcome copy, renderers, and mode toggle
+   ===================================================================== */
+const PITCH_OUTCOMES = {
+  1: [
+    {icon:'ti-database-import', h:'Structured GRC data, ready to query', d:'CSV exports from ServiceNow loaded into a clean PostgreSQL schema — no more ad-hoc spreadsheets.'},
+    {icon:'ti-chart-bar', h:'Static dashboard in 12 weeks', d:'A read-only risk heatmap, RCSA timeline and control register deployed on Azure. Refreshed on schedule.'},
+    {icon:'ti-file-check', h:'Audit-ready data foundation', d:'dbt models enforce data quality gates before anything reaches the dashboard.'},
+    {icon:'ti-rocket', h:'Fastest path to a working prototype', d:'Minimal stack, minimal cost — prove the concept before committing to live connectivity.'}
+  ],
+  2: [
+    {icon:'ti-dashboard', h:'Live risk data, always current', d:'ServiceNow data lands on the dashboard within 15 minutes — no manual exports, no stale reports.'},
+    {icon:'ti-map-2', h:'Full ICS coverage in one cockpit', d:'All six control areas visible across Operations, Payments, IT Security, Finance, Data & Privacy and Treasury.'},
+    {icon:'ti-clock-check', h:'RCSA status at a glance', d:'Due dates, overdue cycles and completion rates without opening any GRC tool.'},
+    {icon:'ti-trending-up', h:'Statistical trend per risk', d:'Trend arrows show whether residual risk is improving or deteriorating since the last cycle.'}
+  ],
+  3: [
+    {icon:'ti-message-chatbot', h:'Ask your risk data in plain language', d:'The AI agent answers natural-language queries — "Show me overdue controls in IT Security" — and cites sources.'},
+    {icon:'ti-file-pencil', h:'TPRM signals drafted automatically', d:'Vendor change events become structured draft risks in seconds, ready for 2LoD review.'},
+    {icon:'ti-shield-check', h:'Policy-grounded answers', d:'The agent retrieves relevant policies and prior RCSAs before answering — responses are traceable, not hallucinated.'},
+    {icon:'ti-brain', h:'Full AI layer, zero new UI to learn', d:'The AI panel lives inside the existing cockpit — no separate tool, no training overhead.'}
+  ],
+  4: [
+    {icon:'ti-send', h:'AI proposes actions, humans approve', d:'Overdue RCSAs, escalation candidates and reminders are surfaced automatically — one click to approve or dismiss.'},
+    {icon:'ti-user-check', h:'Human-in-the-loop by design', d:'No action executes without explicit 2LoD approval. Azure Durable Functions enforce the approval gate.'},
+    {icon:'ti-bell-ringing', h:'Proactive monitoring, not reactive reporting', d:'The system watches for overdue cycles 24/7 and alerts before a breach, not after.'},
+    {icon:'ti-list-check', h:'Full audit trail of AI proposals', d:'Every proposed action, approval and rejection is logged with timestamp and actor for regulator review.'}
+  ],
+  5: [
+    {icon:'ti-refresh', h:'Policy changes reflected automatically', d:'New regulatory documents trigger AI-proposed updates to affected risk descriptions — 2LoD approves and they write back to ServiceNow.'},
+    {icon:'ti-database-export', h:'GRC write-back closes the loop', d:'The cockpit becomes a two-way integration — not just reading from ServiceNow, but updating it under human oversight.'},
+    {icon:'ti-certificate', h:'DORA-compliant autonomous operations', d:'Full audit trail, rollback storage and segregated approval path meet DORA operational resilience requirements.'},
+    {icon:'ti-infinity', h:'Compounding AI value over time', d:'Each approved change improves the model context — the system gets more accurate the longer it runs.'}
+  ]
+};
+
+const PITCH_MAT_LABELS = {
+  1: 'Static baseline',
+  2: 'Live data feed',
+  3: 'AI-assisted (base case)',
+  4: 'Active proposals',
+  5: 'Autonomous loop'
+};
+
+function renderPitchOutcomes(level) {
+  var el = document.getElementById('pitch-outcomes');
+  if (!el) return;
+  var items = PITCH_OUTCOMES[level] || PITCH_OUTCOMES[3];
+  el.innerHTML = items.map(function (o) {
+    return '<div class="pitch-outcome-card">'
+      + '<i class="ti ' + o.icon + ' pitch-outcome-icon"></i>'
+      + '<div class="pitch-outcome-headline">' + o.h + '</div>'
+      + '<div class="pitch-outcome-detail">' + o.d + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+function renderPitchProposal(level) {
+  var el = document.getElementById('pitch-proposal');
+  if (!el) return;
+  var ld = LEVEL_DATA[level] || LEVEL_DATA[3];
+  var tiles = [
+    { v: ld.cost, l: 'Cost' },
+    { v: ld.weeks + ' wks', l: 'Timeline' },
+    { v: ld.roles, l: 'Team' },
+    { v: ld.phases, l: 'Phases' }
+  ];
+  el.innerHTML = tiles.map(function (t) {
+    return '<div class="pitch-prop-tile">'
+      + '<div class="pitch-prop-value">' + t.v + '</div>'
+      + '<div class="pitch-prop-label">' + t.l + '</div>'
+      + '</div>';
+  }).join('');
+}
+
+function renderPitchMaturity(level) {
+  var el = document.getElementById('pitch-maturity');
+  if (!el) return;
+  var html = '';
+  for (var n = 1; n <= 5; n++) {
+    var circleCls = 'pmat-circle' + (n < level ? ' done' : (n === level ? ' active' : ''));
+    var leftCls = 'pmat-line' + (n === 1 ? ' first' : '') + (n <= level ? ' done' : '');
+    var rightCls = 'pmat-line' + (n === 5 ? ' last' : '') + (n < level ? ' done' : '');
+    var labelCls = 'pmat-label' + (n === level ? ' active-label' : '');
+    html += '<div class="pitch-mat-node" onclick="setMaturityLevel(' + n + ');renderPitchSection(' + n + ');">'
+      + '<div class="pmat-row">'
+      + '<div class="' + leftCls + '"></div>'
+      + '<div class="' + circleCls + '">' + n + '</div>'
+      + '<div class="' + rightCls + '"></div>'
+      + '</div>'
+      + '<div class="' + labelCls + '">' + PITCH_MAT_LABELS[n] + '</div>'
+      + '</div>';
+  }
+  el.innerHTML = html;
+}
+
+function renderPitchSection(level) {
+  renderPitchOutcomes(level);
+  renderPitchProposal(level);
+  renderPitchMaturity(level);
+}
+
+/* ── Mode toggle ─────────────────────────────────────────────────────── */
+function setIcsMode(mode) {
+  var pitch = mode !== 'detail';
+  document.body.classList.toggle('pitch-mode', pitch);
+  document.body.classList.toggle('detail-mode', !pitch);
+  sessionStorage.setItem('ics_mode', pitch ? 'pitch' : 'detail');
+  var btn = document.getElementById('modeToggleBtn');
+  if (btn) btn.innerHTML = pitch ? 'Full breakdown &rarr;' : '&larr; Back to overview';
+}
+
+(function () {
+  var btn = document.getElementById('modeToggleBtn');
+  if (btn) {
+    btn.addEventListener('click', function () {
+      setIcsMode(document.body.classList.contains('pitch-mode') ? 'detail' : 'pitch');
+    });
+  }
+  // Reconcile mode + button label with stored preference (default: pitch)
+  setIcsMode(sessionStorage.getItem('ics_mode') === 'detail' ? 'detail' : 'pitch');
+  // Initial render (setMaturityLevel(3) ran before these functions existed)
+  renderPitchSection(typeof currentLevel !== 'undefined' ? currentLevel : 3);
 })();
 </script>
 
