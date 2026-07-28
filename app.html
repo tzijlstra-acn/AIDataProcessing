@@ -1164,6 +1164,79 @@ body.detail-mode #modeToggleBtn { display: inline-flex; }
   .pitch-maturity { gap: 0; }
   .pmat-label { font-size: 9.5px; }
 }
+
+/* =====================================================================
+   UI/UX OVERHAUL — accessibility, focus states & pitch-mode polish
+   ===================================================================== */
+
+/* 1. Consistent, visible keyboard focus ring on every interactive control.
+      Previously most controls fell back to the browser default (often
+      invisible on the branded surfaces). */
+a:focus-visible,
+button:focus-visible,
+summary:focus-visible,
+[role="button"]:focus-visible,
+[tabindex]:focus-visible,
+.tab-btn:focus-visible,
+.level-btn:focus-visible,
+.pitch-mat-node:focus-visible,
+.glance-link:focus-visible,
+.deliverables-toggle:focus-visible,
+.api-field-toggle:focus-visible,
+.deliverable-item.clickable:focus-visible,
+.jvt-seg button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 6px;
+}
+/* Controls that sit on the dark violet surfaces get a lighter ring so it
+   stays visible against #160029 / gradients. */
+.sidebar a:focus-visible,
+.matbar-chip:focus-visible,
+.matbar-sow-btn:focus-visible,
+.module-chip:focus-visible,
+.journey-dot:focus-visible,
+.topbar-hub-btn:focus-visible,
+.pitch-deeper-btn:focus-visible,
+.pitch-ref-btn.primary:focus-visible {
+  outline: 3px solid #C77BFF;
+  outline-offset: 2px;
+}
+
+/* 2. Pitch proposal tiles — stronger visual hierarchy + scannable icon.
+      They read as a considered "at-a-glance" summary rather than four
+      flat boxes. */
+.pitch-prop-tile {
+  border-top: 3px solid var(--brandMid);
+  transition: box-shadow .2s ease, transform .1s ease;
+}
+.pitch-prop-tile:hover {
+  box-shadow: 0 4px 16px rgba(161,0,255,.1);
+  transform: translateY(-1px);
+}
+.pitch-prop-icon { font-size: 19px; color: var(--brandMid); display: block; margin-bottom: 6px; }
+
+/* AI Governance add-on caption under the proposal tiles (pitch mode) */
+.pitch-proposal { flex-wrap: wrap; }
+.pitch-prop-aigov {
+  flex-basis: 100%;
+  order: 99;
+  display: flex; align-items: center; gap: 8px;
+  font-size: 12px; color: var(--brandMid); font-weight: 600;
+  background: rgba(161,0,255,.06);
+  border: 1px solid rgba(161,0,255,.22);
+  border-radius: 8px; padding: 8px 14px;
+}
+.pitch-prop-aigov i { font-size: 15px; }
+
+/* 3. Pitch maturity nodes are keyboard-focusable buttons — give the ring
+      something to sit on and keep the hit target comfortable. */
+.pitch-mat-node { border-radius: 8px; padding: 4px 0; }
+
+/* 4. Respect the app's own reduced-motion contract for the fade-in canvases. */
+@media (prefers-reduced-motion: reduce) {
+  #topbarCanvas, #icsHeroCanvas { animation: none !important; opacity: .35 !important; }
+}
 </style>
 <!-- docx library removed — SoW uses native HTML-to-Word blob generation -->
 </head>
@@ -4860,11 +4933,11 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
       <div class="subsec">
         <div class="subsec-title"><i class="ti ti-diamond"></i>Design Principles</div>
         <div class="principle-grid">
-          <div class="principle-card"><div class="principle-num" style="color:#EEF3FB;">01</div><div class="principle-title">Data Sovereignty</div><div class="principle-desc">All compute and storage within client's Azure tenant in EU region. No data transmitted to external APIs. Azure OpenAI within the client tenant is the only LLM option.</div></div>
-          <div class="principle-card"><div class="principle-num" style="color:#EEF3FB;">02</div><div class="principle-title">Separation of Concerns</div><div class="principle-desc">Ingestion layer decoupled from storage, decoupled from AI layer. Each layer can be updated independently without impacting other layers.</div></div>
-          <div class="principle-card"><div class="principle-num" style="color:#EEF3FB;">03</div><div class="principle-title">Event-Driven Architecture</div><div class="principle-desc">TPRM signals and RCSA status changes trigger downstream processing without polling. Azure Service Bus decouples producers and consumers.</div></div>
-          <div class="principle-card"><div class="principle-num" style="color:#EEF3FB;">04</div><div class="principle-title">Defence in Depth</div><div class="principle-desc">Private Endpoints for all Azure services, RBAC on every resource, audit logging of all AI agent actions, NSGs block all inbound except APIM.</div></div>
-          <div class="principle-card"><div class="principle-num" style="color:#EEF3FB;">05</div><div class="principle-title">Incremental Delivery</div><div class="principle-desc">Static dashboard first (Phase 1), live data (Phase 2), AI components layered on top (Phase 3). Value is delivered before all AI is ready.</div></div>
+          <div class="principle-card"><div class="principle-num" style="color:var(--brandLight);">01</div><div class="principle-title">Data Sovereignty</div><div class="principle-desc">All compute and storage within client's Azure tenant in EU region. No data transmitted to external APIs. Azure OpenAI within the client tenant is the only LLM option.</div></div>
+          <div class="principle-card"><div class="principle-num" style="color:var(--brandLight);">02</div><div class="principle-title">Separation of Concerns</div><div class="principle-desc">Ingestion layer decoupled from storage, decoupled from AI layer. Each layer can be updated independently without impacting other layers.</div></div>
+          <div class="principle-card"><div class="principle-num" style="color:var(--brandLight);">03</div><div class="principle-title">Event-Driven Architecture</div><div class="principle-desc">TPRM signals and RCSA status changes trigger downstream processing without polling. Azure Service Bus decouples producers and consumers.</div></div>
+          <div class="principle-card"><div class="principle-num" style="color:var(--brandLight);">04</div><div class="principle-title">Defence in Depth</div><div class="principle-desc">Private Endpoints for all Azure services, RBAC on every resource, audit logging of all AI agent actions, NSGs block all inbound except APIM.</div></div>
+          <div class="principle-card"><div class="principle-num" style="color:var(--brandLight);">05</div><div class="principle-title">Incremental Delivery</div><div class="principle-desc">Static dashboard first (Phase 1), live data (Phase 2), AI components layered on top (Phase 3). Value is delivered before all AI is ready.</div></div>
         </div>
       </div>
     </div>
@@ -7762,6 +7835,8 @@ function toggleAIGov(btn) {
     btn.classList.toggle('module-chip-active', aiGovEnabled);
   }
   updateCostDisplay();
+  // Keep the pitch-mode proposal in sync so the toggle has a visible effect there too.
+  if (typeof renderPitchSection === 'function') renderPitchSection(currentLevel);
   var toast = document.getElementById('fvToast');
   if (toast) {
     toast.textContent = aiGovEnabled
@@ -7779,7 +7854,9 @@ function setMaturityLevel(level) {
   currentLevel = level;
   // Sync global maturity bar chips
   document.querySelectorAll('.matbar-chip').forEach(function(chip) {
-    chip.classList.toggle('active', parseInt(chip.dataset.level) === level);
+    var isSel = parseInt(chip.dataset.level) === level;
+    chip.classList.toggle('active', isSel);
+    chip.setAttribute('aria-pressed', isSel ? 'true' : 'false');
   });
   // Update global bar description
   var matbarDesc = document.getElementById('matbarDesc');
@@ -9155,18 +9232,29 @@ function renderPitchProposal(level) {
   var el = document.getElementById('pitch-proposal');
   if (!el) return;
   var ld = LEVEL_DATA[level] || LEVEL_DATA[3];
+  // Reflect the AI Governance module toggle so it has a visible effect here.
+  var govOn = (typeof aiGovEnabled !== 'undefined') && aiGovEnabled && AI_GOV_COST_DELTA[level];
+  var baseRoles = parseInt(ld.roles) || 0;
+  var cost  = govOn ? AI_GOV_COST_DELTA[level].cost : ld.cost;
+  var roles = govOn ? String(baseRoles + 2) : ld.roles;
   var tiles = [
-    { v: ld.cost, l: 'Cost' },
-    { v: ld.weeks + ' wks', l: 'Timeline' },
-    { v: ld.roles, l: 'Team' },
-    { v: ld.phases, l: 'Phases' }
+    { icon: 'ti-coin-euro',   v: cost,               l: 'Investment' },
+    { icon: 'ti-calendar-time', v: ld.weeks + ' wks', l: 'Timeline' },
+    { icon: 'ti-users',       v: roles,              l: 'Team' },
+    { icon: 'ti-stack-2',     v: ld.phases,          l: 'Phases' }
   ];
-  el.innerHTML = tiles.map(function (t) {
+  var html = tiles.map(function (t) {
     return '<div class="pitch-prop-tile">'
+      + '<i class="ti ' + t.icon + ' pitch-prop-icon" aria-hidden="true"></i>'
       + '<div class="pitch-prop-value">' + t.v + '</div>'
       + '<div class="pitch-prop-label">' + t.l + '</div>'
       + '</div>';
   }).join('');
+  if (govOn) {
+    html += '<div class="pitch-prop-aigov"><i class="ti ti-shield-check" aria-hidden="true"></i>'
+      + 'Includes the AI Governance module — 2 added roles, NIST AI RMF &amp; EU AI Act deliverables.</div>';
+  }
+  el.innerHTML = html;
 }
 
 function renderPitchMaturity(level) {
@@ -9178,7 +9266,11 @@ function renderPitchMaturity(level) {
     var leftCls = 'pmat-line' + (n === 1 ? ' first' : '') + (n <= level ? ' done' : '');
     var rightCls = 'pmat-line' + (n === 5 ? ' last' : '') + (n < level ? ' done' : '');
     var labelCls = 'pmat-label' + (n === level ? ' active-label' : '');
-    html += '<div class="pitch-mat-node" onclick="setMaturityLevel(' + n + ');renderPitchSection(' + n + ');">'
+    html += '<div class="pitch-mat-node" role="button" tabindex="0"'
+      + ' aria-label="Select maturity level ' + n + ' — ' + PITCH_MAT_LABELS[n] + '"'
+      + ' aria-pressed="' + (n === level ? 'true' : 'false') + '"'
+      + ' onkeydown="if(event.key===\'Enter\'||event.key===\' \'){event.preventDefault();this.click();}"'
+      + ' onclick="setMaturityLevel(' + n + ');renderPitchSection(' + n + ');">'
       + '<div class="pmat-row">'
       + '<div class="' + leftCls + '"></div>'
       + '<div class="' + circleCls + '">' + n + '</div>'
