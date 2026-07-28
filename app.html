@@ -3194,7 +3194,7 @@ CREATE INDEX idx_risks_heatmap
 
     <!-- STEP 7: Browser -->
     <div class="journey-step" data-step="7">
-      <div class="journey-level-tag l3"><span class="jlt-icon">★</span><span class="jlt-label">AI-enhanced at Level 3 — agent chat available in risk detail panel</span><span class="jlt-avail">L3 · L4 · L5</span></div>
+      <div class="journey-level-tag l3"><span class="jlt-icon">◈</span><span class="jlt-label">Data rendering unchanged from L2 — deterministic TanStack Query · AI agent chat panel added as additive side feature, not on the data path</span><span class="jlt-avail">L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">React — useHeatmapData hook (TanStack Query)</div>
@@ -3241,7 +3241,7 @@ CREATE INDEX idx_risks_heatmap
 
     <!-- STEP 8: Heatmap -->
     <div class="journey-step" data-step="8">
-      <div class="journey-level-tag l3"><span class="jlt-icon">★</span><span class="jlt-label">AI-enhanced at Level 3 — agent chat available in risk detail panel</span><span class="jlt-avail">L3 · L4 · L5</span></div>
+      <div class="journey-level-tag l3"><span class="jlt-icon">◈</span><span class="jlt-label">Data rendering unchanged from L2 — pure React component, deterministic colour mapping · heatmap pipeline unmodified at this level</span><span class="jlt-avail">L3 · L4 · L5</span></div>
       <div class="journey-body">
         <div class="journey-data">
           <div class="data-label">React component — &lt;HeatmapCell&gt; at likelihood=4, impact=4</div>
@@ -4626,9 +4626,9 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
             <div class="arch-layer-label">External Data Sources</div>
             <div class="arch-layer-chips">
               <div class="arch-chip"><div class="arch-chip-name">GRC Platform</div><div class="arch-chip-sub">ServiceNow · Archer</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">TPRM Tool</div><div class="arch-chip-sub">Vendor event feed</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">HR / IAM</div><div class="arch-chip-sub">User identities</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">Documents</div><div class="arch-chip-sub">Policy · procedures · PDFs</div></div>
+              <div class="arch-chip" data-arch-min-level="2"><div class="arch-chip-name">TPRM Tool <span class="arch-level-badge">Requires L2</span></div><div class="arch-chip-sub">Vendor event feed · webhooks</div></div>
+              <div class="arch-chip" data-arch-min-level="2"><div class="arch-chip-name">HR / IAM <span class="arch-level-badge">Requires L2</span></div><div class="arch-chip-sub">User identities · RBAC</div></div>
+              <div class="arch-chip" data-arch-min-level="3"><div class="arch-chip-name">Documents <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub">Policy · procedures · PDFs</div></div>
             </div>
           </div>
 
@@ -4640,7 +4640,7 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
             <div class="arch-layer-chips">
               <div class="arch-chip"><div class="arch-chip-name">Azure Data Factory</div><div class="arch-chip-sub">Scheduled pipelines · incremental pull</div></div>
               <div class="arch-chip"><div class="arch-chip-name">Python GRC Connectors</div><div class="arch-chip-sub">Schema normalisation · validation gates</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">Doc Ingestion Function</div><div class="arch-chip-sub">Azure Fn · Blob trigger · change events</div></div>
+              <div class="arch-chip" data-arch-min-level="3"><div class="arch-chip-name">Doc Ingestion Function <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub">Azure Fn · Blob trigger · RAG pipeline feed</div></div>
             </div>
           </div>
 
@@ -4651,7 +4651,7 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
             <div class="arch-layer-label"><i class="ti ti-database"></i>Data Platform</div>
             <div class="arch-layer-chips">
               <div class="arch-chip arch-chip-wide"><div class="arch-chip-name">Azure PostgreSQL v16</div><div class="arch-chip-sub">Risks · Controls · RCSA · Processes · Users · Tasks · Audit</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">Azure AI Search</div><div class="arch-chip-sub">BM25 + Vector (RRF) · 50 GB index</div></div>
+              <div class="arch-chip" data-arch-min-level="3"><div class="arch-chip-name">Azure AI Search <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub">BM25 + Vector (RRF) · 50 GB index</div></div>
               <div class="arch-chip"><div class="arch-chip-name">Azure Blob Storage</div><div class="arch-chip-sub">Documents · PDFs · GRC exports</div></div>
             </div>
           </div>
@@ -4662,10 +4662,10 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
           <div class="arch-layer adl-ai">
             <div class="arch-layer-label"><i class="ti ti-brain"></i>AI / ML Services</div>
             <div class="arch-layer-chips">
-              <div class="arch-chip arch-chip-wide"><div class="arch-chip-name">LLM Agent — Azure OpenAI GPT-4o</div><div class="arch-chip-sub">LangChain RAG · 4 tools: SQLQuery · DocumentRAG · Analysis · Workflow</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">TPRM Signal Engine</div><div class="arch-chip-sub">GPT-4o-mini · auto-draft · ~$0.0003/signal</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">Trend Detection</div><div class="arch-chip-sub">Python · scipy · weekly Azure Fn</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">Workflow Engine</div><div class="arch-chip-sub">Durable Functions · human-in-loop · L4+</div></div>
+              <div class="arch-chip arch-chip-wide" data-arch-min-level="3"><div class="arch-chip-name">LLM Agent — Azure OpenAI GPT-4o <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub">LangChain RAG · 4 tools: SQLQuery · DocumentRAG · Analysis · Workflow</div></div>
+              <div class="arch-chip" data-arch-min-level="3"><div class="arch-chip-name">TPRM Signal Engine <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub">GPT-4o-mini · auto-draft · ~$0.0003/signal</div></div>
+              <div class="arch-chip" data-arch-min-level="2"><div class="arch-chip-name">Trend Detection <span class="arch-level-badge">Requires L2</span></div><div class="arch-chip-sub">Rule-Based · scipy.stats · no LLM · weekly Azure Fn</div></div>
+              <div class="arch-chip" data-arch-min-level="4"><div class="arch-chip-name">Workflow Engine <span class="arch-level-badge">Requires L4</span></div><div class="arch-chip-sub">Durable Functions · human-in-loop</div></div>
             </div>
           </div>
 
@@ -4675,10 +4675,10 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
           <div class="arch-layer adl-api">
             <div class="arch-layer-label"><i class="ti ti-api"></i>API Gateway</div>
             <div class="arch-layer-chips">
-              <div class="arch-chip"><div class="arch-chip-name">Azure APIM</div><div class="arch-chip-sub">JWT auth · rate-limiting · developer portal</div></div>
-              <div class="arch-chip arch-chip-wide"><div class="arch-chip-name">FastAPI — Azure Container Apps</div><div class="arch-chip-sub">REST endpoints · SSE streaming · audit logging</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">Azure AD OAuth2 / OIDC</div><div class="arch-chip-sub">RBAC · role-gated endpoints · Key Vault</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">Redis Cache</div><div class="arch-chip-sub">API response cache · session store</div></div>
+              <div class="arch-chip" data-arch-min-level="2"><div class="arch-chip-name">Azure APIM <span class="arch-level-badge">Requires L2</span></div><div class="arch-chip-sub">JWT auth · rate-limiting · developer portal</div></div>
+              <div class="arch-chip arch-chip-wide" data-arch-min-level="2"><div class="arch-chip-name">FastAPI — Azure Container Apps <span class="arch-level-badge">Requires L2</span></div><div class="arch-chip-sub">REST endpoints · SSE streaming · audit logging</div></div>
+              <div class="arch-chip" data-arch-min-level="2"><div class="arch-chip-name">Azure AD OAuth2 / OIDC <span class="arch-level-badge">Requires L2</span></div><div class="arch-chip-sub">RBAC · role-gated endpoints · Key Vault</div></div>
+              <div class="arch-chip" data-arch-min-level="2"><div class="arch-chip-name">Redis Cache <span class="arch-level-badge">Requires L2</span></div><div class="arch-chip-sub">API response cache · session store</div></div>
             </div>
           </div>
 
@@ -4689,10 +4689,10 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
             <div class="arch-layer-label"><i class="ti ti-device-desktop"></i>Frontend — Azure Static Web Apps</div>
             <div class="arch-layer-chips">
               <div class="arch-chip arch-chip-wide"><div class="arch-chip-name">React 18 SPA</div><div class="arch-chip-sub">TypeScript · Vite · Azure Static Web Apps · global CDN</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">Risk Heatmap</div><div class="arch-chip-sub">Live risk matrix</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">RCSA Timeline</div><div class="arch-chip-sub">Assessment tracker</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">AI Chat Panel</div><div class="arch-chip-sub">NL query interface</div></div>
-              <div class="arch-chip"><div class="arch-chip-name">Workflow Actions</div><div class="arch-chip-sub">1LoD approvals · L4+</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">Risk Heatmap</div><div class="arch-chip-sub">Live risk matrix · deterministic render</div></div>
+              <div class="arch-chip"><div class="arch-chip-name">RCSA Timeline</div><div class="arch-chip-sub">Assessment tracker · rule-based status</div></div>
+              <div class="arch-chip" data-arch-min-level="3"><div class="arch-chip-name">AI Chat Panel <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub">NL query interface · additive feature</div></div>
+              <div class="arch-chip" data-arch-min-level="4"><div class="arch-chip-name">Workflow Actions <span class="arch-level-badge">Requires L4</span></div><div class="arch-chip-sub">1LoD approvals · human-in-loop</div></div>
             </div>
           </div>
 
@@ -7281,7 +7281,7 @@ function openDeliverableSample(name) {
    ===================================================================== */
 const LEVEL_DESCS = {
   1: { title: 'L1 — Static Export', text: 'GRC data is extracted manually as CSV files, uploaded to Azure Blob Storage, transformed by ADF and dbt, and loaded into PostgreSQL. The dashboard is read-only and refreshed on a fixed schedule (e.g. weekly). No real-time data, no AI, no automation.' },
-  2: { title: 'L2 — Connected Live Feed', text: 'GRC system is connected via API with incremental polling every 15 minutes. Changes are pushed to the dashboard in near-real-time via Server-Sent Events (end-to-end latency bounded by the 15-minute ADF polling interval; browser updates instantly once data lands). TPRM system webhooks deliver vendor change signals automatically. Dashboard is always current — no manual exports needed.' },
+  2: { title: 'L2 — Connected Live Feed', text: 'GRC system is connected via API with incremental polling every 15 minutes. Changes are pushed to the dashboard in near-real-time via Server-Sent Events (end-to-end latency bounded by the 15-minute ADF polling interval; browser updates instantly once data lands). TPRM system webhooks deliver vendor change signals automatically. Dashboard is always current — no manual exports needed. <strong>This level delivers the complete, correct dashboard output — live risk heatmap, risk register and RCSA timeline — with no AI components. Azure OpenAI and AI Search are not deployed at L2.</strong>' },
   3: { title: 'L3 — AI-Assisted (Base Case — Reference Dashboard)', text: 'The full AI agent is active: natural language risk queries, document RAG search, and structured analysis. RCSA reminders are sent automatically. AI drafts risk descriptions for TPRM signals. All AI outputs are clearly labelled and the user remains in full control. This is the reference dashboard level.' },
   4: { title: 'L4 — Active Proposals', text: 'The AI proactively monitors for overdue RCSAs and other conditions, generates proposed actions (reminders, escalations), and surfaces them in the 2LoD dashboard for one-click approval. The AI never executes automatically — every action requires explicit human approval via a Durable Function external event.' },
   5: { title: 'L5 — Autonomous with GRC Write-back', text: 'Extends L4 with integrated policy change detection and GRC write-back (core deliverable). When a new regulatory document is uploaded, the AI identifies affected risk descriptions and proposes updates. 2LoD approves and the ICS Cockpit writes directly to the GRC source system via its REST API, closing the full data loop.' },
