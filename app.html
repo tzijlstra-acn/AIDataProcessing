@@ -1237,6 +1237,22 @@ summary:focus-visible,
 @media (prefers-reduced-motion: reduce) {
   #topbarCanvas, #icsHeroCanvas { animation: none !important; opacity: .35 !important; }
 }
+
+/* 5. Next Steps CTA buttons — were the only prominent buttons with no hover feedback. */
+.ns-cta { transition: transform .12s ease, box-shadow .15s ease, filter .15s ease; }
+.ns-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 18px rgba(0,0,0,.22); filter: brightness(1.03); }
+.ns-cta:active { transform: translateY(0); box-shadow: 0 2px 6px rgba(0,0,0,.18); }
+
+/* 6. Pitch maturity path — signal that the nodes are interactive so a first-time viewer
+      sees the journey is clickable. Emphasise the circle only (keeps connector lines aligned). */
+.pitch-mat-node .pmat-circle { transition: background .2s, border-color .2s, color .2s, transform .12s ease; }
+.pitch-mat-node:hover .pmat-circle:not(.active) { transform: scale(1.08); }
+.pitch-mat-node:hover .pmat-label { color: var(--brandMid); }
+
+/* 7. Cost section "Rate card & assumptions" disclosure — rotate its ▸ marker on open
+      so it behaves like the other collapsibles in the guide. */
+details > summary .rc-caret { display: inline-block; transition: transform .2s ease; }
+details[open] > summary .rc-caret { transform: rotate(90deg); }
 </style>
 <!-- docx library removed — SoW uses native HTML-to-Word blob generation -->
 </head>
@@ -1246,7 +1262,7 @@ summary:focus-visible,
 <!-- TOPBAR -->
 <div class="topbar">
   <canvas id="topbarCanvas" aria-hidden="true"></canvas>
-  <button class="hamburger" id="hamburgerBtn" aria-label="Toggle menu">
+  <button class="hamburger" id="hamburgerBtn" aria-label="Toggle navigation menu" aria-expanded="false" aria-controls="sidebar">
     <span></span><span></span><span></span>
   </button>
   <span class="topbar-logo"><svg width="22" height="22" viewBox="0 0 100 100" fill="none" style="margin-right:8px;vertical-align:-4px;"><path d="M10 15 L60 50 L10 85" stroke="#FFFFFF" stroke-width="14" stroke-linecap="round" stroke-linejoin="round"/></svg>ICS Cockpit — Implementation Guide</span>
@@ -1294,7 +1310,7 @@ summary:focus-visible,
 <div class="maturity-bar" id="globalMaturityBar">
   <div class="matbar-top">
     <div class="maturity-bar-label">
-      <i class="ti ti-circuit-switchboard"></i>
+      <i class="ti ti-stairs-up"></i>
       AI Maturity Level
     </div>
     <div class="matbar-chips" role="group" aria-label="Select AI maturity level">
@@ -1338,7 +1354,7 @@ summary:focus-visible,
   <button class="module-chip" id="mod-aigov" aria-pressed="false" onclick="toggleAIGov(this)" title="Toggle AI Governance workstream — adds AI Risk Lead and Model Risk Specialist, NIST AI RMF deliverables, and EU AI Act conformity programme. Adjusts project cost and team across the entire guide.">
     <i class="ti ti-shield-check"></i>
     <span>AI Governance</span>
-    <span class="module-chip-tag">+~€390K &middot; 2 roles &middot; NIST AI RMF</span>
+    <span class="module-chip-tag" id="aigov-chip-tag">+~€390K &middot; 2 roles &middot; NIST AI RMF</span>
     <span class="module-chip-toggle" id="aigov-toggle-indicator">OFF</span>
   </button>
 </div>
@@ -1725,7 +1741,7 @@ summary:focus-visible,
 
     <!-- Client panel -->
     <div>
-      <div class="team-panel-head client-head"><i class="ti ti-building-community"></i>Client SMEs Required (<span id="client-role-count">6</span> Roles)</div>
+      <div class="team-panel-head client-head"><i class="ti ti-building-community"></i><span>Client SMEs Required (<span id="client-role-count">6</span> Roles)</span></div>
       <div class="role-grid" style="grid-template-columns:1fr;">
 
         <div class="role-card client-card" style="cursor:pointer" role="button" tabindex="0" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();this.click()}" title="Click to view role details" onclick="openRoleModal('sponsor')">
@@ -1797,7 +1813,7 @@ summary:focus-visible,
 
   <!-- Staffing Timeline -->
   <div class="subsec">
-    <div class="subsec-title"><i class="ti ti-chart-gantt"></i>Staffing Timeline</div>
+    <div class="subsec-title"><i class="ti ti-calendar-stats"></i>Staffing Timeline</div>
     <details class="collapsible" open>
       <summary>Staffing by Phase — expand to view <span style="font-size:11px;font-weight:400;color:var(--tm);">(roles dimmed at lower maturity levels)</span></summary>
       <div class="details-body">
@@ -5663,7 +5679,7 @@ useEffect(() =&gt; {
   </div>
   <details style="margin-bottom:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radiusL);">
     <summary style="padding:12px 18px;font-weight:700;font-size:13.5px;cursor:pointer;color:var(--tp);display:flex;align-items:center;gap:8px;">
-      <span style="color:var(--brandMid);">▸</span> Rate card &amp; assumptions underlying all cost and ROI figures
+      <span class="rc-caret" style="color:var(--brandMid);">▸</span> Rate card &amp; assumptions underlying all cost and ROI figures
     </summary>
     <div style="padding:0 18px 16px;display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-top:12px;">
       <div>
@@ -5848,8 +5864,8 @@ useEffect(() =&gt; {
       <div style="font-size:14px;color:rgba(255,255,255,.75);max-width:60ch;">A discovery workshop takes 2 days and produces a scoped delivery plan, data readiness report, and a confirmed maturity target — everything needed to move to contract.</div>
     </div>
     <div style="display:flex;gap:12px;flex-shrink:0;">
-      <button onclick="openClientQuestionsModal()" style="background:#fff;color:var(--brand);font-weight:700;font-size:14px;padding:12px 22px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;">Book Discovery Workshop</button>
-      <button onclick="generateSoW(currentLevel)" style="background:rgba(255,255,255,.15);color:#fff;font-weight:700;font-size:14px;padding:12px 22px;border-radius:8px;border:1px solid rgba(255,255,255,.3);cursor:pointer;font-family:inherit;">Download SoW</button>
+      <button class="ns-cta" onclick="openClientQuestionsModal()" style="background:#fff;color:var(--brand);font-weight:700;font-size:14px;padding:12px 22px;border-radius:8px;border:none;cursor:pointer;font-family:inherit;">Book Discovery Workshop</button>
+      <button class="ns-cta" onclick="generateSoW(currentLevel)" style="background:rgba(255,255,255,.15);color:#fff;font-weight:700;font-size:14px;padding:12px 22px;border-radius:8px;border:1px solid rgba(255,255,255,.3);cursor:pointer;font-family:inherit;">Download SoW</button>
     </div>
   </div>
 </section>
@@ -5901,7 +5917,11 @@ useEffect(() =&gt; {
       e.preventDefault();
       const target = document.getElementById(this.dataset.section);
       if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-      if (window.innerWidth < 768) document.getElementById('sidebar').classList.remove('open');
+      if (window.innerWidth < 768) {
+        document.getElementById('sidebar').classList.remove('open');
+        var hb = document.getElementById('hamburgerBtn');
+        if (hb) hb.setAttribute('aria-expanded', 'false');
+      }
     });
   });
 
@@ -5915,7 +5935,10 @@ useEffect(() =&gt; {
   const btn = document.getElementById('hamburgerBtn');
   const sidebar = document.getElementById('sidebar');
   if (btn && sidebar) {
-    btn.addEventListener('click', () => sidebar.classList.toggle('open'));
+    btn.addEventListener('click', () => {
+      const open = sidebar.classList.toggle('open');
+      btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
   }
 })();
 
@@ -7713,6 +7736,10 @@ function updateCostDisplay() {
   if (rolesEl) rolesEl.textContent = isOn ? String(baseRoles + 2) : ld.roles || '';
   if (fteEl)   fteEl.textContent   = isOn ? (AI_GOV_FTE_DELTA[level] || ld.fteWeeks || '') : ld.fteWeeks || '';
 
+  // ── AI Governance module chip tag — reflect the per-level cost delta (was hard-coded to the L3 figure) ──
+  var chipTagEl = document.getElementById('aigov-chip-tag');
+  if (chipTagEl) chipTagEl.innerHTML = (AI_GOV_TABLE_DELTA[level] || '+~€390K') + ' · 2 roles · NIST AI RMF';
+
   // ── team heading role count — C2 fix: write only the number; HTML already has ' Roles)' suffix
   var trcEl = document.getElementById('team-role-count');
   if (trcEl) trcEl.textContent = String(isOn ? baseRoles + 2 : baseRoles);
@@ -9296,6 +9323,7 @@ function setIcsMode(mode) {
   sessionStorage.setItem('ics_mode', pitch ? 'pitch' : 'detail');
   var btn = document.getElementById('modeToggleBtn');
   if (btn) btn.innerHTML = '<i class="ti ti-arrow-left"></i> Back to overview';
+  window.scrollTo({ top: 0, behavior: 'instant' });
 }
 
 (function () {
