@@ -1053,6 +1053,48 @@ button.glance-link, button.deliverables-toggle {
 }
 #flowVizCanvas { display: block; width: 100%; height: auto; }
 #flowVizFooter { padding: 10px 24px 14px; }
+
+/* ============================================================
+   UX AUDIT — density, progressive-disclosure & readability fixes
+   ============================================================ */
+
+/* Prose line-length guard — keep body copy readable (~70ch) on wide screens */
+.section-header p { max-width: 72ch; }
+section > p { max-width: 72ch; }
+.matbar-desc { max-width: 96ch; }
+
+/* Mobile: scrollable horizontal tab bar (was wrapping to multiple rows) */
+@media (max-width: 768px) {
+  .tab-row { flex-wrap: nowrap; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .tab-row::-webkit-scrollbar { display: none; }
+  .tab-btn { flex: 0 0 auto; white-space: nowrap; }
+}
+
+/* Data Journey — Simplified / Technical view toggle */
+.journey-view-toggle { display: flex; align-items: center; gap: 10px; margin: 0 0 16px; flex-wrap: wrap; }
+.jvt-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--tm); font-family: var(--mono); }
+.jvt-seg { display: inline-flex; border: 1px solid var(--border); border-radius: 20px; overflow: hidden; background: var(--surface); box-shadow: 0 1px 3px rgba(22,0,41,.06); }
+.jvt-seg button { border: none; background: transparent; font-family: inherit; font-size: 12.5px; font-weight: 600; color: var(--ts); padding: 6px 16px; cursor: pointer; transition: background .15s, color .15s; }
+.jvt-seg button:not(.active):hover { background: var(--s2); color: var(--tp); }
+.jvt-seg button.active { background: linear-gradient(135deg,#A100FF 0%,#6900A8 100%); color: #fff; }
+.jvt-hint { font-size: 11.5px; color: var(--tm); }
+/* Simplified view: hide code panels + actor detail, keep step title / component / timing */
+body.journey-simplified .journey-body { grid-template-columns: 1fr; }
+body.journey-simplified .journey-data,
+body.journey-simplified .journey-actors { display: none; }
+
+/* API Catalogue — key-endpoints-only filter */
+.api-field-toggle { display: inline-flex; align-items: center; gap: 6px; margin: 0 0 12px; padding: 6px 14px; font-size: 12px; font-weight: 600; color: var(--brandMid); background: var(--brandLight); border: 1px solid rgba(138,21,224,.22); border-radius: 20px; cursor: pointer; font-family: inherit; transition: background .15s, border-color .15s; }
+.api-field-toggle:hover { background: rgba(161,0,255,.12); border-color: rgba(161,0,255,.4); }
+tbody.api-key-only .api-adv { display: none; }
+
+/* Progressive disclosure — clamp long descriptions to 2 lines, click to expand */
+.clampable { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; cursor: pointer; position: relative; }
+.clampable.expanded { -webkit-line-clamp: unset; }
+.clampable:not(.expanded)::after { content: '⋯'; position: absolute; right: 1px; bottom: 0; font-weight: 800; color: var(--brandMid); line-height: 1; }
+
+/* Jargon chips — dotted underline hint that a tooltip is available */
+.jargon { border-bottom: 1px dotted currentColor; cursor: help; }
 </style>
 <!-- docx library removed — SoW uses native HTML-to-Word blob generation -->
 </head>
@@ -2236,6 +2278,16 @@ button.glance-link, button.deliverables-toggle {
 
   <!-- ZONE LEGEND INTRO -->
   <p style="font-size:12.5px;color:var(--ts);line-height:1.6;margin-bottom:6px;">Each step below is colour-coded by zone. The <strong style="color:var(--brand);">Platform Core</strong> (middle steps) is built once and reused for any new use case on the same tenant — only the connectors and output layer need reconfiguring.</p>
+
+  <!-- SIMPLIFIED / TECHNICAL VIEW TOGGLE -->
+  <div class="journey-view-toggle">
+    <span class="jvt-label">View</span>
+    <div class="jvt-seg" id="journeyViewSeg" role="group" aria-label="Data journey detail level">
+      <button type="button" data-view="simplified">Simplified</button>
+      <button type="button" data-view="technical">Technical</button>
+    </div>
+    <span class="jvt-hint">Simplified shows the storyline; Technical reveals code, config and who does what.</span>
+  </div>
 
   <!-- LEVEL DESCRIPTION CARD -->
   <div id="levelDesc" style="margin-bottom:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radiusL);border-left:4px solid var(--brandMid);">
@@ -4599,7 +4651,7 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
   <div class="section-header">
     <div class="section-tag">Section 5</div>
     <h2>Architecture</h2>
-    <p>Azure architecture, AI/ML components, database schema, API catalogue, security design, and technology stack.</p>
+    <p>How the platform is built — infrastructure, AI services, data model, APIs and security.</p>
   </div>
   <div class="level-ctx-banner lcb-ok" id="level-ctx-arch">
     <span class="lcb-icon">✓</span>
@@ -4651,7 +4703,7 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
             <div class="arch-layer-label"><i class="ti ti-database"></i>Data Platform</div>
             <div class="arch-layer-chips">
               <div class="arch-chip arch-chip-wide"><div class="arch-chip-name">Azure PostgreSQL v16</div><div class="arch-chip-sub">Risks · Controls · RCSA · Processes · Users · Tasks · Audit</div></div>
-              <div class="arch-chip" data-arch-min-level="3"><div class="arch-chip-name">Azure AI Search <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub">BM25 + Vector (RRF) · 50 GB index</div></div>
+              <div class="arch-chip" data-arch-min-level="3"><div class="arch-chip-name">Azure AI Search <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub"><span class="jargon" title="Keyword (BM25) and semantic vector search combined via Reciprocal Rank Fusion — retrieves the most relevant policy passages for the AI to cite.">Hybrid keyword + semantic search</span> · 50 GB index</div></div>
               <div class="arch-chip"><div class="arch-chip-name">Azure Blob Storage</div><div class="arch-chip-sub">Documents · PDFs · GRC exports</div></div>
             </div>
           </div>
@@ -4662,7 +4714,7 @@ PATCH https://client.service-now.com/api/now/table/sn_risk_risk/RSK-2024-0142
           <div class="arch-layer adl-ai">
             <div class="arch-layer-label"><i class="ti ti-brain"></i>AI / ML Services</div>
             <div class="arch-layer-chips">
-              <div class="arch-chip arch-chip-wide" data-arch-min-level="3"><div class="arch-chip-name">LLM Agent — Azure OpenAI GPT-4o <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub">LangChain RAG · 4 tools: SQLQuery · DocumentRAG · Analysis · Workflow</div></div>
+              <div class="arch-chip arch-chip-wide" data-arch-min-level="3"><div class="arch-chip-name">LLM Agent — Azure OpenAI GPT-4o <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub"><span class="jargon" title="Retrieval-Augmented Generation — the AI answers using your own policies and data retrieved at query time, not just its training, so answers stay grounded and citable.">LangChain RAG</span> · 4 tools: SQLQuery · DocumentRAG · Analysis · Workflow</div></div>
               <div class="arch-chip" data-arch-min-level="3"><div class="arch-chip-name">TPRM Signal Engine <span class="arch-level-badge">Requires L3</span></div><div class="arch-chip-sub">GPT-4o-mini · auto-draft · ~$0.0003/signal</div></div>
               <div class="arch-chip" data-arch-min-level="2"><div class="arch-chip-name">Trend Detection <span class="arch-level-badge">Requires L2</span></div><div class="arch-chip-sub">Rule-Based · scipy.stats · no LLM · weekly Azure Fn</div></div>
               <div class="arch-chip" data-arch-min-level="4"><div class="arch-chip-name">Workflow Engine <span class="arch-level-badge">Requires L4</span></div><div class="arch-chip-sub">Durable Functions · human-in-loop</div></div>
@@ -4906,10 +4958,11 @@ Risk data freshness: {last_pipeline_run} | Agent version: {agent_version}</div>
       <details class="collapsible" open>
         <summary>FastAPI endpoint catalogue — 16 endpoints</summary>
         <div class="details-body">
+      <button type="button" class="api-field-toggle" id="apiFieldToggle" aria-expanded="false">Show key endpoints only</button>
       <div class="table-wrap" style="margin-bottom:0;">
         <table>
           <thead><tr><th>Method</th><th>Path</th><th>Auth</th><th>Description</th></tr></thead>
-          <tbody>
+          <tbody id="apiCatBody">
             <tr><td><span class="chip" style="background:#E4F2EB;color:#1A7A52;font-size:11px;">GET</span></td><td><code>/api/overview</code></td><td>Any role</td><td>All KPI metrics + areas summary</td></tr>
             <tr><td><span class="chip" style="background:#E4F2EB;color:#1A7A52;font-size:11px;">GET</span></td><td><code>/api/areas</code></td><td>Any role</td><td>All areas with summary statistics</td></tr>
             <tr><td><span class="chip" style="background:#E4F2EB;color:#1A7A52;font-size:11px;">GET</span></td><td><code>/api/areas/{area_id}</code></td><td>Any role</td><td>Full area detail: processes, top risks, 1LoD task list</td></tr>
@@ -4918,14 +4971,14 @@ Risk data freshness: {last_pipeline_run} | Agent version: {agent_version}</div>
             <tr><td><span class="chip" style="background:#FEF3DC;color:#9A6500;font-size:11px;">PUT</span></td><td><code>/api/risks/{risk_id}</code></td><td>2LoD (1LoD limited fields)</td><td>Update risk status, rating, or add comment</td></tr>
             <tr><td><span class="chip" style="background:#E4F2EB;color:#1A7A52;font-size:11px;">GET</span></td><td><code>/api/heatmap</code></td><td>Any role</td><td>5×5 matrix (mode: inherent|residual, scope: area|process|all)</td></tr>
             <tr><td><span class="chip" style="background:#E4F2EB;color:#1A7A52;font-size:11px;">GET</span></td><td><code>/api/rcsa/timeline</code></td><td>Any role</td><td>Upcoming due dates with filters</td></tr>
-            <tr><td><span class="chip" style="background:#EEF3FB;color:#2A5298;font-size:11px;">POST</span></td><td><code>/api/agent/chat</code></td><td>Any role</td><td>SSE streaming LLM agent response</td></tr>
-            <tr><td><span class="chip" style="background:#EEF3FB;color:#2A5298;font-size:11px;">POST</span></td><td><code>/api/assessments/start</code></td><td>1LoD (own) or 2LoD</td><td>Initiate RCSA assessment for a process</td></tr>
-            <tr><td><span class="chip" style="background:#EEF3FB;color:#2A5298;font-size:11px;">POST</span></td><td><code>/api/notifications/remind</code></td><td>2LoD</td><td>Manual reminder for specific task</td></tr>
-            <tr><td><span class="chip" style="background:#EEF3FB;color:#2A5298;font-size:11px;">POST</span></td><td><code>/api/notifications/escalate</code></td><td>2LoD</td><td>Escalate task to manager</td></tr>
-            <tr><td><span class="chip" style="background:#E4F2EB;color:#1A7A52;font-size:11px;">GET</span></td><td><code>/api/tprm/signals</code></td><td>2LoD</td><td>List pending TPRM-triggered risk suggestions</td></tr>
-            <tr><td><span class="chip" style="background:#FEF3DC;color:#9A6500;font-size:11px;">PUT</span></td><td><code>/api/tprm/signals/{id}/accept</code></td><td>2LoD</td><td>Accept signal: creates draft risk in register</td></tr>
-            <tr><td><span class="chip" style="background:#FEF3DC;color:#9A6500;font-size:11px;">PUT</span></td><td><code>/api/tprm/signals/{id}/reject</code></td><td>2LoD</td><td>Reject signal with mandatory reason</td></tr>
-            <tr><td><span class="chip" style="background:#E4F2EB;color:#1A7A52;font-size:11px;">GET</span></td><td><code>/api/events/stream</code></td><td>Any role</td><td>SSE stream for real-time push events</td></tr>
+            <tr><td><span class="chip" style="background:#EEF3FB;color:#2A5298;font-size:11px;">POST</span></td><td><code>/api/agent/chat</code></td><td>Any role</td><td><span class="jargon" title="Server-Sent Events — the answer streams back token-by-token so users see it appear live, like ChatGPT.">Streaming</span> AI agent response</td></tr>
+            <tr class="api-adv"><td><span class="chip" style="background:#EEF3FB;color:#2A5298;font-size:11px;">POST</span></td><td><code>/api/assessments/start</code></td><td>1LoD (own) or 2LoD</td><td>Initiate RCSA assessment for a process</td></tr>
+            <tr class="api-adv"><td><span class="chip" style="background:#EEF3FB;color:#2A5298;font-size:11px;">POST</span></td><td><code>/api/notifications/remind</code></td><td>2LoD</td><td>Manual reminder for specific task</td></tr>
+            <tr class="api-adv"><td><span class="chip" style="background:#EEF3FB;color:#2A5298;font-size:11px;">POST</span></td><td><code>/api/notifications/escalate</code></td><td>2LoD</td><td>Escalate task to manager</td></tr>
+            <tr class="api-adv"><td><span class="chip" style="background:#E4F2EB;color:#1A7A52;font-size:11px;">GET</span></td><td><code>/api/tprm/signals</code></td><td>2LoD</td><td>List pending TPRM-triggered risk suggestions</td></tr>
+            <tr class="api-adv"><td><span class="chip" style="background:#FEF3DC;color:#9A6500;font-size:11px;">PUT</span></td><td><code>/api/tprm/signals/{id}/accept</code></td><td>2LoD</td><td>Accept signal: creates draft risk in register</td></tr>
+            <tr class="api-adv"><td><span class="chip" style="background:#FEF3DC;color:#9A6500;font-size:11px;">PUT</span></td><td><code>/api/tprm/signals/{id}/reject</code></td><td>2LoD</td><td>Reject signal with mandatory reason</td></tr>
+            <tr class="api-adv"><td><span class="chip" style="background:#E4F2EB;color:#1A7A52;font-size:11px;">GET</span></td><td><code>/api/events/stream</code></td><td>Any role</td><td>SSE stream for real-time push events</td></tr>
           </tbody>
         </table>
       </div>
@@ -8849,6 +8902,83 @@ function generateSoW(level) {
   /* ICS hero intro card — medium density with rings */
   netBg('icsHeroCanvas',{n:35,link:120,hubPct:.08,repel:80,sparkMs:380,sparkV:.007,ringMs:3000,scanV:.15});
 }());
+</script>
+
+<script>
+/* ============================================================
+   UX AUDIT — progressive-disclosure interactions
+   ============================================================ */
+
+/* 1. Data Journey — Simplified / Technical view toggle (persists in sessionStorage) */
+(function () {
+  var seg = document.getElementById('journeyViewSeg');
+  if (!seg) return;
+  var KEY = 'ics_journey_view';
+  var buttons = seg.querySelectorAll('button');
+  function apply(view) {
+    var simplified = view === 'simplified';
+    document.body.classList.toggle('journey-simplified', simplified);
+    buttons.forEach(function (b) {
+      var on = b.dataset.view === view;
+      b.classList.toggle('active', on);
+      b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    try { sessionStorage.setItem(KEY, view); } catch (e) {}
+  }
+  var saved = null;
+  try { saved = sessionStorage.getItem(KEY); } catch (e) {}
+  apply(saved === 'technical' ? 'technical' : 'simplified');
+  buttons.forEach(function (b) {
+    b.addEventListener('click', function () { apply(b.dataset.view); });
+  });
+})();
+
+/* 2. API Catalogue — key-endpoints-only filter */
+(function () {
+  var btn = document.getElementById('apiFieldToggle');
+  var tbody = document.getElementById('apiCatBody');
+  if (!btn || !tbody) return;
+  var advCount = tbody.querySelectorAll('.api-adv').length;
+  function apply(keyOnly) {
+    tbody.classList.toggle('api-key-only', keyOnly);
+    btn.setAttribute('aria-expanded', keyOnly ? 'false' : 'true');
+    btn.textContent = keyOnly
+      ? ('Show all endpoints (' + advCount + ' more)')
+      : 'Show key endpoints only';
+  }
+  var keyOnly = true;
+  apply(true);
+  btn.addEventListener('click', function () { keyOnly = !keyOnly; apply(keyOnly); });
+})();
+
+/* 3. Progressive disclosure — clamp long descriptions, click to expand.
+   Only clamps elements that actually overflow 2 lines; re-checks on resize. */
+(function () {
+  var SEL = '.principle-desc';
+  function initEl(el) {
+    if (el.dataset.clampChecked) return;
+    el.dataset.clampChecked = '1';
+    el.classList.add('clampable');
+    if (el.scrollHeight - el.clientHeight < 4) {
+      // fits within 2 lines — no clamp needed
+      el.classList.remove('clampable');
+      return;
+    }
+    el.title = 'Click to expand';
+    el.setAttribute('role', 'button');
+    el.setAttribute('tabindex', '0');
+    function toggle() {
+      var open = el.classList.toggle('expanded');
+      el.title = open ? 'Click to collapse' : 'Click to expand';
+    }
+    el.addEventListener('click', toggle);
+    el.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); toggle(); }
+    });
+  }
+  function run() { document.querySelectorAll(SEL).forEach(initEl); }
+  run();
+})();
 </script>
 
 <div id="fvToast" style="position:fixed;bottom:24px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--brand);color:#fff;font-size:13px;font-weight:600;padding:10px 22px;border-radius:24px;box-shadow:0 8px 32px rgba(61,0,102,.35);opacity:0;transition:opacity .25s,transform .25s;z-index:200;pointer-events:none;font-family:'Space Grotesk',sans-serif;"></div>
