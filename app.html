@@ -1103,7 +1103,6 @@ tbody.api-key-only .api-adv { display: none; }
 body.pitch-mode #pitch-section { display: block; }
 body.pitch-mode .sidebar,
 body.pitch-mode #sidebar,
-body.pitch-mode #moduleBar,
 body.pitch-mode .main > section { display: none !important; }
 
 #pitch-section { max-width: 900px; margin: 0 auto; padding: 8px 24px 90px; }
@@ -1143,9 +1142,20 @@ body.pitch-mode .main > section { display: none !important; }
 .pmat-label { font-size: 11px; color: var(--tm); text-align: center; margin-top: 6px; line-height: 1.3; padding: 0 4px; font-weight: 500; }
 .pmat-label.active-label { color: var(--brandMid); font-weight: 700; }
 
-/* Mode toggle button (fixed, bottom-right) */
-#modeToggleBtn { position: fixed; bottom: 28px; right: 28px; padding: 10px 22px; border: none; border-radius: 24px; background: linear-gradient(135deg,#A100FF,#6900A8); color: #fff; font-weight: 700; font-size: 13px; box-shadow: 0 8px 28px rgba(105,0,168,.4); z-index: 999; cursor: pointer; font-family: inherit; }
-#modeToggleBtn:hover { filter: brightness(1.08); }
+/* Mode toggle — inline "go deeper" banner inside pitch section */
+.pitch-deeper { margin-top: 36px; border: 1px solid rgba(161,0,255,.22); border-radius: 14px; background: linear-gradient(135deg,rgba(161,0,255,.06) 0%,rgba(22,0,41,.04) 100%); padding: 28px 32px; display: flex; align-items: center; justify-content: space-between; gap: 24px; flex-wrap: wrap; }
+.pitch-deeper-copy { flex: 1; min-width: 220px; }
+.pitch-deeper-label { font-size: 10px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--brandMid); font-family: var(--mono); margin-bottom: 6px; }
+.pitch-deeper-title { font-size: 18px; font-weight: 800; color: var(--tp); font-family: 'Space Grotesk',sans-serif; margin-bottom: 6px; line-height: 1.25; }
+.pitch-deeper-sub { font-size: 13px; color: var(--ts); line-height: 1.5; }
+.pitch-deeper-btn { display: inline-flex; align-items: center; gap: 9px; padding: 13px 26px; border: none; border-radius: 28px; background: linear-gradient(135deg,#A100FF,#6900A8); color: #fff; font-weight: 700; font-size: 14px; cursor: pointer; font-family: inherit; white-space: nowrap; box-shadow: 0 6px 24px rgba(105,0,168,.35); transition: filter .15s, box-shadow .15s; }
+.pitch-deeper-btn:hover { filter: brightness(1.08); box-shadow: 0 8px 32px rgba(105,0,168,.5); }
+.pitch-deeper-btn i { font-size: 18px; }
+
+/* Fixed back-button (only shown in detail mode — small, unobtrusive) */
+#modeToggleBtn { display: none; position: fixed; bottom: 24px; right: 24px; padding: 8px 18px; border: none; border-radius: 20px; background: var(--surface); border: 1px solid var(--border); color: var(--ts); font-weight: 600; font-size: 12px; box-shadow: 0 2px 12px rgba(0,0,0,.12); z-index: 999; cursor: pointer; font-family: inherit; gap: 6px; align-items: center; }
+#modeToggleBtn:hover { color: var(--brandMid); border-color: rgba(161,0,255,.4); }
+body.detail-mode #modeToggleBtn { display: inline-flex; }
 
 @media (max-width: 700px) {
   .pitch-title { font-size: 23px; }
@@ -1268,10 +1278,7 @@ body.pitch-mode .main > section { display: none !important; }
     <p class="pitch-valueprop">One place to see every ICS control in real time — with AI that drafts, monitors and, when you're ready, acts, always under human oversight.</p>
     <div class="pitch-ref-row">
       <a class="pitch-ref-btn primary" href="https://tzijlstra-acn.github.io/NFRDashboard/" target="_blank" rel="noopener">
-        <i class="ti ti-layout-dashboard"></i> View the live dashboard
-      </a>
-      <a class="pitch-ref-btn" href="https://tzijlstra-acn.github.io/NFRDashboard/?ai=1" target="_blank" rel="noopener">
-        <i class="ti ti-sparkles"></i> Open with AI Layer
+        <i class="ti ti-layout-dashboard"></i> View the live reference dashboard
       </a>
     </div>
   </div>
@@ -1287,6 +1294,17 @@ body.pitch-mode .main > section { display: none !important; }
 
   <div class="pitch-section-label">Maturity path</div>
   <div class="pitch-maturity" id="pitch-maturity"></div>
+
+  <div class="pitch-deeper">
+    <div class="pitch-deeper-copy">
+      <div class="pitch-deeper-label">For the technical conversation</div>
+      <div class="pitch-deeper-title">Architecture, data journey &amp; project plan</div>
+      <div class="pitch-deeper-sub">Full Azure architecture, end-to-end data flow, Gantt timeline, budget breakdown, risk register and Statement of Work generator.</div>
+    </div>
+    <button class="pitch-deeper-btn" onclick="setIcsMode('detail')">
+      <i class="ti ti-book-2"></i> Open full breakdown
+    </button>
+  </div>
 </div>
 
 <!-- ===== SECTION 1: OVERVIEW ===== -->
@@ -9074,7 +9092,7 @@ function generateSoW(level) {
 </script>
 
 <!-- ===== PITCH MODE — toggle button + renderers ===== -->
-<button id="modeToggleBtn" type="button">Full breakdown &rarr;</button>
+<button id="modeToggleBtn" type="button"><i class="ti ti-arrow-left"></i> Back to overview</button>
 <script>
 /* =====================================================================
    PITCH MODE — outcome copy, renderers, and mode toggle
@@ -9185,15 +9203,13 @@ function setIcsMode(mode) {
   document.body.classList.toggle('detail-mode', !pitch);
   sessionStorage.setItem('ics_mode', pitch ? 'pitch' : 'detail');
   var btn = document.getElementById('modeToggleBtn');
-  if (btn) btn.innerHTML = pitch ? 'Full breakdown &rarr;' : '&larr; Back to overview';
+  if (btn) btn.innerHTML = '<i class="ti ti-arrow-left"></i> Back to overview';
 }
 
 (function () {
   var btn = document.getElementById('modeToggleBtn');
   if (btn) {
-    btn.addEventListener('click', function () {
-      setIcsMode(document.body.classList.contains('pitch-mode') ? 'detail' : 'pitch');
-    });
+    btn.addEventListener('click', function () { setIcsMode('pitch'); });
   }
   // Reconcile mode + button label with stored preference (default: pitch)
   setIcsMode(sessionStorage.getItem('ics_mode') === 'detail' ? 'detail' : 'pitch');
