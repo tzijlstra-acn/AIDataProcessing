@@ -703,7 +703,7 @@ section { padding-top: 16px; margin-bottom: 40px; }
 .modal-box {
   background: var(--surface); border-radius: var(--radiusL);
   box-shadow: 0 24px 64px rgba(0,0,0,.22); width: 100%;
-  max-width: 680px; max-height: 88vh; overflow-y: auto;
+  max-width: 960px; max-height: 88vh; overflow-y: auto;
   animation: modal-in .18s ease;
 }
 @keyframes modal-in { from { transform: translateY(12px); opacity: 0; } to { transform: none; opacity: 1; } }
@@ -6410,6 +6410,8 @@ const CLIENT_ROLES = {
   },
 };
 
+var discAnswers = {};
+
 function openClientQuestionsModal() {
   var questions = [
     {
@@ -6524,42 +6526,332 @@ function openClientQuestionsModal() {
     },
   ];
 
+  // --- Scoring (hard facts only — deltas mirror the qualification table exactly) ---
+  var scoreMap = [
+    [ {weeks:0,cost:0,flags:[]},
+      {weeks:7,cost:400000,flags:['Full stack rebuild required — Bedrock/Glue/Lambda']},
+      {weeks:3,cost:100000,flags:['Cross-cloud data routing complexity']},
+      {weeks:4,cost:200000,flags:['Self-hosted LLM required','AI quality 15–25% lower']} ],
+    [ {weeks:0,cost:0,flags:[]},
+      {weeks:0,cost:0,flags:['GPU VM ~€12K/month ongoing cost','GRC query accuracy 10–20% lower']},
+      {weeks:0,cost:0,flags:['€15K/month fixed — only cost-effective above 100K queries/month']},
+      {weeks:0,cost:-900000,flags:['Scope limited to L1/L2 maximum — AI agent removed']} ],
+    [ {weeks:0,cost:0,flags:[]},
+      {weeks:3,cost:0,flags:['Archer version compatibility check required in Ph0']},
+      {weeks:4,cost:0,flags:['API quality assessment needed']},
+      {weeks:4,cost:0,flags:['Manual upload risk — ongoing operational dependency','No real-time data at L2 without API work']} ],
+    [ {weeks:0,cost:0,flags:[]},
+      {weeks:0,cost:0,flags:['DPIA required before Phase 3']},
+      {weeks:2.5,cost:0,flags:['Privacy engineering sprint — data masking before LLM calls']},
+      {weeks:4,cost:150000,flags:['Azure OpenAI not permitted','Self-hosted LLM required — major architectural change']} ],
+    [ {weeks:0,cost:0,flags:[]},
+      {weeks:0,cost:0,flags:['Article 30 scope differs — TPRM register framing adjustment needed']},
+      {weeks:1,cost:0,flags:['Dual reporting — additional GRC data model fields required']},
+      {weeks:0,cost:0,flags:['DORA features de-scoped — regulatory mapping adjusted']} ],
+    [ {weeks:0,cost:0,flags:[]},
+      {weeks:3,cost:0,flags:['Field mapping workshop required','dbt remediation models needed']},
+      {weeks:5,cost:0,flags:['Manual data cleansing — Phase 1 delivery risk']},
+      {weeks:5,cost:200000,flags:['Enterprise scale — infrastructure and timeline uplift']} ],
+    [ {weeks:0,cost:0,flags:[]},
+      {weeks:0,cost:25000,flags:['OpenAI throughput quota increase required']},
+      {weeks:0,cost:100000,flags:['PTU for OpenAI required','Premium AI Search tier']},
+      {weeks:2,cost:0,flags:['Data audit recommended in Phase 0']} ],
+    [ {weeks:0,cost:-300000,flags:[]},
+      {weeks:0,cost:0,flags:[]},
+      {weeks:0,cost:80000,flags:['Managed service needed post go-live — ~€80–120K/year']},
+      {weeks:2,cost:0,flags:['Shadow model — 20% knowledge transfer overhead']} ],
+    [ {weeks:0,cost:0,flags:[]},
+      {weeks:0,cost:0,flags:['Requires project start within 4 weeks of SOW execution']},
+      {weeks:0,cost:0,flags:['Timeline constrains scope to L1/L2 — AI layer deferred']},
+      {weeks:0,cost:0,flags:['Emergency scope only — separate commercial arrangement required']} ],
+    [ {weeks:0,cost:0,flags:[]},
+      {weeks:12,cost:0,flags:['RFP process adds 8–16 weeks before project start']},
+      {weeks:3,cost:0,flags:['ROI analysis required — 2–4 weeks pre-sales']},
+      {weeks:0,cost:0,flags:['Discovery Sprint (~€15K, 1 week) recommended before full engagement']} ],
+  ];
+  questions.forEach(function(q, qi) {
+    q.opts.forEach(function(o, oi) {
+      var s = scoreMap[qi][oi];
+      o.weeks = s.weeks; o.cost = s.cost; o.flags = s.flags;
+    });
+  });
+
+  var letters = ['A','B','C','D'];
+
   var headerHTML = `
     <div style="padding:20px 24px 0;display:flex;align-items:flex-start;gap:12px;">
       <div style="flex:1;">
         <div style="display:flex;align-items:center;gap:8px;margin-bottom:4px;">
-          <i class="ti ti-help-octagon" style="font-size:20px;color:var(--accent);"></i>
-          <h2 style="margin:0;font-size:18px;color:var(--tp);">Client Discovery Questions</h2>
+          <i class="ti ti-clipboard-check" style="font-size:20px;color:var(--accent);"></i>
+          <h2 style="margin:0;font-size:18px;color:var(--tp);">Client Discovery Worksheet</h2>
         </div>
-        <div style="font-size:12px;color:var(--ts);">10 questions to ask in your first client meeting. Click any question to expand detail and option implications.</div>
+        <div style="font-size:12px;color:var(--ts);">Tick the client's answer to each question. The panel on the right updates the recommended scope, cost, and timeline live.</div>
       </div>
       <button onclick="closeModal()" style="background:none;border:none;cursor:pointer;font-size:22px;color:var(--ts);line-height:1;padding:0 2px;" title="Close">&times;</button>
     </div>
     <div style="height:1px;background:var(--border);margin:12px 0 0;"></div>`;
 
-  var bodyHTML = `<div style="padding-bottom:16px;">` + questions.map(function(q) {
-    var optsHTML = q.opts.map(function(o, i) {
-      var letters = ['A','B','C','D'];
-      return `<div style="display:flex;gap:8px;align-items:flex-start;margin-bottom:5px;">
-        <span style="width:18px;height:18px;border-radius:50%;background:${q.color};color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;">${letters[i]}</span>
-        <div style="font-size:12px;color:var(--ts);"><strong>${o.label}</strong> — ${o.note}</div>
+  var cardsHTML = questions.map(function(q, qi) {
+    var isOpen = qi === 0;
+    var isAnswered = discAnswers[qi] !== undefined;
+    var optsHTML = q.opts.map(function(o, oi) {
+      var sel = discAnswers[qi] === oi;
+      var warn = o.flags.length > 0 ? `<span class="disc-warn" title="Has project impact flags"><i class="ti ti-alert-triangle-filled"></i></span>` : '';
+      return `<div class="disc-tile${sel ? ' selected' : ''}" data-disc-opt data-q="${qi}" data-o="${oi}">
+        <span class="disc-tile-letter" style="background:${q.color};">${letters[oi]}</span>
+        ${warn}
+        <span class="disc-tile-label">${o.label}</span>
+        <span class="disc-tile-note">${o.note}</span>
       </div>`;
     }).join('');
-
-    return `<div style="border-bottom:1px solid var(--border);">
-      <button onclick="this.parentElement.querySelector('.disc-detail').style.display=this.parentElement.querySelector('.disc-detail').style.display==='none'?'block':'none';this.querySelector('.disc-arrow').style.transform=this.parentElement.querySelector('.disc-detail').style.display==='none'?'rotate(0deg)':'rotate(90deg)'" style="width:100%;display:flex;align-items:center;gap:10px;padding:12px 20px;background:none;border:none;cursor:pointer;text-align:left;">
-        <span style="width:26px;height:26px;border-radius:50%;background:${q.color};color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;">${q.num}</span>
-        <span style="flex:1;font-size:13px;font-weight:600;color:var(--tp);">${q.q}</span>
-        <span class="disc-arrow" style="font-size:12px;color:var(--tm);transition:transform .2s;">▶</span>
+    return `<div class="disc-card${isOpen ? ' open' : ''}${isAnswered ? ' answered' : ''}" data-q="${qi}" style="--qc:${q.color};">
+      <button class="disc-q-head" data-disc-toggle="${qi}" type="button">
+        <span class="disc-num" style="background:${q.color};">${q.num}</span>
+        <span class="disc-q-text">${q.q}</span>
+        <i class="disc-q-check ti ti-circle-check-filled"></i>
+        <span class="disc-arrow">▶</span>
       </button>
-      <div class="disc-detail" style="display:none;padding:0 20px 14px 56px;">
-        <div style="font-size:12px;color:var(--ts);background:var(--s1);border-radius:6px;padding:8px 10px;margin-bottom:10px;"><strong>Why this matters:</strong> ${q.impact}</div>
-        ${optsHTML}
+      <div class="disc-card-body">
+        <div class="disc-opts">${optsHTML}</div>
+        <div class="disc-why"><strong>Why this matters:</strong> ${q.impact}</div>
       </div>
     </div>`;
-  }).join('') + `</div>`;
+  }).join('');
+
+  var bodyHTML = `
+  <style>
+    .disc-wrap{display:grid;grid-template-columns:1.35fr 1fr;gap:18px;align-items:start;padding-bottom:4px;}
+    .disc-left{max-height:66vh;overflow-y:auto;padding-right:8px;display:flex;flex-direction:column;gap:12px;}
+    .disc-progress-wrap{position:sticky;top:0;background:var(--surface);padding-bottom:8px;z-index:2;}
+    .disc-progress-label{font-size:11px;font-weight:600;color:var(--ts);margin-bottom:6px;display:flex;justify-content:space-between;}
+    .disc-progress-track{height:8px;border-radius:6px;background:var(--s2);overflow:hidden;}
+    .disc-progress-fill{height:100%;background:linear-gradient(90deg,var(--brandMid),var(--accent));width:0;transition:width .3s ease;}
+    .disc-card{border:1px solid var(--border);border-left:4px solid var(--qc,var(--brandMid));border-radius:var(--radius);background:var(--surface);overflow:hidden;}
+    .disc-card.answered{border-left-color:var(--g);}
+    .disc-q-head{width:100%;display:flex;align-items:center;gap:10px;padding:12px 14px;background:none;border:none;cursor:pointer;text-align:left;font-family:inherit;}
+    .disc-num{width:26px;height:26px;border-radius:50%;color:#fff;font-size:11px;font-weight:800;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+    .disc-q-text{flex:1;font-size:13px;font-weight:600;color:var(--tp);line-height:1.4;}
+    .disc-q-check{font-size:16px;color:var(--g);opacity:0;flex-shrink:0;transition:opacity .15s;}
+    .disc-card.answered .disc-q-check{opacity:1;}
+    .disc-arrow{font-size:12px;color:var(--tm);transition:transform .2s;flex-shrink:0;}
+    .disc-card.open .disc-arrow{transform:rotate(90deg);}
+    .disc-card-body{display:none;padding:0 14px 14px;}
+    .disc-card.open .disc-card-body{display:block;}
+    .disc-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:10px;}
+    .disc-tile{position:relative;border:1.5px solid var(--border);background:var(--s2);border-radius:var(--radius);padding:9px 10px 9px 30px;cursor:pointer;transition:border-color .15s,background .15s,box-shadow .15s;}
+    .disc-tile:hover{border-color:var(--brandMid);}
+    .disc-tile.selected{background:var(--brandLight);border-color:var(--brandMid);box-shadow:0 0 0 1px var(--brandMid) inset;}
+    .disc-tile-letter{position:absolute;left:8px;top:9px;width:16px;height:16px;border-radius:50%;font-size:9px;font-weight:700;color:#fff;display:flex;align-items:center;justify-content:center;}
+    .disc-tile-label{font-size:11.5px;font-weight:700;color:var(--tp);display:block;margin-bottom:2px;line-height:1.3;}
+    .disc-tile.selected .disc-tile-label{color:var(--brand);}
+    .disc-tile-note{font-size:10.5px;color:var(--ts);line-height:1.35;display:block;}
+    .disc-warn{position:absolute;top:6px;right:7px;font-size:11px;color:var(--a);line-height:1;}
+    .disc-why{font-size:11.5px;color:var(--ts);background:var(--s1);border-radius:6px;padding:8px 10px;border-left:2px solid var(--brandMid);line-height:1.45;}
+    .disc-why strong{color:var(--tp);}
+    .disc-right{display:flex;flex-direction:column;gap:10px;position:sticky;top:16px;align-self:flex-start;}
+    .disc-sum-card{border:1px solid var(--border);border-radius:var(--radius);background:var(--surface);padding:12px 14px;}
+    .disc-sum-title{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--tm);margin-bottom:6px;}
+    .disc-level-badge{font-size:32px;font-weight:800;font-family:'Space Grotesk',sans-serif;color:var(--brand);line-height:1;}
+    .disc-level-label{font-size:12px;color:var(--ts);margin-top:5px;line-height:1.35;}
+    .disc-metric-val{font-size:20px;font-weight:800;font-family:'Space Grotesk',sans-serif;line-height:1.1;}
+    .disc-dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:6px;vertical-align:middle;}
+    .disc-flags{max-height:200px;overflow-y:auto;display:flex;flex-direction:column;gap:7px;}
+    .disc-flag{display:flex;gap:7px;font-size:11px;color:var(--ts);line-height:1.35;}
+    .disc-flag i{color:var(--a);flex-shrink:0;margin-top:1px;}
+    .disc-empty{font-size:11.5px;color:var(--tm);font-style:italic;}
+    .disc-copy-btn{width:100%;padding:10px;border-radius:var(--radius);border:none;background:var(--brand);color:#fff;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:6px;transition:background .15s;}
+    .disc-copy-btn:hover{background:var(--brandMid);}
+    @media(max-width:640px){
+      .disc-wrap{grid-template-columns:1fr;}
+      .disc-right{position:static;order:-1;top:0;}
+      .disc-left{max-height:none;overflow:visible;padding-right:0;}
+      .disc-opts{grid-template-columns:1fr;}
+    }
+  </style>
+  <div class="disc-wrap">
+    <div class="disc-left">
+      <div class="disc-progress-wrap">
+        <div class="disc-progress-label"><span>Discovery progress</span><span id="disc-progress-count">0 / ${questions.length} answered</span></div>
+        <div class="disc-progress-track"><div class="disc-progress-fill" id="disc-progress-fill"></div></div>
+      </div>
+      <div id="disc-q-grid" style="display:flex;flex-direction:column;gap:12px;">${cardsHTML}</div>
+    </div>
+    <div class="disc-right">
+      <div class="disc-sum-card">
+        <div class="disc-sum-title">Recommended level</div>
+        <div class="disc-level-badge" id="disc-level-badge">—</div>
+        <div class="disc-level-label" id="disc-level-label">Answer at least 3 questions to see a recommendation</div>
+      </div>
+      <div class="disc-sum-card" id="disc-cost-card" style="display:none;">
+        <div class="disc-sum-title">Cost adjustment · vs base case</div>
+        <div class="disc-metric-val" id="disc-cost-val">€0</div>
+      </div>
+      <div class="disc-sum-card" id="disc-time-card" style="display:none;">
+        <div class="disc-sum-title">Timeline</div>
+        <div class="disc-metric-val" id="disc-time-val">On track</div>
+      </div>
+      <div class="disc-sum-card">
+        <div class="disc-sum-title">Complexity</div>
+        <div class="disc-metric-val" id="disc-cx-val" style="font-size:15px;"><span class="disc-dot" style="background:var(--g);"></span>0 / 10 · Low</div>
+      </div>
+      <div class="disc-sum-card">
+        <div class="disc-sum-title">Active flags</div>
+        <div class="disc-flags" id="disc-flags"><div class="disc-empty">No flags yet</div></div>
+      </div>
+      <div class="disc-sum-card" style="background:var(--brandLight);border-color:var(--borderS);">
+        <div class="disc-sum-title" style="color:var(--brand);">Next step</div>
+        <div id="disc-next" style="font-size:12px;color:var(--tp);line-height:1.45;">Work through the questions to build your project profile</div>
+      </div>
+      <button class="disc-copy-btn" id="disc-copy" type="button"><i class="ti ti-copy"></i> Copy summary</button>
+    </div>
+  </div>`;
 
   openModal(headerHTML, bodyHTML);
+
+  var grid = document.getElementById('disc-q-grid');
+  grid.addEventListener('click', function(e) {
+    var tile = e.target.closest('[data-disc-opt]');
+    if (tile) { selectOption(+tile.dataset.q, +tile.dataset.o); return; }
+    var head = e.target.closest('[data-disc-toggle]');
+    if (head) { head.closest('.disc-card').classList.toggle('open'); }
+  });
+  var copyBtn = document.getElementById('disc-copy');
+  copyBtn.addEventListener('click', copyDiscSummary);
+
+  updateDiscSummary();
+
+  function selectOption(qi, oi) {
+    discAnswers[qi] = oi;
+    var card = grid.querySelector('.disc-card[data-q="' + qi + '"]');
+    card.classList.add('answered');
+    card.querySelectorAll('[data-disc-opt]').forEach(function(t) {
+      t.classList.toggle('selected', +t.dataset.o === oi);
+    });
+    // auto-open the next unanswered question
+    card.classList.remove('open');
+    var next = -1;
+    for (var j = qi + 1; j < questions.length; j++) { if (discAnswers[j] === undefined) { next = j; break; } }
+    if (next === -1) { for (var k = 0; k < questions.length; k++) { if (discAnswers[k] === undefined) { next = k; break; } } }
+    if (next !== -1) { grid.querySelector('.disc-card[data-q="' + next + '"]').classList.add('open'); }
+    else { card.classList.add('open'); }
+    updateDiscSummary();
+  }
+
+  function computeProfile() {
+    var keys = Object.keys(discAnswers).map(Number).sort(function(a, b) { return a - b; });
+    var totalCost = 0, totalWeeks = 0, flags = [];
+    keys.forEach(function(k) {
+      var o = questions[k].opts[discAnswers[k]];
+      totalCost += o.cost; totalWeeks += o.weeks;
+      o.flags.forEach(function(f) { flags.push(f); });
+    });
+    var maxLevel = 5;
+    if (discAnswers[8] === 2) maxLevel = Math.min(maxLevel, 2); // Q09 hard deadline
+    if (discAnswers[8] === 3) maxLevel = Math.min(maxLevel, 1); // Q09 supervisory review live
+    if (discAnswers[1] === 3) maxLevel = Math.min(maxLevel, 2); // Q02 no LLM
+    var base = (typeof currentLevel !== 'undefined' && currentLevel) ? currentLevel : 3;
+    var rec = Math.min(base, maxLevel);
+    return { keys: keys, answered: keys.length, totalCost: totalCost, totalWeeks: +totalWeeks.toFixed(1), flags: flags, rec: rec };
+  }
+
+  function fmtCost(n) {
+    if (n === 0) return '€0';
+    return (n < 0 ? '−€' : '+€') + Math.abs(n).toLocaleString('en-US');
+  }
+
+  function updateDiscSummary() {
+    var p = computeProfile();
+
+    document.getElementById('disc-progress-fill').style.width = (p.answered / questions.length * 100) + '%';
+    document.getElementById('disc-progress-count').textContent = p.answered + ' / ' + questions.length + ' answered';
+
+    var badge = document.getElementById('disc-level-badge');
+    var label = document.getElementById('disc-level-label');
+    if (p.answered < 3) {
+      badge.textContent = '—';
+      label.textContent = 'Answer at least 3 questions to see a recommendation';
+    } else {
+      badge.textContent = 'L' + p.rec;
+      label.textContent = (typeof LEVEL_DATA !== 'undefined' && LEVEL_DATA[p.rec]) ? LEVEL_DATA[p.rec].label : '';
+    }
+
+    var showMetrics = p.answered >= 3;
+    document.getElementById('disc-cost-card').style.display = showMetrics ? 'block' : 'none';
+    document.getElementById('disc-time-card').style.display = showMetrics ? 'block' : 'none';
+    if (showMetrics) {
+      var costEl = document.getElementById('disc-cost-val');
+      costEl.textContent = fmtCost(p.totalCost);
+      costEl.style.color = p.totalCost < 0 ? 'var(--g)' : (p.totalCost > 0 ? 'var(--r)' : 'var(--tm)');
+      var timeEl = document.getElementById('disc-time-val');
+      if (p.totalWeeks === 0) { timeEl.textContent = 'On track'; timeEl.style.color = 'var(--g)'; }
+      else { timeEl.textContent = '+' + p.totalWeeks + ' week' + (p.totalWeeks === 1 ? '' : 's'); timeEl.style.color = 'var(--a)'; }
+    }
+
+    var score = Math.max(0, Math.min(10, Math.round(p.totalWeeks * 0.5 + p.flags.length * 0.8)));
+    var band = score <= 3 ? { t: 'Low', c: 'var(--g)' }
+      : score <= 6 ? { t: 'Medium', c: 'var(--a)' }
+      : score <= 8 ? { t: 'High', c: 'var(--r)' }
+      : { t: 'Very High', c: '#7A1F1A' };
+    document.getElementById('disc-cx-val').innerHTML = '<span class="disc-dot" style="background:' + band.c + ';"></span>' + score + ' / 10 · ' + band.t;
+
+    var fEl = document.getElementById('disc-flags');
+    if (p.flags.length === 0) {
+      fEl.innerHTML = '<div class="disc-empty">No flags yet</div>';
+    } else {
+      fEl.innerHTML = p.flags.map(function(f) {
+        return '<div class="disc-flag"><i class="ti ti-alert-triangle"></i><span>' + f + '</span></div>';
+      }).join('');
+    }
+
+    var next;
+    if (p.answered === 0) next = 'Work through the questions to build your project profile';
+    else if (discAnswers[8] === 2) next = 'L1/L2 scope only — focus discovery on data readiness';
+    else if (discAnswers[9] === 3) next = 'Propose a Discovery Sprint before full engagement';
+    else if (p.answered === questions.length) next = 'Profile complete — review flags and confirm maturity target with the client';
+    else next = 'Keep going — more answers refine the estimate';
+    document.getElementById('disc-next').textContent = next;
+  }
+
+  function copyDiscSummary() {
+    var p = computeProfile();
+    var lines = [];
+    lines.push('CLIENT DISCOVERY SUMMARY');
+    if (p.answered >= 3) {
+      var lvlLabel = (typeof LEVEL_DATA !== 'undefined' && LEVEL_DATA[p.rec]) ? LEVEL_DATA[p.rec].label : ('L' + p.rec);
+      lines.push('Recommended level: ' + lvlLabel);
+      lines.push('Cost adjustment vs base case: ' + fmtCost(p.totalCost));
+      lines.push('Timeline: ' + (p.totalWeeks === 0 ? 'on track' : '+' + p.totalWeeks + ' week' + (p.totalWeeks === 1 ? '' : 's')));
+    } else {
+      lines.push('Recommended level: — (answer at least 3 questions)');
+    }
+    lines.push('');
+    lines.push('ANSWERS:');
+    if (p.keys.length === 0) lines.push('- none yet');
+    p.keys.forEach(function(k) {
+      lines.push(questions[k].num + '  ' + questions[k].q + '  ->  ' + questions[k].opts[discAnswers[k]].label);
+    });
+    lines.push('');
+    lines.push('FLAGS:');
+    if (p.flags.length === 0) lines.push('- none'); else p.flags.forEach(function(f) { lines.push('- ' + f); });
+    var text = lines.join('\n');
+
+    function done() {
+      var b = document.getElementById('disc-copy');
+      var old = b.innerHTML;
+      b.innerHTML = '<i class="ti ti-check"></i> Copied!';
+      setTimeout(function() { b.innerHTML = old; }, 1600);
+    }
+    function fallback() {
+      var ta = document.createElement('textarea');
+      ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); } catch (err) {}
+      document.body.removeChild(ta); done();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(text).then(done, fallback);
+    } else { fallback(); }
+  }
 }
 
 function openRoleModal(key) {
